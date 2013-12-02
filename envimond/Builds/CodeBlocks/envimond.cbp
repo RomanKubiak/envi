@@ -87,6 +87,16 @@
       <Add library="kernel32"/>
       <Add library="comctl32"/>
     </Linker>
+    <Unit filename="../../Source/EnviApplication.cpp"/>
+    <Unit filename="../../Source/EnviApplication.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/EnviCLI.cpp"/>
+    <Unit filename="../../Source/EnviCLI.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/EnviDataSource.h">
       <Option compile="0"/>
       <Option link="0"/>
@@ -98,6 +108,10 @@
     </Unit>
     <Unit filename="../../Source/EnviGPIO.cpp"/>
     <Unit filename="../../Source/EnviGPIO.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/EnviIncludes.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
@@ -847,11 +861,11 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../../JUCE/modules/juce_core/juce_module_info">
+    <Unit filename="../../../../JUCE/modules/juce_core/juce_module_info">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../../JUCE/modules/juce_core/juce_core.h">
+    <Unit filename="../../../../JUCE/modules/juce_core/juce_core.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
@@ -899,11 +913,11 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../../JUCE/modules/juce_data_structures/juce_module_info">
+    <Unit filename="../../../../JUCE/modules/juce_data_structures/juce_module_info">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../../JUCE/modules/juce_data_structures/juce_data_structures.h">
+    <Unit filename="../../../../JUCE/modules/juce_data_structures/juce_data_structures.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
@@ -1055,11 +1069,11 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../../JUCE/modules/juce_events/juce_module_info">
+    <Unit filename="../../../../JUCE/modules/juce_events/juce_module_info">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../../JUCE/modules/juce_events/juce_events.h">
+    <Unit filename="../../../../JUCE/modules/juce_events/juce_events.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>

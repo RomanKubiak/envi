@@ -100,6 +100,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviApplication.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\EnviCLI.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviScheduler.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
@@ -420,6 +426,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviApplication.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EnviCLI.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EnviDataSource.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
@@ -427,6 +439,9 @@
       <Filter>envimond\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EnviGPIO.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EnviIncludes.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EnviHTTP.h">
@@ -753,7 +768,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_ComSmartPtr.h">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_core\juce_core.h">
+    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\juce_core.h">
       <Filter>Juce Modules\juce_core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_Value.h">
@@ -774,7 +789,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_PropertiesFile.h">
       <Filter>Juce Modules\juce_data_structures\app_properties</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_data_structures\juce_data_structures.h">
+    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_data_structures.h">
       <Filter>Juce Modules\juce_data_structures</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_ApplicationBase.h">
@@ -840,7 +855,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_HiddenMessageWindow.h">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_events\juce_events.h">
+    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\juce_events.h">
       <Filter>Juce Modules\juce_events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
@@ -851,13 +866,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\JUCE\modules\juce_core\juce_module_info">
+    <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info">
       <Filter>Juce Modules\juce_core</Filter>
     </None>
-    <None Include="..\..\..\JUCE\modules\juce_data_structures\juce_module_info">
+    <None Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_module_info">
       <Filter>Juce Modules\juce_data_structures</Filter>
     </None>
-    <None Include="..\..\..\JUCE\modules\juce_events\juce_module_info">
+    <None Include="..\..\..\..\JUCE\modules\juce_events\juce_module_info">
       <Filter>Juce Modules\juce_events</Filter>
     </None>
   </ItemGroup>

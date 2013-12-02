@@ -5,6 +5,12 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="ChlxjZ" name="EnviApplication.cpp" compile="1" resource="0"
+            file="Source/EnviApplication.cpp"/>
+      <FILE id="nUfiOc" name="EnviApplication.h" compile="0" resource="0"
+            file="Source/EnviApplication.h"/>
+      <FILE id="GhA4iY" name="EnviCLI.cpp" compile="1" resource="0" file="Source/EnviCLI.cpp"/>
+      <FILE id="DmemKJ" name="EnviCLI.h" compile="0" resource="0" file="Source/EnviCLI.h"/>
       <FILE id="dWtECN" name="EnviDataSource.h" compile="0" resource="0"
             file="Source/EnviDataSource.h"/>
       <FILE id="alNjjr" name="EnviScheduler.cpp" compile="1" resource="0"
@@ -12,6 +18,7 @@
       <FILE id="TVNOeB" name="EnviScheduler.h" compile="0" resource="0" file="Source/EnviScheduler.h"/>
       <FILE id="L6pqtu" name="EnviGPIO.cpp" compile="1" resource="0" file="Source/EnviGPIO.cpp"/>
       <FILE id="n0v6qt" name="EnviGPIO.h" compile="0" resource="0" file="Source/EnviGPIO.h"/>
+      <FILE id="Q2uaTf" name="EnviIncludes.h" compile="0" resource="0" file="Source/EnviIncludes.h"/>
       <FILE id="MiRrSc" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/EnviHTTP.cpp"/>
       <FILE id="oSGMJb" name="EnviHTTP.h" compile="0" resource="0" file="Source/EnviHTTP.h"/>
       <FILE id="trbBVm" name="Envimond.cpp" compile="1" resource="0" file="Source/Envimond.cpp"/>
@@ -26,9 +33,9 @@
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2010>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks">
@@ -37,9 +44,9 @@
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS>
     <LINUX_MAKE targetFolder="Builds/Linux">
@@ -50,9 +57,9 @@
                        targetName="envimond"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>

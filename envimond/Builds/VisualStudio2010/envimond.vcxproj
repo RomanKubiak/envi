@@ -127,6 +127,8 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviApplication.cpp"/>
+    <ClCompile Include="..\..\Source\EnviCLI.cpp"/>
     <ClCompile Include="..\..\Source\EnviScheduler.cpp"/>
     <ClCompile Include="..\..\Source\EnviGPIO.cpp"/>
     <ClCompile Include="..\..\Source\EnviHTTP.cpp"/>
@@ -412,9 +414,12 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviApplication.h"/>
+    <ClInclude Include="..\..\Source\EnviCLI.h"/>
     <ClInclude Include="..\..\Source\EnviDataSource.h"/>
     <ClInclude Include="..\..\Source\EnviScheduler.h"/>
     <ClInclude Include="..\..\Source\EnviGPIO.h"/>
+    <ClInclude Include="..\..\Source\EnviIncludes.h"/>
     <ClInclude Include="..\..\Source\EnviHTTP.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_ASCII.h"/>
@@ -523,14 +528,14 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_osx_ObjCHelpers.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_posix_SharedCode.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_ComSmartPtr.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_core\juce_core.h"/>
+    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\juce_core.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_Value.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_ValueTree.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\undomanager\juce_UndoableAction.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\undomanager\juce_UndoManager.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_ApplicationProperties.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_PropertiesFile.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_data_structures\juce_data_structures.h"/>
+    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_data_structures.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_ApplicationBase.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_CallbackMessage.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_DeletedAtShutdown.h"/>
@@ -552,14 +557,14 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_osx_MessageQueue.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_ScopedXLock.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_HiddenMessageWindow.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_events\juce_events.h"/>
+    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\juce_events.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\JUCE\modules\juce_core\juce_module_info"/>
-    <None Include="..\..\..\JUCE\modules\juce_data_structures\juce_module_info"/>
-    <None Include="..\..\..\JUCE\modules\juce_events\juce_module_info"/>
+    <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info"/>
+    <None Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_module_info"/>
+    <None Include="..\..\..\..\JUCE\modules\juce_events\juce_module_info"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>

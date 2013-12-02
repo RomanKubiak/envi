@@ -49,6 +49,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/EnviApplication_4adf88f5.o \
+  $(OBJDIR)/EnviCLI_b2488c5.o \
   $(OBJDIR)/EnviScheduler_bc3112e0.o \
   $(OBJDIR)/EnviGPIO_ce42eff4.o \
   $(OBJDIR)/EnviHTTP_1c90702d.o \
@@ -75,6 +77,16 @@ clean:
 strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/EnviApplication_4adf88f5.o: ../../Source/EnviApplication.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviApplication.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviCLI_b2488c5.o: ../../Source/EnviCLI.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviCLI.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviScheduler_bc3112e0.o: ../../Source/EnviScheduler.cpp
 	-@mkdir -p $(OBJDIR)
