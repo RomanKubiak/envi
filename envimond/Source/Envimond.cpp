@@ -8,15 +8,12 @@
   ==============================================================================
 */
 
-#include "../JuceLibraryCode/JuceHeader.h"
-
+#include "EnviIncludes.h"
+#include "EnviApplication.h"
 
 //==============================================================================
 int main (int argc, char* argv[])
 {
-
-    // ..your code goes here!
-
-
-    return 0;
+	ScopedPointer <EnviApplication> enviApplication = new EnviApplication(argc, argv);
+	return (enviApplication->messageLoop());
 }

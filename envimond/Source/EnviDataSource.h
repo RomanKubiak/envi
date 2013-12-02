@@ -11,8 +11,22 @@
 #ifndef ENVIDATASOURCE_H_INCLUDED
 #define ENVIDATASOURCE_H_INCLUDED
 
+#include "EnviIncludes.h"
 
+class EnviDataSource
+{
+	public:
+		EnviDataSource(const String &_sourceName) : sourceName(_sourceName)
+		{
+		}
 
+		virtual ~EnviDataSource()
+		{
+		}
+
+	private:
+		String sourceName;
+};
 
 
 #endif  // ENVIDATASOURCE_H_INCLUDED
