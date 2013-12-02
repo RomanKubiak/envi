@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="hhcKth" name="envimond" projectType="consoleapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.envimond" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0">
+  <MAINGROUP id="ScCL3D" name="envimond">
+    <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="dWtECN" name="EnviDataSource.h" compile="0" resource="0"
+            file="Source/EnviDataSource.h"/>
+      <FILE id="alNjjr" name="EnviScheduler.cpp" compile="1" resource="0"
+            file="Source/EnviScheduler.cpp"/>
+      <FILE id="TVNOeB" name="EnviScheduler.h" compile="0" resource="0" file="Source/EnviScheduler.h"/>
+      <FILE id="L6pqtu" name="EnviGPIO.cpp" compile="1" resource="0" file="Source/EnviGPIO.cpp"/>
+      <FILE id="n0v6qt" name="EnviGPIO.h" compile="0" resource="0" file="Source/EnviGPIO.h"/>
+      <FILE id="MiRrSc" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/EnviHTTP.cpp"/>
+      <FILE id="oSGMJb" name="EnviHTTP.h" compile="0" resource="0" file="Source/EnviHTTP.h"/>
+      <FILE id="trbBVm" name="Envimond.cpp" compile="1" resource="0" file="Source/Envimond.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2010 targetFolder="Builds/VisualStudio2010">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="envimond"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="2" targetName="envimond"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2010>
+    <CODEBLOCKS targetFolder="Builds/CodeBlocks">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS>
+    <LINUX_MAKE targetFolder="Builds/Linux">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
+                       targetName="envimond"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
+                       targetName="envimond"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
