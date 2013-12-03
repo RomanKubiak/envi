@@ -15,5 +15,6 @@
 int main (int argc, char* argv[])
 {
 	ScopedPointer <EnviApplication> enviApplication = new EnviApplication(argc, argv);
-	return (enviApplication->messageLoop());
+	enviApplication->messageLoop();
+	return (1);
 }

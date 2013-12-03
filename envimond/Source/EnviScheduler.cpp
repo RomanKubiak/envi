@@ -9,3 +9,19 @@
 */
 
 #include "EnviScheduler.h"
+#include "EnviApplication.h"
+
+EnviScheduler::EnviScheduler(EnviApplication &_owner) : owner(_owner)
+{
+	_DBG("EnviScheduler::ctor");
+	startTimer (100);
+}
+
+EnviScheduler::~EnviScheduler()
+{
+	stopTimer();
+}
+
+void EnviScheduler::timerCallback()
+{
+}

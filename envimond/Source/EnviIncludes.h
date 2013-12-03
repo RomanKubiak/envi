@@ -15,6 +15,18 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <iostream>
 
-#define	_DBG(x)		std::cout << x << std::endl
+#define	_DBG(x)					Logger::writeToLog(x)
+#define ENVI_TIMER_OFFSET		10
+
+namespace Ids
+{
+	#define DECLARE_ID(name)      const Identifier name (#name)
+	DECLARE_ID (envi);
+	DECLARE_ID (dataSource);
+	DECLARE_ID (name);
+	DECLARE_ID (interval);
+	DECLARE_ID (timeout);
+	DECLARE_ID (type);
+};
 
 #endif  // ENVIINCLUDES_H_INCLUDED

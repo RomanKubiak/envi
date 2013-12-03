@@ -8,6 +8,9 @@
     <Filter Include="envimond\Source">
       <UniqueIdentifier>{958D036A-8B6E-2ABF-850E-CE38BA125B3B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="envimond\Source\DataSources">
+      <UniqueIdentifier>{F34191BB-542F-E4E4-9985-20C9793D84EB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
     </Filter>
@@ -100,6 +103,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\DataSources\EnviDSCommand.cpp">
+      <Filter>envimond\Source\DataSources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\EnviLog.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviApplication.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
@@ -426,6 +435,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\DataSources\EnviDSCommand.h">
+      <Filter>envimond\Source\DataSources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EnviLog.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EnviApplication.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>

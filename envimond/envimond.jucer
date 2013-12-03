@@ -5,6 +5,13 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <GROUP id="{F9D41BFF-62D4-5CB5-F8DB-420F9177AA36}" name="DataSources">
+        <FILE id="Dx9OkS" name="EnviDSCommand.cpp" compile="1" resource="0"
+              file="Source/DataSources/EnviDSCommand.cpp"/>
+        <FILE id="nPIcTT" name="EnviDSCommand.h" compile="0" resource="0" file="Source/DataSources/EnviDSCommand.h"/>
+      </GROUP>
+      <FILE id="cluvda" name="EnviLog.cpp" compile="1" resource="0" file="Source/EnviLog.cpp"/>
+      <FILE id="LmdEIy" name="EnviLog.h" compile="0" resource="0" file="Source/EnviLog.h"/>
       <FILE id="ChlxjZ" name="EnviApplication.cpp" compile="1" resource="0"
             file="Source/EnviApplication.cpp"/>
       <FILE id="nUfiOc" name="EnviApplication.h" compile="0" resource="0"

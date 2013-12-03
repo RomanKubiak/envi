@@ -26,6 +26,7 @@ class EnviCLI
 		const bool hasParameter(const String &argument);
 		const int getNumArguments();
 		const String getArgument(const int argumentIndex);
+
 	private:
 		String optionsPattern;
 		StringArray arguments;

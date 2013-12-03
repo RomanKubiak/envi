@@ -127,6 +127,8 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\DataSources\EnviDSCommand.cpp"/>
+    <ClCompile Include="..\..\Source\EnviLog.cpp"/>
     <ClCompile Include="..\..\Source\EnviApplication.cpp"/>
     <ClCompile Include="..\..\Source\EnviCLI.cpp"/>
     <ClCompile Include="..\..\Source\EnviScheduler.cpp"/>
@@ -414,6 +416,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\DataSources\EnviDSCommand.h"/>
+    <ClInclude Include="..\..\Source\EnviLog.h"/>
     <ClInclude Include="..\..\Source\EnviApplication.h"/>
     <ClInclude Include="..\..\Source\EnviCLI.h"/>
     <ClInclude Include="..\..\Source\EnviDataSource.h"/>

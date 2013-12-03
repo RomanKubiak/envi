@@ -13,10 +13,10 @@
 
 #include "EnviIncludes.h"
 
-class EnviDataSource
+class EnviDataSource : public ChangeBroadcaster
 {
 	public:
-		EnviDataSource(const String &_sourceName) : sourceName(_sourceName)
+		EnviDataSource()
 		{
 		}
 
@@ -24,8 +24,14 @@ class EnviDataSource
 		{
 		}
 
-	private:
-		String sourceName;
+		virtual const String getName() 		= 0;
+		virtual const int getInterval() 	= 0;
+		virtual const int getTimeout()		= 0;
+		virtual const bool execute() 		= 0;
+		virtual const var getResult()		= 0;
+
+	protected:
+		CriticalSection dataSourceLock;
 };
 
 
