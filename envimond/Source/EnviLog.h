@@ -17,13 +17,17 @@ class EnviApplication;
 class EnviLog : public AsyncUpdater, public Logger
 {
 	public:
-		EnviLog(EnviApplication &_owner);
+		EnviLog();
 		~EnviLog();
+		void setOwner (EnviApplication *_owner);
 		void handleAsyncUpdate();
-		void logMessage (const String &message);
+		void logMessage(const int level, const String &message);
+		void logMessage(const String &message);
+
+		juce_DeclareSingleton (EnviLog, false);
 
 	private:
-		EnviApplication &owner;
+		EnviApplication *owner;
 };
 
 

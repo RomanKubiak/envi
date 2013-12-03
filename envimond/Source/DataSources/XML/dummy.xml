@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<instance name="Dummy command instance" timeout="2000" interval="5000" type="command" cmd="c:\devel\envi.bat" />

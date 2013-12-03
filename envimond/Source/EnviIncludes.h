@@ -13,9 +13,21 @@
 
 // #define	_DBG(x)		Logger::writeToLog(x)
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "EnviLog.h"
 #include <iostream>
 
-#define	_DBG(x)					Logger::writeToLog(x)
+#define LOG_INFO				0
+#define LOG_WARN				1
+#define LOG_DEBUG				2
+#define LOG_JUCE				3
+#define LOG_ERROR				4
+
+#define _LOG(lvl,msg)			EnviLog::getInstance()->logMessage(lvl,msg)
+#define	_DBG(msg)				_LOG(LOG_DEBUG, msg)
+#define _ERR(msg)				_LOG(LOG_ERROR, msg)
+#define _WRN(msg)				_LOG(LOG_WARN, msg)
+#define _INF(msg)				_LOG(LOG_INFO, msg)
+
 #define ENVI_TIMER_OFFSET		10
 
 namespace Ids
@@ -27,6 +39,7 @@ namespace Ids
 	DECLARE_ID (interval);
 	DECLARE_ID (timeout);
 	DECLARE_ID (type);
+	DECLARE_ID (cmd);
 };
 
 #endif  // ENVIINCLUDES_H_INCLUDED

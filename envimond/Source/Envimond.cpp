@@ -14,7 +14,9 @@
 //==============================================================================
 int main (int argc, char* argv[])
 {
-	ScopedPointer <EnviApplication> enviApplication = new EnviApplication(argc, argv);
-	enviApplication->messageLoop();
-	return (1);
+	ScopedJuceInitialiser_GUI plattform;
+
+	ScopedPointer <EnviApplication> enviApplication (new EnviApplication(argc, argv));
+	
+	return (enviApplication->runDispatchLoop());
 }

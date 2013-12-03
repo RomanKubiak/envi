@@ -10,7 +10,9 @@
 
 #include "EnviLog.h"
 
-EnviLog::EnviLog(EnviApplication &_owner) : owner(_owner)
+juce_ImplementSingleton (EnviLog)
+
+EnviLog::EnviLog() : owner(nullptr)
 {
 	_DBG("EnviLog::ctor");
 	Logger::setCurrentLogger (this);
@@ -18,13 +20,24 @@ EnviLog::EnviLog(EnviApplication &_owner) : owner(_owner)
 
 EnviLog::~EnviLog()
 {
+	clearSingletonInstance();
+}
+
+void EnviLog::setOwner (EnviApplication *_owner)
+{
+	owner = _owner;
 }
 
 void EnviLog::handleAsyncUpdate()
 {
 }
 
-void EnviLog::logMessage (const String &message)
+void EnviLog::logMessage (const int level, const String &message)
 {
 	std::cout << "Envi: " << message << std::endl;
+}
+
+void EnviLog::logMessage(const String &message)
+{
+	logMessage(LOG_JUCE, message);
 }

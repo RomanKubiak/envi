@@ -11,12 +11,10 @@
 #include "EnviApplication.h"
 #include "DataSources/EnviDSCommand.h"
 
-juce_ImplementSingleton (SharedMessageThread)
-
 EnviApplication::EnviApplication(int argc, char* argv[])
 	: enviCLI(argc, argv, "dn:c")
 {
-	std::cout << "EnviApplication::ctor" << std::endl;
+	_DBG("EnviApplication::ctor");
 
 	PropertiesFile::Options options;
 	options.applicationName		= "envi";
@@ -32,24 +30,23 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	/*
 	 *	Envi application classes
 	 */
-	enviLog			= new EnviLog (*this);
-	enviScheduler 	= new EnviScheduler (*this);
+	EnviLog::getInstance()->setOwner(this);
+	enviDB	= new EnviDB(*this);
 }
 
-bool EnviApplication::messageLoop()
+const int EnviApplication::runDispatchLoop()
 {
-	if (registerDataSources())
+	_DBG("EnviApplication::runDispatchLoop");
+	if (registerDataSources() && enviDB->init())
 	{
-		while (1)
-		{
-			SharedMessageThread::getInstance()->waitForThreadToExit(250);
-			_DBG("loop()");
-		}
-		return (true);
+		_DBG("EnviApplication::runDispatchLoop running");
+		MessageManager::getInstance()->runDispatchLoop();
+		return (0);
 	}
 	else
 	{
-		return (false);
+		_ERR("EnviApplication::runDispatchLoop error initializing sources, exit");
+		return (-1);
 	}
 }
 
@@ -109,14 +106,28 @@ PropertySet *EnviApplication::getProperties()
 	return (&defaultPropertyStorage);
 }
 
-void EnviApplication::timerCallback(const int timerId)
+void EnviApplication::timerCallback(int timerId)
 {
 	ScopedLock sl(dataSources.getLock());
-	_DBG("EnviApplication::timerCallback timerId="+String(timerId));
-
-	if (dataSources[ENVI_TIMER_OFFSET - timerId])
+	EnviDataSource *ds = dataSources[ENVI_TIMER_OFFSET - timerId];
+	if (ds)
 	{
-		dataSources[ENVI_TIMER_OFFSET - timerId]->execute();
+		if (ds->isDisabled())
+		{
+			_WRN("Timer triggered for data source \""+ds->getName()+"\". Source is disabled");
+			return;
+		}
+
+		_LOG(LOG_INFO, "Timer triggered for data source \""+ds->getName()+"\"");
+
+		if (ds->startSource())
+		{
+			_LOG(LOG_INFO, "\tsuccess");
+		}
+		else
+		{
+			_LOG(LOG_WARN, "Timer trigger for data source \""+ds->getName()+"\", execute failed");
+		}
 	}
 }
 
@@ -141,7 +152,7 @@ EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstan
 {
 	if (dataSourceInstance.getProperty (Ids::type) == "command")
 	{
-        return (new EnviDSCommand (dataSourceInstance));
+        return (new EnviDSCommand (*this, dataSourceInstance));
 	}
 
 	return (nullptr);
@@ -188,4 +199,17 @@ bool EnviApplication::registerDataSources()
 		_DBG("\t"+dataSourcesFolder.getFullPathName() + " is not a directory, can't initialize any sources");
 		return (false);
 	}
+}
+
+void EnviApplication::sourceFailed(EnviDataSource *dataSource)
+{
+	_DBG("EnviApplication::dsFailed ["+dataSource->getName()+"]");
+}
+
+void EnviApplication::sourceWrite(EnviDataSource *dataSource)
+{
+	_DBG("EnviApplication::dsWrite ["+dataSource->getName()+"]");
+	_DBG("\tresult: ["+dataSource->getResult().toString()+"]");
+
+	enviDB->writeResult (dataSource);
 }

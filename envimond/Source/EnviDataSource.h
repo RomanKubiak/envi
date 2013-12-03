@@ -12,11 +12,12 @@
 #define ENVIDATASOURCE_H_INCLUDED
 
 #include "EnviIncludes.h"
+class EnviApplication;
 
 class EnviDataSource : public ChangeBroadcaster
 {
 	public:
-		EnviDataSource()
+		EnviDataSource(EnviApplication &_owner) : owner(_owner), disabled(false)
 		{
 		}
 
@@ -29,9 +30,38 @@ class EnviDataSource : public ChangeBroadcaster
 		virtual const int getTimeout()		= 0;
 		virtual const bool execute() 		= 0;
 		virtual const var getResult()		= 0;
+		bool startSource()
+		{
+			ScopedLock sl(dataSourceLock);
+			startTime = Time::getCurrentTime();
+			return (execute());
+		}
+
+		void stopSource()
+		{
+			ScopedLock sl(dataSourceLock);
+			endTime = Time::getCurrentTime();
+		}
+
+		void disableSource()
+		{
+			ScopedLock sl(dataSourceLock);
+			disabled = true;
+		}
+
+		bool isDisabled()
+		{
+			ScopedLock sl(dataSourceLock);
+			return (disabled);
+		}
 
 	protected:
+		EnviApplication &owner;
 		CriticalSection dataSourceLock;
+
+	private:
+		Time startTime, endTime;
+		bool disabled;
 };
 
 

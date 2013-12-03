@@ -13,18 +13,26 @@
 
 #include "../EnviIncludes.h"
 #include "../EnviDataSource.h"
+class EnviApplication;
 
-class EnviDSCommand : public EnviDataSource
+class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 {
 	public:
-		EnviDSCommand(const ValueTree instanceConfig);
+		EnviDSCommand(EnviApplication &owner, const ValueTree instanceConfig);
+		~EnviDSCommand();
 		const String getName();
 		const int getInterval();
 		const int getTimeout();
 		const bool execute();
 		const var getResult();
 		const var getProperty (const Identifier &identifier);
+		void run();
+		void handleAsyncUpdate();
+
 	private:
+		String commandOutput;
+		int timeout;
+		String cmd;
 		ValueTree instanceState;
 };
 
