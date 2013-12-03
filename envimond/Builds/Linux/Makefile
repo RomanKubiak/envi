@@ -49,12 +49,11 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/EnviDB_4bcb0923.o \
   $(OBJDIR)/EnviDSCommand_4b26fc40.o \
   $(OBJDIR)/EnviLog_249cfce9.o \
   $(OBJDIR)/EnviApplication_4adf88f5.o \
   $(OBJDIR)/EnviCLI_b2488c5.o \
-  $(OBJDIR)/EnviScheduler_bc3112e0.o \
-  $(OBJDIR)/EnviGPIO_ce42eff4.o \
   $(OBJDIR)/EnviHTTP_1c90702d.o \
   $(OBJDIR)/Envimond_e1dc027d.o \
   $(OBJDIR)/juce_core_aff681cc.o \
@@ -80,6 +79,11 @@ strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
+$(OBJDIR)/EnviDB_4bcb0923.o: ../../Source/EnviDB.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDB.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
 $(OBJDIR)/EnviDSCommand_4b26fc40.o: ../../Source/DataSources/EnviDSCommand.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDSCommand.cpp"
@@ -98,16 +102,6 @@ $(OBJDIR)/EnviApplication_4adf88f5.o: ../../Source/EnviApplication.cpp
 $(OBJDIR)/EnviCLI_b2488c5.o: ../../Source/EnviCLI.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviCLI.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviScheduler_bc3112e0.o: ../../Source/EnviScheduler.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviScheduler.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviGPIO_ce42eff4.o: ../../Source/EnviGPIO.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviGPIO.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviHTTP_1c90702d.o: ../../Source/EnviHTTP.cpp

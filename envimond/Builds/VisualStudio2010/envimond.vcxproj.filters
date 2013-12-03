@@ -103,6 +103,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviDB.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\DataSources\EnviDSCommand.cpp">
       <Filter>envimond\Source\DataSources</Filter>
     </ClCompile>
@@ -113,12 +116,6 @@
       <Filter>envimond\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\EnviCLI.cpp">
-      <Filter>envimond\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\EnviScheduler.cpp">
-      <Filter>envimond\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\EnviGPIO.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\EnviHTTP.cpp">
@@ -435,6 +432,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviDB.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\DataSources\EnviDSCommand.h">
       <Filter>envimond\Source\DataSources</Filter>
     </ClInclude>
@@ -448,12 +448,6 @@
       <Filter>envimond\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EnviDataSource.h">
-      <Filter>envimond\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\EnviScheduler.h">
-      <Filter>envimond\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\EnviGPIO.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EnviIncludes.h">

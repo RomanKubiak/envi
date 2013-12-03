@@ -5,6 +5,8 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="PABCBC" name="EnviDB.cpp" compile="1" resource="0" file="Source/EnviDB.cpp"/>
+      <FILE id="il7SqS" name="EnviDB.h" compile="0" resource="0" file="Source/EnviDB.h"/>
       <GROUP id="{F9D41BFF-62D4-5CB5-F8DB-420F9177AA36}" name="DataSources">
         <FILE id="Dx9OkS" name="EnviDSCommand.cpp" compile="1" resource="0"
               file="Source/DataSources/EnviDSCommand.cpp"/>
@@ -20,11 +22,6 @@
       <FILE id="DmemKJ" name="EnviCLI.h" compile="0" resource="0" file="Source/EnviCLI.h"/>
       <FILE id="dWtECN" name="EnviDataSource.h" compile="0" resource="0"
             file="Source/EnviDataSource.h"/>
-      <FILE id="alNjjr" name="EnviScheduler.cpp" compile="1" resource="0"
-            file="Source/EnviScheduler.cpp"/>
-      <FILE id="TVNOeB" name="EnviScheduler.h" compile="0" resource="0" file="Source/EnviScheduler.h"/>
-      <FILE id="L6pqtu" name="EnviGPIO.cpp" compile="1" resource="0" file="Source/EnviGPIO.cpp"/>
-      <FILE id="n0v6qt" name="EnviGPIO.h" compile="0" resource="0" file="Source/EnviGPIO.h"/>
       <FILE id="Q2uaTf" name="EnviIncludes.h" compile="0" resource="0" file="Source/EnviIncludes.h"/>
       <FILE id="MiRrSc" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/EnviHTTP.cpp"/>
       <FILE id="oSGMJb" name="EnviHTTP.h" compile="0" resource="0" file="Source/EnviHTTP.h"/>
@@ -32,10 +29,11 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2010 targetFolder="Builds/VisualStudio2010">
+    <VS2010 targetFolder="Builds/VisualStudio2010" externalLibraries="sqlite3.lib">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="envimond"/>
+                       isDebug="1" optimisation="1" targetName="envimond" headerPath="../../Source/Addons/include"
+                       libraryPath="../../Source/Addons/lib"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
