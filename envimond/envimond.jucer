@@ -5,6 +5,11 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <GROUP id="{390E11F8-07A1-DB31-CBAE-39D013E3530A}" name="Addons">
+        <FILE id="LmECvZ" name="sqlite3.h" compile="0" resource="0" file="Source/Addons/sqlite3.h"/>
+        <FILE id="KzoiKd" name="sqlite3ext.h" compile="0" resource="0" file="Source/Addons/sqlite3ext.h"/>
+        <FILE id="NKIOQw" name="sqlite3.c" compile="1" resource="0" file="Source/Addons/sqlite3.c"/>
+      </GROUP>
       <FILE id="PABCBC" name="EnviDB.cpp" compile="1" resource="0" file="Source/EnviDB.cpp"/>
       <FILE id="il7SqS" name="EnviDB.h" compile="0" resource="0" file="Source/EnviDB.h"/>
       <GROUP id="{F9D41BFF-62D4-5CB5-F8DB-420F9177AA36}" name="DataSources">
@@ -29,11 +34,11 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2010 targetFolder="Builds/VisualStudio2010" externalLibraries="sqlite3.lib">
+    <VS2010 targetFolder="Builds/VisualStudio2010" externalLibraries="">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="envimond" headerPath="../../Source/Addons/include"
-                       libraryPath="../../Source/Addons/lib"/>
+        <CONFIGURATION name="Debug" winWarningLevel="2" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="envimond" headerPath="../../Source/Addons"
+                       libraryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>

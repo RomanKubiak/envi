@@ -8,6 +8,9 @@
     <Filter Include="envimond\Source">
       <UniqueIdentifier>{958D036A-8B6E-2ABF-850E-CE38BA125B3B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="envimond\Source\Addons">
+      <UniqueIdentifier>{930B4C08-9A0C-1CB6-B18A-1B2E732DD96B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="envimond\Source\DataSources">
       <UniqueIdentifier>{F34191BB-542F-E4E4-9985-20C9793D84EB}</UniqueIdentifier>
     </Filter>
@@ -103,6 +106,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Addons\sqlite3.c">
+      <Filter>envimond\Source\Addons</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviDB.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
@@ -432,6 +438,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Addons\sqlite3.h">
+      <Filter>envimond\Source\Addons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Addons\sqlite3ext.h">
+      <Filter>envimond\Source\Addons</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EnviDB.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>

@@ -49,6 +49,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/sqlite3_513ce6d4.o \
   $(OBJDIR)/EnviDB_4bcb0923.o \
   $(OBJDIR)/EnviDSCommand_4b26fc40.o \
   $(OBJDIR)/EnviLog_249cfce9.o \
@@ -78,6 +79,11 @@ clean:
 strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/sqlite3_513ce6d4.o: ../../Source/Addons/sqlite3.c
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling sqlite3.c"
+	@$(CC) $(CFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviDB_4bcb0923.o: ../../Source/EnviDB.cpp
 	-@mkdir -p $(OBJDIR)
