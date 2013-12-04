@@ -82,7 +82,6 @@ void EnviDB::run()
 		}
 		else
 		{
-			_DBG("EnviDB::run queue empty");
 			continue;
 		}
 	}
@@ -96,7 +95,6 @@ int EnviDB::dbCallback(void *object, int argc, char **argv, char **columnName)
 
 void EnviDB::writeResult(EnviDataSource *dataSource)
 {
-	_DBG("EnviDB::writeResult");
 }
 
 bool EnviDB::openFile()

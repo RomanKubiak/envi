@@ -19,11 +19,13 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	PropertiesFile::Options options;
 	options.applicationName		= "envi";
 	options.filenameSuffix		= "xml";
+
 #ifdef JUCE_LINUX
 	options.folderName			= ".envi";
 #else
 	options.folderName			= "envi";
 #endif
+
 	options.storageFormat 		= PropertiesFile::storeAsXML;
 	applicationProperties.setStorageParameters (options);
 
@@ -31,7 +33,8 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 *	Envi application classes
 	 */
 	EnviLog::getInstance()->setOwner(this);
-	enviDB	= new EnviDB(*this);
+	enviHTTP	= new EnviHTTP(*this);
+	enviDB		= new EnviDB(*this);
 }
 
 const int EnviApplication::runDispatchLoop()
@@ -203,13 +206,18 @@ bool EnviApplication::registerDataSources()
 
 void EnviApplication::sourceFailed(EnviDataSource *dataSource)
 {
-	_DBG("EnviApplication::dsFailed ["+dataSource->getName()+"]");
+	_DBG("EnviApplication::sourceFailed ["+dataSource->getName()+"]");
 }
 
 void EnviApplication::sourceWrite(EnviDataSource *dataSource)
 {
-	_DBG("EnviApplication::dsWrite ["+dataSource->getName()+"]");
-	_DBG("\tresult: ["+dataSource->getResult().toString()+"]");
+	_DBG("EnviApplication::sourceWrite ["+dataSource->getName()+"]");
+	_DBG("\tresult: ["+EnviData::toString(dataSource->getResult())+"]");
 
 	enviDB->writeResult (dataSource);
+}
+
+const var EnviApplication::getOption(const Identifier &optionId)
+{
+	return (var::null);
 }

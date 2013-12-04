@@ -1,0 +1,3 @@
+@ECHO OFF
+echo PUTVAL Temperature C:1179574444:23
+echo PUTVAL Voltage interval=100 V:1179574444:192

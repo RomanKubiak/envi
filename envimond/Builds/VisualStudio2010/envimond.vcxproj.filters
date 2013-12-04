@@ -106,6 +106,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviHTTPConnection.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviDataSource.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
@@ -441,6 +444,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviHTTPConnection.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Addons\sqlite3.h">
       <Filter>envimond\Source\Addons</Filter>
     </ClInclude>

@@ -14,6 +14,7 @@
 #include "EnviCLI.h"
 #include "EnviDataSource.h"
 #include "EnviDB.h"
+#include "EnviHTTP.h"
 
 class EnviApplication : public MultiTimer
 {
@@ -34,12 +35,14 @@ class EnviApplication : public MultiTimer
 		EnviDataSource *registerDataSource(EnviDataSource *dataSource);
 		void sourceFailed(EnviDataSource *dataSource);
 		void sourceWrite(EnviDataSource *dataSource);
+		const var getOption(const Identifier &optionId);
 
 	private:
 		PropertySet defaultPropertyStorage;
 		ApplicationProperties applicationProperties;
 		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
+		ScopedPointer <EnviHTTP> enviHTTP;
 		OwnedArray <EnviDataSource,CriticalSection> dataSources;
 };
 

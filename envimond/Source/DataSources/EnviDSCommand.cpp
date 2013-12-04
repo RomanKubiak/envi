@@ -68,10 +68,10 @@ const bool EnviDSCommand::execute()
 	return (false);
 }
 
-const var EnviDSCommand::getResult()
+const EnviData EnviDSCommand::getResult()
 {
 	ScopedLock sl (dataSourceLock);
-	return (commandOutput);
+	return (EnviData::createFromCommand(commandOutput));
 }
 
 const var EnviDSCommand::getProperty (const Identifier &identifier)

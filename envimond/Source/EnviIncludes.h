@@ -40,6 +40,7 @@ namespace Ids
 	DECLARE_ID (timeout);
 	DECLARE_ID (type);
 	DECLARE_ID (cmd);
+	DECLARE_ID (port);
 };
 
 #endif  // ENVIINCLUDES_H_INCLUDED

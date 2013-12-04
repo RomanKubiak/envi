@@ -5,6 +5,10 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="efiZxN" name="EnviHTTPConnection.cpp" compile="1" resource="0"
+            file="Source/EnviHTTPConnection.cpp"/>
+      <FILE id="hu46JT" name="EnviHTTPConnection.h" compile="0" resource="0"
+            file="Source/EnviHTTPConnection.h"/>
       <FILE id="JCDuF3" name="EnviDataSource.cpp" compile="1" resource="0"
             file="Source/EnviDataSource.cpp"/>
       <GROUP id="{390E11F8-07A1-DB31-CBAE-39D013E3530A}" name="Addons">

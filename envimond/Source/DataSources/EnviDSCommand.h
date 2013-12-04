@@ -24,7 +24,7 @@ class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 		const int getInterval();
 		const int getTimeout();
 		const bool execute();
-		const var getResult();
+		const EnviData getResult();
 		const var getProperty (const Identifier &identifier);
 		void run();
 		void handleAsyncUpdate();

@@ -30,17 +30,35 @@ class EnviData
 			Hertz,
 			Ohm,
 			Farad,
-			kUnitCount
+			Watt,
+			KiloWattHour,
+			Unknown
+		};
+
+		struct Value
+		{
+			String name;
+			var value;
+			bool error;
+			Unit unit;
+			int interval;
+			Time sampleTime;
 		};
 
 		EnviData();
 		EnviData(const EnviData &other);
-		static EnviData createFromString(const String &dataSource);
+		EnviData(const String &firstValueName, const var firstValueValue=var::null, const Time firstValueSampleTime=Time());
+		bool operator== (const EnviData& other) noexcept;
+		EnviData::Value& operator[] (int arrayIndex) const;
 
-	private:
-		String name;
-		var value;
-		bool error;
+		const int getNumValues() const;
+		void addValue(const EnviData::Value valueToAdd);
+		Array <Value> values;
+
+		static EnviData createFromCommand(const String &dataCommand);
+		static const String toString(const EnviData &enviData);
+		static const String unitToString(const Unit unit);
+		static const Unit stringToUnit(const String &unit);
 };
 
 class EnviDataSource : public ChangeBroadcaster
@@ -58,7 +76,7 @@ class EnviDataSource : public ChangeBroadcaster
 		virtual const int getInterval() 	= 0;
 		virtual const int getTimeout()		= 0;
 		virtual const bool execute() 		= 0;
-		virtual const var getResult()		= 0;
+		virtual const EnviData getResult()	= 0;
 		virtual EnviData::Unit getUnit()	{ return (EnviData::Integer); }
 		bool startSource()
 		{
