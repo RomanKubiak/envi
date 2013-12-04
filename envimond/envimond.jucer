@@ -5,6 +5,8 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="JCDuF3" name="EnviDataSource.cpp" compile="1" resource="0"
+            file="Source/EnviDataSource.cpp"/>
       <GROUP id="{390E11F8-07A1-DB31-CBAE-39D013E3530A}" name="Addons">
         <FILE id="LmECvZ" name="sqlite3.h" compile="0" resource="0" file="Source/Addons/sqlite3.h"/>
         <FILE id="KzoiKd" name="sqlite3ext.h" compile="0" resource="0" file="Source/Addons/sqlite3ext.h"/>
@@ -50,7 +52,8 @@
     </VS2010>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"
+                       headerPath="../../Source/Addons"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

@@ -11,7 +11,7 @@
 #include "EnviDSCommand.h"
 #include "../EnviApplication.h"
 
-EnviDSCommand::EnviDSCommand(EnviApplication &owner, const ValueTree instanceConfig) 
+EnviDSCommand::EnviDSCommand(EnviApplication &owner, const ValueTree instanceConfig)
 	: EnviDataSource(owner), Thread("EnviDSCommand"), timeout(0)
 {
 	_DBG("EnviDSCommand::ctor");
@@ -20,8 +20,17 @@ EnviDSCommand::EnviDSCommand(EnviApplication &owner, const ValueTree instanceCon
 
 	if (instanceState.isValid())
 	{
-		timeout = getProperty(Ids::timeout);
-		cmd		= getProperty(Ids::cmd);
+		timeout = (bool)instanceState.hasProperty (Ids::timeout) ? (int)getProperty(Ids::timeout) : 5000;
+
+		if (!instanceState.hasProperty(Ids::cmd))
+		{
+			_WRN("EnviDSCommand::ctor no cmd set, disabling source");
+			setDisabled(true);
+		}
+		else
+		{
+			cmd		= getProperty(Ids::cmd);
+		}
 	}
 }
 
@@ -35,29 +44,28 @@ EnviDSCommand::~EnviDSCommand()
 
 const String EnviDSCommand::getName()
 {
-	ScopedLock sl (dataSourceLock);
 	return (getProperty(Ids::name));
 }
 
 const int EnviDSCommand::getInterval()
 {
-	ScopedLock sl (dataSourceLock);
 	return (getProperty(Ids::interval));
 }
 
 const int EnviDSCommand::getTimeout()
 {
-	ScopedLock sl (dataSourceLock);
 	return (getProperty(Ids::timeout));
 }
 
 const bool EnviDSCommand::execute()
 {
-	_DBG("EnviDSCommand::execute ["+getName()+"] command: "+getProperty(Ids::cmd)+" timeout: "+getProperty(Ids::timeout));
+	if (!isDisabled())
+	{
+		startThread();
+		return (true);
+	}
 
-	startThread();
-
-	return (true);
+	return (false);
 }
 
 const var EnviDSCommand::getResult()
@@ -68,6 +76,7 @@ const var EnviDSCommand::getResult()
 
 const var EnviDSCommand::getProperty (const Identifier &identifier)
 {
+	ScopedLock sl (dataSourceLock);
 	return (instanceState.getProperty (identifier));
 }
 
@@ -81,7 +90,7 @@ void EnviDSCommand::run()
 	{
 		if (childProc.waitForProcessToFinish(getTimeout()))
 		{
-			commandOutput = childProc.readAllProcessOutput ();
+			commandOutput = childProc.readAllProcessOutput ().trim();
 		}
 		else
 		{

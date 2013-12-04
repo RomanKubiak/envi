@@ -14,6 +14,35 @@
 #include "EnviIncludes.h"
 class EnviApplication;
 
+class EnviData
+{
+	public:
+		enum Unit
+		{
+			Integer,
+			Text,
+			Float,
+			Volt,
+			Amp,
+			Celsius,
+			Decibel,
+			Lux,
+			Hertz,
+			Ohm,
+			Farad,
+			kUnitCount
+		};
+
+		EnviData();
+		EnviData(const EnviData &other);
+		static EnviData createFromString(const String &dataSource);
+
+	private:
+		String name;
+		var value;
+		bool error;
+};
+
 class EnviDataSource : public ChangeBroadcaster
 {
 	public:
@@ -30,6 +59,7 @@ class EnviDataSource : public ChangeBroadcaster
 		virtual const int getTimeout()		= 0;
 		virtual const bool execute() 		= 0;
 		virtual const var getResult()		= 0;
+		virtual EnviData::Unit getUnit()	{ return (EnviData::Integer); }
 		bool startSource()
 		{
 			ScopedLock sl(dataSourceLock);
@@ -43,10 +73,10 @@ class EnviDataSource : public ChangeBroadcaster
 			endTime = Time::getCurrentTime();
 		}
 
-		void disableSource()
+		void setDisabled(const bool shouldBeDisabled)
 		{
 			ScopedLock sl(dataSourceLock);
-			disabled = true;
+			disabled = shouldBeDisabled;
 		}
 
 		bool isDisabled()

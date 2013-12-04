@@ -30,20 +30,65 @@ const bool EnviDB::init()
 	if (databaseFile.existsAsFile())
 	{
 		_DBG("\tdatabase file exists ["+databaseFile.getFullPathName()+"]");
-		return (true);
+		if (!openFile())
+		{
+			_ERR("Failed to open database file");
+		}
+		else
+		{
+			_DBG("EnviDB::init file opened, starting thread");
+
+			startThread();
+
+			return (true);
+		}
 	}
 	else
 	{
 		_WRN("database file does not exist, attempt to create ["+databaseFile.getFullPathName()+"]");
-		return (createDatabase());
+
+		if (createDatabase())
+		{
+			startThread();
+
+			return (true);
+		}
 	}
+
+	return (false);
 }
 
 void EnviDB::run()
 {
+	_DBG("EnviDB::run");
+
+	while (1)
+	{
+		wait(1000);
+
+		if (threadShouldExit())
+		{
+			_DBG("EnviDB::run thread signaled to exit");
+			return;
+		}
+
+        ScopedLock sl(dataQueue.getLock());
+        if (dataQueue.size() > 0)
+		{
+			_DBG("EnviDB::run queue size: "+String(dataQueue.size()));
+			for (int i=0; i<dataQueue.size(); i++)
+			{
+			}
+		}
+		else
+		{
+			_DBG("EnviDB::run queue empty");
+			continue;
+		}
+	}
 }
 
-int EnviDB::dbCallback(void *object, int argc, char **argv, char **azColName)
+int EnviDB::dbCallback(void *object, int argc, char **argv, char **columnName)
 {
 	EnviDB *enviDB = (EnviDB*)object;
 	return (0);
@@ -54,13 +99,23 @@ void EnviDB::writeResult(EnviDataSource *dataSource)
 	_DBG("EnviDB::writeResult");
 }
 
-bool EnviDB::createDatabase()
+bool EnviDB::openFile()
 {
 	lastResult = sqlite3_open (databaseFile.getFullPathName().toUTF8(), &db);
 
 	if (lastResult)
 	{
 		_ERR("EnviDB::createDatabase can't create: ["+String(sqlite3_errmsg(db))+"]");
+		return (false);
+	}
+
+	return (true);
+}
+
+bool EnviDB::createDatabase()
+{
+	if (!openFile())
+	{
 		return (false);
 	}
 

@@ -127,6 +127,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviDataSource.cpp"/>
     <ClCompile Include="..\..\Source\Addons\sqlite3.c"/>
     <ClCompile Include="..\..\Source\EnviDB.cpp"/>
     <ClCompile Include="..\..\Source\DataSources\EnviDSCommand.cpp"/>

@@ -35,12 +35,15 @@ class EnviDB : public Thread
 		void writeResult(EnviDataSource *dataSource);
 		bool createDatabase();
 		static int dbCallback(void *object, int argc, char **argv, char **azColName);
+
 	private:
+		bool openFile();
 		char *lastExecError;
 		sqlite3 *db;
 		File databaseFile;
 		EnviApplication &owner;
 		int lastResult;
+		OwnedArray <EnviData, CriticalSection> dataQueue;
 };
 
 
