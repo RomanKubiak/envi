@@ -88,6 +88,15 @@
       <Add library="kernel32"/>
       <Add library="comctl32"/>
     </Linker>
+    <Unit filename="../../Source/EnviDataStore.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/EnviFlatFileStore.cpp"/>
+    <Unit filename="../../Source/EnviFlatFileStore.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/EnviHTTPConnection.cpp"/>
     <Unit filename="../../Source/EnviHTTPConnection.h">
       <Option compile="0"/>

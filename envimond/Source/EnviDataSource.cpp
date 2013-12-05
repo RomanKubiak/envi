@@ -75,7 +75,7 @@ EnviData EnviData::createFromCommand(const String &dataCommand)
 			/* value */
 			StringArray lineTokens = StringArray::fromTokens (oneLine, " ", "\"'");
 			String valueString;
-			if (lineTokens.size() >= 3)
+			if (lineTokens.size() >= 2)
 			{
 				/* the name is always second */
 				EnviData::Value value;
@@ -99,7 +99,7 @@ EnviData EnviData::createFromCommand(const String &dataCommand)
 				StringArray valueTokens = StringArray::fromTokens (valueString, ":", "\"'");
 				if (valueTokens.size() != 3)
 				{
-					_DBG("EnviData::createFromCommand unsupported PUTVAL: ["+oneLine+"]");
+					_DBG("EnviData::createFromCommand unsupported PUTVAL: ["+oneLine+"], value format invalid");
 					return (EnviData());
 				}
 				else
@@ -107,12 +107,14 @@ EnviData EnviData::createFromCommand(const String &dataCommand)
 					value.unit		= stringToUnit(valueTokens[0]);
 					value.sampleTime	= Time(valueTokens[1].getIntValue());
 					value.value		= valueTokens[2];
-					
+
 					data.addValue (value);
 				}
 			}
-
-			_DBG("EnviData::createFromCommand unsupported PUTVAL: ["+oneLine+"]");
+			else
+			{
+				_DBG("EnviData::createFromCommand unsupported PUTVAL: ["+oneLine+"], command format invalid");
+			}
 		}
 		else if (dataCommand.startsWith("PUTNOTIF"))
 		{
@@ -120,7 +122,7 @@ EnviData EnviData::createFromCommand(const String &dataCommand)
 			_DBG("EnviData::createFromCommand unsupported PUTNOTIF: ["+oneLine+"]");
 		}
 	}
-	
+
 	return (data);
 }
 
@@ -133,6 +135,16 @@ const String EnviData::toString(const EnviData &enviData)
 		ret << enviData[i].name+", "+enviData[i].value.toString()+", "+enviData[i].sampleTime.toString(true,true,true,true)+"\n";
 	}
 
+	return (ret);
+}
+
+const String EnviData::toCSVString(const EnviData &enviData, const String &separator)
+{
+	String ret;
+	for (int i=0; i<enviData.getNumValues(); i++)
+	{
+		ret << enviData[i].name << separator << unitToString(enviData[i].unit) << separator << enviData[i].value.toString() << "\n";
+	}
 	return (ret);
 }
 

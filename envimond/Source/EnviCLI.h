@@ -27,6 +27,8 @@ class EnviCLI
 		const int getNumArguments();
 		const String getArgument(const int argumentIndex);
 
+		JUCE_LEAK_DETECTOR(EnviCLI);
+
 	private:
 		String optionsPattern;
 		StringArray arguments;

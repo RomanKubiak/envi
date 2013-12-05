@@ -5,6 +5,11 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="JxzcDZ" name="EnviDataStore.h" compile="0" resource="0" file="Source/EnviDataStore.h"/>
+      <FILE id="CVx00P" name="EnviFlatFileStore.cpp" compile="1" resource="0"
+            file="Source/EnviFlatFileStore.cpp"/>
+      <FILE id="s3y8Ol" name="EnviFlatFileStore.h" compile="0" resource="0"
+            file="Source/EnviFlatFileStore.h"/>
       <FILE id="efiZxN" name="EnviHTTPConnection.cpp" compile="1" resource="0"
             file="Source/EnviHTTPConnection.cpp"/>
       <FILE id="hu46JT" name="EnviHTTPConnection.h" compile="0" resource="0"
@@ -85,5 +90,5 @@
     <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
     <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
-  <JUCEOPTIONS/>
+  <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"/>
 </JUCERPROJECT>

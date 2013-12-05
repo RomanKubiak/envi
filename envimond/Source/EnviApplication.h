@@ -37,6 +37,8 @@ class EnviApplication : public MultiTimer
 		void sourceWrite(EnviDataSource *dataSource);
 		const var getOption(const Identifier &optionId);
 
+		JUCE_LEAK_DETECTOR(EnviApplication);
+
 	private:
 		PropertySet defaultPropertyStorage;
 		ApplicationProperties applicationProperties;

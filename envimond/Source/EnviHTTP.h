@@ -23,6 +23,9 @@ class EnviHTTP : public Thread
 		void run();
 		void processConnection (StreamingSocket *connectedSocket);
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
+
+		JUCE_LEAK_DETECTOR(EnviHTTP);
+
 	private:
 		EnviApplication &owner;
 		StreamingSocket serverSocket;

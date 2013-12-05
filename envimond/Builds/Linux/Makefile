@@ -49,6 +49,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/EnviFlatFileStore_837642f1.o \
   $(OBJDIR)/EnviHTTPConnection_9e96a62b.o \
   $(OBJDIR)/EnviDataSource_4723edaa.o \
   $(OBJDIR)/sqlite3_513ce6d4.o \
@@ -81,6 +82,11 @@ clean:
 strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/EnviFlatFileStore_837642f1.o: ../../Source/EnviFlatFileStore.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviFlatFileStore.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviHTTPConnection_9e96a62b.o: ../../Source/EnviHTTPConnection.cpp
 	-@mkdir -p $(OBJDIR)

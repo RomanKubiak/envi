@@ -13,17 +13,8 @@
 
 #include "EnviIncludes.h"
 #include "EnviDataSource.h"
-#include "sqlite3.h"
-
+#include "EnviFlatFileStore.h"
 class EnviApplication;
-
-#define DATABASE_SCHEME "\
-PRAGMA foreign_keys=OFF;\
-BEGIN TRANSACTION;\
-CREATE TABLE data (id integer primary key autoincrement, name text, type text, result text, time DATETIME);\
-CREATE TABLE stats (id integer primary key autoincrement, name text, type text, start DATETIME, end DATETIME);\
-COMMIT;\
-"
 
 class EnviDB : public Thread
 {
@@ -33,16 +24,12 @@ class EnviDB : public Thread
 		~EnviDB();
 		void run();
 		void writeResult(EnviDataSource *dataSource);
-		bool createDatabase();
-		static int dbCallback(void *object, int argc, char **argv, char **azColName);
+
+		JUCE_LEAK_DETECTOR(EnviDB)
 
 	private:
-		bool openFile();
-		char *lastExecError;
-		sqlite3 *db;
-		File databaseFile;
+		ScopedPointer <EnviFlatFileStore> enviStore;
 		EnviApplication &owner;
-		int lastResult;
 		OwnedArray <EnviData, CriticalSection> dataQueue;
 };
 

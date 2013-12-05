@@ -29,6 +29,8 @@ class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 		void run();
 		void handleAsyncUpdate();
 
+		JUCE_LEAK_DETECTOR(EnviDSCommand);
+
 	private:
 		String commandOutput;
 		int timeout;

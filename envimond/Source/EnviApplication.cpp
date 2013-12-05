@@ -211,9 +211,6 @@ void EnviApplication::sourceFailed(EnviDataSource *dataSource)
 
 void EnviApplication::sourceWrite(EnviDataSource *dataSource)
 {
-	_DBG("EnviApplication::sourceWrite ["+dataSource->getName()+"]");
-	_DBG("\tresult: ["+EnviData::toString(dataSource->getResult())+"]");
-
 	enviDB->writeResult (dataSource);
 }
 

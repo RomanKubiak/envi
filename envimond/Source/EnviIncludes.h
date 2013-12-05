@@ -41,6 +41,7 @@ namespace Ids
 	DECLARE_ID (type);
 	DECLARE_ID (cmd);
 	DECLARE_ID (port);
+	DECLARE_ID (storeFile);
 };
 
 #endif  // ENVIINCLUDES_H_INCLUDED

@@ -43,6 +43,7 @@ class EnviData
 			Unit unit;
 			int interval;
 			Time sampleTime;
+			int index;
 		};
 
 		EnviData();
@@ -57,8 +58,11 @@ class EnviData
 
 		static EnviData createFromCommand(const String &dataCommand);
 		static const String toString(const EnviData &enviData);
+		static const String toCSVString(const EnviData &enviData, const String &separator=";");
 		static const String unitToString(const Unit unit);
 		static const Unit stringToUnit(const String &unit);
+
+		JUCE_LEAK_DETECTOR(EnviData);
 };
 
 class EnviDataSource : public ChangeBroadcaster
@@ -102,6 +106,8 @@ class EnviDataSource : public ChangeBroadcaster
 			ScopedLock sl(dataSourceLock);
 			return (disabled);
 		}
+
+		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
 		EnviApplication &owner;

@@ -14,48 +14,30 @@
 EnviDB::EnviDB(EnviApplication &_owner) : Thread ("Envi/Database"), owner(_owner)
 {
 	_DBG("EnviDB::ctor");
+	enviStore = new EnviFlatFileStore(owner);
+	enviStore->openStore();
 }
 
 EnviDB::~EnviDB()
 {
-	sqlite3_close (db);
+	if (isThreadRunning())
+	{
+		notify();
+		waitForThreadToExit(1500);
+	}
 }
 
 const bool EnviDB::init()
 {
-	_DBG("EnviDB::init");
-
-	databaseFile = owner.getPropertiesFolder().getChildFile("envi.sqlite3");
-
-	if (databaseFile.existsAsFile())
+	if (enviStore->isValid())
 	{
-		_DBG("\tdatabase file exists ["+databaseFile.getFullPathName()+"]");
-		if (!openFile())
-		{
-			_ERR("Failed to open database file");
-		}
-		else
-		{
-			_DBG("EnviDB::init file opened, starting thread");
-
-			startThread();
-
-			return (true);
-		}
+		startThread();
+		return (true);
 	}
 	else
 	{
-		_WRN("database file does not exist, attempt to create ["+databaseFile.getFullPathName()+"]");
-
-		if (createDatabase())
-		{
-			startThread();
-
-			return (true);
-		}
+		return (false);
 	}
-
-	return (false);
 }
 
 void EnviDB::run()
@@ -64,7 +46,7 @@ void EnviDB::run()
 
 	while (1)
 	{
-		wait(1000);
+		wait(200);
 
 		if (threadShouldExit())
 		{
@@ -78,6 +60,8 @@ void EnviDB::run()
 			_DBG("EnviDB::run queue size: "+String(dataQueue.size()));
 			for (int i=0; i<dataQueue.size(); i++)
 			{
+				enviStore->storeData (*dataQueue[i]);
+				dataQueue.remove (i, true);
 			}
 		}
 		else
@@ -87,46 +71,13 @@ void EnviDB::run()
 	}
 }
 
-int EnviDB::dbCallback(void *object, int argc, char **argv, char **columnName)
-{
-	EnviDB *enviDB = (EnviDB*)object;
-	return (0);
-}
-
 void EnviDB::writeResult(EnviDataSource *dataSource)
 {
-}
-
-bool EnviDB::openFile()
-{
-	lastResult = sqlite3_open (databaseFile.getFullPathName().toUTF8(), &db);
-
-	if (lastResult)
 	{
-		_ERR("EnviDB::createDatabase can't create: ["+String(sqlite3_errmsg(db))+"]");
-		return (false);
+		ScopedLock sl(dataQueue.getLock());
+		dataQueue.add (new EnviData(dataSource->getResult()));
+		_DBG("EnviDB::writeResult queue size: "+String(dataQueue.size()));
 	}
 
-	return (true);
-}
-
-bool EnviDB::createDatabase()
-{
-	if (!openFile())
-	{
-		return (false);
-	}
-
-	_INF("EnviDB::createDatabase database created");
-
-	lastResult = sqlite3_exec (db, DATABASE_SCHEME, dbCallback, this, &lastExecError);
-
-	if (lastResult != SQLITE_OK)
-	{
-		_ERR("EnviDB::createDatabase can't execute create statement: ["+String(lastExecError)+"]");
-		sqlite3_free (lastExecError);
-		return (false);
-	}
-
-	return (true);
+	notify();
 }
