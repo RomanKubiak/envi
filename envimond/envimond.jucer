@@ -5,6 +5,10 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <FILE id="lKlp0I" name="EnviWiringPi.cpp" compile="1" resource="0"
+            file="Source/EnviWiringPi.cpp"/>
+      <FILE id="bp7W0R" name="EnviWiringPi.h" compile="0" resource="0" file="Source/EnviWiringPi.h"/>
+      <FILE id="rtfumN" name="AppConfig.h" compile="0" resource="0" file="Source/AppConfig.h"/>
       <FILE id="JxzcDZ" name="EnviDataStore.h" compile="0" resource="0" file="Source/EnviDataStore.h"/>
       <FILE id="CVx00P" name="EnviFlatFileStore.cpp" compile="1" resource="0"
             file="Source/EnviFlatFileStore.cpp"/>
@@ -16,18 +20,16 @@
             file="Source/EnviHTTPConnection.h"/>
       <FILE id="JCDuF3" name="EnviDataSource.cpp" compile="1" resource="0"
             file="Source/EnviDataSource.cpp"/>
-      <GROUP id="{390E11F8-07A1-DB31-CBAE-39D013E3530A}" name="Addons">
-        <FILE id="LmECvZ" name="sqlite3.h" compile="0" resource="0" file="Source/Addons/sqlite3.h"/>
-        <FILE id="KzoiKd" name="sqlite3ext.h" compile="0" resource="0" file="Source/Addons/sqlite3ext.h"/>
-        <FILE id="NKIOQw" name="sqlite3.c" compile="1" resource="0" file="Source/Addons/sqlite3.c"/>
-      </GROUP>
       <FILE id="PABCBC" name="EnviDB.cpp" compile="1" resource="0" file="Source/EnviDB.cpp"/>
       <FILE id="il7SqS" name="EnviDB.h" compile="0" resource="0" file="Source/EnviDB.h"/>
-      <GROUP id="{F9D41BFF-62D4-5CB5-F8DB-420F9177AA36}" name="DataSources">
-        <FILE id="Dx9OkS" name="EnviDSCommand.cpp" compile="1" resource="0"
-              file="Source/DataSources/EnviDSCommand.cpp"/>
-        <FILE id="nPIcTT" name="EnviDSCommand.h" compile="0" resource="0" file="Source/DataSources/EnviDSCommand.h"/>
-      </GROUP>
+      <FILE id="ww3Y4R" name="EnviDSBMP085.cpp" compile="1" resource="0"
+            file="Source/EnviDSBMP085.cpp"/>
+      <FILE id="PBy75r" name="EnviDSBMP085.h" compile="0" resource="0" file="Source/EnviDSBMP085.h"/>
+      <FILE id="fjBflm" name="EnviDSCommand.cpp" compile="1" resource="0"
+            file="Source/EnviDSCommand.cpp"/>
+      <FILE id="rOY14A" name="EnviDSCommand.h" compile="0" resource="0" file="Source/EnviDSCommand.h"/>
+      <FILE id="Oigria" name="EnviDSDHT11.cpp" compile="1" resource="0" file="Source/EnviDSDHT11.cpp"/>
+      <FILE id="CM3GVo" name="EnviDSDHT11.h" compile="0" resource="0" file="Source/EnviDSDHT11.h"/>
       <FILE id="cluvda" name="EnviLog.cpp" compile="1" resource="0" file="Source/EnviLog.cpp"/>
       <FILE id="LmdEIy" name="EnviLog.h" compile="0" resource="0" file="Source/EnviLog.h"/>
       <FILE id="ChlxjZ" name="EnviApplication.cpp" compile="1" resource="0"
@@ -41,6 +43,7 @@
       <FILE id="Q2uaTf" name="EnviIncludes.h" compile="0" resource="0" file="Source/EnviIncludes.h"/>
       <FILE id="MiRrSc" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/EnviHTTP.cpp"/>
       <FILE id="oSGMJb" name="EnviHTTP.h" compile="0" resource="0" file="Source/EnviHTTP.h"/>
+      <FILE id="sOLpJo" name="JuceHeader.h" compile="0" resource="0" file="Source/JuceHeader.h"/>
       <FILE id="trbBVm" name="Envimond.cpp" compile="1" resource="0" file="Source/Envimond.cpp"/>
     </GROUP>
   </MAINGROUP>
@@ -53,11 +56,7 @@
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-      </MODULEPATHS>
+      <MODULEPATHS/>
     </VS2010>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks">
       <CONFIGURATIONS>
@@ -65,30 +64,20 @@
                        headerPath="../../Source/Addons"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-      </MODULEPATHS>
+      <MODULEPATHS/>
     </CODEBLOCKS>
-    <LINUX_MAKE targetFolder="Builds/Linux">
+    <LINUX_MAKE targetFolder="Source/" extraLinkerFlags="" externalLibraries="wiringPi&#10;juce-static-debug&#10;X11&#10;dl&#10;rt&#10;sqlite3"
+                extraCompilerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
-                       targetName="envimond"/>
+                       targetName="envimond" linuxArchitecture="-march=armv6" binaryPath="/usr/local/bin/"
+                       headerPath="/usr/include/juce"/>
         <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
-                       targetName="envimond"/>
+                       targetName="envimond" linuxArchitecture="-march=armv6"/>
       </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-      </MODULEPATHS>
+      <MODULEPATHS/>
     </LINUX_MAKE>
   </EXPORTFORMATS>
-  <MODULES>
-    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
-  </MODULES>
+  <MODULES/>
   <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"/>
 </JUCERPROJECT>

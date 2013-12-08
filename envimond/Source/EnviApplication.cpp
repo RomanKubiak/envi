@@ -9,7 +9,9 @@
 */
 
 #include "EnviApplication.h"
-#include "DataSources/EnviDSCommand.h"
+#include "EnviDSCommand.h"
+#include "EnviDSBMP085.h"
+#include "EnviDSDHT11.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
 	: enviCLI(argc, argv, "dn:c")
@@ -35,6 +37,7 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	EnviLog::getInstance()->setOwner(this);
 	enviHTTP	= new EnviHTTP(*this);
 	enviDB		= new EnviDB(*this);
+	enviWiringPi	= new EnviWiringPi(*this);
 }
 
 const int EnviApplication::runDispatchLoop()
@@ -55,23 +58,6 @@ const int EnviApplication::runDispatchLoop()
 
 void EnviApplication::cleanupAndExit()
 {
-}
-
-void EnviApplication::addDataSource(EnviDataSource *sourceToAdd)
-{
-	ScopedLock sl(dataSources.getLock());
-	registerDataSource (dataSources.add (sourceToAdd));
-}
-
-EnviDataSource *EnviApplication::registerDataSource(EnviDataSource *dataSource)
-{
-	if (dataSource != nullptr)
-	{
-		ScopedLock sl(dataSources.getLock());
-		startTimer (ENVI_TIMER_OFFSET + dataSources.indexOf(dataSource), dataSource->getInterval());
-	}
-
-	return (dataSource);
 }
 
 void EnviApplication::removeDataSource(EnviDataSource *sourceToRemove)
@@ -112,7 +98,7 @@ PropertySet *EnviApplication::getProperties()
 void EnviApplication::timerCallback(int timerId)
 {
 	ScopedLock sl(dataSources.getLock());
-	EnviDataSource *ds = dataSources[ENVI_TIMER_OFFSET - timerId];
+	EnviDataSource *ds = dataSources[timerId - ENVI_TIMER_OFFSET];
 	if (ds)
 	{
 		if (ds->isDisabled())
@@ -123,15 +109,17 @@ void EnviApplication::timerCallback(int timerId)
 
 		_LOG(LOG_INFO, "Timer triggered for data source \""+ds->getName()+"\"");
 
-		if (ds->startSource())
-		{
-			_LOG(LOG_INFO, "\tsuccess");
-		}
-		else
+		if (!ds->startSource())
 		{
 			_LOG(LOG_WARN, "Timer trigger for data source \""+ds->getName()+"\", execute failed");
 		}
 	}
+}
+
+void EnviApplication::addDataSource(EnviDataSource *sourceToAdd)
+{
+	ScopedLock sl(dataSources.getLock());
+	registerDataSource (dataSources.add (sourceToAdd));
 }
 
 EnviDataSource *EnviApplication::createInstance(const File &sourceState)
@@ -158,13 +146,31 @@ EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstan
         return (new EnviDSCommand (*this, dataSourceInstance));
 	}
 
+	if (dataSourceInstance.getProperty (Ids::type) == "bmp085")
+	{
+        return (new EnviDSBMP085 (*this, dataSourceInstance));
+	}
+
+	if (dataSourceInstance.getProperty (Ids::type) == "dht11")
+	{
+        return (new EnviDSDHT11 (*this, dataSourceInstance));
+	}
 	return (nullptr);
+}
+
+EnviDataSource *EnviApplication::registerDataSource(EnviDataSource *dataSource)
+{
+	if (dataSource != nullptr)
+	{
+		ScopedLock sl(dataSources.getLock());
+		startTimer (ENVI_TIMER_OFFSET + dataSources.indexOf(dataSource), dataSource->getInterval());
+	}
+
+	return (dataSource);
 }
 
 bool EnviApplication::registerDataSources()
 {
-	_DBG("EnviApplication::registerDataSources");
-
 	File dataSourcesFolder = getPropertiesFolder().getChildFile("sources");
 	if (dataSourcesFolder.isDirectory())
 	{
@@ -176,7 +182,6 @@ bool EnviApplication::registerDataSources()
 		{
 			for (int i=0; i<sourceXmls.size(); i++)
 			{
-				_DBG("\tfoundSource: "+sourceXmls[i].getFullPathName());
 				EnviDataSource *ds = createInstance (sourceXmls[i]);
 
 				if (ds)
@@ -185,7 +190,6 @@ bool EnviApplication::registerDataSources()
 				}
 				else
 				{
-                    _DBG("\t\tfailed to create data source");
 				}
 			}
 
@@ -193,20 +197,18 @@ bool EnviApplication::registerDataSources()
 		}
 		else
 		{
-			_DBG("\tno data sources found");
 			return (false);
 		}
 	}
 	else
 	{
-		_DBG("\t"+dataSourcesFolder.getFullPathName() + " is not a directory, can't initialize any sources");
+		_LOG(LOG_ERROR, "\t"+dataSourcesFolder.getFullPathName() + " is not a directory, can't initialize any sources");
 		return (false);
 	}
 }
 
 void EnviApplication::sourceFailed(EnviDataSource *dataSource)
 {
-	_DBG("EnviApplication::sourceFailed ["+dataSource->getName()+"]");
 }
 
 void EnviApplication::sourceWrite(EnviDataSource *dataSource)

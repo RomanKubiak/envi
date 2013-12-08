@@ -11,8 +11,8 @@
 #ifndef ENVIDSCOMMAND_H_INCLUDED
 #define ENVIDSCOMMAND_H_INCLUDED
 
-#include "../EnviIncludes.h"
-#include "../EnviDataSource.h"
+#include "EnviIncludes.h"
+#include "EnviDataSource.h"
 class EnviApplication;
 
 class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater

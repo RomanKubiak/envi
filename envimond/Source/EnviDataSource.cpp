@@ -26,7 +26,19 @@ EnviData::EnviData(const String &firstValueName, const var firstValueValue, cons
 		EnviData::Value value;
 		value.name			= firstValueName;
 		value.value			= firstValueValue;
-		value. sampleTime	= firstValueSampleTime;
+		value.sampleTime	= firstValueSampleTime;
+
+		values.add (value);
+	}
+}
+
+EnviData::EnviData(const String &firstValueName, const Unit valueUnit)
+{
+	if (firstValueName != String::empty)
+	{
+		EnviData::Value value;
+		value.name		= firstValueName;
+		value.unit		= valueUnit;
 
 		values.add (value);
 	}
@@ -61,81 +73,51 @@ void EnviData::addValue(const EnviData::Value valueToAdd)
 	values.add (valueToAdd);
 }
 
-EnviData EnviData::createFromCommand(const String &dataCommand)
+EnviData EnviData::fromJSON(const String &json)
 {
-	StringArray lines = StringArray::fromLines(dataCommand);
-	EnviData data;
-
-	for (int l=0; l<lines.size(); l++)
+	EnviData enviData;
+/*	var data = JSON::parse (json);
+	
+	enviData.dataSourceName = data["name"];
+	
+	for (int i=0; i<data.size(); i++)
 	{
-		String oneLine = lines[l];
-
-		if (oneLine.startsWith("PUTVAL"))
-		{
-			/* value */
-			StringArray lineTokens = StringArray::fromTokens (oneLine, " ", "\"'");
-			String valueString;
-			if (lineTokens.size() >= 2)
-			{
-				/* the name is always second */
-				EnviData::Value value;
-				value.name = lineTokens[1];
-
-				if (lineTokens[2].startsWith("interval"))
-				{
-					/* only one option, interval */
-					/* move the value one position */
-					value.interval	= lineTokens[2].fromFirstOccurrenceOf("=", false, true).getIntValue();
-					valueString		= lineTokens[3];
-				}
-				else
-				{
-					/* no OPTIONS */
-					valueString		= lineTokens[2];
-				}
-
-				/* values must have 3 fields UNIT:TIME:VALUE */
-
-				StringArray valueTokens = StringArray::fromTokens (valueString, ":", "\"'");
-				if (valueTokens.size() != 3)
-				{
-					_DBG("EnviData::createFromCommand unsupported PUTVAL: ["+oneLine+"], value format invalid");
-					return (EnviData());
-				}
-				else
-				{
-					value.unit		= stringToUnit(valueTokens[0]);
-					value.sampleTime	= Time(valueTokens[1].getIntValue());
-					value.value		= valueTokens[2];
-
-					data.addValue (value);
-				}
-			}
-			else
-			{
-				_DBG("EnviData::createFromCommand unsupported PUTVAL: ["+oneLine+"], command format invalid");
-			}
-		}
-		else if (dataCommand.startsWith("PUTNOTIF"))
-		{
-			/* notification */
-			_DBG("EnviData::createFromCommand unsupported PUTNOTIF: ["+oneLine+"]");
-		}
+		EnviData::Value value(data[i]["name"], stringToUnit(data[i]["unit"]));
+		
+		value.error		= data[i]["error"];
+		value.sampleTime	= Time(data[i]["sampleTime"]);
+		value.interval		= data[i]["interval"];
+		value.index		= data[i]["index"];
+		
+		enviData.addValue (value);
 	}
-
-	return (data);
+*/	
+	return (enviData);
 }
 
-const String EnviData::toString(const EnviData &enviData)
+const String EnviData::toJSON(const EnviData &enviData)
 {
 	String ret;
-
+	DynamicObject *ds = new DynamicObject();
+	ds->setProperty ("name", enviData.dataSourceName);
+	var values;
+	
 	for (int i=0; i<enviData.getNumValues(); i++)
 	{
-		ret << enviData[i].name+", "+enviData[i].value.toString()+", "+enviData[i].sampleTime.toString(true,true,true,true)+"\n";
+		DynamicObject *value = new DynamicObject();
+		value->setProperty ("name", enviData[i].name);
+		value->setProperty ("value", enviData[i].value.toString());
+		value->setProperty ("unit", unitToString(enviData[i].unit));
+		value->setProperty ("interval", enviData[i].interval);
+		value->setProperty ("error", enviData[i].error);
+		value->setProperty ("sampleTime", enviData[i].sampleTime.getMilliseconds());
+		value->setProperty ("index", enviData[i].index);
+		
+		values.append (value);
 	}
-
-	return (ret);
+	ds->setProperty ("values", values);
+	
+	return (JSON::toString(var(ds)));
 }
 
 const String EnviData::toCSVString(const EnviData &enviData, const String &separator)
@@ -143,7 +125,13 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 	String ret;
 	for (int i=0; i<enviData.getNumValues(); i++)
 	{
-		ret << enviData[i].name << separator << unitToString(enviData[i].unit) << separator << enviData[i].value.toString() << "\n";
+		ret 	<< enviData.dataSourceName				<< separator
+			<< enviData[i].name 					<< separator
+			<< unitToString(enviData[i].unit) 			<< separator
+			<< enviData[i].value.toString() 			<< separator
+			<< _STR(enviData[i].sampleTime.toMilliseconds())	<< separator
+			<< _STR(enviData[i].error) 				<< separator
+			<< "\n";
 	}
 	return (ret);
 }
@@ -158,12 +146,16 @@ const String EnviData::unitToString(const EnviData::Unit unit)
 			return ("Float");
 		case Text:
 			return ("Text");
+		case Percent:
+			return ("%");
 		case Volt:
 			return ("V");
 		case Amp:
 			return ("A");
 		case Celsius:
-			return ("C");
+			return ("degC");
+		case Fahrenheit:
+			return ("degF");
 		case Decibel:
 			return ("dB");
 		case Lux:
@@ -197,7 +189,7 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 		return (EnviData::Amp);
 	if (unit == "V")
 		return (EnviData::Volt);
-	if (unit == "C")
+	if (unit == "degC")
 		return (EnviData::Celsius);
 	if (unit == "dB")
 		return (EnviData::Decibel);
@@ -213,5 +205,9 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 		return (EnviData::Watt);
 	if (unit == "kWH")
 		return (EnviData::KiloWattHour);
+	if (unit == "%")
+		return (EnviData::Percent);
+	if (unit == "degF")
+		return (EnviData::Fahrenheit);
 	return (EnviData::Unknown);
 }

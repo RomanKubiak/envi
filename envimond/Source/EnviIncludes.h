@@ -12,7 +12,7 @@
 #define ENVIINCLUDES_H_INCLUDED
 
 // #define	_DBG(x)		Logger::writeToLog(x)
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceHeader.h"
 #include "EnviLog.h"
 #include <iostream>
 
@@ -22,6 +22,7 @@
 #define LOG_JUCE				3
 #define LOG_ERROR				4
 
+#define	_STR(x)					String(x)
 #define _LOG(lvl,msg)			EnviLog::getInstance()->logMessage(lvl,msg)
 #define	_DBG(msg)				_LOG(LOG_DEBUG, msg)
 #define _ERR(msg)				_LOG(LOG_ERROR, msg)
@@ -42,6 +43,15 @@ namespace Ids
 	DECLARE_ID (cmd);
 	DECLARE_ID (port);
 	DECLARE_ID (storeFile);
+	DECLARE_ID (i2cAddr);
+	DECLARE_ID (gpioBase);
+	DECLARE_ID (gpioPin);
+	DECLARE_ID (delay);
+	DECLARE_ID (iterations);
 };
 
+static inline float getRandomFloat (const float limit)
+{
+	return (Random::getSystemRandom().nextFloat() * limit);
+}
 #endif  // ENVIINCLUDES_H_INCLUDED

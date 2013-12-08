@@ -15,13 +15,13 @@ ifeq ($(CONFIG),Debug)
   OUTDIR := build
 
   ifeq ($(TARGET_ARCH),)
-    TARGET_ARCH := -march=native
+    TARGET_ARCH := -march=armv6
   endif
 
   CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0
   CXXFLAGS += $(CFLAGS)
-  LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt 
+  LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lwiringPi 
   LDDEPS :=
   RESFLAGS :=  -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules
   TARGET := envimond
@@ -35,13 +35,13 @@ ifeq ($(CONFIG),Release)
   OUTDIR := build
 
   ifeq ($(TARGET_ARCH),)
-    TARGET_ARCH := -march=native
+    TARGET_ARCH := -march=armv6
   endif
 
   CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "NDEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -Os
   CXXFLAGS += $(CFLAGS)
-  LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -fvisibility=hidden -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt 
+  LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -fvisibility=hidden -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lwiringPi 
   LDDEPS :=
   RESFLAGS :=  -D "LINUX=1" -D "NDEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules
   TARGET := envimond
@@ -54,6 +54,8 @@ OBJECTS := \
   $(OBJDIR)/EnviDataSource_4723edaa.o \
   $(OBJDIR)/sqlite3_513ce6d4.o \
   $(OBJDIR)/EnviDB_4bcb0923.o \
+  $(OBJDIR)/EnviDSDHT11_65e40d05.o \
+  $(OBJDIR)/EnviDSBMP085_8b32367d.o \
   $(OBJDIR)/EnviDSCommand_4b26fc40.o \
   $(OBJDIR)/EnviLog_249cfce9.o \
   $(OBJDIR)/EnviApplication_4adf88f5.o \
@@ -106,6 +108,16 @@ $(OBJDIR)/sqlite3_513ce6d4.o: ../../Source/Addons/sqlite3.c
 $(OBJDIR)/EnviDB_4bcb0923.o: ../../Source/EnviDB.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDB.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDSDHT11_65e40d05.o: ../../Source/DataSources/EnviDSDHT11.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSDHT11.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDSBMP085_8b32367d.o: ../../Source/DataSources/EnviDSBMP085.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSBMP085.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviDSCommand_4b26fc40.o: ../../Source/DataSources/EnviDSCommand.cpp

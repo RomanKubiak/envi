@@ -70,8 +70,6 @@ const Result EnviFlatFileStore::closeStore()
 
 const Result EnviFlatFileStore::storeData(const EnviData &dataToStore)
 {
-	_DBG("EnviFlatFileStore::storeData");
-	_DBG("\t["+EnviData::toCSVString(dataToStore)+"]");
 	if (isValid())
 	{
 		if (storeFile.appendText (EnviData::toCSVString(dataToStore), false, false))

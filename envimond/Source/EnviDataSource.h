@@ -22,9 +22,11 @@ class EnviData
 			Integer,
 			Text,
 			Float,
+			Percent,
 			Volt,
 			Amp,
 			Celsius,
+			Fahrenheit,
 			Decibel,
 			Lux,
 			Hertz,
@@ -37,6 +39,8 @@ class EnviData
 
 		struct Value
 		{
+			Value() {}
+			Value(const String _name, const Unit _unit) : name(_name), unit(_unit) {}
 			String name;
 			var value;
 			bool error;
@@ -48,6 +52,7 @@ class EnviData
 
 		EnviData();
 		EnviData(const EnviData &other);
+		EnviData(const String &firstValueName, const Unit valueUnit);
 		EnviData(const String &firstValueName, const var firstValueValue=var::null, const Time firstValueSampleTime=Time());
 		bool operator== (const EnviData& other) noexcept;
 		EnviData::Value& operator[] (int arrayIndex) const;
@@ -56,12 +61,14 @@ class EnviData
 		void addValue(const EnviData::Value valueToAdd);
 		Array <Value> values;
 
-		static EnviData createFromCommand(const String &dataCommand);
-		static const String toString(const EnviData &enviData);
+		static EnviData fromJSON(const String &jsonString);
+		static const String toJSON(const EnviData &enviData);
 		static const String toCSVString(const EnviData &enviData, const String &separator=";");
+
 		static const String unitToString(const Unit unit);
 		static const Unit stringToUnit(const String &unit);
 
+		String dataSourceName;
 		JUCE_LEAK_DETECTOR(EnviData);
 };
 

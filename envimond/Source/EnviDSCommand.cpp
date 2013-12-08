@@ -9,13 +9,11 @@
 */
 
 #include "EnviDSCommand.h"
-#include "../EnviApplication.h"
+#include "EnviApplication.h"
 
 EnviDSCommand::EnviDSCommand(EnviApplication &owner, const ValueTree instanceConfig)
 	: EnviDataSource(owner), Thread("EnviDSCommand"), timeout(0)
 {
-	_DBG("EnviDSCommand::ctor");
-	_DBG("\t"+instanceConfig.getProperty(Ids::name).toString());
 	instanceState = instanceConfig.createCopy();
 
 	if (instanceState.isValid())
@@ -61,7 +59,14 @@ const bool EnviDSCommand::execute()
 {
 	if (!isDisabled())
 	{
-		startThread();
+		if (isThreadRunning())
+		{
+			notify();
+		}
+		else
+		{
+			startThread();
+		}
 		return (true);
 	}
 
@@ -71,7 +76,7 @@ const bool EnviDSCommand::execute()
 const EnviData EnviDSCommand::getResult()
 {
 	ScopedLock sl (dataSourceLock);
-	return (EnviData::createFromCommand(commandOutput));
+	return (EnviData::fromJSON(commandOutput));
 }
 
 const var EnviDSCommand::getProperty (const Identifier &identifier)
@@ -82,32 +87,45 @@ const var EnviDSCommand::getProperty (const Identifier &identifier)
 
 void EnviDSCommand::run()
 {
-	ScopedLock sl (dataSourceLock);
-	ChildProcess childProc;
-	commandOutput = String::empty;
-
-	if (childProc.start(cmd, ChildProcess::wantStdOut))
+	while (1)
 	{
-		if (childProc.waitForProcessToFinish(getTimeout()))
+		do
 		{
-			commandOutput = childProc.readAllProcessOutput ().trim();
-		}
-		else
-		{
-			_WRN("EnviDSCommand::execute ["+getName()+"] timeout");
-
-			if (!childProc.kill())
+			if (threadShouldExit())
 			{
-				_WRN("EnviDSCommand::execute ["+getName()+"] can't kill child process");
+				_DBG("EnviDSCommand::run thread signalled to exit");
+				return;
 			}
-		}
-	}
-	else
-	{
-		_WRN("EnviDSCommand::execute ["+getName()+"] failed to start child process");
-	}
 
-	triggerAsyncUpdate();
+			ScopedLock sl (dataSourceLock);
+			ChildProcess childProc;
+			commandOutput = String::empty;
+
+			if (childProc.start(cmd, ChildProcess::wantStdOut))
+			{
+				if (childProc.waitForProcessToFinish(getTimeout()))
+				{
+					commandOutput = childProc.readAllProcessOutput().trim();
+					_DBG("command: "+commandOutput);
+				}
+				else
+				{
+					_WRN("EnviDSCommand::execute ["+getName()+"] timeout");
+	
+					if (!childProc.kill())
+					{
+						_WRN("EnviDSCommand::execute ["+getName()+"] can't kill child process");
+					}
+				}
+			}
+			else
+			{
+				_WRN("EnviDSCommand::execute ["+getName()+"] failed to start child process");
+			}
+
+			triggerAsyncUpdate();
+		} while (wait (-1));
+	}
 }
 
 void EnviDSCommand::handleAsyncUpdate()

@@ -57,7 +57,6 @@ void EnviDB::run()
         ScopedLock sl(dataQueue.getLock());
         if (dataQueue.size() > 0)
 		{
-			_DBG("EnviDB::run queue size: "+String(dataQueue.size()));
 			for (int i=0; i<dataQueue.size(); i++)
 			{
 				enviStore->storeData (*dataQueue[i]);
@@ -76,7 +75,6 @@ void EnviDB::writeResult(EnviDataSource *dataSource)
 	{
 		ScopedLock sl(dataQueue.getLock());
 		dataQueue.add (new EnviData(dataSource->getResult()));
-		_DBG("EnviDB::writeResult queue size: "+String(dataQueue.size()));
 	}
 
 	notify();

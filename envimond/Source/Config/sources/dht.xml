@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<instance 	name="DHT11" 
+		timeout="2000" 
+		interval="15000" 
+		type="dht11" 
+		gpioPin="5" 
+		delay="3000" 
+		iterations="4" />

@@ -15,6 +15,7 @@
 #include "EnviDataSource.h"
 #include "EnviDB.h"
 #include "EnviHTTP.h"
+#include "EnviWiringPi.h"
 
 class EnviApplication : public MultiTimer
 {
@@ -45,6 +46,7 @@ class EnviApplication : public MultiTimer
 		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
+		ScopedPointer <EnviWiringPi> enviWiringPi;
 		OwnedArray <EnviDataSource,CriticalSection> dataSources;
 };
 
