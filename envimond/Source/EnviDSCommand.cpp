@@ -106,7 +106,6 @@ void EnviDSCommand::run()
 				if (childProc.waitForProcessToFinish(getTimeout()))
 				{
 					commandOutput = childProc.readAllProcessOutput().trim();
-					_DBG("command: "+commandOutput);
 				}
 				else
 				{

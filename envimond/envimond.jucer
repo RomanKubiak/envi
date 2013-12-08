@@ -56,7 +56,11 @@
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS/>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+      </MODULEPATHS>
     </VS2010>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks">
       <CONFIGURATIONS>
@@ -64,7 +68,11 @@
                        headerPath="../../Source/Addons"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS/>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+      </MODULEPATHS>
     </CODEBLOCKS>
     <LINUX_MAKE targetFolder="Source/" extraLinkerFlags="" externalLibraries="wiringPi&#10;juce-static-debug&#10;X11&#10;dl&#10;rt&#10;sqlite3"
                 extraCompilerFlags="">
@@ -75,9 +83,17 @@
         <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
                        targetName="envimond" linuxArchitecture="-march=armv6"/>
       </CONFIGURATIONS>
-      <MODULEPATHS/>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+      </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
-  <MODULES/>
+  <MODULES>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
   <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"/>
 </JUCERPROJECT>

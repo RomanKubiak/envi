@@ -39,8 +39,16 @@ class EnviData
 
 		struct Value
 		{
-			Value() {}
-			Value(const String _name, const Unit _unit) : name(_name), unit(_unit) {}
+			Value() 
+			{}
+			Value(const Value &other) 
+				:	name(other.name), unit(other.unit), value(other.value), 
+					error(other.error), interval(other.interval), index(other.index), 
+					sampleTime(other.sampleTime)
+			{}
+			Value(const String _name, const Unit _unit) 
+				: name(_name), unit(_unit) 
+			{}
 			String name;
 			var value;
 			bool error;
@@ -61,7 +69,7 @@ class EnviData
 		void addValue(const EnviData::Value valueToAdd);
 		Array <Value> values;
 
-		static EnviData fromJSON(const String &jsonString);
+		static const EnviData fromJSON(const String &jsonString);
 		static const String toJSON(const EnviData &enviData);
 		static const String toCSVString(const EnviData &enviData, const String &separator=";");
 

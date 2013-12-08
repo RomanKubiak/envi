@@ -46,7 +46,9 @@ class EnviApplication : public MultiTimer
 		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
+#ifdef JUCE_LINUX
 		ScopedPointer <EnviWiringPi> enviWiringPi;
+#endif
 		OwnedArray <EnviDataSource,CriticalSection> dataSources;
 };
 

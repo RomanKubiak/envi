@@ -37,7 +37,10 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	EnviLog::getInstance()->setOwner(this);
 	enviHTTP	= new EnviHTTP(*this);
 	enviDB		= new EnviDB(*this);
+
+#ifdef JUCE_LINUX
 	enviWiringPi	= new EnviWiringPi(*this);
+#endif
 }
 
 const int EnviApplication::runDispatchLoop()
@@ -213,6 +216,7 @@ void EnviApplication::sourceFailed(EnviDataSource *dataSource)
 
 void EnviApplication::sourceWrite(EnviDataSource *dataSource)
 {
+	_DBG(EnviData::toCSVString(dataSource->getResult()));
 	enviDB->writeResult (dataSource);
 }
 

@@ -12,7 +12,7 @@
 #include "EnviApplication.h"
 
 EnviDSDHT11::EnviDSDHT11(EnviApplication &owner, const ValueTree instanceConfig)
-	: EnviDataSource(owner), Thread("EnviDSDHT11"), dht11_dat({0,0,0,0,0})
+	: EnviDataSource(owner), Thread("EnviDSDHT11")
 {
 	instanceState = instanceConfig.createCopy();
 

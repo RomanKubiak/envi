@@ -2,6 +2,7 @@
 #define ENVIWIRINGPI_H_INCLUDED
 
 #include "EnviIncludes.h"
+#ifdef JUCE_LINUX
 #include <wiringPi.h>
 
 class EnviApplication;
@@ -19,4 +20,5 @@ class EnviWiringPi
 		EnviApplication &owner;
 };
 
+#endif
 #endif

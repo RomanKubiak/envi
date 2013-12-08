@@ -15,7 +15,7 @@ EnviData::EnviData()
 }
 
 EnviData::EnviData(const EnviData &other)
-	: values(other.values)
+	: values(other.values), dataSourceName(other.dataSourceName)
 {
 }
 
@@ -73,25 +73,26 @@ void EnviData::addValue(const EnviData::Value valueToAdd)
 	values.add (valueToAdd);
 }
 
-EnviData EnviData::fromJSON(const String &json)
+const EnviData EnviData::fromJSON(const String &jsonString)
 {
 	EnviData enviData;
-/*	var data = JSON::parse (json);
-	
+	var data				= JSON::parse (jsonString);
 	enviData.dataSourceName = data["name"];
-	
-	for (int i=0; i<data.size(); i++)
+	var values				= data["values"];
+
+	for (int i=0; i<values.size(); i++)
 	{
-		EnviData::Value value(data[i]["name"], stringToUnit(data[i]["unit"]));
+		EnviData::Value value(values[i]["name"], stringToUnit(values[i]["unit"]));
 		
-		value.error		= data[i]["error"];
-		value.sampleTime	= Time(data[i]["sampleTime"]);
-		value.interval		= data[i]["interval"];
-		value.index		= data[i]["index"];
+		value.value			= values[i]["value"];
+		value.error			= values[i]["error"];
+		value.sampleTime	= Time(values[i]["sampleTime"]);
+		value.interval		= values[i]["interval"];
+		value.index			= values[i]["index"];
 		
 		enviData.addValue (value);
 	}
-*/	
+
 	return (enviData);
 }
 
