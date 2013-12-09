@@ -80,7 +80,7 @@
         <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS>
-    <LINUX_MAKE targetFolder="Source/" extraLinkerFlags="" externalLibraries="wiringPi&#10;juce-static-debug&#10;X11&#10;dl&#10;rt&#10;sqlite3"
+    <LINUX_MAKE targetFolder="Builds/Linux" extraLinkerFlags="" externalLibraries="wiringPi&#10;juce-static-debug&#10;X11&#10;dl&#10;rt"
                 extraCompilerFlags="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
