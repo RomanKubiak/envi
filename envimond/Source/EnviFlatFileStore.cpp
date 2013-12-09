@@ -50,7 +50,9 @@ bool LZOOutputStream::write (const void *data, size_t size)
 	else
 	{
 		_DBG("LZOOutputStream::write lzo1x_1_compress success, data size: "+_STR(size)+", compressed size: "+_STR((int)compressedSize));
-        return (destStream->write (tempCompressedData.getData(), compressedSize));
+		destStream->write (tempCompressedData.getData(), compressedSize);
+		destStream->flush();
+        return (true);
 	}
 }
 
