@@ -18,12 +18,12 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=armv6
   endif
 
-  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../../../JUCE/modules -I /usr/include/juce
+  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0
   CXXFLAGS += $(CFLAGS)
   LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lwiringPi -ljuce-static-debug -lX11 -ldl -lrt 
   LDDEPS :=
-  RESFLAGS :=  -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../../../JUCE/modules -I /usr/include/juce
+  RESFLAGS :=  -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals
   TARGET := envimond
   BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
 endif
@@ -38,34 +38,36 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=armv6
   endif
 
-  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "NDEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../../../JUCE/modules
+  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "NDEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -Os
   CXXFLAGS += $(CFLAGS)
   LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -fvisibility=hidden -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lwiringPi -ljuce-static-debug -lX11 -ldl -lrt 
   LDDEPS :=
-  RESFLAGS :=  -D "LINUX=1" -D "NDEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../../../JUCE/modules
+  RESFLAGS :=  -D "LINUX=1" -D "NDEBUG=1" -D "JUCER_LINUX_MAKE_7346DA2A=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules
   TARGET := envimond
   BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/minilzo_c0dd049d.o \
-  $(OBJDIR)/EnviWiringPi_dbc4dbe0.o \
-  $(OBJDIR)/EnviFlatFileStore_837642f1.o \
-  $(OBJDIR)/EnviHTTPConnection_9e96a62b.o \
-  $(OBJDIR)/EnviDataSource_4723edaa.o \
-  $(OBJDIR)/EnviDB_4bcb0923.o \
-  $(OBJDIR)/EnviDSBMP085_c301cd1c.o \
-  $(OBJDIR)/EnviDSCommand_d4a3981.o \
-  $(OBJDIR)/EnviDSDHT11_c287a686.o \
-  $(OBJDIR)/EnviLog_249cfce9.o \
+  $(OBJDIR)/getopt_1199f4d.o \
+  $(OBJDIR)/sqlite3_42a04441.o \
+  $(OBJDIR)/EnviHTTP_b152028e.o \
+  $(OBJDIR)/EnviHTTPConnection_ceb1734c.o \
+  $(OBJDIR)/EnviDataSource_d73fb816.o \
+  $(OBJDIR)/EnviDSBMP085_8e254288.o \
+  $(OBJDIR)/EnviDSCommand_a6957195.o \
+  $(OBJDIR)/EnviDSDHT11_1ba9d39a.o \
+  $(OBJDIR)/EnviWiringPi_a6e8514c.o \
+  $(OBJDIR)/EnviDB_f29e9557.o \
+  $(OBJDIR)/EnviFlatFileStore_2148ce3d.o \
+  $(OBJDIR)/EnviSqlite3Store_bc4d2d73.o \
   $(OBJDIR)/EnviApplication_4adf88f5.o \
   $(OBJDIR)/EnviCLI_b2488c5.o \
-  $(OBJDIR)/EnviHTTP_1c90702d.o \
+  $(OBJDIR)/EnviLog_249cfce9.o \
   $(OBJDIR)/Envimond_e1dc027d.o \
-  $(OBJDIR)/juce_core_28ba299e.o \
-  $(OBJDIR)/juce_data_structures_2a02f2da.o \
-  $(OBJDIR)/juce_events_a3c29712.o \
+  $(OBJDIR)/juce_core_aff681cc.o \
+  $(OBJDIR)/juce_data_structures_bdd6d488.o \
+  $(OBJDIR)/juce_events_79b2840.o \
 
 .PHONY: clean
 
@@ -86,54 +88,64 @@ strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
-$(OBJDIR)/minilzo_c0dd049d.o: ../../Source/Ext/minilzo.c
+$(OBJDIR)/getopt_1199f4d.o: ../../Source/Externals/getopt.c
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling minilzo.c"
+	@echo "Compiling getopt.c"
 	@$(CC) $(CFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviWiringPi_dbc4dbe0.o: ../../Source/EnviWiringPi.cpp
+$(OBJDIR)/sqlite3_42a04441.o: ../../Source/Externals/sqlite3.c
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviWiringPi.cpp"
+	@echo "Compiling sqlite3.c"
+	@$(CC) $(CFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviHTTP_b152028e.o: ../../Source/Network/EnviHTTP.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviHTTP.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviFlatFileStore_837642f1.o: ../../Source/EnviFlatFileStore.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviFlatFileStore.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviHTTPConnection_9e96a62b.o: ../../Source/EnviHTTPConnection.cpp
+$(OBJDIR)/EnviHTTPConnection_ceb1734c.o: ../../Source/Network/EnviHTTPConnection.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviHTTPConnection.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviDataSource_4723edaa.o: ../../Source/EnviDataSource.cpp
+$(OBJDIR)/EnviDataSource_d73fb816.o: ../../Source/Source/EnviDataSource.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDataSource.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviDB_4bcb0923.o: ../../Source/EnviDB.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviDB.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviDSBMP085_c301cd1c.o: ../../Source/EnviDSBMP085.cpp
+$(OBJDIR)/EnviDSBMP085_8e254288.o: ../../Source/Source/EnviDSBMP085.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDSBMP085.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviDSCommand_d4a3981.o: ../../Source/EnviDSCommand.cpp
+$(OBJDIR)/EnviDSCommand_a6957195.o: ../../Source/Source/EnviDSCommand.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDSCommand.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviDSDHT11_c287a686.o: ../../Source/EnviDSDHT11.cpp
+$(OBJDIR)/EnviDSDHT11_1ba9d39a.o: ../../Source/Source/EnviDSDHT11.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDSDHT11.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviLog_249cfce9.o: ../../Source/EnviLog.cpp
+$(OBJDIR)/EnviWiringPi_a6e8514c.o: ../../Source/Source/EnviWiringPi.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviLog.cpp"
+	@echo "Compiling EnviWiringPi.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDB_f29e9557.o: ../../Source/Storage/EnviDB.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDB.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviFlatFileStore_2148ce3d.o: ../../Source/Storage/EnviFlatFileStore.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviFlatFileStore.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviSqlite3Store_bc4d2d73.o: ../../Source/Storage/EnviSqlite3Store.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviSqlite3Store.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviApplication_4adf88f5.o: ../../Source/EnviApplication.cpp
@@ -146,9 +158,9 @@ $(OBJDIR)/EnviCLI_b2488c5.o: ../../Source/EnviCLI.cpp
 	@echo "Compiling EnviCLI.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviHTTP_1c90702d.o: ../../Source/EnviHTTP.cpp
+$(OBJDIR)/EnviLog_249cfce9.o: ../../Source/EnviLog.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviHTTP.cpp"
+	@echo "Compiling EnviLog.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/Envimond_e1dc027d.o: ../../Source/Envimond.cpp
@@ -156,17 +168,17 @@ $(OBJDIR)/Envimond_e1dc027d.o: ../../Source/Envimond.cpp
 	@echo "Compiling Envimond.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/juce_core_28ba299e.o: ../../../../JUCE/modules/juce_core/juce_core.cpp
+$(OBJDIR)/juce_core_aff681cc.o: ../../JuceLibraryCode/modules/juce_core/juce_core.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling juce_core.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/juce_data_structures_2a02f2da.o: ../../../../JUCE/modules/juce_data_structures/juce_data_structures.cpp
+$(OBJDIR)/juce_data_structures_bdd6d488.o: ../../JuceLibraryCode/modules/juce_data_structures/juce_data_structures.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling juce_data_structures.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/juce_events_a3c29712.o: ../../../../JUCE/modules/juce_events/juce_events.cpp
+$(OBJDIR)/juce_events_79b2840.o: ../../JuceLibraryCode/modules/juce_events/juce_events.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling juce_events.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"

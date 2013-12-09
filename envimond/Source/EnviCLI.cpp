@@ -10,95 +10,48 @@
 
 #include "EnviCLI.h"
 
-EnviCLI::EnviCLI (const int argc, char *argv[], const String &_optionsPattern)
-	: optionsPattern(_optionsPattern)
+EnviCLI::EnviCLI (const int argc, char *argv[])
 {
-	int i = 0;
-	while (argv[++i] != NULL)
+	int c;
+
+	while (1)
 	{
-		arguments.add (argv[i]);
+		static struct option long_options[] =
+		{
+			{"verbose",			no_argument,		0, 'v'},
+			{"background",		no_argument,		0, 'b'},
+			{"log-file",		required_argument,	0, 'f'},
+			{"log-level",		required_argument,	0, 'l'},
+			{"store-file",		required_argument,	0, 's'},
+			{"store-format",	required_argument,	0, 'S'},
+			{"listen-port",		required_argument,	0, 'p'},
+			{"disable-source",	required_argument,	0, 'd'},
+			{"list-sources",	required_argument,	0, 'L'},
+			{0, 0, 0, 0}
+		};
+	
+		int option_index = 0; 
+		int c = getopt_long (argc, argv, "vbf:l:s:S:p:d:L:", long_options, &option_index);
+
+		if (c == -1)
+			break;
+     
+		_DBG("option("+String(c)+"): option=["+String(long_options[option_index].name)+(optarg ? ("] value=["+String(optarg)+"]") : "]"));
+		arguments.set (_STR(long_options[option_index].name), _STR(optarg));
 	}
 }
 
-StringArray &EnviCLI::getAllArguments()
+StringPairArray &EnviCLI::getAllArguments()
 {
 	return (arguments);
 }
 
-const bool EnviCLI::requiresParameter(const String &argument)
-{
-	if (optionsPattern [optionsPattern.indexOf(argument) + 1] == ':')
-		return (true);
-
-	return (false);
-}
-
-const bool EnviCLI::hasParameter(const String &argument)
-{
-    if (isSet(argument))
-	{
-		const String param = arguments[arguments.indexOf(argument)+1];
-		if (!isSet (param))
-		{
-			/* is should be parameter not another argument [starts with -] */
-			return (true);
-		}
-	}
-
-	return (false);
-}
-
 const bool EnviCLI::isSet(const String &argument)
 {
-	if (!argument.startsWith("-"))
-		return (false);
-
-	return (arguments.indexOf(argument) ? true : false);
-}
-
-const int EnviCLI::getNumArguments()
-{
-	int count=0;
-	for (int i=0; i<arguments.size(); i++)
-		if (arguments[i].startsWith("-")) count++;
-	return (count);
+	return (arguments.getAllKeys().indexOf(argument) >= 0);
 }
 
 const String EnviCLI::getParameter(const String &argument)
 {
-	if (hasParameter (argument))
-	{
-		return (arguments[arguments.indexOf(argument)+1]);
-	}
-
-	return (String::empty);
-}
-
-const String EnviCLI::getArgument(const int argumentIndex)
-{
-	int count=0;
-	for (int i=0; i<arguments.size(); i++)
-	{
-		if (count == argumentIndex)
-			return (arguments[i]);
-
-		if (arguments[i].startsWith("-")) count++;
-	}
-
-	return (String::empty);
-}
-
-const String EnviCLI::getParameter(const int argumentIndex)
-{
-	int count=0;
-	for (int i=0; i<arguments.size(); i++)
-	{
-		if (count == argumentIndex)
-		{
-			return (getParameter (arguments[i]));
-		}
-
-		if (arguments[i].startsWith("-")) count++;
-	}
-	return (String::empty);
+	return (arguments.getValue (argument, String::empty));
 }

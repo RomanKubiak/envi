@@ -12,26 +12,19 @@
 #define ENVICLI_H_INCLUDED
 
 #include "EnviIncludes.h"
+#include "getopt.h"
 
 class EnviCLI
 {
 	public:
-		EnviCLI (const int argc, char *argv[], const String &_options);
-		StringArray &getAllArguments();
-		const bool requiresParameter(const juce_wchar optionToCheck);
+		EnviCLI (const int argc, char *argv[]);
+		StringPairArray &getAllArguments();
 		const String getParameter(const String &argument);
-		const String getParameter(const int argumentIndex);
 		const bool isSet(const String &argument);
-		const bool requiresParameter(const String &argument);
-		const bool hasParameter(const String &argument);
-		const int getNumArguments();
-		const String getArgument(const int argumentIndex);
-
 		JUCE_LEAK_DETECTOR(EnviCLI);
 
 	private:
-		String optionsPattern;
-		StringArray arguments;
+		StringPairArray arguments;
 };
 
 #endif  // ENVICLI_H_INCLUDED

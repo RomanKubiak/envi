@@ -14,7 +14,7 @@
 #include "EnviDSDHT11.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
-	: enviCLI(argc, argv, "dn:c")
+	: enviCLI(argc, argv)
 {
 	_DBG("EnviApplication::ctor");
 

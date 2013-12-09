@@ -5,59 +5,68 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
-      <GROUP id="{FC441004-1869-03A5-FD92-65CBB7AEA62F}" name="Ext">
-        <FILE id="hEKhFg" name="lzoconf.h" compile="0" resource="0" file="Source/Ext/lzoconf.h"/>
-        <FILE id="xiTQBq" name="lzodefs.h" compile="0" resource="0" file="Source/Ext/lzodefs.h"/>
-        <FILE id="EHDlQy" name="minilzo.c" compile="1" resource="0" file="Source/Ext/minilzo.c"/>
-        <FILE id="eYGimP" name="minilzo.h" compile="0" resource="0" file="Source/Ext/minilzo.h"/>
+      <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
+        <FILE id="x1skFV" name="getopt.c" compile="1" resource="0" file="Source/Externals/getopt.c"/>
+        <FILE id="vw6pVq" name="getopt.h" compile="0" resource="0" file="Source/Externals/getopt.h"/>
+        <FILE id="zKTn6a" name="sqlite3.c" compile="1" resource="0" file="Source/Externals/sqlite3.c"/>
+        <FILE id="YZ3kUF" name="sqlite3.h" compile="0" resource="0" file="Source/Externals/sqlite3.h"/>
+        <FILE id="Zz7VRw" name="sqlite3ext.h" compile="0" resource="0" file="Source/Externals/sqlite3ext.h"/>
       </GROUP>
-      <FILE id="lKlp0I" name="EnviWiringPi.cpp" compile="1" resource="0"
-            file="Source/EnviWiringPi.cpp"/>
-      <FILE id="bp7W0R" name="EnviWiringPi.h" compile="0" resource="0" file="Source/EnviWiringPi.h"/>
-      <FILE id="rtfumN" name="AppConfig.h" compile="0" resource="0" file="Source/AppConfig.h"/>
-      <FILE id="JxzcDZ" name="EnviDataStore.h" compile="0" resource="0" file="Source/EnviDataStore.h"/>
-      <FILE id="CVx00P" name="EnviFlatFileStore.cpp" compile="1" resource="0"
-            file="Source/EnviFlatFileStore.cpp"/>
-      <FILE id="s3y8Ol" name="EnviFlatFileStore.h" compile="0" resource="0"
-            file="Source/EnviFlatFileStore.h"/>
-      <FILE id="efiZxN" name="EnviHTTPConnection.cpp" compile="1" resource="0"
-            file="Source/EnviHTTPConnection.cpp"/>
-      <FILE id="hu46JT" name="EnviHTTPConnection.h" compile="0" resource="0"
-            file="Source/EnviHTTPConnection.h"/>
-      <FILE id="JCDuF3" name="EnviDataSource.cpp" compile="1" resource="0"
-            file="Source/EnviDataSource.cpp"/>
-      <FILE id="PABCBC" name="EnviDB.cpp" compile="1" resource="0" file="Source/EnviDB.cpp"/>
-      <FILE id="il7SqS" name="EnviDB.h" compile="0" resource="0" file="Source/EnviDB.h"/>
-      <FILE id="ww3Y4R" name="EnviDSBMP085.cpp" compile="1" resource="0"
-            file="Source/EnviDSBMP085.cpp"/>
-      <FILE id="PBy75r" name="EnviDSBMP085.h" compile="0" resource="0" file="Source/EnviDSBMP085.h"/>
-      <FILE id="fjBflm" name="EnviDSCommand.cpp" compile="1" resource="0"
-            file="Source/EnviDSCommand.cpp"/>
-      <FILE id="rOY14A" name="EnviDSCommand.h" compile="0" resource="0" file="Source/EnviDSCommand.h"/>
-      <FILE id="Oigria" name="EnviDSDHT11.cpp" compile="1" resource="0" file="Source/EnviDSDHT11.cpp"/>
-      <FILE id="CM3GVo" name="EnviDSDHT11.h" compile="0" resource="0" file="Source/EnviDSDHT11.h"/>
-      <FILE id="cluvda" name="EnviLog.cpp" compile="1" resource="0" file="Source/EnviLog.cpp"/>
-      <FILE id="LmdEIy" name="EnviLog.h" compile="0" resource="0" file="Source/EnviLog.h"/>
-      <FILE id="ChlxjZ" name="EnviApplication.cpp" compile="1" resource="0"
+      <GROUP id="{CEA7D5EF-0A70-CE8D-CC9D-3621BB641A1E}" name="Network">
+        <FILE id="Xr8LdV" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/Network/EnviHTTP.cpp"/>
+        <FILE id="ytmL4F" name="EnviHTTP.h" compile="0" resource="0" file="Source/Network/EnviHTTP.h"/>
+        <FILE id="jUFxrp" name="EnviHTTPConnection.cpp" compile="1" resource="0"
+              file="Source/Network/EnviHTTPConnection.cpp"/>
+        <FILE id="ApgXHy" name="EnviHTTPConnection.h" compile="0" resource="0"
+              file="Source/Network/EnviHTTPConnection.h"/>
+      </GROUP>
+      <GROUP id="{8152FBDB-7753-31BE-06F1-AAEC91628D7C}" name="Source">
+        <FILE id="Sh1PMb" name="EnviDataSource.cpp" compile="1" resource="0"
+              file="Source/Source/EnviDataSource.cpp"/>
+        <FILE id="V85bNv" name="EnviDataSource.h" compile="0" resource="0"
+              file="Source/Source/EnviDataSource.h"/>
+        <FILE id="H2s6ix" name="EnviDSBMP085.cpp" compile="1" resource="0"
+              file="Source/Source/EnviDSBMP085.cpp"/>
+        <FILE id="HsR4Rt" name="EnviDSBMP085.h" compile="0" resource="0" file="Source/Source/EnviDSBMP085.h"/>
+        <FILE id="LEpqvO" name="EnviDSCommand.cpp" compile="1" resource="0"
+              file="Source/Source/EnviDSCommand.cpp"/>
+        <FILE id="VUHHII" name="EnviDSCommand.h" compile="0" resource="0" file="Source/Source/EnviDSCommand.h"/>
+        <FILE id="azLI6b" name="EnviDSDHT11.cpp" compile="1" resource="0" file="Source/Source/EnviDSDHT11.cpp"/>
+        <FILE id="wmHHtA" name="EnviDSDHT11.h" compile="0" resource="0" file="Source/Source/EnviDSDHT11.h"/>
+        <FILE id="gLmpDy" name="EnviWiringPi.cpp" compile="1" resource="0"
+              file="Source/Source/EnviWiringPi.cpp"/>
+        <FILE id="b0chJe" name="EnviWiringPi.h" compile="0" resource="0" file="Source/Source/EnviWiringPi.h"/>
+      </GROUP>
+      <GROUP id="{5CE78983-9368-73A3-BA90-802ED9422F0E}" name="Storage">
+        <FILE id="ki7iAx" name="EnviDataStore.h" compile="0" resource="0" file="Source/Storage/EnviDataStore.h"/>
+        <FILE id="tTUaOt" name="EnviDB.cpp" compile="1" resource="0" file="Source/Storage/EnviDB.cpp"/>
+        <FILE id="zuolcq" name="EnviDB.h" compile="0" resource="0" file="Source/Storage/EnviDB.h"/>
+        <FILE id="dsrCFg" name="EnviFlatFileStore.cpp" compile="1" resource="0"
+              file="Source/Storage/EnviFlatFileStore.cpp"/>
+        <FILE id="viAXdI" name="EnviFlatFileStore.h" compile="0" resource="0"
+              file="Source/Storage/EnviFlatFileStore.h"/>
+        <FILE id="yGQ0L6" name="EnviSqlite3Store.cpp" compile="1" resource="0"
+              file="Source/Storage/EnviSqlite3Store.cpp"/>
+        <FILE id="omng1e" name="EnviSqlite3Store.h" compile="0" resource="0"
+              file="Source/Storage/EnviSqlite3Store.h"/>
+      </GROUP>
+      <FILE id="Sl6MjI" name="EnviApplication.cpp" compile="1" resource="0"
             file="Source/EnviApplication.cpp"/>
-      <FILE id="nUfiOc" name="EnviApplication.h" compile="0" resource="0"
+      <FILE id="q3GhPG" name="EnviApplication.h" compile="0" resource="0"
             file="Source/EnviApplication.h"/>
-      <FILE id="GhA4iY" name="EnviCLI.cpp" compile="1" resource="0" file="Source/EnviCLI.cpp"/>
-      <FILE id="DmemKJ" name="EnviCLI.h" compile="0" resource="0" file="Source/EnviCLI.h"/>
-      <FILE id="dWtECN" name="EnviDataSource.h" compile="0" resource="0"
-            file="Source/EnviDataSource.h"/>
-      <FILE id="Q2uaTf" name="EnviIncludes.h" compile="0" resource="0" file="Source/EnviIncludes.h"/>
-      <FILE id="MiRrSc" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/EnviHTTP.cpp"/>
-      <FILE id="oSGMJb" name="EnviHTTP.h" compile="0" resource="0" file="Source/EnviHTTP.h"/>
-      <FILE id="sOLpJo" name="JuceHeader.h" compile="0" resource="0" file="Source/JuceHeader.h"/>
-      <FILE id="trbBVm" name="Envimond.cpp" compile="1" resource="0" file="Source/Envimond.cpp"/>
+      <FILE id="D9qqNP" name="EnviCLI.cpp" compile="1" resource="0" file="Source/EnviCLI.cpp"/>
+      <FILE id="sR1nPO" name="EnviCLI.h" compile="0" resource="0" file="Source/EnviCLI.h"/>
+      <FILE id="cvZ0HV" name="EnviIncludes.h" compile="0" resource="0" file="Source/EnviIncludes.h"/>
+      <FILE id="zGFraZ" name="EnviLog.cpp" compile="1" resource="0" file="Source/EnviLog.cpp"/>
+      <FILE id="MIqHS2" name="EnviLog.h" compile="0" resource="0" file="Source/EnviLog.h"/>
+      <FILE id="hNKy5q" name="Envimond.cpp" compile="1" resource="0" file="Source/Envimond.cpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2010 targetFolder="Builds/VisualStudio2010" externalLibraries="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="2" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="1" optimisation="1" targetName="envimond" headerPath="../../Source/Addons"
+                       isDebug="1" optimisation="1" targetName="envimond" headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals&#10;../../Source/Externals"
                        libraryPath=""/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
@@ -71,7 +80,7 @@
     <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"
-                       headerPath="../../Source/Addons"/>
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -85,7 +94,7 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="envimond" linuxArchitecture="-march=armv6" binaryPath="/usr/local/bin/"
-                       headerPath="/usr/include/juce"/>
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"/>
         <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
                        targetName="envimond" linuxArchitecture="-march=armv6"/>
       </CONFIGURATIONS>
@@ -97,9 +106,10 @@
     </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
-    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"/>
+  <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"
+               JUCE_INCLUDE_ZLIB_CODE="enabled"/>
 </JUCERPROJECT>

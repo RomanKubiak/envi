@@ -8,8 +8,17 @@
     <Filter Include="envimond\Source">
       <UniqueIdentifier>{958D036A-8B6E-2ABF-850E-CE38BA125B3B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="envimond\Source\Ext">
-      <UniqueIdentifier>{D2622469-DE26-E36E-40C6-8B3EBC2DA857}</UniqueIdentifier>
+    <Filter Include="envimond\Source\Externals">
+      <UniqueIdentifier>{C31649FC-C95B-8743-99D4-9920A938AA04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="envimond\Source\Network">
+      <UniqueIdentifier>{D21658E4-99E8-160D-97DF-72B4DB3ED5F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="envimond\Source\Source">
+      <UniqueIdentifier>{8E6F3E47-63D1-6681-886A-3D42E8D679EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="envimond\Source\Storage">
+      <UniqueIdentifier>{6D5B9ABE-6B7A-6759-CB40-1D667ABD00D8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
@@ -103,35 +112,41 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\Ext\minilzo.c">
-      <Filter>envimond\Source\Ext</Filter>
+    <ClCompile Include="..\..\Source\Externals\getopt.c">
+      <Filter>envimond\Source\Externals</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviWiringPi.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Externals\sqlite3.c">
+      <Filter>envimond\Source\Externals</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviFlatFileStore.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp">
+      <Filter>envimond\Source\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviHTTPConnection.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp">
+      <Filter>envimond\Source\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviDataSource.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Source\EnviDataSource.cpp">
+      <Filter>envimond\Source\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviDB.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Source\EnviDSBMP085.cpp">
+      <Filter>envimond\Source\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviDSBMP085.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Source\EnviDSCommand.cpp">
+      <Filter>envimond\Source\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviDSCommand.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Source\EnviDSDHT11.cpp">
+      <Filter>envimond\Source\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviDSDHT11.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Source\EnviWiringPi.cpp">
+      <Filter>envimond\Source\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviLog.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Storage\EnviDB.cpp">
+      <Filter>envimond\Source\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Storage\EnviFlatFileStore.cpp">
+      <Filter>envimond\Source\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Storage\EnviSqlite3Store.cpp">
+      <Filter>envimond\Source\Storage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\EnviApplication.cpp">
       <Filter>envimond\Source</Filter>
@@ -139,358 +154,361 @@
     <ClCompile Include="..\..\Source\EnviCLI.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\EnviHTTP.cpp">
+    <ClCompile Include="..\..\Source\EnviLog.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Envimond.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_CharacterFunctions.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_Identifier.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_Identifier.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_LocalisedStrings.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_LocalisedStrings.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_String.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_String.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringArray.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringArray.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringPairArray.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringPairArray.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringPool.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringPool.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\text\juce_TextDiff.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_TextDiff.cpp">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_BigInteger.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_BigInteger.cpp">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_Expression.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_Expression.cpp">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_Random.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_Random.cpp">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_MemoryBlock.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_MemoryBlock.cpp">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.cpp">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_DynamicObject.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_DynamicObject.cpp">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_NamedValueSet.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_NamedValueSet.cpp">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_PropertySet.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_PropertySet.cpp">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_Variant.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_Variant.cpp">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ChildProcess.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ChildProcess.cpp">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_HighResolutionTimer.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_HighResolutionTimer.cpp">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ReadWriteLock.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ReadWriteLock.cpp">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_Thread.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_Thread.cpp">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ThreadPool.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ThreadPool.cpp">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_TimeSliceThread.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_TimeSliceThread.cpp">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\time\juce_PerformanceCounter.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_PerformanceCounter.cpp">
       <Filter>Juce Modules\juce_core\time</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\time\juce_RelativeTime.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_RelativeTime.cpp">
       <Filter>Juce Modules\juce_core\time</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\time\juce_Time.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_Time.cpp">
       <Filter>Juce Modules\juce_core\time</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\files\juce_DirectoryIterator.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_DirectoryIterator.cpp">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\files\juce_File.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_File.cpp">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\files\juce_FileInputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileInputStream.cpp">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\files\juce_FileOutputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileOutputStream.cpp">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\files\juce_FileSearchPath.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileSearchPath.cpp">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\files\juce_TemporaryFile.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_TemporaryFile.cpp">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\network\juce_IPAddress.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_IPAddress.cpp">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\network\juce_MACAddress.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_MACAddress.cpp">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\network\juce_NamedPipe.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_NamedPipe.cpp">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\network\juce_Socket.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_Socket.cpp">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\network\juce_URL.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_URL.cpp">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_BufferedInputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_BufferedInputStream.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_FileInputSource.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_FileInputSource.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_InputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_InputStream.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_MemoryInputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_MemoryInputStream.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_MemoryOutputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_MemoryOutputStream.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_OutputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_OutputStream.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_SubregionStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_SubregionStream.cpp">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\logging\juce_FileLogger.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\logging\juce_FileLogger.cpp">
       <Filter>Juce Modules\juce_core\logging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\logging\juce_Logger.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\logging\juce_Logger.cpp">
       <Filter>Juce Modules\juce_core\logging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\system\juce_SystemStats.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\system\juce_SystemStats.cpp">
       <Filter>Juce Modules\juce_core\system</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\xml\juce_XmlDocument.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\xml\juce_XmlDocument.cpp">
       <Filter>Juce Modules\juce_core\xml</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\xml\juce_XmlElement.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\xml\juce_XmlElement.cpp">
       <Filter>Juce Modules\juce_core\xml</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\javascript\juce_Javascript.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\javascript\juce_Javascript.cpp">
       <Filter>Juce Modules\juce_core\javascript</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\javascript\juce_JSON.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\javascript\juce_JSON.cpp">
       <Filter>Juce Modules\juce_core\javascript</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\zip\juce_GZIPCompressorOutputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\zip\juce_GZIPCompressorOutputStream.cpp">
       <Filter>Juce Modules\juce_core\zip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\zip\juce_GZIPDecompressorInputStream.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\zip\juce_GZIPDecompressorInputStream.cpp">
       <Filter>Juce Modules\juce_core\zip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\zip\juce_ZipFile.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\zip\juce_ZipFile.cpp">
       <Filter>Juce Modules\juce_core\zip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\unit_tests\juce_UnitTest.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\unit_tests\juce_UnitTest.cpp">
       <Filter>Juce Modules\juce_core\unit_tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\misc\juce_Result.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\misc\juce_Result.cpp">
       <Filter>Juce Modules\juce_core\misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\misc\juce_Uuid.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\misc\juce_Uuid.cpp">
       <Filter>Juce Modules\juce_core\misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_android_Files.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_android_Files.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_android_Misc.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_android_Misc.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_android_Network.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_android_Network.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_android_SystemStats.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_android_SystemStats.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_android_Threads.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_android_Threads.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_linux_CommonFile.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_linux_CommonFile.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_linux_Files.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_linux_Files.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_linux_Network.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_linux_Network.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_linux_SystemStats.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_linux_SystemStats.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_linux_Threads.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_linux_Threads.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_mac_Files.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_mac_Files.mm">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_mac_Network.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_mac_Network.mm">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_mac_Strings.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_mac_Strings.mm">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_mac_SystemStats.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_mac_SystemStats.mm">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_mac_Threads.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_mac_Threads.mm">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_posix_NamedPipe.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_win32_Files.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_Files.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_win32_Network.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_Network.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_win32_Registry.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_Registry.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_win32_SystemStats.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_SystemStats.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\native\juce_win32_Threads.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_Threads.cpp">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_data_structures\values\juce_Value.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_Value.cpp">
       <Filter>Juce Modules\juce_data_structures\values</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_data_structures\values\juce_ValueTree.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_ValueTree.cpp">
       <Filter>Juce Modules\juce_data_structures\values</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_data_structures\undomanager\juce_UndoManager.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\undomanager\juce_UndoManager.cpp">
       <Filter>Juce Modules\juce_data_structures\undomanager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_data_structures\app_properties\juce_ApplicationProperties.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_ApplicationProperties.cpp">
       <Filter>Juce Modules\juce_data_structures\app_properties</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_data_structures\app_properties\juce_PropertiesFile.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_PropertiesFile.cpp">
       <Filter>Juce Modules\juce_data_structures\app_properties</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_ApplicationBase.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_ApplicationBase.cpp">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_DeletedAtShutdown.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_DeletedAtShutdown.cpp">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_MessageListener.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_MessageListener.cpp">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_MessageManager.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_MessageManager.cpp">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\timers\juce_MultiTimer.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\timers\juce_MultiTimer.cpp">
       <Filter>Juce Modules\juce_events\timers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\timers\juce_Timer.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\timers\juce_Timer.cpp">
       <Filter>Juce Modules\juce_events\timers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ActionBroadcaster.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ActionBroadcaster.cpp">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_AsyncUpdater.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_AsyncUpdater.cpp">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ChangeBroadcaster.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ChangeBroadcaster.cpp">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\interprocess\juce_InterprocessConnection.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\interprocess\juce_InterprocessConnection.cpp">
       <Filter>Juce Modules\juce_events\interprocess</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\interprocess\juce_InterprocessConnectionServer.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\interprocess\juce_InterprocessConnectionServer.cpp">
       <Filter>Juce Modules\juce_events\interprocess</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\native\juce_android_Messaging.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_android_Messaging.cpp">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\native\juce_ios_MessageManager.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_ios_MessageManager.mm">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\native\juce_linux_Messaging.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_linux_Messaging.cpp">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\native\juce_mac_MessageManager.mm">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_mac_MessageManager.mm">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\native\juce_win32_Messaging.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_Messaging.cpp">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_core\juce_core.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_data_structures.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\juce_data_structures.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\juce_events.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Ext\lzoconf.h">
-      <Filter>envimond\Source\Ext</Filter>
+    <ClInclude Include="..\..\Source\Externals\getopt.h">
+      <Filter>envimond\Source\Externals</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Ext\lzodefs.h">
-      <Filter>envimond\Source\Ext</Filter>
+    <ClInclude Include="..\..\Source\Externals\sqlite3.h">
+      <Filter>envimond\Source\Externals</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Ext\minilzo.h">
-      <Filter>envimond\Source\Ext</Filter>
+    <ClInclude Include="..\..\Source\Externals\sqlite3ext.h">
+      <Filter>envimond\Source\Externals</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviWiringPi.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Network\EnviHTTP.h">
+      <Filter>envimond\Source\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\AppConfig.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h">
+      <Filter>envimond\Source\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviDataStore.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Source\EnviDataSource.h">
+      <Filter>envimond\Source\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviFlatFileStore.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Source\EnviDSBMP085.h">
+      <Filter>envimond\Source\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviHTTPConnection.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Source\EnviDSCommand.h">
+      <Filter>envimond\Source\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviDB.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Source\EnviDSDHT11.h">
+      <Filter>envimond\Source\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviDSBMP085.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Source\EnviWiringPi.h">
+      <Filter>envimond\Source\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviDSCommand.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Storage\EnviDataStore.h">
+      <Filter>envimond\Source\Storage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviDSDHT11.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Storage\EnviDB.h">
+      <Filter>envimond\Source\Storage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviLog.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Storage\EnviFlatFileStore.h">
+      <Filter>envimond\Source\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Storage\EnviSqlite3Store.h">
+      <Filter>envimond\Source\Storage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\EnviApplication.h">
       <Filter>envimond\Source</Filter>
@@ -498,424 +516,418 @@
     <ClInclude Include="..\..\Source\EnviCLI.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviDataSource.h">
-      <Filter>envimond\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\EnviIncludes.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\EnviHTTP.h">
+    <ClInclude Include="..\..\Source\EnviLog.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\JuceHeader.h">
-      <Filter>envimond\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_CharacterFunctions.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharacterFunctions.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_CharPointer_ASCII.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_ASCII.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_CharPointer_UTF16.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_UTF16.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_CharPointer_UTF32.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_UTF32.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_CharPointer_UTF8.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_CharPointer_UTF8.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_Identifier.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_Identifier.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_LocalisedStrings.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_LocalisedStrings.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_NewLine.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_NewLine.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_String.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_String.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringArray.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringArray.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringPairArray.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringPairArray.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringPool.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringPool.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_StringRef.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_StringRef.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\text\juce_TextDiff.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\text\juce_TextDiff.h">
       <Filter>Juce Modules\juce_core\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_BigInteger.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_BigInteger.h">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_Expression.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_Expression.h">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_MathsFunctions.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_MathsFunctions.h">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_Random.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_Random.h">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\maths\juce_Range.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\maths\juce_Range.h">
       <Filter>Juce Modules\juce_core\maths</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_Atomic.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_Atomic.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_ByteOrder.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ByteOrder.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_ContainerDeletePolicy.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ContainerDeletePolicy.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_HeapBlock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_HeapBlock.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_LeakedObjectDetector.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_LeakedObjectDetector.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_Memory.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_Memory.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_MemoryBlock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_MemoryBlock.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_OptionalScopedPointer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_OptionalScopedPointer.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_ReferenceCountedObject.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ReferenceCountedObject.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_ScopedPointer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ScopedPointer.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_Singleton.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_Singleton.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\memory\juce_WeakReference.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_WeakReference.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_AbstractFifo.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_Array.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_Array.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_ArrayAllocationBase.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_ArrayAllocationBase.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_DynamicObject.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_DynamicObject.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_ElementComparator.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_ElementComparator.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_HashMap.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_HashMap.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_LinkedListPointer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_LinkedListPointer.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_NamedValueSet.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_NamedValueSet.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_OwnedArray.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_OwnedArray.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_PropertySet.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_PropertySet.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_ReferenceCountedArray.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_ReferenceCountedArray.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_ScopedValueSetter.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_ScopedValueSetter.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_SortedSet.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_SortedSet.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_SparseSet.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_SparseSet.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\containers\juce_Variant.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_Variant.h">
       <Filter>Juce Modules\juce_core\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ChildProcess.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ChildProcess.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_CriticalSection.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_CriticalSection.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_DynamicLibrary.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_DynamicLibrary.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_HighResolutionTimer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_HighResolutionTimer.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_InterProcessLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_InterProcessLock.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_Process.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_Process.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ReadWriteLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ReadWriteLock.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ScopedLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ScopedLock.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ScopedReadLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ScopedReadLock.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ScopedWriteLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ScopedWriteLock.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_SpinLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_SpinLock.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_Thread.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_Thread.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ThreadLocalValue.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ThreadLocalValue.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_ThreadPool.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_ThreadPool.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_TimeSliceThread.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_TimeSliceThread.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\threads\juce_WaitableEvent.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\threads\juce_WaitableEvent.h">
       <Filter>Juce Modules\juce_core\threads</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\time\juce_PerformanceCounter.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_PerformanceCounter.h">
       <Filter>Juce Modules\juce_core\time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\time\juce_RelativeTime.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_RelativeTime.h">
       <Filter>Juce Modules\juce_core\time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\time\juce_Time.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_Time.h">
       <Filter>Juce Modules\juce_core\time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_DirectoryIterator.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_DirectoryIterator.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_File.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_File.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_FileInputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileInputStream.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_FileOutputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileOutputStream.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_FileSearchPath.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileSearchPath.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_MemoryMappedFile.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_MemoryMappedFile.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\files\juce_TemporaryFile.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_TemporaryFile.h">
       <Filter>Juce Modules\juce_core\files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\network\juce_IPAddress.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_IPAddress.h">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\network\juce_MACAddress.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_MACAddress.h">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\network\juce_NamedPipe.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_NamedPipe.h">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\network\juce_Socket.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_Socket.h">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\network\juce_URL.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_URL.h">
       <Filter>Juce Modules\juce_core\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_BufferedInputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_BufferedInputStream.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_FileInputSource.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_FileInputSource.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_InputSource.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_InputSource.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_InputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_InputStream.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_MemoryInputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_MemoryInputStream.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_MemoryOutputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_MemoryOutputStream.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_OutputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_OutputStream.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\streams\juce_SubregionStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\streams\juce_SubregionStream.h">
       <Filter>Juce Modules\juce_core\streams</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\logging\juce_FileLogger.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\logging\juce_FileLogger.h">
       <Filter>Juce Modules\juce_core\logging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\logging\juce_Logger.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\logging\juce_Logger.h">
       <Filter>Juce Modules\juce_core\logging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\system\juce_PlatformDefs.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\system\juce_PlatformDefs.h">
       <Filter>Juce Modules\juce_core\system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\system\juce_StandardHeader.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\system\juce_StandardHeader.h">
       <Filter>Juce Modules\juce_core\system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\system\juce_SystemStats.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\system\juce_SystemStats.h">
       <Filter>Juce Modules\juce_core\system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\system\juce_TargetPlatform.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\system\juce_TargetPlatform.h">
       <Filter>Juce Modules\juce_core\system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\xml\juce_XmlDocument.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\xml\juce_XmlDocument.h">
       <Filter>Juce Modules\juce_core\xml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\xml\juce_XmlElement.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\xml\juce_XmlElement.h">
       <Filter>Juce Modules\juce_core\xml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\javascript\juce_Javascript.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\javascript\juce_Javascript.h">
       <Filter>Juce Modules\juce_core\javascript</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\javascript\juce_JSON.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\javascript\juce_JSON.h">
       <Filter>Juce Modules\juce_core\javascript</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\zip\juce_GZIPCompressorOutputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\zip\juce_GZIPCompressorOutputStream.h">
       <Filter>Juce Modules\juce_core\zip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\zip\juce_GZIPDecompressorInputStream.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\zip\juce_GZIPDecompressorInputStream.h">
       <Filter>Juce Modules\juce_core\zip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\zip\juce_ZipFile.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\zip\juce_ZipFile.h">
       <Filter>Juce Modules\juce_core\zip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\unit_tests\juce_UnitTest.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\unit_tests\juce_UnitTest.h">
       <Filter>Juce Modules\juce_core\unit_tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\misc\juce_Result.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\misc\juce_Result.h">
       <Filter>Juce Modules\juce_core\misc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\misc\juce_Uuid.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\misc\juce_Uuid.h">
       <Filter>Juce Modules\juce_core\misc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\misc\juce_WindowsRegistry.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\misc\juce_WindowsRegistry.h">
       <Filter>Juce Modules\juce_core\misc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\native\juce_android_JNIHelpers.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_android_JNIHelpers.h">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\native\juce_BasicNativeHeaders.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_BasicNativeHeaders.h">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\native\juce_osx_ObjCHelpers.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_osx_ObjCHelpers.h">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\native\juce_posix_SharedCode.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_posix_SharedCode.h">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\native\juce_win32_ComSmartPtr.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\native\juce_win32_ComSmartPtr.h">
       <Filter>Juce Modules\juce_core\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_core\juce_core.h">
       <Filter>Juce Modules\juce_core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\values\juce_Value.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_Value.h">
       <Filter>Juce Modules\juce_data_structures\values</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\values\juce_ValueTree.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\values\juce_ValueTree.h">
       <Filter>Juce Modules\juce_data_structures\values</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\undomanager\juce_UndoableAction.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\undomanager\juce_UndoableAction.h">
       <Filter>Juce Modules\juce_data_structures\undomanager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\undomanager\juce_UndoManager.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\undomanager\juce_UndoManager.h">
       <Filter>Juce Modules\juce_data_structures\undomanager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\app_properties\juce_ApplicationProperties.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_ApplicationProperties.h">
       <Filter>Juce Modules\juce_data_structures\app_properties</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\app_properties\juce_PropertiesFile.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_data_structures\app_properties\juce_PropertiesFile.h">
       <Filter>Juce Modules\juce_data_structures\app_properties</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_data_structures.h">
       <Filter>Juce Modules\juce_data_structures</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_ApplicationBase.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_ApplicationBase.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_CallbackMessage.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_CallbackMessage.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_DeletedAtShutdown.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_DeletedAtShutdown.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_Initialisation.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_Initialisation.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_Message.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_Message.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_MessageListener.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_MessageListener.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_MessageManager.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_MessageManager.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\messages\juce_NotificationType.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\messages\juce_NotificationType.h">
       <Filter>Juce Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\timers\juce_MultiTimer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\timers\juce_MultiTimer.h">
       <Filter>Juce Modules\juce_events\timers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\timers\juce_Timer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\timers\juce_Timer.h">
       <Filter>Juce Modules\juce_events\timers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ActionBroadcaster.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ActionBroadcaster.h">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ActionListener.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ActionListener.h">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_AsyncUpdater.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_AsyncUpdater.h">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ChangeBroadcaster.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ChangeBroadcaster.h">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ChangeListener.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ChangeListener.h">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\broadcasters\juce_ListenerList.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\broadcasters\juce_ListenerList.h">
       <Filter>Juce Modules\juce_events\broadcasters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\interprocess\juce_InterprocessConnection.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\interprocess\juce_InterprocessConnection.h">
       <Filter>Juce Modules\juce_events\interprocess</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\interprocess\juce_InterprocessConnectionServer.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\interprocess\juce_InterprocessConnectionServer.h">
       <Filter>Juce Modules\juce_events\interprocess</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\native\juce_osx_MessageQueue.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_osx_MessageQueue.h">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\native\juce_ScopedXLock.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_ScopedXLock.h">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\native\juce_win32_HiddenMessageWindow.h">
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_HiddenMessageWindow.h">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\juce_events.h">

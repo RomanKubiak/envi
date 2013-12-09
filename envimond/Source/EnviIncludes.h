@@ -48,6 +48,7 @@ namespace Ids
 	DECLARE_ID (gpioPin);
 	DECLARE_ID (delay);
 	DECLARE_ID (iterations);
+	DECLARE_ID (data);
 };
 
 static inline float getRandomFloat (const float limit)
