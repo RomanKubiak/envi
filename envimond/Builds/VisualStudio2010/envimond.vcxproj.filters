@@ -8,6 +8,9 @@
     <Filter Include="envimond\Source">
       <UniqueIdentifier>{958D036A-8B6E-2ABF-850E-CE38BA125B3B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="envimond\Source\Ext">
+      <UniqueIdentifier>{D2622469-DE26-E36E-40C6-8B3EBC2DA857}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Juce Modules">
       <UniqueIdentifier>{422C46B7-0467-2DB0-BF3C-16DFCAFD69AC}</UniqueIdentifier>
     </Filter>
@@ -100,6 +103,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Ext\minilzo.c">
+      <Filter>envimond\Source\Ext</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviWiringPi.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
@@ -447,6 +453,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Ext\lzoconf.h">
+      <Filter>envimond\Source\Ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Ext\lzodefs.h">
+      <Filter>envimond\Source\Ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Ext\minilzo.h">
+      <Filter>envimond\Source\Ext</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EnviWiringPi.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>

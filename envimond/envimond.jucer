@@ -5,6 +5,12 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <GROUP id="{FC441004-1869-03A5-FD92-65CBB7AEA62F}" name="Ext">
+        <FILE id="hEKhFg" name="lzoconf.h" compile="0" resource="0" file="Source/Ext/lzoconf.h"/>
+        <FILE id="xiTQBq" name="lzodefs.h" compile="0" resource="0" file="Source/Ext/lzodefs.h"/>
+        <FILE id="EHDlQy" name="minilzo.c" compile="1" resource="0" file="Source/Ext/minilzo.c"/>
+        <FILE id="eYGimP" name="minilzo.h" compile="0" resource="0" file="Source/Ext/minilzo.h"/>
+      </GROUP>
       <FILE id="lKlp0I" name="EnviWiringPi.cpp" compile="1" resource="0"
             file="Source/EnviWiringPi.cpp"/>
       <FILE id="bp7W0R" name="EnviWiringPi.h" compile="0" resource="0" file="Source/EnviWiringPi.h"/>
@@ -62,7 +68,7 @@
         <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2010>
-    <CODEBLOCKS targetFolder="Builds/CodeBlocks">
+    <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"
                        headerPath="../../Source/Addons"/>

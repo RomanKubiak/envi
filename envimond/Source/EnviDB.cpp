@@ -14,8 +14,7 @@
 EnviDB::EnviDB(EnviApplication &_owner) : Thread ("Envi/Database"), owner(_owner)
 {
 	_DBG("EnviDB::ctor");
-	enviStore = new EnviFlatFileStore(owner);
-	enviStore->openStore();
+	enviStore = new EnviFlatFileStore(owner, EnviFlatFileStore::CSV, true);
 }
 
 EnviDB::~EnviDB()
@@ -29,13 +28,16 @@ EnviDB::~EnviDB()
 
 const bool EnviDB::init()
 {
-	if (enviStore->isValid())
+	Result res = enviStore->openStore();
+
+	if (res.wasOk())
 	{
 		startThread();
 		return (true);
 	}
 	else
 	{
+		_ERR("EnviDB::init data store failed to open: ["+res.getErrorMessage()+"]");
 		return (false);
 	}
 }

@@ -20,6 +20,7 @@
           <Add option="-march=pentium4"/>
           <Add option="-mstackrealign"/>
           <Add option="-g"/>
+          <Add option="-w"/>
           <Add option="-D__MINGW__=1"/>
           <Add option="-D__MINGW_EXTENSION="/>
           <Add option="-DJUCER_CODEBLOCKS_20734A5D=1"/>
@@ -54,6 +55,7 @@
           <Add option="-std=gnu++0x"/>
           <Add option="-march=pentium4"/>
           <Add option="-mstackrealign"/>
+          <Add option="-w"/>
           <Add option="-D__MINGW__=1"/>
           <Add option="-D__MINGW_EXTENSION="/>
           <Add option="-DJUCER_CODEBLOCKS_20734A5D=1"/>
@@ -88,6 +90,19 @@
       <Add library="kernel32"/>
       <Add library="comctl32"/>
     </Linker>
+    <Unit filename="../../Source/Ext/lzoconf.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Ext/lzodefs.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Ext/minilzo.c"/>
+    <Unit filename="../../Source/Ext/minilzo.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/EnviWiringPi.cpp"/>
     <Unit filename="../../Source/EnviWiringPi.h">
       <Option compile="0"/>

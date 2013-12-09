@@ -18,7 +18,6 @@ int main (int argc, char* argv[])
 	ScopedJuceInitialiser_GUI plattform;
 
 	ScopedPointer <EnviApplication> enviApplication (new EnviApplication(argc, argv));
-
 	const bool ret = enviApplication->runDispatchLoop();
 	return (ret);
 }

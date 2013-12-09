@@ -127,6 +127,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Ext\minilzo.c"/>
     <ClCompile Include="..\..\Source\EnviWiringPi.cpp"/>
     <ClCompile Include="..\..\Source\EnviFlatFileStore.cpp"/>
     <ClCompile Include="..\..\Source\EnviHTTPConnection.cpp"/>
@@ -421,6 +422,9 @@
     <ClCompile Include="..\..\..\..\JUCE\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Ext\lzoconf.h"/>
+    <ClInclude Include="..\..\Source\Ext\lzodefs.h"/>
+    <ClInclude Include="..\..\Source\Ext\minilzo.h"/>
     <ClInclude Include="..\..\Source\EnviWiringPi.h"/>
     <ClInclude Include="..\..\Source\AppConfig.h"/>
     <ClInclude Include="..\..\Source\EnviDataStore.h"/>
