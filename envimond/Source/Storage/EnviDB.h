@@ -14,6 +14,7 @@
 #include "EnviIncludes.h"
 #include "EnviDataSource.h"
 #include "EnviFlatFileStore.h"
+#include "EnviSqlite3Store.h"
 class EnviApplication;
 
 class EnviDB : public Thread
@@ -28,7 +29,8 @@ class EnviDB : public Thread
 		JUCE_LEAK_DETECTOR(EnviDB)
 
 	private:
-		ScopedPointer <EnviFlatFileStore> enviStore;
+		// ScopedPointer <EnviFlatFileStore> enviStore;
+		ScopedPointer <EnviSqlite3Store> enviStore;
 		EnviApplication &owner;
 		OwnedArray <EnviData, CriticalSection> dataQueue;
 };

@@ -14,7 +14,8 @@
 EnviDB::EnviDB(EnviApplication &_owner) : Thread ("Envi/Database"), owner(_owner)
 {
 	_DBG("EnviDB::ctor");
-	enviStore = new EnviFlatFileStore(owner, EnviFlatFileStore::CSV);
+	// enviStore = new EnviFlatFileStore(owner, EnviFlatFileStore::CSV);
+	enviStore = new EnviSqlite3Store(owner);
 }
 
 EnviDB::~EnviDB()

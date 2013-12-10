@@ -115,19 +115,20 @@ void EnviDSDHT11::handleAsyncUpdate()
 {
 	_DBG("EnviDSDHT11::handleAsyncUpdate");
 	ScopedLock sl (dataSourceLock);
-	result[0].value = temperatureCelsius;
-	result[1].value = temperatureFahrenheit;
-	result[2].value	= humidity;
 	owner.sourceWrite (this);
 }
 
 #ifndef JUCE_LINUX
 bool EnviDSDHT11::readDHTValue()
 {
+	ScopedLock sl (dataSourceLock);
 	Random r(Time::getHighResolutionTicks());
-	temperatureFahrenheit	= getRandomFloat(200.0f);
-	temperatureCelsius	= getRandomFloat(100.0f);
-	humidity		= getRandomFloat(100.0f);
+	result[0].value 		= getRandomFloat(100.0f);
+	result[0].sampleTime	= Time::getCurrentTime();
+	result[1].value 		= getRandomFloat(200.0f);
+	result[1].sampleTime	= Time::getCurrentTime();
+	result[2].value			= getRandomFloat(100.0f);
+	result[2].sampleTime	= Time::getCurrentTime();
 	return (true);
 }
 #else
@@ -171,7 +172,7 @@ bool EnviDSDHT11::readDHTValue()
 		if (counter == 255) break;
 
 		// ignore first 3 transitions
-		if ((i >= 4) && (i%2 == 0)) 
+		if ((i >= 4) && (i%2 == 0))
 		{
 			// shove each bit into the storage bytes
 			dht11_dat[j/8] <<= 1;
@@ -185,9 +186,13 @@ bool EnviDSDHT11::readDHTValue()
 	// print it out if data is good
 	if ((j >= 40) && (dht11_dat[4] == ((dht11_dat[0] + dht11_dat[1] + dht11_dat[2] + dht11_dat[3]) & 0xFF)) )
 	{
-		temperatureFahrenheit	= dht11_dat[2] * 9. / 5. + 32;
-		temperatureCelsius	= String (_STR(dht11_dat[2])+"."+_STR(dht11_dat[3])).getFloatValue();
-		humidity		= String (_STR(dht11_dat[0])+"."+_STR(dht11_dat[1])).getFloatValue();
+		ScopedLock sl (dataSourceLock);
+		result[0].value 		= String (_STR(dht11_dat[2])+"."+_STR(dht11_dat[3])).getFloatValue();
+		result[0].sampleTime	= Time::getCurrentTime();
+		result[1].value 		= dht11_dat[2] * 9. / 5. + 32;
+		result[1].sampleTime	= Time::getCurrentTime();
+		result[2].value			= String (_STR(dht11_dat[0])+"."+_STR(dht11_dat[1])).getFloatValue();
+		result[2].sampleTime	= Time::getCurrentTime();
 
 		_DBG("EnviDSDHT11::readDHTValue got values");
 		_DBG(_STR(temperatureFahrenheit)+" "+_STR(temperatureCelsius)+" "+_STR(humidity));

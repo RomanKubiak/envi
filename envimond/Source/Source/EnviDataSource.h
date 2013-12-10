@@ -39,21 +39,22 @@ class EnviData
 
 		struct Value
 		{
-			Value() 
+			Value()
+				: error(0), unit(Unknown), sampleTime(Time::getCurrentTime()), index(0)
 			{}
-			Value(const Value &other) 
-				:	name(other.name), unit(other.unit), value(other.value), 
-					error(other.error), interval(other.interval), index(other.index), 
+
+			Value(const Value &other)
+				:	name(other.name), unit(other.unit), value(other.value),
+					error(other.error), index(other.index),
 					sampleTime(other.sampleTime)
 			{}
-			Value(const String _name, const Unit _unit) 
-				: name(_name), unit(_unit) 
+			Value(const String _name, const Unit _unit)
+				: name(_name), unit(_unit), error(0)
 			{}
 			String name;
 			var value;
 			bool error;
 			Unit unit;
-			int interval;
 			Time sampleTime;
 			int index;
 		};
@@ -73,7 +74,7 @@ class EnviData
 		static const EnviData fromJSON(const String &jsonString);
 		static const String toJSON(const EnviData &enviData);
 		static const String toCSVString(const EnviData &enviData, const String &separator=";");
-
+		static const StringArray toSQL(const EnviData &enviData, const String &dataTable="data", const String &unitTable="units");
 		static const String unitToString(const Unit unit);
 		static const Unit stringToUnit(const String &unit);
 

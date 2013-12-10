@@ -23,11 +23,17 @@ class EnviLog : public AsyncUpdater, public Logger
 		void handleAsyncUpdate();
 		void logMessage(const int level, const String &message);
 		void logMessage(const String &message);
+		const Result setLogToFile(const bool logToFile);
+		void setLogToConsole(const bool logToConsole);
+		static const String levelToString(const int logLevel);
 
 		juce_DeclareSingleton (EnviLog, false);
 
 	private:
 		EnviApplication *owner;
+		ScopedPointer <FileLogger> fileLogger;
+		bool logToFile, logToConsole;
+
 };
 
 

@@ -24,6 +24,7 @@ class EnviDataStore
         virtual const Result storeData(const EnviData &dataToStore)								= 0;
         virtual const Result rotate()															= 0;
 		virtual const bool isValid()															= 0;
+		virtual const Result flush()															= 0;
 	protected:
 		EnviApplication &owner;
 };

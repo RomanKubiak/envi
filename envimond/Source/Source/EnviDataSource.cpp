@@ -88,13 +88,12 @@ const EnviData EnviData::fromJSON(const String &jsonString)
 	for (int i=0; i<values.size(); i++)
 	{
 		EnviData::Value value(values[i]["name"], stringToUnit(values[i]["unit"]));
-		
+
 		value.value			= values[i]["value"];
 		value.error			= values[i]["error"];
 		value.sampleTime	= Time(values[i]["sampleTime"]);
-		value.interval		= values[i]["interval"];
 		value.index			= values[i]["index"];
-		
+
 		enviData.addValue (value);
 	}
 
@@ -107,22 +106,21 @@ const String EnviData::toJSON(const EnviData &enviData)
 	DynamicObject *ds = new DynamicObject();
 	ds->setProperty ("name", enviData.dataSourceName);
 	var values;
-	
+
 	for (int i=0; i<enviData.getNumValues(); i++)
 	{
 		DynamicObject *value = new DynamicObject();
 		value->setProperty ("name", enviData[i].name);
 		value->setProperty ("value", enviData[i].value.toString());
 		value->setProperty ("unit", unitToString(enviData[i].unit));
-		value->setProperty ("interval", enviData[i].interval);
 		value->setProperty ("error", enviData[i].error);
 		value->setProperty ("sampleTime", enviData[i].sampleTime.getMilliseconds());
 		value->setProperty ("index", enviData[i].index);
-		
+
 		values.append (value);
 	}
 	ds->setProperty ("values", values);
-	
+
 	return (JSON::toString(var(ds)));
 }
 
@@ -131,7 +129,7 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 	String ret;
 	for (int i=0; i<enviData.getNumValues(); i++)
 	{
-		ret 	
+		ret
 			<< enviData.dataSourceName				<< separator
 			<< enviData[i].name 					<< separator
 			<< unitToString(enviData[i].unit) 			<< separator
@@ -141,6 +139,30 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 			<< "\n";
 	}
 	return (ret);
+}
+
+const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTable, const String &unitTable)
+{
+	StringArray queries;
+	String sql;
+
+	for (int i=0; i<enviData.getNumValues(); i++)
+	{
+		sql << "INSERT INTO "
+			<< dataTable
+			<< "(sourceName, valueName, valueValue, valueTime, valueError, valueUnit)"
+			<< " VALUES ("
+			<< "'" << enviData.dataSourceName << "',"
+			<< "'" << enviData[i].name << "',"
+			<< "'" << enviData[i].value.toString() << "',"
+			<< "'" << enviData[i].sampleTime.toMilliseconds() << "',"
+			<< enviData[i].error << ","
+			<< (int)enviData[i].unit << ");";
+
+		queries.add (sql);
+	}
+
+	return (queries);
 }
 
 const String EnviData::unitToString(const EnviData::Unit unit)
