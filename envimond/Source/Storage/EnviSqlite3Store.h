@@ -15,6 +15,12 @@
 #include "EnviDataStore.h"
 #include "Externals/sqlite3.h"
 
+#define ENVI_DB_SCHEMA "\
+CREATE TABLE IF NOT EXISTS units	(id INTEGER PRIMARY KEY, enumId   INTEGER,  symbol TEXT);\
+CREATE TABLE IF NOT EXISTS sources	(id INTEGER PRIMARY KEY, enumId   INTEGER,  name TEXT, interval INTEGER, config TEXT);\
+CREATE TABLE IF NOT EXISTS data		(id INTEGER PRIMARY KEY, sourceId INTEGER , name TEXT, value REAL,       unit INTEGER, error INTEGER, timestamp TIMESTAMP);\
+"
+
 class EnviSqlite3Store : public EnviDataStore
 {
 	public:
@@ -28,6 +34,7 @@ class EnviSqlite3Store : public EnviDataStore
 		const bool isValid();
 		const Result flush();
 
+		const Result createDatabase();
 		const Result transactionBegin();
         const Result transactionExecute(const String &query);
         const Result transactionCommit();

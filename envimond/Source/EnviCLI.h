@@ -21,6 +21,7 @@ class EnviCLI
 		StringPairArray &getAllArguments();
 		const String getParameter(const String &argument);
 		const bool isSet(const String &argument);
+		void printHelp();
 		JUCE_LEAK_DETECTOR(EnviCLI);
 
 	private:

@@ -35,6 +35,17 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 *	Envi application classes
 	 */
 	EnviLog::getInstance()->setOwner(this);
+
+	if (!enviCLI.getParameter("log-file").isEmpty())
+	{
+		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));
+
+		if (!res.wasOk())
+		{
+			_ERR("Can't write to specified log file: ["+res.getErrorMessage()+"]");
+		}
+	}
+
 	enviHTTP	= new EnviHTTP(*this);
 	enviDB		= new EnviDB(*this);
 
@@ -216,7 +227,6 @@ void EnviApplication::sourceFailed(EnviDataSource *dataSource)
 
 void EnviApplication::sourceWrite(EnviDataSource *dataSource)
 {
-	_DBG(EnviData::toCSVString(dataSource->getResult()));
 	enviDB->writeResult (dataSource);
 }
 

@@ -11,17 +11,16 @@
 #include "EnviDSDHT11.h"
 #include "EnviApplication.h"
 
-EnviDSDHT11::EnviDSDHT11(EnviApplication &owner, const ValueTree instanceConfig)
-	: EnviDataSource(owner), Thread("EnviDSDHT11")
+EnviDSDHT11::EnviDSDHT11(EnviApplication &_owner, const ValueTree _instanceConfig)
+	: EnviDataSource(_owner, _instanceConfig), Thread("EnviDSDHT11")
 {
-	instanceState = instanceConfig.createCopy();
-
-	if (instanceState.isValid())
+	if (instanceConfig.isValid())
 	{
-		timeout			= (bool)instanceState.hasProperty (Ids::timeout)	? (int)getProperty(Ids::timeout)	: 5000;
-		gpioPin			= (int)instanceState.hasProperty(Ids::gpioPin)		? (int)getProperty(Ids::gpioPin)	: 5;
-		iterationsDelay		= (int)instanceState.hasProperty(Ids::delay)		? (int)getProperty(Ids::delay)		: 2000;
-		iterations		= (int)instanceState.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
+		timeout				= (bool)instanceConfig.hasProperty (Ids::timeout)	? (int)getProperty(Ids::timeout)	: 5000;
+		gpioPin				= (int)instanceConfig.hasProperty(Ids::gpioPin)		? (int)getProperty(Ids::gpioPin)	: 5;
+		iterationsDelay		= (int)instanceConfig.hasProperty(Ids::delay)		? (int)getProperty(Ids::delay)		: 2000;
+		iterations			= (int)instanceConfig.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
+		index				= result.dataSourceId	= DHT11_DS + (int)getProperty(Ids::index);
 	}
 
 	result.addValue (EnviData::Value("temperature", EnviData::Celsius));
@@ -74,12 +73,6 @@ const EnviData EnviDSDHT11::getResult()
 {
 	ScopedLock sl (dataSourceLock);
 	return (result);
-}
-
-const var EnviDSDHT11::getProperty (const Identifier &identifier)
-{
-	ScopedLock sl (dataSourceLock);
-	return (instanceState.getProperty (identifier));
 }
 
 void EnviDSDHT11::run()

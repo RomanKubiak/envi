@@ -12,7 +12,7 @@
 #include "EnviApplication.h"
 
 EnviSqlite3Store::EnviSqlite3Store(EnviApplication &owner)
-	: EnviDataStore (owner), db(nullptr), queryCacheSize(2)
+	: EnviDataStore (owner), db(nullptr), queryCacheSize(6)
 {
 }
 
@@ -43,7 +43,7 @@ const Result EnviSqlite3Store::openStore()
 	else
 	{
 		_DBG("EnviSqlite3Store::openStore sqlite3_opened success for file: ["+storeFile.getFullPathName()+"]");
-		return (Result::ok());
+		return (createDatabase());
 	}
 }
 
@@ -60,7 +60,6 @@ const Result EnviSqlite3Store::storeData(const EnviData &dataToStore)
 
 	if (sqlQueries.size() >= queryCacheSize)
 	{
-
 		return (flush());
 	}
 
@@ -78,18 +77,24 @@ const Result EnviSqlite3Store::flush()
 		_DBG("\ttransaction started");
 		for (int i=0; i<sqlQueries.size(); i++)
 		{
-			_DBG("\texecute: ["+sqlQueries[i]+"]");
+			_DBG("\texecute:");
+			_DBG(sqlQueries[i]);
+
             res = transactionExecute(sqlQueries[i]);
 
             if (!res.wasOk())
 			{
+				_LOG(LOG_ERROR, "Transaction failed: ["+res.getErrorMessage()+"]");
+				sqlQueries.clear();
 				break;
 			}
 		}
 
+		sqlQueries.clear();
 		return (res = transactionCommit());
 	}
 
+	sqlQueries.clear();
 	return (res);
 }
 
@@ -109,13 +114,14 @@ const Result EnviSqlite3Store::transactionBegin()
 
 const Result EnviSqlite3Store::transactionExecute(const String &query)
 {
-	char *errorMessage = nullptr;
-	const int ret = sqlite3_exec (db, query.toUTF8(), nullptr, nullptr, &errorMessage);
+	char *errmsg = nullptr;
+	const int ret = sqlite3_exec (db, query.toUTF8(), nullptr, nullptr, &errmsg);
 
 	if (ret != SQLITE_OK)
 	{
-		sqlite3_free (errorMessage);
-		return (Result::fail("Failed to execute query: ["+_STR(errorMessage)+"] query: ["+query+"]"));
+		String errorMessage = CharPointer_UTF8(errmsg);
+		sqlite3_free (errmsg);
+		return (Result::fail("Failed to execute query: [" + errorMessage + "] query: ["+query+"]"));
 	}
 
 	return (Result::ok());
@@ -123,13 +129,14 @@ const Result EnviSqlite3Store::transactionExecute(const String &query)
 
 const Result EnviSqlite3Store::transactionCommit()
 {
-	char *errorMessage = nullptr;
-	const int ret = sqlite3_exec (db, "COMMIT", nullptr, nullptr, &errorMessage);
+	char *errmsg = nullptr;
+	const int ret = sqlite3_exec (db, "COMMIT", nullptr, nullptr, &errmsg);
 
 	if (ret != SQLITE_OK)
 	{
-		sqlite3_free (errorMessage);
-		return (Result::fail("Failed to begin transaction: ["+_STR(errorMessage)+"]"));
+		String errorMessage = CharPointer_UTF8(errmsg);
+		sqlite3_free (errmsg);
+		return (Result::fail("Failed to begin transaction: [" + errorMessage + "]"));
 	}
 
 	return (Result::ok());
@@ -137,13 +144,29 @@ const Result EnviSqlite3Store::transactionCommit()
 
 const Result EnviSqlite3Store::transactionRollback()
 {
-	char *errorMessage = nullptr;
-	const int ret = sqlite3_exec (db, "ROLLBACK", nullptr, nullptr, &errorMessage);
+	char *errmsg = nullptr;
+	const int ret = sqlite3_exec (db, "ROLLBACK", nullptr, nullptr, &errmsg);
 
 	if (ret != SQLITE_OK)
 	{
-		sqlite3_free (errorMessage);
-		return (Result::fail("Failed to begin transaction: ["+_STR(errorMessage)+"]"));
+		String errorMessage = CharPointer_UTF8(errmsg);
+		sqlite3_free (errmsg);
+		return (Result::fail("Failed to rollback transaction: [" + errorMessage + "]"));
+	}
+
+	return (Result::ok());
+}
+
+const Result EnviSqlite3Store::createDatabase()
+{
+	char *errmsg = nullptr;
+	const int ret = sqlite3_exec (db, ENVI_DB_SCHEMA, nullptr, nullptr, &errmsg);
+
+	if (ret != SQLITE_OK)
+	{
+		String errorMessage = CharPointer_UTF8(errmsg);
+		sqlite3_free (errmsg);
+		return (Result::fail("Failed to create database: [" + errorMessage + "]"));
 	}
 
 	return (Result::ok());

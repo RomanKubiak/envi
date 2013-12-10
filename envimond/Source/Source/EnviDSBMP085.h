@@ -18,14 +18,13 @@ class EnviApplication;
 class EnviDSBMP085 : public EnviDataSource, public Thread, public AsyncUpdater
 {
 	public:
-		EnviDSBMP085(EnviApplication &owner, const ValueTree instanceConfig);
+		EnviDSBMP085(EnviApplication &_owner, const ValueTree _instanceConfig);
 		~EnviDSBMP085();
 		const String getName();
 		const int getInterval();
 		const int getTimeout();
 		const bool execute();
 		const EnviData getResult();
-		const var getProperty (const Identifier &identifier);
 		void run();
 		void handleAsyncUpdate();
 
@@ -33,7 +32,6 @@ class EnviDSBMP085 : public EnviDataSource, public Thread, public AsyncUpdater
 
 	private:
 		EnviData result;
-		ValueTree instanceState;
 		int i2cAddr;
 		int timeout;
 };

@@ -14,9 +14,8 @@
 juce_ImplementSingleton (EnviLog)
 
 EnviLog::EnviLog()
-	: owner(nullptr), logToFile(false), logToConsole(true)
+	: owner(nullptr), logToConsole(true)
 {
-	_DBG("EnviLog::ctor");
 	Logger::setCurrentLogger (this);
 }
 
@@ -36,9 +35,18 @@ void EnviLog::handleAsyncUpdate()
 
 void EnviLog::logMessage (const int level, const String &message)
 {
+	const String msg = Time::getCurrentTime().formatted ("%Y-%m-%d %H:%M:%S") +" ENVI ["+levelToString(level)+"]: "+message;
+
+	Logger::outputDebugString (msg);
+
 	if (logToConsole)
 	{
-		std::cout << "ENVI [" << levelToString(level) << "]: " << message << std::endl;
+		std::cout << msg << std::endl;
+	}
+
+	if (fileLogger)
+	{
+		fileLogger->logMessage (msg);
 	}
 }
 
@@ -67,24 +75,15 @@ const String EnviLog::levelToString(const int logLevel)
 	return ("INFO");
 }
 
-const Result EnviLog::setLogToFile(const bool _logToFile)
+const Result EnviLog::setLogToFile(const File fileToLogTo)
 {
-	logToFile	= logToFile;
-
-	if (logToFile)
+	if (fileToLogTo.hasWriteAccess())
 	{
-		if (owner)
-		{
-			File f(owner->getOption("log-file").toString());
-			if (f.hasWriteAccess())
-			{
-				fileLogger = new FileLogger (f, "Envi log");
-			}
-			else
-			{
-				return (Result::fail("Can't write to log file: ["+f.getFullPathName()+"]"));
-			}
-		}
+		fileLogger = new FileLogger (fileToLogTo, "Envi log");
+		return (Result::ok());
 	}
-	return (Result::ok());
+	else
+	{
+		return (Result::fail("Can't write to log file: ["+fileToLogTo.getFullPathName()+"]"));
+	}
 }

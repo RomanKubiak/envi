@@ -26,14 +26,13 @@ class EnviApplication;
 class EnviDSDHT11 : public EnviDataSource, public Thread, public AsyncUpdater
 {
 	public:
-		EnviDSDHT11(EnviApplication &owner, const ValueTree instanceConfig);
+		EnviDSDHT11(EnviApplication &_owner, const ValueTree _instanceConfig);
 		~EnviDSDHT11();
 		const String getName();
 		const int getInterval();
 		const int getTimeout();
 		const bool execute();
 		const EnviData getResult();
-		const var getProperty (const Identifier &identifier);
 		void run();
 		void handleAsyncUpdate();
 		bool readDHTValue();
@@ -42,7 +41,6 @@ class EnviDSDHT11 : public EnviDataSource, public Thread, public AsyncUpdater
 	private:
 		int dht11_dat[5];
 		EnviData result;
-		ValueTree instanceState;
 		int gpioPin;
 		int timeout;
 		int iterations;

@@ -23,7 +23,7 @@ class EnviLog : public AsyncUpdater, public Logger
 		void handleAsyncUpdate();
 		void logMessage(const int level, const String &message);
 		void logMessage(const String &message);
-		const Result setLogToFile(const bool logToFile);
+		const Result setLogToFile(const File _fileToLogTo);
 		void setLogToConsole(const bool logToConsole);
 		static const String levelToString(const int logLevel);
 
@@ -32,7 +32,7 @@ class EnviLog : public AsyncUpdater, public Logger
 	private:
 		EnviApplication *owner;
 		ScopedPointer <FileLogger> fileLogger;
-		bool logToFile, logToConsole;
+		bool logToConsole;
 
 };
 

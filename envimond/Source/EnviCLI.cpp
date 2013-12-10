@@ -35,8 +35,7 @@ EnviCLI::EnviCLI (const int argc, char *argv[])
 
 		if (c == -1)
 			break;
-     
-		_DBG("option("+String(c)+"): option=["+String(long_options[option_index].name)+(optarg ? ("] value=["+String(optarg)+"]") : "]"));
+
 		arguments.set (_STR(long_options[option_index].name), _STR(optarg));
 	}
 }
@@ -54,4 +53,8 @@ const bool EnviCLI::isSet(const String &argument)
 const String EnviCLI::getParameter(const String &argument)
 {
 	return (arguments.getValue (argument, String::empty));
+}
+
+void EnviCLI::printHelp()
+{
 }

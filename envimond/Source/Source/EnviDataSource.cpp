@@ -15,11 +15,14 @@ EnviData::EnviData()
 }
 
 EnviData::EnviData(const EnviData &other)
-	: values(other.values), dataSourceName(other.dataSourceName)
+	:	values(other.values), 
+		dataSourceName(other.dataSourceName),
+		dataSourceId(other.dataSourceId)
 {
 }
 
 EnviData::EnviData(const String &firstValueName, const var firstValueValue, const Time firstValueSampleTime)
+	: dataSourceId(0)
 {
 	if (firstValueName != String::empty)
 	{
@@ -33,6 +36,7 @@ EnviData::EnviData(const String &firstValueName, const var firstValueValue, cons
 }
 
 EnviData::EnviData(const String &firstValueName, const Unit valueUnit)
+	: dataSourceId(0)
 {
 	if (firstValueName != String::empty)
 	{
@@ -78,11 +82,12 @@ const int EnviData::getSize() const
 	return (dataSourceName.length() + sizeof(Value) * getNumValues());
 }
 
-const EnviData EnviData::fromJSON(const String &jsonString)
+const EnviData EnviData::fromJSON(const String &jsonString, const int dataSourceIndex)
 {
 	EnviData enviData;
 	var data				= JSON::parse (jsonString);
 	enviData.dataSourceName = data["name"];
+	enviData.dataSourceId	= dataSourceIndex;
 	var values				= data["values"];
 
 	for (int i=0; i<values.size(); i++)
@@ -144,20 +149,20 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTable, const String &unitTable)
 {
 	StringArray queries;
-	String sql;
 
 	for (int i=0; i<enviData.getNumValues(); i++)
 	{
+		String sql;
 		sql << "INSERT INTO "
 			<< dataTable
-			<< "(sourceName, valueName, valueValue, valueTime, valueError, valueUnit)"
+			<< "(sourceId, name, value, timestamp, error, unit)"
 			<< " VALUES ("
-			<< "'" << enviData.dataSourceName << "',"
-			<< "'" << enviData[i].name << "',"
-			<< "'" << enviData[i].value.toString() << "',"
-			<< "'" << enviData[i].sampleTime.toMilliseconds() << "',"
-			<< enviData[i].error << ","
-			<< (int)enviData[i].unit << ");";
+			<< enviData.dataSourceId							<< ","
+			<< "'"	<< enviData[i].name							<< "',"
+			<< "'"	<< (float)enviData[i].value					<< "',"
+			<< "'"	<< enviData[i].sampleTime.toMilliseconds()	<< "',"
+			<<		(int)enviData[i].error						<< ","
+			<<		(int)enviData[i].unit						<< ");\n";
 
 		queries.add (sql);
 	}
@@ -239,4 +244,30 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 	if (unit == "degF")
 		return (EnviData::Fahrenheit);
 	return (EnviData::Unknown);
+}
+
+EnviDataSource::EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig) 
+	: disabled(false), owner(_owner), instanceConfig(_instanceConfig.createCopy())
+{
+}
+
+String EnviDataSource::getScopeUID() const
+{
+	return ("EnviDataSource");
+}
+
+Expression EnviDataSource::getSymbolValue(const String &symbol) const
+{
+	return (Expression(0.0));
+}
+
+double EnviDataSource::evaluateFunction (const String &functionName, const double *parameters, int numParameters) const
+{
+	return (0.0);
+}
+
+const var EnviDataSource::getProperty (const Identifier &identifier)
+{
+	ScopedLock sl (dataSourceLock);
+	return (instanceConfig.getProperty (identifier));
 }

@@ -11,24 +11,14 @@
 #include "EnviDSCommand.h"
 #include "EnviApplication.h"
 
-EnviDSCommand::EnviDSCommand(EnviApplication &owner, const ValueTree instanceConfig)
-	: EnviDataSource(owner), Thread("EnviDSCommand"), timeout(0)
+EnviDSCommand::EnviDSCommand(EnviApplication &_owner, const ValueTree _instanceConfig)
+	: EnviDataSource(_owner, _instanceConfig), Thread("EnviDSCommand"), timeout(0)
 {
-	instanceState = instanceConfig.createCopy();
-
-	if (instanceState.isValid())
+	if (instanceConfig.isValid())
 	{
-		timeout = (bool)instanceState.hasProperty (Ids::timeout) ? (int)getProperty(Ids::timeout) : 5000;
-
-		if (!instanceState.hasProperty(Ids::cmd))
-		{
-			_WRN("EnviDSCommand::ctor no cmd set, disabling source");
-			setDisabled(true);
-		}
-		else
-		{
-			cmd		= getProperty(Ids::cmd);
-		}
+		index				= result.dataSourceId	= Command_DS + (int)getProperty(Ids::index);
+		timeout				= instanceConfig.hasProperty (Ids::timeout)	? getProperty(Ids::timeout) : 5000;
+		cmd					= instanceConfig.hasProperty (Ids::cmd)		? getProperty(Ids::cmd).toString()		: String::empty;
 	}
 }
 
@@ -76,13 +66,7 @@ const bool EnviDSCommand::execute()
 const EnviData EnviDSCommand::getResult()
 {
 	ScopedLock sl (dataSourceLock);
-	return (EnviData::fromJSON(commandOutput));
-}
-
-const var EnviDSCommand::getProperty (const Identifier &identifier)
-{
-	ScopedLock sl (dataSourceLock);
-	return (instanceState.getProperty (identifier));
+	return (EnviData::fromJSON(commandOutput,index));
 }
 
 void EnviDSCommand::run()
@@ -94,6 +78,13 @@ void EnviDSCommand::run()
 			if (threadShouldExit())
 			{
 				_DBG("EnviDSCommand::run thread signalled to exit");
+				return;
+			}
+
+			if (cmd.isEmpty())
+			{
+				_WRN("EnviDSCommand::run command is an empty string (not set in XML?), disabling");
+				setDisabled (true);
 				return;
 			}
 

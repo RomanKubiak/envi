@@ -10,24 +10,14 @@
 
 #include "EnviDSBMP085.h"
 
-EnviDSBMP085::EnviDSBMP085(EnviApplication &owner, const ValueTree instanceConfig)
-	: EnviDataSource(owner), Thread("EnviDSBMP085"), i2cAddr(-1), timeout(-1)
+EnviDSBMP085::EnviDSBMP085(EnviApplication &_owner, const ValueTree _instanceConfig)
+	: EnviDataSource(_owner, _instanceConfig), Thread("EnviDSBMP085"), i2cAddr(-1), timeout(-1)
 {
-	instanceState = instanceConfig.createCopy();
-
-	if (instanceState.isValid())
+	if (instanceConfig.isValid())
 	{
-		timeout = (bool)instanceState.hasProperty (Ids::timeout) ? (int)getProperty(Ids::timeout) : 5000;
-
-		if (!instanceState.hasProperty(Ids::i2cAddr))
-		{
-			_WRN("EnviDSBMP085::ctor no i2cAddr set, disabling source");
-			setDisabled(true);
-		}
-		else
-		{
-			i2cAddr	= getProperty(Ids::i2cAddr);
-		}
+		timeout				= (bool)instanceConfig.hasProperty(Ids::timeout)	? (int)getProperty(Ids::timeout)	: 5000;
+		i2cAddr				= (bool)instanceConfig.hasProperty(Ids::i2cAddr)	? (int)getProperty(Ids::i2cAddr)	: 0x77;
+		index				= result.dataSourceId	= BMP086_DS + (int)getProperty(Ids::index);
 	}
 }
 
@@ -76,12 +66,6 @@ const EnviData EnviDSBMP085::getResult()
 {
 	ScopedLock sl (dataSourceLock);
 	return (result);
-}
-
-const var EnviDSBMP085::getProperty (const Identifier &identifier)
-{
-	ScopedLock sl (dataSourceLock);
-	return (instanceState.getProperty (identifier));
 }
 
 void EnviDSBMP085::run()

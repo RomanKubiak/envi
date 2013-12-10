@@ -31,6 +31,13 @@
 
 #define ENVI_TIMER_OFFSET		10
 
+enum EnviDataSourceIndex
+{
+	Command_DS	= 0x0000,
+	BMP086_DS	= 0x000f,
+	DHT11_DS	= 0x00f0
+};
+
 namespace Ids
 {
 	#define DECLARE_ID(name)      const Identifier name (#name)
@@ -49,6 +56,7 @@ namespace Ids
 	DECLARE_ID (delay);
 	DECLARE_ID (iterations);
 	DECLARE_ID (data);
+	DECLARE_ID (index);
 };
 
 static inline float getRandomFloat (const float limit)

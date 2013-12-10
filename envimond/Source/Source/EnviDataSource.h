@@ -14,7 +14,7 @@
 #include "EnviIncludes.h"
 class EnviApplication;
 
-class EnviData
+class EnviData 
 {
 	public:
 		enum Unit
@@ -71,7 +71,7 @@ class EnviData
 		Array <Value> values;
 
 		const int getSize() const;
-		static const EnviData fromJSON(const String &jsonString);
+		static const EnviData fromJSON(const String &jsonString, const int dataSourceIndex=0);
 		static const String toJSON(const EnviData &enviData);
 		static const String toCSVString(const EnviData &enviData, const String &separator=";");
 		static const StringArray toSQL(const EnviData &enviData, const String &dataTable="data", const String &unitTable="units");
@@ -79,26 +79,27 @@ class EnviData
 		static const Unit stringToUnit(const String &unit);
 
 		String dataSourceName;
+		int dataSourceId;
 		JUCE_LEAK_DETECTOR(EnviData);
+
+	protected:
+		
 };
 
-class EnviDataSource : public ChangeBroadcaster
+class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
 {
 	public:
-		EnviDataSource(EnviApplication &_owner) : owner(_owner), disabled(false)
-		{
-		}
-
-		virtual ~EnviDataSource()
-		{
-		}
-
+		EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig);
+		virtual ~EnviDataSource() {}
+		virtual const var getProperty (const Identifier &identifier);
 		virtual const String getName() 		= 0;
 		virtual const int getInterval() 	= 0;
 		virtual const int getTimeout()		= 0;
 		virtual const bool execute() 		= 0;
 		virtual const EnviData getResult()	= 0;
 		virtual EnviData::Unit getUnit()	{ return (EnviData::Integer); }
+
+		ValueTree getConfig()				{ return (instanceConfig); }
 		bool startSource()
 		{
 			ScopedLock sl(dataSourceLock);
@@ -124,11 +125,16 @@ class EnviDataSource : public ChangeBroadcaster
 			return (disabled);
 		}
 
+		String getScopeUID() const;
+		Expression getSymbolValue(const String &symbol) const;
+		double evaluateFunction (const String &functionName, const double *parameters, int numParameters) const;
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
+		ValueTree instanceConfig;
 		EnviApplication &owner;
 		CriticalSection dataSourceLock;
+		int index;
 
 	private:
 		Time startTime, endTime;
