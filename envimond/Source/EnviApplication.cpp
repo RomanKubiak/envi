@@ -1,4 +1,4 @@
-/*
+ /*
   ==============================================================================
 
     EnviApplication.cpp
@@ -14,27 +14,29 @@
 #include "EnviDSDHT11.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
-	: enviCLI(argc, argv), valid(true)
+	: enviCLI(nullptr), valid(true)
 {
-	_DBG(enviCLI.getAllArguments().getDescription());
+	enviCLI = new EnviCLI (argc, argv);
 
-	if (enviCLI.isSet("help"))
+	_DBG(enviCLI->getAllArguments().getDescription());
+
+	if (enviCLI->isSet("help"))
 	{
-		enviCLI.printHelp();
+		enviCLI->printHelp();
 		valid = false;
 		return;
 	}
 
-	if (enviCLI.isSet("list-sources"))
+	if (enviCLI->isSet("list-sources"))
 	{
 		std::cout << "List sources:\n\n";
 		valid = false;
 		return;
 	}
 
-	if (enviCLI.isSet("log-file"))
+	if (enviCLI->isSet("log-file"))
 	{
-		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));
+		Result res = EnviLog::getInstance()->setLogToFile (enviCLI->getParameter("log-file"));
 
 		if (!res.wasOk())
 		{

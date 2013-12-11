@@ -29,10 +29,6 @@ void EnviLog::setOwner (EnviApplication *_owner)
 	owner = _owner;
 }
 
-void EnviLog::handleAsyncUpdate()
-{
-}
-
 void EnviLog::logMessage (const int level, const String &message)
 {
 	const String msg = Time::getCurrentTime().formatted ("%Y-%m-%d %H:%M:%S") +" ENVI ["+levelToString(level)+"]: "+message;

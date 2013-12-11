@@ -40,12 +40,12 @@ class EnviApplication : public MultiTimer
 		const var getOption(const Identifier &optionId);
 		const bool isValid() { return (valid); }
 
-		JUCE_LEAK_DETECTOR(EnviApplication);
+		//JUCE_LEAK_DETECTOR(EnviApplication);
 
 	private:
 		PropertySet defaultPropertyStorage;
 		ApplicationProperties applicationProperties;
-		EnviCLI enviCLI;
+		ScopedPointer <EnviCLI> enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
 		bool valid;
