@@ -17,7 +17,7 @@ EnviDSCommand::EnviDSCommand(EnviApplication &_owner, const ValueTree _instanceC
 	if (instanceConfig.isValid())
 	{
 		index				= result.dataSourceId	= Command_DS + (int)getProperty(Ids::index);
-		timeout				= instanceConfig.hasProperty (Ids::timeout)	? getProperty(Ids::timeout) : 5000;
+		timeout				= instanceConfig.hasProperty (Ids::timeout)	? (int)getProperty(Ids::timeout) : 5000;
 		cmd					= instanceConfig.hasProperty (Ids::cmd)		? getProperty(Ids::cmd).toString()		: String::empty;
 	}
 }
@@ -28,21 +28,6 @@ EnviDSCommand::~EnviDSCommand()
 	{
 		waitForThreadToExit (500);
 	}
-}
-
-const String EnviDSCommand::getName()
-{
-	return (getProperty(Ids::name));
-}
-
-const int EnviDSCommand::getInterval()
-{
-	return (getProperty(Ids::interval));
-}
-
-const int EnviDSCommand::getTimeout()
-{
-	return (getProperty(Ids::timeout));
 }
 
 const bool EnviDSCommand::execute()
@@ -101,7 +86,7 @@ void EnviDSCommand::run()
 				else
 				{
 					_WRN("EnviDSCommand::execute ["+getName()+"] timeout");
-	
+
 					if (!childProc.kill())
 					{
 						_WRN("EnviDSCommand::execute ["+getName()+"] can't kill child process");

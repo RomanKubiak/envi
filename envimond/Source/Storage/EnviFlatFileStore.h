@@ -52,7 +52,7 @@ class EnviDataFileJSON : public EnviDataFile
 		~EnviDataFileJSON();
 		const Result appendData(const EnviData &data);
 		const Result flush();
-		
+
 		JUCE_LEAK_DETECTOR(EnviDataFileJSON);
 
 	private:
@@ -79,6 +79,7 @@ class EnviFlatFileStore : public EnviDataStore
 		const bool isValid();
 		const String getExtension();
 		static const FileType getFileType(const String &extensionToCheck);
+
 		JUCE_LEAK_DETECTOR(EnviFlatFileStore);
 
 	private:

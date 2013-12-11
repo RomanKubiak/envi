@@ -14,7 +14,7 @@
 #include "EnviIncludes.h"
 class EnviApplication;
 
-class EnviData 
+class EnviData
 {
 	public:
 		enum Unit
@@ -83,7 +83,7 @@ class EnviData
 		JUCE_LEAK_DETECTOR(EnviData);
 
 	protected:
-		
+
 };
 
 class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
@@ -92,9 +92,9 @@ class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
 		EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig);
 		virtual ~EnviDataSource() {}
 		virtual const var getProperty (const Identifier &identifier);
-		virtual const String getName() 		= 0;
-		virtual const int getInterval() 	= 0;
-		virtual const int getTimeout()		= 0;
+		virtual const String getName();
+		virtual const int getInterval();
+		virtual const int getTimeout();
 		virtual const bool execute() 		= 0;
 		virtual const EnviData getResult()	= 0;
 		virtual EnviData::Unit getUnit()	{ return (EnviData::Integer); }

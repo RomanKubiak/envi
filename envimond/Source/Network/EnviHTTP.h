@@ -28,7 +28,7 @@ class EnviHTTP : public Thread
 
 	private:
 		EnviApplication &owner;
-		StreamingSocket serverSocket;
+		ScopedPointer <StreamingSocket> serverSocket;
 		OwnedArray <EnviHTTPConnection> connectionPool;
 };
 

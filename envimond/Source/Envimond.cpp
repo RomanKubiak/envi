@@ -16,8 +16,16 @@
 int main (int argc, char* argv[])
 {
 	ScopedJuceInitialiser_GUI plattform;
+	Result returnValue = Result::ok();
 
-	ScopedPointer <EnviApplication> enviApplication (new EnviApplication(argc, argv));
-	const bool ret = enviApplication->runDispatchLoop();
-	return (ret);
+	EnviApplication *enviApplication = new EnviApplication(argc, argv);
+
+	if (enviApplication->isValid())
+	{
+		returnValue = enviApplication->runDispatchLoop();
+	}
+
+	deleteAndZero (enviApplication);
+
+	return (returnValue.wasOk() ? 0 : 1);
 }

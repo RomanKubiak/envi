@@ -22,7 +22,7 @@ EnviDB::~EnviDB()
 {
 	if (isThreadRunning())
 	{
-		notify();
+		signalThreadShouldExit();
 		waitForThreadToExit(1500);
 	}
 }

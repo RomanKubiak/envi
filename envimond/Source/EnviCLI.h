@@ -17,15 +17,18 @@
 class EnviCLI
 {
 	public:
-		EnviCLI (const int argc, char *argv[]);
+		EnviCLI (const int _argc, char *_argv[]);
 		StringPairArray &getAllArguments();
 		const String getParameter(const String &argument);
 		const bool isSet(const String &argument);
 		void printHelp();
+		const bool isValid() { return (valid); }
+
 		JUCE_LEAK_DETECTOR(EnviCLI);
 
 	private:
 		StringPairArray arguments;
+		bool valid;
 };
 
 #endif  // ENVICLI_H_INCLUDED

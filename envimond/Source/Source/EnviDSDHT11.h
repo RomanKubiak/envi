@@ -28,14 +28,12 @@ class EnviDSDHT11 : public EnviDataSource, public Thread, public AsyncUpdater
 	public:
 		EnviDSDHT11(EnviApplication &_owner, const ValueTree _instanceConfig);
 		~EnviDSDHT11();
-		const String getName();
-		const int getInterval();
-		const int getTimeout();
 		const bool execute();
 		const EnviData getResult();
 		void run();
 		void handleAsyncUpdate();
 		bool readDHTValue();
+
 		JUCE_LEAK_DETECTOR(EnviDSDHT11);
 
 	private:

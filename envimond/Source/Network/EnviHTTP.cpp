@@ -15,36 +15,46 @@
 EnviHTTP::EnviHTTP(EnviApplication &_owner) : owner(_owner), Thread("EnviHTTP")
 {
 	_DBG("EnviHTTP::ctor");
-	startThread();
+
+	serverSocket = new StreamingSocket();
+
+	if (serverSocket != nullptr)
+	{
+		if (!serverSocket->createListener(owner.getProperties() ? owner.getProperties()->getIntValue(Ids::port, 31337) : 31337))
+		{
+			_ERR("Can't listen on specified TCP port: "+_STR(serverSocket->getPort()));
+		}
+		else
+		{
+			_DBG("\tlistening on TCP port: "+_STR(serverSocket->getPort()));
+			startThread();
+		}
+	}
 }
 
 EnviHTTP::~EnviHTTP()
 {
+	if (isThreadRunning())
+	{
+		if (serverSocket != nullptr)
+			serverSocket->close();
+
+		stopThread (4000);
+		serverSocket = nullptr;
+	}
 }
 
 void EnviHTTP::run()
 {
-	if (serverSocket.createListener(owner.getProperties() ? owner.getProperties()->getIntValue(Ids::port, 31337) : 31337))
+	while ((! threadShouldExit()) && serverSocket != nullptr)
 	{
-		_DBG("EnviHTTP listening on port: "+String(serverSocket.getPort()));
+		ScopedPointer<StreamingSocket> streamingSocket (serverSocket->waitForNextConnection());
 
-		while (1)
+		if (streamingSocket != nullptr)
 		{
-			StreamingSocket *streamingSocket = serverSocket.waitForNextConnection ();
-
-			if (threadShouldExit())
-			{
-				_INF("EnviHTTP thread signaled to exit");
-				return;
-			}
-
 			_DBG("EnviHTTP accepted connection from: "+streamingSocket->getHostName());
 			processConnection (streamingSocket);
 		}
-	}
-	else
-	{
-		_ERR("EnviHTTP can't bind to TCP port: "+String(serverSocket.getPort()));
 	}
 }
 

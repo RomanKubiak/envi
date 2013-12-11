@@ -40,6 +40,8 @@ class EnviSqlite3Store : public EnviDataStore
         const Result transactionCommit();
         const Result transactionRollback();
 
+		JUCE_LEAK_DETECTOR(EnviSqlite3Store);
+
 	private:
 		StringArray sqlQueries;
 		sqlite3 *db;

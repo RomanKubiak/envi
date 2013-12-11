@@ -20,9 +20,6 @@ class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 	public:
 		EnviDSCommand(EnviApplication &_owner, const ValueTree _instanceConfig);
 		~EnviDSCommand();
-		const String getName();
-		const int getInterval();
-		const int getTimeout();
 		const bool execute();
 		const EnviData getResult();
 		void run();

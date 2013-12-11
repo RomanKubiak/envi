@@ -21,7 +21,8 @@ class EnviApplication : public MultiTimer
 {
 	public:
 		EnviApplication(int argc, char* argv[]);
-		const int runDispatchLoop();
+		~EnviApplication();
+		const Result runDispatchLoop();
 		void cleanupAndExit();
 		void addDataSource(EnviDataSource *sourceToAdd);
 		void removeDataSource(EnviDataSource *sourceToRemove);
@@ -37,6 +38,7 @@ class EnviApplication : public MultiTimer
 		void sourceFailed(EnviDataSource *dataSource);
 		void sourceWrite(EnviDataSource *dataSource);
 		const var getOption(const Identifier &optionId);
+		const bool isValid() { return (valid); }
 
 		JUCE_LEAK_DETECTOR(EnviApplication);
 
@@ -46,6 +48,7 @@ class EnviApplication : public MultiTimer
 		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
+		bool valid;
 #ifdef JUCE_LINUX
 		ScopedPointer <EnviWiringPi> enviWiringPi;
 #endif

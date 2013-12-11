@@ -29,21 +29,6 @@ EnviDSBMP085::~EnviDSBMP085()
 	}
 }
 
-const String EnviDSBMP085::getName()
-{
-	return (getProperty(Ids::name));
-}
-
-const int EnviDSBMP085::getInterval()
-{
-	return (getProperty(Ids::interval));
-}
-
-const int EnviDSBMP085::getTimeout()
-{
-	return (getProperty(Ids::timeout));
-}
-
 const bool EnviDSBMP085::execute()
 {
 	if (!isDisabled())
@@ -88,6 +73,3 @@ void EnviDSBMP085::run()
 void EnviDSBMP085::handleAsyncUpdate()
 {
 }
-
-#ifdef JUCE_LINUX
-#endif

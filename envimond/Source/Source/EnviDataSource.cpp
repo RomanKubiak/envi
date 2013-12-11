@@ -15,7 +15,7 @@ EnviData::EnviData()
 }
 
 EnviData::EnviData(const EnviData &other)
-	:	values(other.values), 
+	:	values(other.values),
 		dataSourceName(other.dataSourceName),
 		dataSourceId(other.dataSourceId)
 {
@@ -162,7 +162,7 @@ const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTa
 			<< "'"	<< (float)enviData[i].value					<< "',"
 			<< "'"	<< enviData[i].sampleTime.toMilliseconds()	<< "',"
 			<<		(int)enviData[i].error						<< ","
-			<<		(int)enviData[i].unit						<< ");\n";
+			<<		(int)enviData[i].unit						<< ");";
 
 		queries.add (sql);
 	}
@@ -246,7 +246,7 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 	return (EnviData::Unknown);
 }
 
-EnviDataSource::EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig) 
+EnviDataSource::EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig)
 	: disabled(false), owner(_owner), instanceConfig(_instanceConfig.createCopy())
 {
 }
@@ -270,4 +270,19 @@ const var EnviDataSource::getProperty (const Identifier &identifier)
 {
 	ScopedLock sl (dataSourceLock);
 	return (instanceConfig.getProperty (identifier));
+}
+
+const String EnviDataSource::getName()
+{
+	return (getProperty(Ids::name));
+}
+
+const int EnviDataSource::getInterval()
+{
+	return (getProperty(Ids::interval));
+}
+
+const int EnviDataSource::getTimeout()
+{
+	return (getProperty(Ids::timeout));
 }

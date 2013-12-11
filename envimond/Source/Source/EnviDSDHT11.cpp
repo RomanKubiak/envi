@@ -36,21 +36,6 @@ EnviDSDHT11::~EnviDSDHT11()
 	}
 }
 
-const String EnviDSDHT11::getName()
-{
-	return (getProperty(Ids::name));
-}
-
-const int EnviDSDHT11::getInterval()
-{
-	return (getProperty(Ids::interval));
-}
-
-const int EnviDSDHT11::getTimeout()
-{
-	return (getProperty(Ids::timeout));
-}
-
 const bool EnviDSDHT11::execute()
 {
 	if (!isDisabled())

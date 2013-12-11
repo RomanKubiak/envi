@@ -14,9 +14,35 @@
 #include "EnviDSDHT11.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
-	: enviCLI(argc, argv)
+	: enviCLI(argc, argv), valid(true)
 {
-	_DBG("EnviApplication::ctor");
+	_DBG(enviCLI.getAllArguments().getDescription());
+
+	if (enviCLI.isSet("help"))
+	{
+		enviCLI.printHelp();
+		valid = false;
+		return;
+	}
+
+	if (enviCLI.isSet("list-sources"))
+	{
+		std::cout << "List sources:\n\n";
+		valid = false;
+		return;
+	}
+
+	if (enviCLI.isSet("log-file"))
+	{
+		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));
+
+		if (!res.wasOk())
+		{
+			_ERR("Can't write to specified log file: ["+res.getErrorMessage()+"]");
+			valid = false;
+			return;
+		}
+	}
 
 	PropertiesFile::Options options;
 	options.applicationName		= "envi";
@@ -36,16 +62,6 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 */
 	EnviLog::getInstance()->setOwner(this);
 
-	if (!enviCLI.getParameter("log-file").isEmpty())
-	{
-		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));
-
-		if (!res.wasOk())
-		{
-			_ERR("Can't write to specified log file: ["+res.getErrorMessage()+"]");
-		}
-	}
-
 	enviHTTP	= new EnviHTTP(*this);
 	enviDB		= new EnviDB(*this);
 
@@ -54,19 +70,29 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 #endif
 }
 
-const int EnviApplication::runDispatchLoop()
+EnviApplication::~EnviApplication()
+{
+}
+
+const Result EnviApplication::runDispatchLoop()
 {
 	_DBG("EnviApplication::runDispatchLoop");
-	if (registerDataSources() && enviDB->init())
+
+	if (registerDataSources())
 	{
-		_DBG("EnviApplication::runDispatchLoop running");
-		MessageManager::getInstance()->runDispatchLoop();
-		return (0);
+		if (enviDB->init())
+		{
+			MessageManager::getInstance()->runDispatchLoop();
+			return (Result::ok());
+		}
+		else
+		{
+			return (Result::fail("Can't initialize EnivDB"));
+		}
 	}
 	else
 	{
-		_ERR("EnviApplication::runDispatchLoop error initializing sources, exit");
-		return (-1);
+		return (Result::fail("Can't register data sources"));
 	}
 }
 
