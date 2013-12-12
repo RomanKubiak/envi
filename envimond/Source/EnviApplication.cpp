@@ -24,13 +24,6 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 
 	_DBG(enviCLI.getAllArguments().getDescription());
 
-	/*
-	 * Register all data sources here
-	 */
-	dataSources.add (new EnviDSDHT11(*this));
-	dataSources.add (new EnviDSCommand(*this));
-	dataSources.add (new EnviDSBMP085(*this));
-
 	if (enviCLI.isSet("help"))
 	{
 		enviCLI.printHelp();
@@ -94,6 +87,12 @@ EnviApplication::~EnviApplication()
 {
 }
 
+const bool EnviApplication::isValid()
+{
+	ScopedLock sl(dataSources.getLock());
+	return (valid);
+}
+
 EnviCLI &EnviApplication::getCLI()
 {
 	return (enviCLI);
@@ -140,31 +139,14 @@ void EnviApplication::removeDataSource(EnviDataSource *sourceToRemove)
 
 const int EnviApplication::getNumDataSources()
 {
+	ScopedLock sl(dataSources.getLock());
 	return (dataSources.size());
 }
 
 EnviDataSource *EnviApplication::getDataSource(const int index)
 {
+	ScopedLock sl(dataSources.getLock());
 	return (dataSources[index]);
-}
-
-const File EnviApplication::getPropertiesFolder()
-{
-	if (applicationProperties.getUserSettings())
-	{
-		return (applicationProperties.getUserSettings()->getFile().getParentDirectory());
-	}
-	return (File::getSpecialLocation(File::userApplicationDataDirectory));
-}
-
-PropertySet *EnviApplication::getProperties()
-{
-	if (applicationProperties.getUserSettings())
-	{
-		return (applicationProperties.getUserSettings());
-	}
-
-	return (&defaultPropertyStorage);
 }
 
 void EnviApplication::timerCallback(int timerId)
@@ -179,7 +161,7 @@ void EnviApplication::timerCallback(int timerId)
 			return;
 		}
 
-		_LOG(LOG_INFO, "Timer triggered for data source \""+ds->getName()+"\"");
+		_INF("Timer triggered for data source type: ["+ds->getType().toString()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
 
 		if (!ds->startSource())
 		{
@@ -188,13 +170,7 @@ void EnviApplication::timerCallback(int timerId)
 	}
 }
 
-void EnviApplication::addDataSource(EnviDataSource *sourceToAdd)
-{
-	ScopedLock sl(dataSources.getLock());
-	registerDataSource (dataSources.add (sourceToAdd));
-}
-
-EnviDataSource *EnviApplication::checkForValidInstance(const ValueTree dataSourceInstance)
+EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstance)
 {
 	const String type = dataSourceInstance.getProperty(Ids::type);
 
@@ -205,12 +181,24 @@ EnviDataSource *EnviApplication::checkForValidInstance(const ValueTree dataSourc
 	}
 	else
 	{
-		for (int i=0; i<dataSources.size(); i++)
+		EnviDataSource *ds = getInstanceFromType(dataSourceInstance.getProperty(Ids::type).toString());
+
+		if (ds != nullptr)
 		{
-			if (dataSources[i]->getType() == type)
-			{
-			}
+			ScopedLock sl(dataSources.getLock());
+			dataSources.add (ds);
+
+			ds->initialize (dataSourceInstance);
+			ds->setInstanceNumber (getNumInstances(type));
+
+			startTimer (ENVI_TIMER_OFFSET + dataSources.indexOf(ds), ds->getInterval());
 		}
+		else
+		{
+			_WRN("Unknown data source type in XML: ["+type+"]");
+			return (nullptr);
+		}
+		return (ds);
 	}
 }
 
@@ -224,7 +212,7 @@ EnviDataSource *EnviApplication::createInstance(const File &sourceState)
 
 		if (instanceState.isValid())
 		{
-			return (checkForValidInstance (instanceState));
+			return (createInstance (instanceState));
 		}
 		else
 		{
@@ -234,17 +222,6 @@ EnviDataSource *EnviApplication::createInstance(const File &sourceState)
 	}
 
 	return (nullptr);
-}
-
-EnviDataSource *EnviApplication::registerDataSource(EnviDataSource *dataSource)
-{
-	if (dataSource != nullptr)
-	{
-		ScopedLock sl(dataSources.getLock());
-		startTimer (ENVI_TIMER_OFFSET + dataSources.indexOf(dataSource), dataSource->getInterval());
-	}
-
-	return (dataSource);
 }
 
 const Result EnviApplication::findDataSourcesOnDisk()
@@ -268,11 +245,9 @@ const Result EnviApplication::findDataSourcesOnDisk()
 		{
 			for (int i=0; i<sourceXmls.size(); i++)
 			{
-				EnviDataSource *ds = createInstance (sourceXmls[i]);
-
-				if (ds)
+				if (createInstance (sourceXmls[i]) == nullptr)
 				{
-					addDataSource (ds);
+					return (Result::fail("Can't create all data sources"));
 				}
 			}
 
@@ -301,7 +276,35 @@ void EnviApplication::sourceWrite(EnviDataSource *dataSource, const Result &fail
 	}
 }
 
-const var EnviApplication::getOption(const Identifier &optionId)
+EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 {
-	return (var::null);
+	if (dsType == Ids::dht11)
+	{
+		return (new EnviDSDHT11(*this));
+	}
+	else if (dsType == Ids::cmd)
+	{
+		return (new EnviDSCommand(*this));
+	}
+	else if (dsType == Ids::bmp085)
+	{
+		return (new EnviDSBMP085(*this));
+	}
+
+	return (nullptr);
+}
+
+const int EnviApplication::getNumInstances(const Identifier dsType)
+{
+	ScopedLock sl(dataSources.getLock());
+
+	int instances = 0;
+
+	for (int i=0; i<dataSources.size(); i++)
+	{
+		if (dataSources[i]->getType() == dsType)
+			instances++;
+	}
+
+	return (instances);
 }

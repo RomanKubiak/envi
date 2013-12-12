@@ -25,7 +25,6 @@ class EnviApplication : public MultiTimer
 
 		const Result runDispatchLoop();
 		void cleanupAndExit();
-		void addDataSource(EnviDataSource *sourceToAdd);
 		void removeDataSource(EnviDataSource *sourceToRemove);
 		const int getNumDataSources();
 		EnviDataSource *getDataSource(const int index);
@@ -35,12 +34,13 @@ class EnviApplication : public MultiTimer
 		const Result findDataSourcesOnDisk();
 		EnviCLI &getCLI();
 		ApplicationProperties &getApplicationProperties();
+		
 		EnviDataSource *createInstance(const File &sourceState);
-		EnviDataSource *checkForValidInstance(const ValueTree dataSourceInstance);
-		EnviDataSource *registerDataSource(EnviDataSource *dataSource);
+		EnviDataSource *createInstance(const ValueTree dataSourceInstance);
 		void sourceWrite(EnviDataSource *dataSource, const Result &failureReason);
-		const var getOption(const Identifier &optionId);
-		const bool isValid() { return (valid); }
+		const int getNumInstances(const Identifier dsType);
+		EnviDataSource *getInstanceFromType(const Identifier dsType);
+		const bool isValid();
 
 		JUCE_LEAK_DETECTOR(EnviApplication);
 

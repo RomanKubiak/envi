@@ -50,6 +50,8 @@ namespace Ids
 	DECLARE_ID (timeout);
 	DECLARE_ID (type);
 	DECLARE_ID (cmd);
+	DECLARE_ID (dht11);
+	DECLARE_ID (bmp085);
 	DECLARE_ID (port);
 	DECLARE_ID (storeFile);
 	DECLARE_ID (i2cAddr);

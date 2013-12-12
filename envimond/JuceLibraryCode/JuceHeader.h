@@ -17,6 +17,7 @@
 #include "modules/juce_core/juce_core.h"
 #include "modules/juce_data_structures/juce_data_structures.h"
 #include "modules/juce_events/juce_events.h"
+#include "BinaryData.h"
 
 #if ! DONT_SET_USING_JUCE_NAMESPACE
  // If your code uses a lot of JUCE classes, then this will obviously save you

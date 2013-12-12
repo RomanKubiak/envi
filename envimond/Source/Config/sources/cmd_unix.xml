@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataSource type="cmd"      name="JSON command interface/UNIX" 
+		        timeout="2000"  interval="30000" 
+		        cmd="/root/devel/envi/envimond/Source/Config/scripts/json.sh">
+</dataSource>

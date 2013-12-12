@@ -29,7 +29,7 @@ EnviDSDHT11::~EnviDSDHT11()
 
 const Result EnviDSDHT11::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig = _instanceConfig.createCopy();
+	instanceConfig.copyPropertiesFrom (_instanceConfig, nullptr);
 
 	if (instanceConfig.isValid())
 	{
@@ -37,6 +37,8 @@ const Result EnviDSDHT11::initialize(const ValueTree _instanceConfig)
 		iterationsDelay		= (int)instanceConfig.hasProperty(Ids::delay)		? (int)getProperty(Ids::delay)		: 2000;
 		iterations			= (int)instanceConfig.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
 	}
+
+	return (Result::ok());
 }
 
 const Result EnviDSDHT11::execute()

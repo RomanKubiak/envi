@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataSource type="cmd"      name="JSON command interface/WINDOWS"
+		        timeout="2000"  interval="5000"
+		        cmd="c:\devel\envi\envimond\Source\Config\scripts\json.bat">
+</dataSource>

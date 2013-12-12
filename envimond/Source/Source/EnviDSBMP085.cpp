@@ -32,6 +32,8 @@ const Result EnviDSBMP085::initialize(const ValueTree _instanceConfig)
 	{
 		i2cAddr				= (bool)instanceConfig.hasProperty(Ids::i2cAddr)	? (int)getProperty(Ids::i2cAddr)	: 0x77;
 	}
+
+	return (Result::ok());
 }
 
 const Result EnviDSBMP085::execute()

@@ -161,16 +161,21 @@ const EnviFlatFileStore::FileType EnviFlatFileStore::getFileType(const String &e
 const Result EnviFlatFileStore::openStore()
 {
 	_DBG("EnviFlatFileStore::openStore");
-	if (owner.getOption(Ids::storeFile).toString().isEmpty())
+	if (owner.getCLI().isSet("store-file"))
 	{
-		storeFile = owner.getPropertiesFolder().getChildFile(Ids::data.toString()+"."+getExtension());
+		storeFile = File(owner.getCLI().getParameter("store-file"));
 	}
 	else
 	{
-		storeFile = File (owner.getOption(Ids::storeFile));
+		if (owner.getApplicationProperties().getUserSettings())
+		{
+			storeFile = File (owner.getApplicationProperties().getUserSettings()->getFile().getParentDirectory().getChildFile("data.sqlite3"));
+		}
+		else
+		{
+			return (Result::fail("Can't set any default storage file"));
+		}
 	}
-
-	_DBG("EnviFlatFileStore::openStore file: ["+storeFile.getFullPathName()+"]");
 
 	if (!storeFile.existsAsFile())
 	{
@@ -180,6 +185,7 @@ const Result EnviFlatFileStore::openStore()
 		}
 		else
 		{
+			_INF("Data store file set to: "+storeFile.getFullPathName());
 			return (createDataFile());
 		}
 	}
@@ -191,6 +197,7 @@ const Result EnviFlatFileStore::openStore()
 		}
 		else
 		{
+			_INF("Data store file set to: "+storeFile.getFullPathName());
 			return (createDataFile());
 		}
 	}

@@ -8,6 +8,15 @@
     <Filter Include="envimond\Source">
       <UniqueIdentifier>{958D036A-8B6E-2ABF-850E-CE38BA125B3B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="envimond\Source\Config">
+      <UniqueIdentifier>{735CBB1F-D247-D492-1612-7813E53551A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="envimond\Source\Config\scripts">
+      <UniqueIdentifier>{E4D54D40-1036-0C78-EA4C-4D12F1D95CD7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="envimond\Source\Config\sources">
+      <UniqueIdentifier>{ED090F17-69F6-7457-7C0D-46219355C0B4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="envimond\Source\Externals">
       <UniqueIdentifier>{C31649FC-C95B-8743-99D4-9920A938AA04}</UniqueIdentifier>
     </Filter>
@@ -456,6 +465,9 @@
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_Messaging.cpp">
       <Filter>Juce Modules\juce_events\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>Juce Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp">
       <Filter>Juce Library Code</Filter>
@@ -936,11 +948,32 @@
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
+      <Filter>Juce Library Code</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\Config\scripts\json.bat">
+      <Filter>envimond\Source\Config\scripts</Filter>
+    </None>
+    <None Include="..\..\Source\Config\scripts\json.sh">
+      <Filter>envimond\Source\Config\scripts</Filter>
+    </None>
+    <None Include="..\..\Source\Config\sources\bmp085.xml">
+      <Filter>envimond\Source\Config\sources</Filter>
+    </None>
+    <None Include="..\..\Source\Config\sources\cmd_unix.xml">
+      <Filter>envimond\Source\Config\sources</Filter>
+    </None>
+    <None Include="..\..\Source\Config\sources\cmd_win32.xml">
+      <Filter>envimond\Source\Config\sources</Filter>
+    </None>
+    <None Include="..\..\Source\Config\sources\dht.xml">
+      <Filter>envimond\Source\Config\sources</Filter>
+    </None>
     <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info">
       <Filter>Juce Modules\juce_core</Filter>
     </None>

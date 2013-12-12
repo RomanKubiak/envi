@@ -265,6 +265,7 @@ const Result EnviDataSource::initialize(const ValueTree _instanceConfig)
 {
 	ScopedLock sl (dataSourceLock);
 	instanceConfig 	= _instanceConfig.createCopy();
+	return (Result::ok());
 }
 
 String EnviDataSource::getScopeUID() const
@@ -327,6 +328,7 @@ const int EnviDataSource::getInstanceNumber() const
 void EnviDataSource::setInstanceNumber(const int instanceNumber)
 {
 	setProperty (Ids::instance, instanceNumber);
+	result.dataSourceInstanceNumber = instanceNumber;
 }
 
 const EnviData EnviDataSource::getResult() const

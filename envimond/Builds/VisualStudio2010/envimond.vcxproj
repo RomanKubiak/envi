@@ -419,6 +419,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_Messaging.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\juce_data_structures.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
@@ -580,9 +581,16 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_HiddenMessageWindow.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\juce_events.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\Config\scripts\json.bat"/>
+    <None Include="..\..\Source\Config\scripts\json.sh"/>
+    <None Include="..\..\Source\Config\sources\bmp085.xml"/>
+    <None Include="..\..\Source\Config\sources\cmd_unix.xml"/>
+    <None Include="..\..\Source\Config\sources\cmd_win32.xml"/>
+    <None Include="..\..\Source\Config\sources\dht.xml"/>
     <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info"/>
     <None Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_module_info"/>
     <None Include="..\..\..\..\JUCE\modules\juce_events\juce_module_info"/>

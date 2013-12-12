@@ -48,7 +48,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifdef JUCE_WINDOWS
+#ifdef _WINDOWS
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>

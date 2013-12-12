@@ -5,6 +5,18 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <GROUP id="{265D1A6F-24DA-B6A1-E522-05306D971ACB}" name="Config">
+        <GROUP id="{D492D212-53E7-E6FF-8911-2D0F132E3937}" name="scripts">
+          <FILE id="QwgGN9" name="json.bat" compile="0" resource="1" file="Source/Config/scripts/json.bat"/>
+          <FILE id="ldE61H" name="json.sh" compile="0" resource="1" file="Source/Config/scripts/json.sh"/>
+        </GROUP>
+        <GROUP id="{CC7BA0D1-E6F4-D0A1-5CCE-5D223A05B343}" name="sources">
+          <FILE id="IDubMV" name="bmp085.xml" compile="0" resource="1" file="Source/Config/sources/bmp085.xml"/>
+          <FILE id="qb76BQ" name="cmd_unix.xml" compile="0" resource="1" file="Source/Config/sources/cmd_unix.xml"/>
+          <FILE id="hxzHBB" name="cmd_win32.xml" compile="0" resource="1" file="Source/Config/sources/cmd_win32.xml"/>
+          <FILE id="sSBeC4" name="dht.xml" compile="0" resource="1" file="Source/Config/sources/dht.xml"/>
+        </GROUP>
+      </GROUP>
       <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
         <FILE id="x1skFV" name="getopt.c" compile="1" resource="0" file="Source/Externals/getopt.c"/>
         <FILE id="vw6pVq" name="getopt.h" compile="0" resource="0" file="Source/Externals/getopt.h"/>
@@ -90,7 +102,7 @@
       </MODULEPATHS>
     </CODEBLOCKS>
     <LINUX_MAKE targetFolder="Builds/Linux" extraLinkerFlags="" externalLibraries="wiringPi&#10;juce-static-debug&#10;X11&#10;dl&#10;rt"
-                extraCompilerFlags="">
+                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="envimond" linuxArchitecture="-march=armv6" binaryPath="/usr/local/bin/"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<dataSource 	type="bmp085" 	name="BMP085 barometric pressure and temperature" 
+		          timeout="2000" 	interval="5000" 
+		          i2caddr="0x77">
+
+	<dataValue name="pressure" 	exp="" />
+	<dataValue name="temperature" 	exp="" />
+	<dataValue name="altitude" 	exp="" />
+
+</dataSource>

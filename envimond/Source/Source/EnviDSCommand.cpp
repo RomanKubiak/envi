@@ -26,12 +26,14 @@ EnviDSCommand::~EnviDSCommand()
 
 const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig = _instanceConfig.createCopy();
+	instanceConfig.copyPropertiesFrom (_instanceConfig, nullptr);
 
 	if (instanceConfig.isValid())
 	{
 		cmd					= instanceConfig.hasProperty (Ids::cmd)		? getProperty(Ids::cmd).toString()		: String::empty;
 	}
+
+	return (Result::ok());
 }
 
 const Result EnviDSCommand::execute()
@@ -66,7 +68,7 @@ void EnviDSCommand::run()
 
 			if (cmd.isEmpty())
 			{
-				_WRN("EnviDSCommand::run command is an empty string (not set in XML?), disabling");
+				_WRN("Command is an empty string (not set in XML?), disabling");
 				setDisabled (true);
 				return;
 			}
@@ -83,17 +85,17 @@ void EnviDSCommand::run()
 				}
 				else
 				{
-					_WRN("EnviDSCommand::execute ["+getName()+"] timeout");
+					_WRN("["+getName()+"] timeout");
 
 					if (!childProc.kill())
 					{
-						_WRN("EnviDSCommand::execute ["+getName()+"] can't kill child process");
+						_WRN("["+getName()+"] can't kill child process");
 					}
 				}
 			}
 			else
 			{
-				_WRN("EnviDSCommand::execute ["+getName()+"] failed to start child process");
+				_WRN("["+getName()+"] failed to start child process");
 			}
 
 			triggerAsyncUpdate();
@@ -103,6 +105,6 @@ void EnviDSCommand::run()
 
 void EnviDSCommand::handleAsyncUpdate()
 {
-	result.copyValues (EnviData::fromJSON(commandOutput));
-	collectFinished (commandOutput.isEmpty() ? Result::fail("Command output empty") : Result::ok());
+	result.copyValues (EnviData::fromJSON(commandOutput, EnviDataSource::getInstanceNumber()));
+	collectFinished (commandOutput.isEmpty() ? Result::fail("Command output empty, command: "+cmd) : Result::ok());
 }
