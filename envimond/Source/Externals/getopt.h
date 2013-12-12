@@ -16,7 +16,9 @@
 #ifdef __MINGW32__
 #include <_mingw.h>
 #else
+#ifdef JUCE_WINDOWS
 #include <crtdefs.h>
+#endif
 #endif // __MINGW32__
 
 #ifdef __cplusplus
