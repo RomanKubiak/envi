@@ -29,7 +29,8 @@ class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 
 	private:
 		String commandOutput;
-		String cmd;
+		String commandLine;
+		HashMap<String,Expression> valueExpressions;
 };
 
 #endif  // ENVIDSCOMMAND_H_INCLUDED

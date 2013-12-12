@@ -12,7 +12,7 @@
 #include "EnviApplication.h"
 
 EnviDSCommand::EnviDSCommand(EnviApplication &owner)
-	: Thread("EnviDSCommand"), cmd(String::empty), EnviDataSource(owner, "cmd")
+	: Thread("EnviDSCommand"), commandLine(String::empty), EnviDataSource(owner, "cmd")
 {
 }
 
@@ -26,11 +26,32 @@ EnviDSCommand::~EnviDSCommand()
 
 const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig.copyPropertiesFrom (_instanceConfig, nullptr);
+	instanceConfig = _instanceConfig.createCopy();
 
 	if (instanceConfig.isValid())
 	{
-		cmd					= instanceConfig.hasProperty (Ids::cmd)		? getProperty(Ids::cmd).toString()		: String::empty;
+		commandLine	= instanceConfig.hasProperty (Ids::cmd)	? getProperty(Ids::cmd).toString() : String::empty;
+
+		for (int i=0; i<instanceConfig.getNumChildren(); i++)
+		{
+			if (instanceConfig.getChild(i).hasType(Ids::dataValue))
+			{
+				if (instanceConfig.getChild(i).hasProperty(Ids::dataExp) && instanceConfig.getChild(i).hasProperty(Ids::name))
+				{
+					try
+					{
+						Expression exp (instanceConfig.getChild(i).getProperty(Ids::dataExp).toString());
+					}
+					catch (Expression::ParseError parseError)
+					{
+						_WRN("EnviDSCommand failed to parse expression for value: ["+instanceConfig.getChild(i).getProperty(Ids::name).toString()+"]");
+						continue;
+					}
+					
+					valueExpressions.set (instanceConfig.getChild(i).getProperty(Ids::name), Expression(instanceConfig.getChild(i).getProperty(Ids::dataExp).toString()));
+				}
+			}
+		}
 	}
 
 	return (Result::ok());
@@ -66,18 +87,17 @@ void EnviDSCommand::run()
 				return;
 			}
 
-			if (cmd.isEmpty())
+			if (commandLine.isEmpty())
 			{
 				_WRN("Command is an empty string (not set in XML?), disabling");
 				setDisabled (true);
 				return;
 			}
 
-			ScopedLock sl (dataSourceLock);
 			ChildProcess childProc;
 			commandOutput = String::empty;
 
-			if (childProc.start(cmd, ChildProcess::wantStdOut))
+			if (childProc.start(commandLine, ChildProcess::wantStdOut))
 			{
 				if (childProc.waitForProcessToFinish(getTimeout()))
 				{
@@ -105,6 +125,17 @@ void EnviDSCommand::run()
 
 void EnviDSCommand::handleAsyncUpdate()
 {
-	result.copyValues (EnviData::fromJSON(commandOutput, EnviDataSource::getInstanceNumber()));
-	collectFinished (commandOutput.isEmpty() ? Result::fail("Command output empty, command: "+cmd) : Result::ok());
+	EnviData data = EnviData::fromJSON(commandOutput, getInstanceNumber());
+
+	for (int i=0; i<data.getNumValues(); i++)
+	{
+		if (valueExpressions.contains (data[i].name))
+		{
+			String evaluationError;
+
+			const double returnValue = valueExpressions[data[i].name].evaluate (*this, evaluationError);
+		}
+	}
+	result.copyValues (data);
+	collectFinished (commandOutput.isEmpty() ? Result::fail("Command output empty, command: "+commandLine) : Result::ok());
 }

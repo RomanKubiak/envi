@@ -2,5 +2,8 @@
 
 <dataSource type="cmd"      name="JSON command interface/WINDOWS"
 		        timeout="2000"  interval="5000"
-		        cmd="c:\devel\envi\envimond\Source\Config\scripts\json.bat">
+		        cmd="c:\\devel\\json.bat">
+	<dataValue name="value1" dataExp="result * 2" />
+	<dataValue name="value2" dataExp="result * 4" />
+	<dataValue name="value3" dataExp="result / rand()" />
 </dataSource>

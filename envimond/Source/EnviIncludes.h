@@ -45,6 +45,8 @@ namespace Ids
 	#define DECLARE_ID(name)      const Identifier name (#name)
 	DECLARE_ID (envi);
 	DECLARE_ID (dataSource);
+	DECLARE_ID (dataValue);
+	DECLARE_ID (dataExp);
 	DECLARE_ID (name);
 	DECLARE_ID (interval);
 	DECLARE_ID (timeout);
