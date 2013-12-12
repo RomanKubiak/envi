@@ -15,12 +15,14 @@
 #include "JuceHeader.h"
 #include "EnviLog.h"
 #include <iostream>
+#include <memory>
+#include <string>
+#include <map>
 
-#define LOG_INFO				0
+#define LOG_ERROR				0
 #define LOG_WARN				1
-#define LOG_DEBUG				2
-#define LOG_JUCE				3
-#define LOG_ERROR				4
+#define LOG_INFO				2
+#define LOG_DEBUG				3
 
 #define	_STR(x)					String(x)
 #define _LOG(lvl,msg)			EnviLog::getInstance()->logMessage(lvl,msg)
@@ -57,6 +59,7 @@ namespace Ids
 	DECLARE_ID (iterations);
 	DECLARE_ID (data);
 	DECLARE_ID (index);
+	DECLARE_ID (instance);
 };
 
 static inline float getRandomFloat (const float limit)

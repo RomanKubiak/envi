@@ -22,6 +22,7 @@ class EnviApplication : public MultiTimer
 	public:
 		EnviApplication(int argc, char* argv[]);
 		~EnviApplication();
+
 		const Result runDispatchLoop();
 		void cleanupAndExit();
 		void addDataSource(EnviDataSource *sourceToAdd);
@@ -31,23 +32,26 @@ class EnviApplication : public MultiTimer
 		const File getPropertiesFolder();
 		PropertySet *getProperties();
 		void timerCallback(int timerId);
-		bool registerDataSources();
+		const Result findDataSourcesOnDisk();
+		EnviCLI &getCLI();
+		ApplicationProperties &getApplicationProperties();
 		EnviDataSource *createInstance(const File &sourceState);
-		EnviDataSource *createInstance(const ValueTree dataSourceInstance);
+		EnviDataSource *checkForValidInstance(const ValueTree dataSourceInstance);
 		EnviDataSource *registerDataSource(EnviDataSource *dataSource);
-		void sourceFailed(EnviDataSource *dataSource);
-		void sourceWrite(EnviDataSource *dataSource);
+		void sourceWrite(EnviDataSource *dataSource, const Result &failureReason);
 		const var getOption(const Identifier &optionId);
 		const bool isValid() { return (valid); }
 
-		//JUCE_LEAK_DETECTOR(EnviApplication);
+		JUCE_LEAK_DETECTOR(EnviApplication);
 
 	private:
 		PropertySet defaultPropertyStorage;
 		ApplicationProperties applicationProperties;
-		ScopedPointer <EnviCLI> enviCLI;
+		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
+		StringArray allowedSources;
+		File dataSourcesDir;
 		bool valid;
 #ifdef JUCE_LINUX
 		ScopedPointer <EnviWiringPi> enviWiringPi;

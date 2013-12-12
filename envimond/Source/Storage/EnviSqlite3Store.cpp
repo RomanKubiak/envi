@@ -24,13 +24,20 @@ EnviSqlite3Store::~EnviSqlite3Store()
 const Result EnviSqlite3Store::openStore()
 {
 	_DBG("EnviSqlite3Store::openStore");
-	if (owner.getOption(Ids::storeFile).toString().isEmpty())
+	if (owner.getCLI().isSet("store-file"))
 	{
-		storeFile = owner.getPropertiesFolder().getChildFile(Ids::data.toString()+".sqlite3");
+		storeFile = File(owner.getCLI().getParameter("store-file"));
 	}
 	else
 	{
-		storeFile = File (owner.getOption(Ids::storeFile));
+		if (owner.getApplicationProperties().getUserSettings())
+		{
+			storeFile = File (owner.getApplicationProperties().getUserSettings()->getFile().getParentDirectory().getChildFile("data.sqlite3"));
+		}
+		else
+		{
+			return (Result::fail("Can't set any default storage file"));
+		}
 	}
 
 	int rc = sqlite3_open (storeFile.getFullPathName().toUTF8(), &db);
@@ -42,7 +49,7 @@ const Result EnviSqlite3Store::openStore()
 	}
 	else
 	{
-		_DBG("EnviSqlite3Store::openStore sqlite3_opened success for file: ["+storeFile.getFullPathName()+"]");
+		_INF("Data store file set to: "+storeFile.getFullPathName());
 		return (createDatabase());
 	}
 }

@@ -21,7 +21,11 @@ int main (int argc, char* argv[])
 
 	if (enviApplication->isValid())
 	{
-		enviApplication->runDispatchLoop();
+		const Result res = enviApplication->runDispatchLoop();
+		if (!res.wasOk())
+		{
+			_ERR("Application start failed: "+res.getErrorMessage());
+		}
 	}
 
 	deleteAndZero (enviApplication);

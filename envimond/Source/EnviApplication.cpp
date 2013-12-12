@@ -14,29 +14,44 @@
 #include "EnviDSDHT11.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
-	: enviCLI(nullptr), valid(true)
+	: enviCLI(argc, argv), valid(true)
 {
-	enviCLI = new EnviCLI (argc, argv);
-
-	_DBG(enviCLI->getAllArguments().getDescription());
-
-	if (enviCLI->isSet("help"))
+	EnviLog::getInstance()->setOwner(this);
+	if (enviCLI.isSet("log-console"))
 	{
-		enviCLI->printHelp();
+		EnviLog::getInstance()->setLogToConsole(true);
+	}
+
+	_DBG(enviCLI.getAllArguments().getDescription());
+
+	/*
+	 * Register all data sources here
+	 */
+	dataSources.add (new EnviDSDHT11(*this));
+	dataSources.add (new EnviDSCommand(*this));
+	dataSources.add (new EnviDSBMP085(*this));
+
+	if (enviCLI.isSet("help"))
+	{
+		enviCLI.printHelp();
 		valid = false;
 		return;
 	}
 
-	if (enviCLI->isSet("list-sources"))
+	if (enviCLI.isSet("list-sources"))
 	{
-		std::cout << "List sources:\n\n";
+		std::cout << "Available data sources:\n";
+		for (int i=0; i<dataSources.size(); i++)
+		{
+			std::cout << "\t" << dataSources[i]->getType().toString() << std::endl;
+		}
 		valid = false;
 		return;
 	}
 
-	if (enviCLI->isSet("log-file"))
+	if (enviCLI.isSet("log-file"))
 	{
-		Result res = EnviLog::getInstance()->setLogToFile (enviCLI->getParameter("log-file"));
+		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));
 
 		if (!res.wasOk())
 		{
@@ -44,6 +59,11 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 			valid = false;
 			return;
 		}
+	}
+
+	if (enviCLI.isSet("enable-sources"))
+	{
+		allowedSources = StringArray::fromTokens(enviCLI.getParameter("enable-sources"), ",", "'\"");
 	}
 
 	PropertiesFile::Options options;
@@ -62,8 +82,6 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	/*
 	 *	Envi application classes
 	 */
-	EnviLog::getInstance()->setOwner(this);
-
 	enviHTTP	= new EnviHTTP(*this);
 	enviDB		= new EnviDB(*this);
 
@@ -76,11 +94,23 @@ EnviApplication::~EnviApplication()
 {
 }
 
+EnviCLI &EnviApplication::getCLI()
+{
+	return (enviCLI);
+}
+
+ApplicationProperties &EnviApplication::getApplicationProperties()
+{
+	return (applicationProperties);
+}
+
 const Result EnviApplication::runDispatchLoop()
 {
 	_DBG("EnviApplication::runDispatchLoop");
 
-	if (registerDataSources())
+	const Result sourcesResult = findDataSourcesOnDisk();
+
+	if (sourcesResult.wasOk())
 	{
 		if (enviDB->init())
 		{
@@ -94,7 +124,7 @@ const Result EnviApplication::runDispatchLoop()
 	}
 	else
 	{
-		return (Result::fail("Can't register data sources"));
+		return (sourcesResult);
 	}
 }
 
@@ -164,6 +194,26 @@ void EnviApplication::addDataSource(EnviDataSource *sourceToAdd)
 	registerDataSource (dataSources.add (sourceToAdd));
 }
 
+EnviDataSource *EnviApplication::checkForValidInstance(const ValueTree dataSourceInstance)
+{
+	const String type = dataSourceInstance.getProperty(Ids::type);
+
+	if (allowedSources.indexOf (type) >= 0)
+	{
+		_WRN("Data source type: ["+type+"] disabled on command line");
+		return (nullptr);
+	}
+	else
+	{
+		for (int i=0; i<dataSources.size(); i++)
+		{
+			if (dataSources[i]->getType() == type)
+			{
+			}
+		}
+	}
+}
+
 EnviDataSource *EnviApplication::createInstance(const File &sourceState)
 {
 	ScopedPointer <XmlElement> xml(XmlDocument::parse (sourceState));
@@ -174,29 +224,15 @@ EnviDataSource *EnviApplication::createInstance(const File &sourceState)
 
 		if (instanceState.isValid())
 		{
-			return (createInstance (instanceState));
+			return (checkForValidInstance (instanceState));
+		}
+		else
+		{
+			_WRN("Invalid data source configuration file: "+sourceState.getFullPathName());
+			return (nullptr);
 		}
 	}
 
-	return (nullptr);
-}
-
-EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstance)
-{
-	if (dataSourceInstance.getProperty (Ids::type) == "command")
-	{
-        return (new EnviDSCommand (*this, dataSourceInstance));
-	}
-
-	if (dataSourceInstance.getProperty (Ids::type) == "bmp085")
-	{
-        return (new EnviDSBMP085 (*this, dataSourceInstance));
-	}
-
-	if (dataSourceInstance.getProperty (Ids::type) == "dht11")
-	{
-        return (new EnviDSDHT11 (*this, dataSourceInstance));
-	}
 	return (nullptr);
 }
 
@@ -211,11 +247,19 @@ EnviDataSource *EnviApplication::registerDataSource(EnviDataSource *dataSource)
 	return (dataSource);
 }
 
-bool EnviApplication::registerDataSources()
+const Result EnviApplication::findDataSourcesOnDisk()
 {
-	File dataSourcesFolder = getPropertiesFolder().getChildFile("sources");
+	if (applicationProperties.getUserSettings() == nullptr)
+	{
+		return (Result::fail("Not ready yet"));
+	}
+
+	File dataSourcesFolder (enviCLI.isSet("sources-dir") ? enviCLI.getParameter("sources-dir") : applicationProperties.getUserSettings()->getFile().getParentDirectory());
+
 	if (dataSourcesFolder.isDirectory())
 	{
+		_INF("Data sources directory set to: "+dataSourcesFolder.getFullPathName());
+
 		Array <File> sourceXmls;
 
 		const int ret = dataSourcesFolder.findChildFiles (sourceXmls, File::findFiles, false, "*.xml");
@@ -230,32 +274,31 @@ bool EnviApplication::registerDataSources()
 				{
 					addDataSource (ds);
 				}
-				else
-				{
-				}
 			}
 
-			return (true);
+			return (Result::ok());
 		}
 		else
 		{
-			return (false);
+			return (Result::fail ("Found 0 sources in sources directory: "+dataSourcesFolder.getFullPathName()));
 		}
 	}
 	else
 	{
-		_LOG(LOG_ERROR, "\t"+dataSourcesFolder.getFullPathName() + " is not a directory, can't initialize any sources");
-		return (false);
+		return (Result::fail (dataSourcesFolder.getFullPathName() + " is not a directory, can't initialize any sources"));
 	}
 }
 
-void EnviApplication::sourceFailed(EnviDataSource *dataSource)
+void EnviApplication::sourceWrite(EnviDataSource *dataSource, const Result &failureReason)
 {
-}
-
-void EnviApplication::sourceWrite(EnviDataSource *dataSource)
-{
-	enviDB->writeResult (dataSource);
+	if (failureReason.wasOk())
+	{
+		enviDB->writeResult (dataSource);
+	}
+	else
+	{
+		_WRN("Data source: ["+dataSource->getName()+"] instance: "+_STR(dataSource->getInstanceNumber())+"] has failed: ["+failureReason.getErrorMessage()+"]");
+	}
 }
 
 const var EnviApplication::getOption(const Identifier &optionId)

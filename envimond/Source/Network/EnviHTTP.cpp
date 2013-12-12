@@ -14,19 +14,17 @@
 
 EnviHTTP::EnviHTTP(EnviApplication &_owner) : owner(_owner), Thread("EnviHTTP")
 {
-	_DBG("EnviHTTP::ctor");
-
 	serverSocket = new StreamingSocket();
 
 	if (serverSocket != nullptr)
 	{
-		if (!serverSocket->createListener(owner.getProperties() ? owner.getProperties()->getIntValue(Ids::port, 31337) : 31337))
+		if (!serverSocket->createListener((bool)owner.getCLI().isSet("listen-port") ? owner.getCLI().getParameter("listen-port").getIntValue() : 31337))
 		{
 			_ERR("Can't listen on specified TCP port: "+_STR(serverSocket->getPort()));
 		}
 		else
 		{
-			_DBG("\tlistening on TCP port: "+_STR(serverSocket->getPort()));
+			_INF("Listening for JSON-RPC rquests on TCP port: "+_STR(serverSocket->getPort()));
 			startThread();
 		}
 	}

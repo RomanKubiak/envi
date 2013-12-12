@@ -9,6 +9,7 @@
 */
 
 #include "EnviDataSource.h"
+#include "EnviApplication.h"
 
 EnviData::EnviData()
 {
@@ -17,12 +18,12 @@ EnviData::EnviData()
 EnviData::EnviData(const EnviData &other)
 	:	values(other.values),
 		dataSourceName(other.dataSourceName),
-		dataSourceId(other.dataSourceId)
+		dataSourceInstanceNumber(other.dataSourceInstanceNumber)
 {
 }
 
 EnviData::EnviData(const String &firstValueName, const var firstValueValue, const Time firstValueSampleTime)
-	: dataSourceId(0)
+	: dataSourceInstanceNumber(0)
 {
 	if (firstValueName != String::empty)
 	{
@@ -36,7 +37,7 @@ EnviData::EnviData(const String &firstValueName, const var firstValueValue, cons
 }
 
 EnviData::EnviData(const String &firstValueName, const Unit valueUnit)
-	: dataSourceId(0)
+	: dataSourceInstanceNumber(0)
 {
 	if (firstValueName != String::empty)
 	{
@@ -67,6 +68,11 @@ EnviData::Value& EnviData::operator[] (int arrayIndex) const
 	return (values.getReference (arrayIndex));
 }
 
+void EnviData::copyValues(const EnviData &valuesToUpdateFrom)
+{
+	values = valuesToUpdateFrom.values;
+}
+
 const int EnviData::getNumValues() const
 {
 	return (values.size());
@@ -82,12 +88,13 @@ const int EnviData::getSize() const
 	return (dataSourceName.length() + sizeof(Value) * getNumValues());
 }
 
-const EnviData EnviData::fromJSON(const String &jsonString, const int dataSourceIndex)
+const EnviData EnviData::fromJSON(const String &jsonString, const int dataSourceInstanceNumber)
 {
 	EnviData enviData;
 	var data				= JSON::parse (jsonString);
 	enviData.dataSourceName = data["name"];
-	enviData.dataSourceId	= dataSourceIndex;
+	enviData.dataSourceType	= data["type"];
+	enviData.dataSourceInstanceNumber	= dataSourceInstanceNumber;
 	var values				= data["values"];
 
 	for (int i=0; i<values.size(); i++)
@@ -110,6 +117,8 @@ const String EnviData::toJSON(const EnviData &enviData)
 	String ret;
 	DynamicObject *ds = new DynamicObject();
 	ds->setProperty ("name", enviData.dataSourceName);
+	ds->setProperty ("type", enviData.dataSourceType);
+	ds->setProperty ("instance", enviData.dataSourceInstanceNumber);
 	var values;
 
 	for (int i=0; i<enviData.getNumValues(); i++)
@@ -157,7 +166,7 @@ const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTa
 			<< dataTable
 			<< "(sourceId, name, value, timestamp, error, unit)"
 			<< " VALUES ("
-			<< enviData.dataSourceId							<< ","
+			<< enviData.dataSourceInstanceNumber				<< ","
 			<< "'"	<< enviData[i].name							<< "',"
 			<< "'"	<< (float)enviData[i].value					<< "',"
 			<< "'"	<< enviData[i].sampleTime.toMilliseconds()	<< "',"
@@ -246,9 +255,16 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 	return (EnviData::Unknown);
 }
 
-EnviDataSource::EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig)
-	: disabled(false), owner(_owner), instanceConfig(_instanceConfig.createCopy())
+EnviDataSource::EnviDataSource(EnviApplication &_owner, const Identifier &_type)
+	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource)
 {
+	setProperty (Ids::type, _type.toString());
+}
+
+const Result EnviDataSource::initialize(const ValueTree _instanceConfig)
+{
+	ScopedLock sl (dataSourceLock);
+	instanceConfig 	= _instanceConfig.createCopy();
 }
 
 String EnviDataSource::getScopeUID() const
@@ -266,23 +282,92 @@ double EnviDataSource::evaluateFunction (const String &functionName, const doubl
 	return (0.0);
 }
 
-const var EnviDataSource::getProperty (const Identifier &identifier)
+const var EnviDataSource::getProperty (const Identifier &identifier) const
 {
 	ScopedLock sl (dataSourceLock);
 	return (instanceConfig.getProperty (identifier));
 }
 
-const String EnviDataSource::getName()
+void EnviDataSource::setProperty (const Identifier identifier, const var &value)
+{
+	ScopedLock sl (dataSourceLock);
+	instanceConfig.setProperty (identifier, value, nullptr);
+}
+
+const String EnviDataSource::getName() const
 {
 	return (getProperty(Ids::name));
 }
 
-const int EnviDataSource::getInterval()
+void EnviDataSource::setName(const String &name)
+{
+	setProperty (Ids::name, name);
+}
+
+const Identifier EnviDataSource::getType() const
+{
+	return (getProperty(Ids::type).toString());
+}
+
+const int EnviDataSource::getInterval() const
 {
 	return (getProperty(Ids::interval));
 }
 
-const int EnviDataSource::getTimeout()
+const int EnviDataSource::getTimeout() const
 {
 	return (getProperty(Ids::timeout));
+}
+
+const int EnviDataSource::getInstanceNumber() const
+{
+	return (getProperty(Ids::instance));
+}
+
+void EnviDataSource::setInstanceNumber(const int instanceNumber)
+{
+	setProperty (Ids::instance, instanceNumber);
+}
+
+const EnviData EnviDataSource::getResult() const
+{
+	ScopedLock sl(dataSourceLock);
+	return (result);
+}
+
+ValueTree EnviDataSource::getConfig() const
+{
+	ScopedLock sl(dataSourceLock);
+	return (instanceConfig);
+}
+
+bool EnviDataSource::startSource()
+{
+	ScopedLock sl(dataSourceLock);
+	startTime = Time::getCurrentTime();
+	return (execute());
+}
+
+void EnviDataSource::stopSource()
+{
+	ScopedLock sl(dataSourceLock);
+	endTime = Time::getCurrentTime();
+}
+
+void EnviDataSource::collectFinished(const Result collectStatus)
+{
+	ScopedLock sl(dataSourceLock);
+	owner.sourceWrite (this, collectStatus);
+}
+
+void EnviDataSource::setDisabled(const bool shouldBeDisabled)
+{
+	ScopedLock sl(dataSourceLock);
+	disabled = shouldBeDisabled;
+}
+
+bool EnviDataSource::isDisabled() const
+{
+	ScopedLock sl(dataSourceLock);
+	return (disabled);
 }

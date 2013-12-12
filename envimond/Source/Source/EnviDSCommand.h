@@ -18,19 +18,17 @@ class EnviApplication;
 class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 {
 	public:
-		EnviDSCommand(EnviApplication &_owner, const ValueTree _instanceConfig);
+		EnviDSCommand(EnviApplication &_owner);
 		~EnviDSCommand();
-		const bool execute();
-		const EnviData getResult();
+		const Result initialize(const ValueTree _instanceConfig);
+		const Result execute();
 		void run();
 		void handleAsyncUpdate();
 
 		JUCE_LEAK_DETECTOR(EnviDSCommand);
 
 	private:
-		EnviData result;
 		String commandOutput;
-		int timeout;
 		String cmd;
 };
 

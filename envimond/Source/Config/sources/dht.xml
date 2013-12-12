@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<instance 	name="DHT11" 
-		timeout="2000" 
-		interval="15000" 
-		type="dht11" 
-		gpioPin="5" 
-		delay="3000" 
-		iterations="4" />
+<dataSource 	type="dht11" 	name="DHT11 temperature and humidity sensor" 
+		timeout="2000" 	interval="15000" 
+		gpioPin="5"  	delay="3000" iterations="4">
+
+	<dataValue name="temp-celsius" 		exp="" />
+	<dataValue name="temp-fahrenheit" 	exp="" />
+	<dataValue name="humidity" 		exp="" />
+
+</dataSource>

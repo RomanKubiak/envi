@@ -18,19 +18,17 @@ class EnviApplication;
 class EnviDSBMP085 : public EnviDataSource, public Thread, public AsyncUpdater
 {
 	public:
-		EnviDSBMP085(EnviApplication &_owner, const ValueTree _instanceConfig);
+		EnviDSBMP085(EnviApplication &_owner);
 		~EnviDSBMP085();
-		const bool execute();
-		const EnviData getResult();
+		const Result initialize(const ValueTree _instanceConfig);
+		const Result execute();
 		void run();
 		void handleAsyncUpdate();
 
 		JUCE_LEAK_DETECTOR(EnviDSBMP085);
 
 	private:
-		EnviData result;
 		int i2cAddr;
-		int timeout;
 };
 
 #endif  // ENVIDSBMP085_H_INCLUDED

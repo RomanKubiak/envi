@@ -211,6 +211,11 @@ const Result EnviFlatFileStore::storeData(const EnviData &dataToStore)
 	return (Result::fail("EnviFlatFileStore::storeData store is invalid"));
 }
 
+const Result EnviFlatFileStore::flush()
+{
+	return (Result::ok());
+}
+
 const Result EnviFlatFileStore::rotate()
 {
 	_LOG(LOG_INFO, "EnviFlatFileStore::rotate");

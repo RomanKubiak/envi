@@ -79,7 +79,7 @@ class EnviFlatFileStore : public EnviDataStore
 		const bool isValid();
 		const String getExtension();
 		static const FileType getFileType(const String &extensionToCheck);
-
+		const Result flush();
 		JUCE_LEAK_DETECTOR(EnviFlatFileStore);
 
 	private:

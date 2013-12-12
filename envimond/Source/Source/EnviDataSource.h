@@ -66,6 +66,7 @@ class EnviData
 		bool operator== (const EnviData& other) noexcept;
 		EnviData::Value& operator[] (int arrayIndex) const;
 
+		void copyValues(const EnviData &valuesToUpdateFrom);
 		const int getNumValues() const;
 		void addValue(const EnviData::Value valueToAdd);
 		Array <Value> values;
@@ -79,7 +80,8 @@ class EnviData
 		static const Unit stringToUnit(const String &unit);
 
 		String dataSourceName;
-		int dataSourceId;
+		String dataSourceType;
+		int dataSourceInstanceNumber;
 		JUCE_LEAK_DETECTOR(EnviData);
 
 	protected:
@@ -89,57 +91,42 @@ class EnviData
 class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
 {
 	public:
-		EnviDataSource(EnviApplication &_owner, const ValueTree _instanceConfig);
+		EnviDataSource(EnviApplication &_owner, const Identifier &_type);
 		virtual ~EnviDataSource() {}
-		virtual const var getProperty (const Identifier &identifier);
-		virtual const String getName();
-		virtual const int getInterval();
-		virtual const int getTimeout();
-		virtual const bool execute() 		= 0;
-		virtual const EnviData getResult()	= 0;
-		virtual EnviData::Unit getUnit()	{ return (EnviData::Integer); }
+		virtual const Result execute() 		= 0;
+		virtual const Result initialize(const ValueTree _instanceConfig);
 
-		ValueTree getConfig()				{ return (instanceConfig); }
-		bool startSource()
-		{
-			ScopedLock sl(dataSourceLock);
-			startTime = Time::getCurrentTime();
-			return (execute());
-		}
-
-		void stopSource()
-		{
-			ScopedLock sl(dataSourceLock);
-			endTime = Time::getCurrentTime();
-		}
-
-		void setDisabled(const bool shouldBeDisabled)
-		{
-			ScopedLock sl(dataSourceLock);
-			disabled = shouldBeDisabled;
-		}
-
-		bool isDisabled()
-		{
-			ScopedLock sl(dataSourceLock);
-			return (disabled);
-		}
-
+		void collectFinished(const Result collectStatus);
+		const var getProperty (const Identifier &identifier) const;
+		void setProperty (const Identifier identifier, const var &value);
+		const int getInterval() const;
+		const int getInstanceNumber() const;
+		void setInstanceNumber(const int instanceNumber);
+		const String getName() const;
+		void setName(const String &name);
+		const Identifier getType() const;
+		const int getTimeout() const;
+		const EnviData getResult() const;
+		ValueTree getConfig() const;
+		bool startSource();
+		void stopSource();
+		void setDisabled(const bool shouldBeDisabled);
+		bool isDisabled() const;
 		String getScopeUID() const;
 		Expression getSymbolValue(const String &symbol) const;
 		double evaluateFunction (const String &functionName, const double *parameters, int numParameters) const;
+
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
 		ValueTree instanceConfig;
 		EnviApplication &owner;
 		CriticalSection dataSourceLock;
-		int index;
+		EnviData result;
 
 	private:
 		Time startTime, endTime;
 		bool disabled;
+		int instanceNumber;
 };
-
-
 #endif  // ENVIDATASOURCE_H_INCLUDED

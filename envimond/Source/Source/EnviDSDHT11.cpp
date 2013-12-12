@@ -11,18 +11,9 @@
 #include "EnviDSDHT11.h"
 #include "EnviApplication.h"
 
-EnviDSDHT11::EnviDSDHT11(EnviApplication &_owner, const ValueTree _instanceConfig)
-	: EnviDataSource(_owner, _instanceConfig), Thread("EnviDSDHT11")
+EnviDSDHT11::EnviDSDHT11(EnviApplication &owner)
+	: Thread("EnviDSDHT11"), gpioPin(-1), EnviDataSource(owner, "dht11")
 {
-	if (instanceConfig.isValid())
-	{
-		timeout				= (bool)instanceConfig.hasProperty (Ids::timeout)	? (int)getProperty(Ids::timeout)	: 5000;
-		gpioPin				= (int)instanceConfig.hasProperty(Ids::gpioPin)		? (int)getProperty(Ids::gpioPin)	: 5;
-		iterationsDelay		= (int)instanceConfig.hasProperty(Ids::delay)		? (int)getProperty(Ids::delay)		: 2000;
-		iterations			= (int)instanceConfig.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
-		index				= result.dataSourceId	= DHT11_DS + (int)getProperty(Ids::index);
-	}
-
 	result.addValue (EnviData::Value("temperature", EnviData::Celsius));
 	result.addValue (EnviData::Value("temperature", EnviData::Fahrenheit));
 	result.addValue (EnviData::Value("humidity", EnviData::Percent));
@@ -36,7 +27,19 @@ EnviDSDHT11::~EnviDSDHT11()
 	}
 }
 
-const bool EnviDSDHT11::execute()
+const Result EnviDSDHT11::initialize(const ValueTree _instanceConfig)
+{
+	instanceConfig = _instanceConfig.createCopy();
+
+	if (instanceConfig.isValid())
+	{
+		gpioPin				= (int)instanceConfig.hasProperty(Ids::gpioPin)		? (int)getProperty(Ids::gpioPin)	: 5;
+		iterationsDelay		= (int)instanceConfig.hasProperty(Ids::delay)		? (int)getProperty(Ids::delay)		: 2000;
+		iterations			= (int)instanceConfig.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
+	}
+}
+
+const Result EnviDSDHT11::execute()
 {
 	if (!isDisabled())
 	{
@@ -48,16 +51,10 @@ const bool EnviDSDHT11::execute()
 		{
 			startThread();
 		}
-		return (true);
+		return (Result::ok());
 	}
 
-	return (false);
-}
-
-const EnviData EnviDSDHT11::getResult()
-{
-	ScopedLock sl (dataSourceLock);
-	return (result);
+	return (Result::ok());
 }
 
 void EnviDSDHT11::run()
@@ -91,9 +88,7 @@ void EnviDSDHT11::run()
 
 void EnviDSDHT11::handleAsyncUpdate()
 {
-	_DBG("EnviDSDHT11::handleAsyncUpdate");
-	ScopedLock sl (dataSourceLock);
-	owner.sourceWrite (this);
+	collectFinished (Result::ok());
 }
 
 #ifndef JUCE_LINUX

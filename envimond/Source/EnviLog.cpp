@@ -48,7 +48,7 @@ void EnviLog::logMessage (const int level, const String &message)
 
 void EnviLog::logMessage(const String &message)
 {
-	logMessage(LOG_JUCE, message);
+	logMessage(LOG_INFO, message);
 }
 
 const String EnviLog::levelToString(const int logLevel)
@@ -56,19 +56,17 @@ const String EnviLog::levelToString(const int logLevel)
 	switch (logLevel)
 	{
 		case LOG_INFO:
-			return ("INFO");
+			return ("INF");
 		case LOG_WARN:
-			return ("WARN");
+			return ("WRN");
 		case LOG_DEBUG:
-			return ("DEBUG");
+			return ("DBG");
 		case LOG_ERROR:
-			return ("ERROR");
-		case LOG_JUCE:
-			return ("JUCE");
+			return ("ERR");
 		default:
 			break;
 	}
-	return ("INFO");
+	return ("INF");
 }
 
 const Result EnviLog::setLogToFile(const File fileToLogTo)
@@ -82,4 +80,9 @@ const Result EnviLog::setLogToFile(const File fileToLogTo)
 	{
 		return (Result::fail("Can't write to log file: ["+fileToLogTo.getFullPathName()+"]"));
 	}
+}
+
+void EnviLog::setLogToConsole(const bool _logToConsole)
+{
+	logToConsole = _logToConsole;
 }

@@ -11,15 +11,9 @@
 #include "EnviDSCommand.h"
 #include "EnviApplication.h"
 
-EnviDSCommand::EnviDSCommand(EnviApplication &_owner, const ValueTree _instanceConfig)
-	: EnviDataSource(_owner, _instanceConfig), Thread("EnviDSCommand"), timeout(0)
+EnviDSCommand::EnviDSCommand(EnviApplication &owner)
+	: Thread("EnviDSCommand"), cmd(String::empty), EnviDataSource(owner, "cmd")
 {
-	if (instanceConfig.isValid())
-	{
-		index				= result.dataSourceId	= Command_DS + (int)getProperty(Ids::index);
-		timeout				= instanceConfig.hasProperty (Ids::timeout)	? (int)getProperty(Ids::timeout) : 5000;
-		cmd					= instanceConfig.hasProperty (Ids::cmd)		? getProperty(Ids::cmd).toString()		: String::empty;
-	}
 }
 
 EnviDSCommand::~EnviDSCommand()
@@ -30,7 +24,17 @@ EnviDSCommand::~EnviDSCommand()
 	}
 }
 
-const bool EnviDSCommand::execute()
+const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
+{
+	instanceConfig = _instanceConfig.createCopy();
+
+	if (instanceConfig.isValid())
+	{
+		cmd					= instanceConfig.hasProperty (Ids::cmd)		? getProperty(Ids::cmd).toString()		: String::empty;
+	}
+}
+
+const Result EnviDSCommand::execute()
 {
 	if (!isDisabled())
 	{
@@ -42,16 +46,10 @@ const bool EnviDSCommand::execute()
 		{
 			startThread();
 		}
-		return (true);
+		return (Result::ok());
 	}
 
-	return (false);
-}
-
-const EnviData EnviDSCommand::getResult()
-{
-	ScopedLock sl (dataSourceLock);
-	return (EnviData::fromJSON(commandOutput,index));
+	return (Result::ok());
 }
 
 void EnviDSCommand::run()
@@ -105,14 +103,6 @@ void EnviDSCommand::run()
 
 void EnviDSCommand::handleAsyncUpdate()
 {
-	ScopedLock sl (dataSourceLock);
-
-	if (commandOutput.isEmpty())
-	{
-		owner.sourceFailed (this);
-	}
-	else
-	{
-		owner.sourceWrite (this);
-	}
+	result.copyValues (EnviData::fromJSON(commandOutput));
+	collectFinished (commandOutput.isEmpty() ? Result::fail("Command output empty") : Result::ok());
 }

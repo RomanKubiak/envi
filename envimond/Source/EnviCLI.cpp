@@ -29,11 +29,12 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			{"store-file",		required_argument,	0, 's'},
 			{"store-format",	required_argument,	0, 'S'},
 			{"listen-port",		required_argument,	0, 'p'},
-			{"disable-source",	required_argument,	0, 'd'},
+			{"enable-source",	required_argument,	0, 'e'},
+			{"sources-dir",		required_argument,  0, 'd'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long (argc, argv, "vbLhf:l:s:S:p:d:", long_options, &option_index);
+		c = getopt_long (argc, argv, "vbLhf:l:s:S:p:e:d:", long_options, &option_index);
 
 		if (c == -1)
 			break;
@@ -69,10 +70,13 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 				arguments.set ("store-format", _STR(optarg));
 				break;
 			case 'p':
-				arguments.set ("liten-port", _STR(optarg));
+				arguments.set ("listen-port", _STR(optarg));
+				break;
+			case 'e':
+				arguments.set ("enable-source", _STR(optarg));
 				break;
 			case 'd':
-				arguments.set ("disable-source", _STR(optarg));
+				arguments.set ("sources-dir", _STR(optarg));
 				break;
 
 			default:
@@ -107,6 +111,7 @@ void EnviCLI::printHelp()
 			<< "\t-h, --help             \t\tPrint this help\n"
 			<< "\t-v, --versbose         \t\tBe vrbose about what we are doing\n"
 			<< "\t-f, --log-file=FILE	 \tLog to a file specified by FILE.\n"
+			<< "\t-c, --log-console      \tPrint logs to console.\n"
 			<< "\t-l, --log-level=LEVEL	 \tWhen logging information, what level to use\n"
 			<< "\t                       \t\t(DEBUG, INFO, WARN, ERROR)\n"
 			<< "\t-s, --store-file=FILE	 \tWrite sensor data to a file specified by FILE.\n"
@@ -115,8 +120,9 @@ void EnviCLI::printHelp()
 			<< "\t-S, --store-format=FORMAT \tChoose the storage format for the data\n"
 			<< "\t                       \t\tthere ae two formats available SQLITE3 and CSV\n"
 			<< "\t-p, --listen-port=PORT \t\tWhat TCP port to listen on for JSON-RPC requests\n"
-			<< "\t-d, --disable-source=LIST \tA comma seperated list of sources not to start\n"
+			<< "\t-e, --enable-source=LIST \tA comma seperated list of sources to start\n"
 			<< "\t-L, --list-sources     \t\tPrint a list of available data sources and exit\n"
+			<< "\t-d, --sources-dir=FILE \t\tWhere to look for data sources configs\n"
 			<< "\n"
 			<< "Don't report bugs, i don't care :)\n"
 			<< "For updates (i doubt there will be any) go to: https://github.com/RomanKubiak/envi \n\n";

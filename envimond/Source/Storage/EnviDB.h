@@ -29,8 +29,7 @@ class EnviDB : public Thread
 		JUCE_LEAK_DETECTOR(EnviDB)
 
 	private:
-		// ScopedPointer <EnviFlatFileStore> enviStore;
-		ScopedPointer <EnviSqlite3Store> enviStore;
+		ScopedPointer <EnviDataStore> enviStore;
 		EnviApplication &owner;
 		OwnedArray <EnviData, CriticalSection> dataQueue;
 };

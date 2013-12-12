@@ -14,8 +14,25 @@
 EnviDB::EnviDB(EnviApplication &_owner) : Thread ("Envi/Database"), owner(_owner)
 {
 	_DBG("EnviDB::ctor");
-	// enviStore = new EnviFlatFileStore(owner, EnviFlatFileStore::CSV);
-	enviStore = new EnviSqlite3Store(owner);
+
+	if (owner.getCLI().isSet("store-format"))
+	{
+		if (owner.getCLI().getParameter("store-format") == "csv")
+		{
+			_INF("Storage format chosen: csv");
+			enviStore = new EnviFlatFileStore(owner, EnviFlatFileStore::CSV);
+		}
+		else
+		{
+			_INF("Storage format chosen: sqlite3");
+			enviStore = new EnviSqlite3Store(owner);
+		}
+	}
+	else
+	{
+		_INF("Storage format chosen: sqlite3");
+		enviStore = new EnviSqlite3Store(owner);
+	}
 }
 
 EnviDB::~EnviDB()

@@ -9,16 +9,11 @@
 */
 
 #include "EnviDSBMP085.h"
+#include "EnviApplication.h"
 
-EnviDSBMP085::EnviDSBMP085(EnviApplication &_owner, const ValueTree _instanceConfig)
-	: EnviDataSource(_owner, _instanceConfig), Thread("EnviDSBMP085"), i2cAddr(-1), timeout(-1)
+EnviDSBMP085::EnviDSBMP085(EnviApplication &owner)
+	: Thread("EnviDSBMP085"), i2cAddr(-1), EnviDataSource(owner, "bmp085")
 {
-	if (instanceConfig.isValid())
-	{
-		timeout				= (bool)instanceConfig.hasProperty(Ids::timeout)	? (int)getProperty(Ids::timeout)	: 5000;
-		i2cAddr				= (bool)instanceConfig.hasProperty(Ids::i2cAddr)	? (int)getProperty(Ids::i2cAddr)	: 0x77;
-		index				= result.dataSourceId	= BMP086_DS + (int)getProperty(Ids::index);
-	}
 }
 
 EnviDSBMP085::~EnviDSBMP085()
@@ -29,7 +24,17 @@ EnviDSBMP085::~EnviDSBMP085()
 	}
 }
 
-const bool EnviDSBMP085::execute()
+const Result EnviDSBMP085::initialize(const ValueTree _instanceConfig)
+{
+	instanceConfig = _instanceConfig.createCopy();
+
+	if (instanceConfig.isValid())
+	{
+		i2cAddr				= (bool)instanceConfig.hasProperty(Ids::i2cAddr)	? (int)getProperty(Ids::i2cAddr)	: 0x77;
+	}
+}
+
+const Result EnviDSBMP085::execute()
 {
 	if (!isDisabled())
 	{
@@ -41,16 +46,10 @@ const bool EnviDSBMP085::execute()
 		{
 			startThread();
 		}
-		return (true);
+		return (Result::ok());
 	}
 
-	return (false);
-}
-
-const EnviData EnviDSBMP085::getResult()
-{
-	ScopedLock sl (dataSourceLock);
-	return (result);
+	return (Result::ok());
 }
 
 void EnviDSBMP085::run()
