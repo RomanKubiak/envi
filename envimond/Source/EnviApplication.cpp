@@ -31,17 +31,6 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 		return;
 	}
 
-	if (enviCLI.isSet("list-sources"))
-	{
-		std::cout << "Available data sources:\n";
-		for (int i=0; i<dataSources.size(); i++)
-		{
-			std::cout << "\t" << dataSources[i]->getType().toString() << std::endl;
-		}
-		valid = false;
-		return;
-	}
-
 	if (enviCLI.isSet("log-file"))
 	{
 		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));

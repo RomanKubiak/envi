@@ -21,7 +21,6 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 		{
 			{"verbose",			no_argument,		0, 'v'},
 			{"background",		no_argument,		0, 'b'},
-			{"list-sources",	no_argument,		0, 'L'},
 			{"help",			no_argument,		0, 'h'},
 			{"log-console",		no_argument,		0, 'c'},
 			{"log-file",		required_argument,	0, 'f'},
@@ -34,7 +33,7 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long (argc, argv, "vbLhf:l:s:S:p:e:d:", long_options, &option_index);
+		c = getopt_long (argc, argv, "vbhf:l:s:S:p:e:d:", long_options, &option_index);
 
 		if (c == -1)
 			break;
@@ -49,9 +48,6 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 				break;
 			case 'h':
 				arguments.set ("help", String::empty);
-				break;
-			case 'L':
-				arguments.set ("list-sources", String::empty);
 				break;
 			case 'c':
 				arguments.set ("log-console", String::empty);

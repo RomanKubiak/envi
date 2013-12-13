@@ -454,6 +454,13 @@ double EnviDataSource::EnviExpScope::evaluateFunction (const String &functionNam
 		if (numParameters == 1)
 			return (Random::getSystemRandom().nextInt((const int)*parameters));
 	}
+	if (functionName == "rand_double")
+	{
+		if (numParameters == 0)
+			return (Random::getSystemRandom().nextDouble());
+		if (numParameters == 1)
+			return (Random::getSystemRandom().nextDouble());
+	}
 	else if (functionName == "abs")
 	{
 		if (numParameters == 1)
