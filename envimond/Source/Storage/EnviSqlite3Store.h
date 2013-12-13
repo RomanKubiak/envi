@@ -47,6 +47,8 @@ class EnviSqlite3Store : public EnviDataStore
 		sqlite3 *db;
 		File storeFile;
 		int queryCacheSize;
+		int64 queryCount, transactionCount;
+		int64 transactionTimeAvg;
 };
 
 #endif  // ENVISQLITE3STORE_H_INCLUDED

@@ -212,13 +212,18 @@ EnviDataSource *EnviApplication::createInstance(const File &sourceState)
 
 		if (instanceState.isValid())
 		{
+			_INF(sourceState.getFileName()+" looks like a valid data source defintion.");
 			return (createInstance (instanceState));
 		}
 		else
 		{
-			_WRN("Invalid data source configuration file: "+sourceState.getFullPathName());
+			_WRN(sourceState.getFileName()+" is an invalid data source definition (not XML).");
 			return (nullptr);
 		}
+	}
+	else
+	{
+		_WRN(sourceState.getFileName()+" can't be parsed as a XML file.");
 	}
 
 	return (nullptr);

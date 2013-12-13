@@ -32,26 +32,8 @@ const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 	{
 		commandLine	= instanceConfig.hasProperty (Ids::cmd)	? getProperty(Ids::cmd).toString() : String::empty;
 
-		for (int i=0; i<instanceConfig.getNumChildren(); i++)
-		{
-			if (instanceConfig.getChild(i).hasType(Ids::dataValue))
-			{
-				if (instanceConfig.getChild(i).hasProperty(Ids::dataExp) && instanceConfig.getChild(i).hasProperty(Ids::name))
-				{
-					try
-					{
-						Expression exp (instanceConfig.getChild(i).getProperty(Ids::dataExp).toString());
-					}
-					catch (Expression::ParseError parseError)
-					{
-						_WRN("EnviDSCommand failed to parse expression for value: ["+instanceConfig.getChild(i).getProperty(Ids::name).toString()+"]");
-						continue;
-					}
-					
-					valueExpressions.set (instanceConfig.getChild(i).getProperty(Ids::name), Expression(instanceConfig.getChild(i).getProperty(Ids::dataExp).toString()));
-				}
-			}
-		}
+		if (instanceConfig.getNumChildren() > 0)
+			return (setAllExpressions());
 	}
 
 	return (Result::ok());
@@ -129,11 +111,15 @@ void EnviDSCommand::handleAsyncUpdate()
 
 	for (int i=0; i<data.getNumValues(); i++)
 	{
-		if (valueExpressions.contains (data[i].name))
+		if (hasExpression(data[i].name))
 		{
-			String evaluationError;
+			const double result= evaluateExpression (data[i].value, data[i].name);
 
-			const double returnValue = valueExpressions[data[i].name].evaluate (*this, evaluationError);
+			if (result != (double)data[i].value)
+			{
+				_DBG("EnviDSCommand evaluation result input: ["+data[i].value.toString()+"] output: ["+String(result,2)+"]");
+				data[i].value = result;
+			}
 		}
 	}
 	result.copyValues (data);

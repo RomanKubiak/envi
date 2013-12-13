@@ -12,7 +12,8 @@
 #include "EnviApplication.h"
 
 EnviSqlite3Store::EnviSqlite3Store(EnviApplication &owner)
-	: EnviDataStore (owner), db(nullptr), queryCacheSize(6)
+	: EnviDataStore (owner), db(nullptr), queryCacheSize(6),
+		queryCount(0), transactionCount(0), transactionTimeAvg(0)
 {
 }
 
@@ -23,7 +24,6 @@ EnviSqlite3Store::~EnviSqlite3Store()
 
 const Result EnviSqlite3Store::openStore()
 {
-	_DBG("EnviSqlite3Store::openStore");
 	if (owner.getCLI().isSet("store-file"))
 	{
 		storeFile = File(owner.getCLI().getParameter("store-file"));
@@ -45,7 +45,7 @@ const Result EnviSqlite3Store::openStore()
 	if (rc)
 	{
 		sqlite3_close (db);
-		return (Result::fail("EnviSqlite3Store::openStore sqlite3_open failed: ["+_STR(sqlite3_errmsg(db))+"]"));
+		return (Result::fail("sqlite3_open failed: ["+_STR(sqlite3_errmsg(db))+"]"));
 	}
 	else
 	{
@@ -56,7 +56,6 @@ const Result EnviSqlite3Store::openStore()
 
 const Result EnviSqlite3Store::closeStore()
 {
-	_DBG("EnviSqlite3Store::closeStore");
 	sqlite3_close (db);
 	return (Result::ok());
 }
@@ -75,23 +74,17 @@ const Result EnviSqlite3Store::storeData(const EnviData &dataToStore)
 
 const Result EnviSqlite3Store::flush()
 {
-	_DBG("EnviSqlite3Store::flush");
-
 	Result res = transactionBegin();
 
 	if (res.wasOk())
 	{
-		_DBG("\ttransaction started");
 		for (int i=0; i<sqlQueries.size(); i++)
 		{
-			_DBG("\texecute:");
-			_DBG(sqlQueries[i]);
-
             res = transactionExecute(sqlQueries[i]);
 
             if (!res.wasOk())
 			{
-				_LOG(LOG_ERROR, "Transaction failed: ["+res.getErrorMessage()+"]");
+				_WRN("Transaction failed: ["+res.getErrorMessage()+"]");
 				sqlQueries.clear();
 				break;
 			}

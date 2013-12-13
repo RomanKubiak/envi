@@ -88,14 +88,26 @@ class EnviData
 
 };
 
-class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
+class EnviDataSource : public ChangeBroadcaster
 {
 	public:
+		class EnviExpScope : public Expression::Scope
+		{
+			public:
+				EnviExpScope(EnviDataSource &_owner);
+				String getScopeUID() const;
+				Expression getSymbolValue(const String &symbol) const;
+				double evaluateFunction (const String &functionName, const double *parameters, int numParameters) const;
+				EnviExpScope &setData (const double _inputData);
+			private:
+				EnviDataSource &owner;
+				double inputData;
+		};
+
 		EnviDataSource(EnviApplication &_owner, const Identifier &_type);
 		virtual ~EnviDataSource() {}
 		virtual const Result execute() 		= 0;
 		virtual const Result initialize(const ValueTree _instanceConfig);
-
 		void collectFinished(const Result collectStatus);
 		const var getProperty (const Identifier &identifier) const;
 		void setProperty (const Identifier identifier, const var &value);
@@ -112,10 +124,10 @@ class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
 		void stopSource();
 		void setDisabled(const bool shouldBeDisabled);
 		bool isDisabled() const;
-		String getScopeUID() const;
-		Expression getSymbolValue(const String &symbol) const;
-		double evaluateFunction (const String &functionName, const double *parameters, int numParameters) const;
-
+		const double evaluateExpression (const double inputData, const String &valueName);
+		const Result setValueExpression (const String &valueName, const String &expressionString);
+		const Result setAllExpressions();
+		const bool hasExpression(const String &valueName);
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
@@ -123,10 +135,12 @@ class EnviDataSource : public ChangeBroadcaster, public Expression::Scope
 		EnviApplication &owner;
 		CriticalSection dataSourceLock;
 		EnviData result;
+		HashMap <String,Expression> valueExpressions;
 
 	private:
 		Time startTime, endTime;
 		bool disabled;
 		int instanceNumber;
+		EnviExpScope enviExpScope;
 };
 #endif  // ENVIDATASOURCE_H_INCLUDED

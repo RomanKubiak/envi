@@ -256,7 +256,7 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 }
 
 EnviDataSource::EnviDataSource(EnviApplication &_owner, const Identifier &_type)
-	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource)
+	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this)
 {
 	setProperty (Ids::type, _type.toString());
 }
@@ -266,21 +266,6 @@ const Result EnviDataSource::initialize(const ValueTree _instanceConfig)
 	ScopedLock sl (dataSourceLock);
 	instanceConfig 	= _instanceConfig.createCopy();
 	return (Result::ok());
-}
-
-String EnviDataSource::getScopeUID() const
-{
-	return ("EnviDataSource");
-}
-
-Expression EnviDataSource::getSymbolValue(const String &symbol) const
-{
-	return (Expression(0.0));
-}
-
-double EnviDataSource::evaluateFunction (const String &functionName, const double *parameters, int numParameters) const
-{
-	return (0.0);
 }
 
 const var EnviDataSource::getProperty (const Identifier &identifier) const
@@ -372,4 +357,155 @@ bool EnviDataSource::isDisabled() const
 {
 	ScopedLock sl(dataSourceLock);
 	return (disabled);
+}
+
+const Result EnviDataSource::setAllExpressions()
+{
+	for (int i=0; i<instanceConfig.getNumChildren(); i++)
+	{
+		if (instanceConfig.getChild(i).hasType(Ids::dataValue))
+		{
+			if (instanceConfig.getChild(i).hasProperty(Ids::dataExp) && instanceConfig.getChild(i).hasProperty(Ids::name))
+			{
+				Result res = setValueExpression(instanceConfig.getChild(i).getProperty(Ids::name), instanceConfig.getChild(i).getProperty(Ids::dataExp));
+				if (!res.wasOk())
+				{
+					return (res);
+				}
+			}
+		}
+	}
+	return (Result::ok());
+}
+
+const Result EnviDataSource::setValueExpression (const String &valueName, const String &expressionString)
+{
+	ScopedLock sl(dataSourceLock);
+
+	if (valueExpressions.contains (valueName))
+	{
+		_WRN("Data source: ["+getName()+"], re-setting expression for value: "+valueName);
+	}
+
+	try
+	{
+		Expression exp (expressionString);
+	}
+	catch (Expression::ParseError parseError)
+	{
+		return (Result::fail("EnviDSCommand failed to parse expression for value: ["+valueName+"] expression: ["+expressionString+"]"));
+	}
+
+    valueExpressions.set (valueName, Expression(expressionString));
+    return (Result::ok());
+}
+
+const bool EnviDataSource::hasExpression(const String &valueName)
+{
+	ScopedLock sl(dataSourceLock);
+	return (valueExpressions.contains(valueName));
+}
+
+const double EnviDataSource::evaluateExpression (const double inputData, const String &valueName)
+{
+	ScopedLock sl(dataSourceLock);
+	String error;
+
+	const double result = valueExpressions[valueName].evaluate(enviExpScope.setData(inputData), error);
+
+	if (!error.isEmpty())
+	{
+		_WRN("Evaluating expression failed source: ["+getName()+"], error: ["+error+"]");
+	}
+	return (result);
+}
+
+EnviDataSource::EnviExpScope::EnviExpScope(EnviDataSource &_owner): owner(_owner)
+{
+}
+
+EnviDataSource::EnviExpScope &EnviDataSource::EnviExpScope::setData (const double _inputData)
+{
+	inputData = _inputData;
+	return (*this);
+}
+
+String EnviDataSource::EnviExpScope::getScopeUID() const
+{
+	return ("EnviDataSource");
+}
+
+Expression EnviDataSource::EnviExpScope::getSymbolValue(const String &symbol) const
+{
+	if (symbol == "result")
+	{
+		return (Expression(inputData));
+	}
+
+	return (Expression(0.0));
+}
+
+double EnviDataSource::EnviExpScope::evaluateFunction (const String &functionName, const double *parameters, int numParameters) const
+{
+	if (functionName == "rand_int")
+	{
+		if (numParameters == 0)
+			return (Random::getSystemRandom().nextInt());
+		if (numParameters == 1)
+			return (Random::getSystemRandom().nextInt((const int)*parameters));
+	}
+	else if (functionName == "abs")
+	{
+		if (numParameters == 1)
+			return (abs(*parameters));
+	}
+	else if (functionName == "ceil")
+	{
+		if (numParameters == 1)
+			return (ceil(*parameters));
+	}
+	else if (functionName == "floor")
+	{
+		if (numParameters == 1)
+			return (floor(*parameters));
+	}
+	else if (functionName == "modf_int")
+	{
+		if (numParameters == 1)
+		{
+			double intpart;
+			const double fractpart = modf (*parameters , &intpart);
+			return (intpart);
+		}
+	}
+	else if (functionName == "modf_fract")
+	{
+		if (numParameters == 1)
+		{
+			double intpart;
+			const double fractpart = modf (*parameters , &intpart);
+			return (fractpart);
+		}
+	}
+	else if (functionName == "sqrt")
+	{
+		if (numParameters == 1)
+			return (sqrt (*parameters));
+	}
+	else if (functionName == "log")
+	{
+		if (numParameters == 1)
+			return (log (*parameters));
+	}
+	else if (functionName == "log10")
+	{
+		if (numParameters == 1)
+			return (log10 (*parameters));
+	}
+	else if (functionName == "exp")
+	{
+		if (numParameters == 1)
+			return (exp(*parameters));
+	}
+	return (0.0);
 }
