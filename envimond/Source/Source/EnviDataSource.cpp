@@ -164,14 +164,14 @@ const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTa
 		String sql;
 		sql << "INSERT INTO "
 			<< dataTable
-			<< "(sourceId, name, value, timestamp, error, unit)"
+			<< "(sourceId, valueName, valueValue, timestamp, valueError, valueUnit)"
 			<< " VALUES ("
-			<< enviData.dataSourceInstanceNumber				<< ","
-			<< "'"	<< enviData[i].name							<< "',"
-			<< "'"	<< (float)enviData[i].value					<< "',"
+			<< enviData.dataSourceInstanceNumber			<< ","
+			<< "'"	<< enviData[i].name				<< "',"
+			<< "'"	<< (float)enviData[i].value			<< "',"
 			<< "'"	<< enviData[i].sampleTime.toMilliseconds()	<< "',"
-			<<		(int)enviData[i].error						<< ","
-			<<		(int)enviData[i].unit						<< ");";
+			<< (int)enviData[i].error				<< ","
+			<< (int)enviData[i].unit				<< ");";
 
 		queries.add (sql);
 	}
@@ -345,6 +345,57 @@ void EnviDataSource::collectFinished(const Result collectStatus)
 {
 	ScopedLock sl(dataSourceLock);
 	owner.sourceWrite (this, collectStatus);
+}
+
+void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0)
+{
+	{
+		ScopedLock sl(dataSourceLock);
+	
+		result[0].value 	= value0;
+		result[0].sampleTime	= Time::getCurrentTime();
+	}
+	
+	if (finishCollectNow)
+	{
+		collectFinished (collectStatus);
+	}
+}
+
+void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1)
+{
+	{
+		ScopedLock sl(dataSourceLock);
+	
+		result[0].value 	= value0;
+		result[0].sampleTime	= Time::getCurrentTime();
+		result[1].value 	= value1;
+		result[1].sampleTime	= Time::getCurrentTime();
+	}
+	
+	if (finishCollectNow)
+	{
+		collectFinished (collectStatus);
+	}
+}
+
+void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1, const var value2)
+{
+	{
+		ScopedLock sl(dataSourceLock);
+	
+		result[0].value 	= value0;
+		result[0].sampleTime	= Time::getCurrentTime();
+		result[1].value 	= value1;
+		result[1].sampleTime	= Time::getCurrentTime();
+		result[2].value 	= value2;
+		result[2].sampleTime	= Time::getCurrentTime();
+	}
+	
+	if (finishCollectNow)
+	{
+		collectFinished (collectStatus);
+	}
 }
 
 void EnviDataSource::setDisabled(const bool shouldBeDisabled)

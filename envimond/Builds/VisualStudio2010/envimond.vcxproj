@@ -131,8 +131,9 @@
     <ClCompile Include="..\..\Source\Externals\sqlite3.c"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp"/>
+    <ClCompile Include="..\..\Source\Source\EnviDSPCF8591.cpp"/>
+    <ClCompile Include="..\..\Source\Source\EnviDSDHT22.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDataSource.cpp"/>
-    <ClCompile Include="..\..\Source\Source\EnviDSBMP085.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSCommand.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSDHT11.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviWiringPi.cpp"/>
@@ -430,8 +431,9 @@
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h"/>
     <ClInclude Include="..\..\Source\Network\EnviHTTP.h"/>
     <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h"/>
+    <ClInclude Include="..\..\Source\Source\EnviDSPCF8591.h"/>
+    <ClInclude Include="..\..\Source\Source\EnviDSDHT22.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDataSource.h"/>
-    <ClInclude Include="..\..\Source\Source\EnviDSBMP085.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSCommand.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSDHT11.h"/>
     <ClInclude Include="..\..\Source\Source\EnviWiringPi.h"/>

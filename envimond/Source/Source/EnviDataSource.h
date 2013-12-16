@@ -109,6 +109,9 @@ class EnviDataSource : public ChangeBroadcaster
 		virtual const Result execute() 		= 0;
 		virtual const Result initialize(const ValueTree _instanceConfig);
 		void collectFinished(const Result collectStatus);
+		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0);
+		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1);
+		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1, const var value2);
 		const var getProperty (const Identifier &identifier) const;
 		void setProperty (const Identifier identifier, const var &value);
 		const int getInterval() const;

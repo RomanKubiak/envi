@@ -33,9 +33,9 @@ const Result EnviDSDHT11::initialize(const ValueTree _instanceConfig)
 
 	if (instanceConfig.isValid())
 	{
-		gpioPin				= (int)instanceConfig.hasProperty(Ids::gpioPin)		? (int)getProperty(Ids::gpioPin)	: 5;
+		gpioPin			= (int)instanceConfig.hasProperty(Ids::gpioPin)	? (int)getProperty(Ids::gpioPin)	: 5;
 		iterationsDelay		= (int)instanceConfig.hasProperty(Ids::delay)		? (int)getProperty(Ids::delay)		: 2000;
-		iterations			= (int)instanceConfig.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
+		iterations		= (int)instanceConfig.hasProperty(Ids::iterations)	? (int)getProperty(Ids::iterations)	: 2000;
 	}
 
 	return (Result::ok());
@@ -98,11 +98,11 @@ bool EnviDSDHT11::readDHTValue()
 {
 	ScopedLock sl (dataSourceLock);
 	Random r(Time::getHighResolutionTicks());
-	result[0].value 		= getRandomFloat(100.0f);
+	result[0].value 	= getRandomFloat(100.0f);
 	result[0].sampleTime	= Time::getCurrentTime();
-	result[1].value 		= getRandomFloat(200.0f);
+	result[1].value 	= getRandomFloat(200.0f);
 	result[1].sampleTime	= Time::getCurrentTime();
-	result[2].value			= getRandomFloat(100.0f);
+	result[2].value		= getRandomFloat(100.0f);
 	result[2].sampleTime	= Time::getCurrentTime();
 	return (true);
 }

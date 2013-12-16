@@ -141,13 +141,18 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Source/EnviDataSource.cpp"/>
-    <Unit filename="../../Source/Source/EnviDataSource.h">
+    <Unit filename="../../Source/Source/EnviDSPCF8591.cpp"/>
+    <Unit filename="../../Source/Source/EnviDSPCF8591.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Source/EnviDSBMP085.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSBMP085.h">
+    <Unit filename="../../Source/Source/EnviDSDHT22.cpp"/>
+    <Unit filename="../../Source/Source/EnviDSDHT22.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Source/EnviDataSource.cpp"/>
+    <Unit filename="../../Source/Source/EnviDataSource.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>

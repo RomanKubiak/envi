@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<dataSource type="dht22" name="DHT22" interval="12000" gpioPin="7" delay="3000" iterations="4" />

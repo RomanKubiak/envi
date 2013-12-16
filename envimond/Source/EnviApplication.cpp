@@ -10,8 +10,9 @@
 
 #include "EnviApplication.h"
 #include "EnviDSCommand.h"
-#include "EnviDSBMP085.h"
+#include "EnviDSDHT22.h"
 #include "EnviDSDHT11.h"
+#include "EnviDSPCF8591.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
 	: enviCLI(argc, argv), valid(true)
@@ -45,7 +46,7 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 
 	if (enviCLI.isSet("log-level"))
 	{
-        EnviLog::getInstance()->setLogLevel (enviCLI.getParameter("log-level").getIntValue());
+		EnviLog::getInstance()->setLogLevel (enviCLI.getParameter("log-level").getIntValue());
 	}
 
 	if (enviCLI.isSet("enable-sources"))
@@ -285,12 +286,14 @@ EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 	{
 		return (new EnviDSCommand(*this));
 	}
-#ifdef JUCE_LINUX
-	else if (dsType == Ids::bmp085)
+	else if (dsType == Ids::dht22)
 	{
-		return (new EnviDSBMP085(*this));
+		return (new EnviDSDHT22(*this));
 	}
-#endif
+	else if (dsType == Ids::pcf8591)
+	{
+		return (new EnviDSPCF8591(*this));
+	}
 	return (nullptr);
 }
 

@@ -14,7 +14,7 @@
 juce_ImplementSingleton (EnviLog)
 
 EnviLog::EnviLog()
-	: owner(nullptr), logToConsole(true), logLevel(0)
+	: owner(nullptr), logToConsole(false), logLevel(3)
 {
 	Logger::setCurrentLogger (this);
 }

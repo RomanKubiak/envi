@@ -53,8 +53,9 @@ OBJECTS := \
   $(OBJDIR)/sqlite3_42a04441.o \
   $(OBJDIR)/EnviHTTP_b152028e.o \
   $(OBJDIR)/EnviHTTPConnection_ceb1734c.o \
+  $(OBJDIR)/EnviDSPCF8591_acb629f2.o \
+  $(OBJDIR)/EnviDSDHT22_1d6cc3ba.o \
   $(OBJDIR)/EnviDataSource_d73fb816.o \
-  $(OBJDIR)/EnviDSBMP085_8e254288.o \
   $(OBJDIR)/EnviDSCommand_a6957195.o \
   $(OBJDIR)/EnviDSDHT11_1ba9d39a.o \
   $(OBJDIR)/EnviWiringPi_a6e8514c.o \
@@ -109,14 +110,19 @@ $(OBJDIR)/EnviHTTPConnection_ceb1734c.o: ../../Source/Network/EnviHTTPConnection
 	@echo "Compiling EnviHTTPConnection.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
+$(OBJDIR)/EnviDSPCF8591_acb629f2.o: ../../Source/Source/EnviDSPCF8591.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSPCF8591.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDSDHT22_1d6cc3ba.o: ../../Source/Source/EnviDSDHT22.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSDHT22.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
 $(OBJDIR)/EnviDataSource_d73fb816.o: ../../Source/Source/EnviDataSource.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviDataSource.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviDSBMP085_8e254288.o: ../../Source/Source/EnviDSBMP085.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviDSBMP085.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviDSCommand_a6957195.o: ../../Source/Source/EnviDSCommand.cpp

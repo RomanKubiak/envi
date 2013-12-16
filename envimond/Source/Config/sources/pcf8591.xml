@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataSource type="pcf8591" name="PCF8591" interval="5000" i2cAddr="0x48">
+	<dataValue name="AIN0" pin="0" unit="Integer" />
+	<dataValue name="AIN1" pin="1" unit="Integer" />
+	<dataValue name="AIN2" pin="2" unit="Integer" />
+	<dataValue name="AIN3" pin="3" unit="Integer" />
+</dataSource>

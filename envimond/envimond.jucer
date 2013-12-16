@@ -33,13 +33,15 @@
               file="Source/Network/EnviHTTPConnection.h"/>
       </GROUP>
       <GROUP id="{8152FBDB-7753-31BE-06F1-AAEC91628D7C}" name="Source">
+        <FILE id="vKCWsv" name="EnviDSPCF8591.cpp" compile="1" resource="0"
+              file="Source/Source/EnviDSPCF8591.cpp"/>
+        <FILE id="FkYtY6" name="EnviDSPCF8591.h" compile="0" resource="0" file="Source/Source/EnviDSPCF8591.h"/>
+        <FILE id="STAObU" name="EnviDSDHT22.cpp" compile="1" resource="0" file="Source/Source/EnviDSDHT22.cpp"/>
+        <FILE id="kkuo1n" name="EnviDSDHT22.h" compile="0" resource="0" file="Source/Source/EnviDSDHT22.h"/>
         <FILE id="Sh1PMb" name="EnviDataSource.cpp" compile="1" resource="0"
               file="Source/Source/EnviDataSource.cpp"/>
         <FILE id="V85bNv" name="EnviDataSource.h" compile="0" resource="0"
               file="Source/Source/EnviDataSource.h"/>
-        <FILE id="H2s6ix" name="EnviDSBMP085.cpp" compile="1" resource="0"
-              file="Source/Source/EnviDSBMP085.cpp"/>
-        <FILE id="HsR4Rt" name="EnviDSBMP085.h" compile="0" resource="0" file="Source/Source/EnviDSBMP085.h"/>
         <FILE id="LEpqvO" name="EnviDSCommand.cpp" compile="1" resource="0"
               file="Source/Source/EnviDSCommand.cpp"/>
         <FILE id="VUHHII" name="EnviDSCommand.h" compile="0" resource="0" file="Source/Source/EnviDSCommand.h"/>
