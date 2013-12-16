@@ -21,11 +21,13 @@ class EnviHTTPConnection : public Thread
 		~EnviHTTPConnection();
 		void run();
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
-
+		const bool getRequestHeaders();
+		const bool sendResponse();
 		JUCE_LEAK_DETECTOR(EnviHTTPConnection);
 
 	private:
 		URL processingUrl;
+		bool gotRequestHeaders;
 		StreamingSocket *socket;
 };
 

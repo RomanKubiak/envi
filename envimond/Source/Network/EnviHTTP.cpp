@@ -51,7 +51,11 @@ void EnviHTTP::run()
 		if (streamingSocket != nullptr)
 		{
 			_DBG("EnviHTTP accepted connection from: "+streamingSocket->getHostName());
-			processConnection (streamingSocket);
+			processConnection (streamingSocket.release());
+		}
+		else
+		{
+			_DBG("EnviHTTP accepted connection, failed to create conversation socket");
 		}
 	}
 }

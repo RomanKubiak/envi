@@ -43,6 +43,11 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 		}
 	}
 
+	if (enviCLI.isSet("log-level"))
+	{
+        EnviLog::getInstance()->setLogLevel (enviCLI.getParameter("log-level").getIntValue());
+	}
+
 	if (enviCLI.isSet("enable-sources"))
 	{
 		allowedSources = StringArray::fromTokens(enviCLI.getParameter("enable-sources"), ",", "'\"");
@@ -150,11 +155,11 @@ void EnviApplication::timerCallback(int timerId)
 			return;
 		}
 
-		_INF("Timer triggered for data source type: ["+ds->getType().toString()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
+		_DBG("Timer triggered for data source type: ["+ds->getType().toString()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
 
 		if (!ds->startSource())
 		{
-			_LOG(LOG_WARN, "Timer trigger for data source \""+ds->getName()+"\", execute failed");
+			_WRN("Timer trigger for data source \""+ds->getName()+"\", execute failed");
 		}
 	}
 }
@@ -280,11 +285,12 @@ EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 	{
 		return (new EnviDSCommand(*this));
 	}
+#ifdef JUCE_LINUX
 	else if (dsType == Ids::bmp085)
 	{
 		return (new EnviDSBMP085(*this));
 	}
-
+#endif
 	return (nullptr);
 }
 

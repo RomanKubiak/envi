@@ -11,6 +11,8 @@
 #ifndef ENVIDSBMP085_H_INCLUDED
 #define ENVIDSBMP085_H_INCLUDED
 
+#ifdef JUCE_LINUX
+
 #include "EnviIncludes.h"
 #include "EnviDataSource.h"
 #include "EnviWiringPi.h"
@@ -66,5 +68,5 @@ class EnviDSBMP085 : public EnviDataSource, public Thread, public AsyncUpdater
                 int b1,b2,mb,mc,md;
                 int b5;
 };
-
+#endif
 #endif  // ENVIDSBMP085_H_INCLUDED

@@ -14,7 +14,7 @@
 juce_ImplementSingleton (EnviLog)
 
 EnviLog::EnviLog()
-	: owner(nullptr), logToConsole(false)
+	: owner(nullptr), logToConsole(true), logLevel(0)
 {
 	Logger::setCurrentLogger (this);
 }
@@ -31,6 +31,9 @@ void EnviLog::setOwner (EnviApplication *_owner)
 
 void EnviLog::logMessage (const int level, const String &message)
 {
+	if (level > logLevel)
+		return;
+
 	const String msg = Time::getCurrentTime().formatted ("%Y-%m-%d %H:%M:%S") +" ENVI ["+levelToString(level)+"]: "+message;
 
 	Logger::outputDebugString (msg);
@@ -85,4 +88,9 @@ const Result EnviLog::setLogToFile(const File fileToLogTo)
 void EnviLog::setLogToConsole(const bool _logToConsole)
 {
 	logToConsole = _logToConsole;
+}
+
+void EnviLog::setLogLevel(const int _logLevel)
+{
+	logLevel = _logLevel;
 }

@@ -90,7 +90,7 @@ void EnviDSCommand::run()
 				{
 					_DBG("timeout reached: "+_STR(getTimeout()));
 					_DBG("command: "+commandLine);
-					
+
 					_WRN("["+getName()+"] timeout");
 
 					if (!childProc.kill())
@@ -119,7 +119,6 @@ void EnviDSCommand::handleAsyncUpdate()
 
 			if (result != (double)data[i].value)
 			{
-				_DBG("EnviDSCommand evaluation result input: ["+data[i].value.toString()+"] output: ["+String(result,2)+"]");
 				data[i].value = result;
 			}
 		}

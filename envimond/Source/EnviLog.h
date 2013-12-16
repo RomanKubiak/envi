@@ -24,6 +24,7 @@ class EnviLog : public Logger
 		void logMessage(const String &message);
 		const Result setLogToFile(const File _fileToLogTo);
 		void setLogToConsole(const bool _logToConsole);
+		void setLogLevel(const int _logLevel);
 		static const String levelToString(const int logLevel);
 
 		juce_DeclareSingleton (EnviLog, false);
@@ -32,6 +33,7 @@ class EnviLog : public Logger
 		EnviApplication *owner;
 		ScopedPointer <FileLogger> fileLogger;
 		bool logToConsole;
+		int logLevel;
 
 };
 

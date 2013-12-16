@@ -7,7 +7,7 @@
 
   ==============================================================================
 */
-
+#ifdef JUCE_LINUX
 #include "EnviDSBMP085.h"
 #include "EnviApplication.h"
 #include <wiringPi.h>
@@ -38,7 +38,7 @@ const Result EnviDSBMP085::initialize(const ValueTree _instanceConfig)
 	}
 
 	fd = wiringPiI2CSetup(address);
-  
+
 	if (fd < 0)
 	{
 		return (Result::fail ("wiringPiI2CSetup failed for address: "+String(address)+" mode: "+String(mode)));
@@ -85,11 +85,11 @@ void EnviDSBMP085::run()
 }
 
 void EnviDSBMP085::handleAsyncUpdate()
-{        
+{
         readCalibrationData();
         unsigned int temp = calculateTemperature(readRawTemperature());
         float pres = calculatePressure(readRawPressure());
-        
+
         _DBG("Temp: "+_STR(temp)+" Pressure: "+String(pres,2));
 }
 
@@ -107,7 +107,7 @@ void EnviDSBMP085::readCalibrationData()
         mb	= wiringPiI2CReadReg16 (fd, __BMP085_CAL_MB);
         mc	= wiringPiI2CReadReg16 (fd, __BMP085_CAL_MC);
         md	= wiringPiI2CReadReg16 (fd, __BMP085_CAL_MD);
-        
+
         _DBG("\tAC1 ="+_STR(ac1));
         _DBG("\tAC2 ="+_STR(ac2));
         _DBG("\tAC3 ="+_STR(ac3));
@@ -119,19 +119,19 @@ void EnviDSBMP085::readCalibrationData()
         _DBG("\tMB ="+_STR(mb));
         _DBG("\tMC ="+_STR(mc));
         _DBG("\tMD ="+_STR(md));
-} 
+}
 
 unsigned int EnviDSBMP085::readRawPressure()
 {
         wiringPiI2CWriteReg8 (fd, __BMP085_CONTROL, __BMP085_READPRESSURECMD + (mode << 6));
-        
+
         usleep((2 + (3<<mode)) * 1000);
-        
+
         const unsigned char msb 	= wiringPiI2CReadReg8 (fd, __BMP085_PRESSUREDATA);
         const unsigned char lsb 	= wiringPiI2CReadReg8 (fd, __BMP085_PRESSUREDATA+1);
         const unsigned char xlsb	= wiringPiI2CReadReg8 (fd, __BMP085_PRESSUREDATA+2);
         const unsigned int rawPressure	= (((unsigned long)msb << 16) | ((unsigned long)lsb << 8) | (unsigned long)xlsb) >> (8 - mode);
-        
+
         _DBG("RAW pressure data msb: "+_STR(msb)+" lsb: "+_STR(lsb)+" xlsb: "+_STR(xlsb));
         _DBG("RAW pressure:"+_STR(rawPressure));
         return (rawPressure);
@@ -142,7 +142,7 @@ unsigned int EnviDSBMP085::readRawTemperature()
         wiringPiI2CWriteReg8 (fd, __BMP085_CONTROL, __BMP085_READTEMPCMD);
         usleep (7000);
         const unsigned int rawTemperature = wiringPiI2CReadReg16 (fd, __BMP085_TEMPDATA);
-        
+
         _DBG("RAW temperature: "+_STR(rawTemperature));
         return (rawTemperature);
 }
@@ -150,12 +150,12 @@ unsigned int EnviDSBMP085::readRawTemperature()
 unsigned int EnviDSBMP085::calculateTemperature(unsigned int ut)
 {
 	int x1, x2;
-  
+
 	x1 = (((int)ut - (int)ac6)*(int)ac5) >> 15;
 	x2 = ((int)mc << 11)/(x1 + md);
 	b5 = x1 + x2;
 
-	unsigned int result = ((b5 + 8)>>4);  
+	unsigned int result = ((b5 + 8)>>4);
 
 	return result;
 }
@@ -192,3 +192,5 @@ long EnviDSBMP085::calculatePressure(long rawPressure)
   long temp = p;
   return temp;
 }
+
+#endif
