@@ -64,6 +64,7 @@ namespace Ids
 	DECLARE_ID (data);
 	DECLARE_ID (index);
 	DECLARE_ID (instance);
+	DECLARE_ID (mode);
 };
 
 static inline float getRandomFloat (const float limit)

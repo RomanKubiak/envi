@@ -79,14 +79,18 @@ void EnviDSCommand::run()
 			ChildProcess childProc;
 			commandOutput = String::empty;
 
-			if (childProc.start(commandLine, ChildProcess::wantStdOut))
+			if (childProc.start(commandLine))
 			{
 				if (childProc.waitForProcessToFinish(getTimeout()))
 				{
 					commandOutput = childProc.readAllProcessOutput().trim();
+					triggerAsyncUpdate();
 				}
 				else
 				{
+					_DBG("timeout reached: "+_STR(getTimeout()));
+					_DBG("command: "+commandLine);
+					
 					_WRN("["+getName()+"] timeout");
 
 					if (!childProc.kill())
@@ -99,8 +103,6 @@ void EnviDSCommand::run()
 			{
 				_WRN("["+getName()+"] failed to start child process");
 			}
-
-			triggerAsyncUpdate();
 		} while (wait (-1));
 	}
 }
