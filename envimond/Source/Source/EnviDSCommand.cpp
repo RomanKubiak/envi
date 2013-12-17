@@ -83,8 +83,8 @@ void EnviDSCommand::run()
 			{
 				if (childProc.waitForProcessToFinish(getTimeout()))
 				{
-					commandOutput = childProc.readAllProcessOutput().trim();
-					triggerAsyncUpdate();
+					_DBG("Command success: ["+commandLine+"]");
+					processCommandOutput(childProc.readAllProcessOutput().trim());
 				}
 				else
 				{
@@ -109,20 +109,50 @@ void EnviDSCommand::run()
 
 void EnviDSCommand::handleAsyncUpdate()
 {
-	EnviData data = EnviData::fromJSON(commandOutput, getInstanceNumber());
-
-	for (int i=0; i<data.getNumValues(); i++)
 	{
-		if (hasExpression(data[i].name))
-		{
-			const double result= evaluateExpression (data[i].value, data[i].name);
+		ScopedLock sl(safeResultLock);
+		copyValues (safeResult);
+	}
 
-			if (result != (double)data[i].value)
+	collectFinished (Result::ok());
+}
+
+void EnviDSCommand::processExpressions()
+{
+	for (int i=0; i<safeResult.getNumValues(); i++)
+	{
+		if (hasExpression(safeResult[i].name))
+		{
+			const double result= evaluateExpression (safeResult[i].value, safeResult[i].name);
+
+			if (result != (double)safeResult[i].value)
 			{
-				data[i].value = result;
+				safeResult[i].value = result;
 			}
 		}
 	}
-	result.copyValues (data);
-	collectFinished (commandOutput.isEmpty() ? Result::fail("Command output empty, command: "+commandLine) : Result::ok());
+}
+
+void EnviDSCommand::processCommandOutput (const String _commandOutput)
+{
+	_DBG("EnviDSCommand::processCommandOutput ["+_commandOutput+"]");
+	commandOutput = _commandOutput;
+	
+	if (!commandOutput.isEmpty())
+	{
+		ScopedLock sl(safeResultLock);
+
+		safeResult = EnviData::fromJSON(commandOutput, getInstanceNumber());
+
+		if (safeResult.getNumValues() > 0)
+		{
+			processExpressions();
+		}
+
+		triggerAsyncUpdate();
+	}
+	else
+	{
+		_WRN("["+getName()+"] empty output from command: ["+commandLine+"]");
+	}
 }

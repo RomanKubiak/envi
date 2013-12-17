@@ -55,6 +55,7 @@ namespace Ids
 	DECLARE_ID (dht11);
 	DECLARE_ID (dht22);
 	DECLARE_ID (pcf8591);
+	DECLARE_ID (ds18b20);
 	DECLARE_ID (port);
 	DECLARE_ID (storeFile);
 	DECLARE_ID (i2cAddr);
@@ -68,6 +69,8 @@ namespace Ids
 	DECLARE_ID (mode);
 	DECLARE_ID (pin);
 	DECLARE_ID (unit);
+	DECLARE_ID (deviceId);
+	DECLARE_ID (stats);
 };
 
 static inline float getRandomFloat (const float limit)

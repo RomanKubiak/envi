@@ -49,9 +49,9 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 		EnviLog::getInstance()->setLogLevel (enviCLI.getParameter("log-level").getIntValue());
 	}
 
-	if (enviCLI.isSet("enable-sources"))
+	if (enviCLI.isSet("disabled-sources"))
 	{
-		allowedSources = StringArray::fromTokens(enviCLI.getParameter("enable-sources"), ",", "'\"");
+		disabledSources = StringArray::fromTokens(enviCLI.getParameter("disabled-sources"), ",", "'\"");
 	}
 
 	PropertiesFile::Options options;
@@ -66,16 +66,22 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 
 	options.storageFormat 		= PropertiesFile::storeAsXML;
 	applicationProperties.setStorageParameters (options);
-
+	
+	Result res = findDataSourcesOnDisk();
+	
+	if (!res.wasOk())
+	{
+		_ERR("Can't initialize sources: ["+res.getErrorMessage()+"]");
+		valid = false;
+		return;
+	}
+	
 	/*
 	 *	Envi application classes
 	 */
-	enviHTTP	= new EnviHTTP(*this);
-	enviDB		= new EnviDB(*this);
-
-#ifdef JUCE_LINUX
+	enviHTTP	    = new EnviHTTP(*this);
+	enviDB		    = new EnviDB(*this);
 	enviWiringPi	= new EnviWiringPi(*this);
-#endif
 }
 
 EnviApplication::~EnviApplication()
@@ -101,24 +107,14 @@ ApplicationProperties &EnviApplication::getApplicationProperties()
 const Result EnviApplication::runDispatchLoop()
 {
 	_DBG("EnviApplication::runDispatchLoop");
-
-	const Result sourcesResult = findDataSourcesOnDisk();
-
-	if (sourcesResult.wasOk())
+	if (enviDB->init())
 	{
-		if (enviDB->init())
-		{
-			MessageManager::getInstance()->runDispatchLoop();
-			return (Result::ok());
-		}
-		else
-		{
-			return (Result::fail("Can't initialize EnivDB"));
-		}
+		MessageManager::getInstance()->runDispatchLoop();
+		return (Result::ok());
 	}
 	else
 	{
-		return (sourcesResult);
+		return (Result::fail("Can't initialize EnivDB"));
 	}
 }
 
@@ -169,7 +165,7 @@ EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstan
 {
 	const String type = dataSourceInstance.getProperty(Ids::type);
 
-	if (allowedSources.indexOf (type) >= 0)
+	if (disabledSources.indexOf (type) >= 0 && enviCLI.isSet("disabled-sources"))
 	{
 		_WRN("Data source type: ["+type+"] disabled on command line");
 		return (nullptr);
@@ -247,7 +243,7 @@ const Result EnviApplication::findDataSourcesOnDisk()
 			{
 				if (createInstance (sourceXmls[i]) == nullptr)
 				{
-					return (Result::fail("Can't create all data sources"));
+					continue;
 				}
 			}
 

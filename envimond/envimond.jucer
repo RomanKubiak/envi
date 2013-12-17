@@ -5,25 +5,6 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
-      <GROUP id="{265D1A6F-24DA-B6A1-E522-05306D971ACB}" name="Config">
-        <GROUP id="{D492D212-53E7-E6FF-8911-2D0F132E3937}" name="scripts">
-          <FILE id="QwgGN9" name="json.bat" compile="0" resource="1" file="Source/Config/scripts/json.bat"/>
-          <FILE id="ldE61H" name="json.sh" compile="0" resource="1" file="Source/Config/scripts/json.sh"/>
-        </GROUP>
-        <GROUP id="{CC7BA0D1-E6F4-D0A1-5CCE-5D223A05B343}" name="sources">
-          <FILE id="IDubMV" name="bmp085.xml" compile="0" resource="1" file="Source/Config/sources/bmp085.xml"/>
-          <FILE id="qb76BQ" name="cmd_unix.xml" compile="0" resource="1" file="Source/Config/sources/cmd_unix.xml"/>
-          <FILE id="hxzHBB" name="cmd_win32.xml" compile="0" resource="1" file="Source/Config/sources/cmd_win32.xml"/>
-          <FILE id="sSBeC4" name="dht.xml" compile="0" resource="1" file="Source/Config/sources/dht.xml"/>
-        </GROUP>
-      </GROUP>
-      <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
-        <FILE id="x1skFV" name="getopt.c" compile="1" resource="0" file="Source/Externals/getopt.c"/>
-        <FILE id="vw6pVq" name="getopt.h" compile="0" resource="0" file="Source/Externals/getopt.h"/>
-        <FILE id="zKTn6a" name="sqlite3.c" compile="1" resource="0" file="Source/Externals/sqlite3.c"/>
-        <FILE id="YZ3kUF" name="sqlite3.h" compile="0" resource="0" file="Source/Externals/sqlite3.h"/>
-        <FILE id="Zz7VRw" name="sqlite3ext.h" compile="0" resource="0" file="Source/Externals/sqlite3ext.h"/>
-      </GROUP>
       <GROUP id="{CEA7D5EF-0A70-CE8D-CC9D-3621BB641A1E}" name="Network">
         <FILE id="Xr8LdV" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/Network/EnviHTTP.cpp"/>
         <FILE id="ytmL4F" name="EnviHTTP.h" compile="0" resource="0" file="Source/Network/EnviHTTP.h"/>
@@ -85,11 +66,7 @@
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-      </MODULEPATHS>
+      <MODULEPATHS/>
     </VS2010>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w">
       <CONFIGURATIONS>
@@ -97,33 +74,21 @@
                        headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-      </MODULEPATHS>
+      <MODULEPATHS/>
     </CODEBLOCKS>
-    <LINUX_MAKE targetFolder="Builds/Linux" extraLinkerFlags="" externalLibraries="wiringPi&#10;juce-static-debug&#10;X11&#10;dl&#10;rt"
-                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s">
+    <LINUX_MAKE targetFolder="Builds/Linux" extraLinkerFlags="" externalLibraries="wiringPi&#10;X11&#10;dl&#10;rt&#10;envi-debug"
+                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="envimond" linuxArchitecture="-march=armv6" binaryPath="/usr/local/bin/"
-                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"/>
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals&#10;~/devel/JUCE"/>
         <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
                        targetName="envimond" linuxArchitecture="-march=armv6"/>
       </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-      </MODULEPATHS>
+      <MODULEPATHS/>
     </LINUX_MAKE>
   </EXPORTFORMATS>
-  <MODULES>
-    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
-    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
-  </MODULES>
+  <MODULES/>
   <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"
                JUCE_INCLUDE_ZLIB_CODE="enabled"/>
 </JUCERPROJECT>

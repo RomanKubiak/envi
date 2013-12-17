@@ -49,6 +49,13 @@ EnviData::EnviData(const String &firstValueName, const Unit valueUnit)
 	}
 }
 
+void EnviData::operator= (const EnviData& other) noexcept
+{
+	values 				= other.values;
+	dataSourceName 			= other.dataSourceName;
+	dataSourceInstanceNumber 	= other.dataSourceInstanceNumber;
+}
+
 bool EnviData::operator== (const EnviData& other) noexcept
 {
 	if (values.size() != other.values.size())
@@ -322,6 +329,12 @@ const EnviData EnviDataSource::getResult() const
 	return (result);
 }
 
+void EnviDataSource::setResult (const EnviData &_result)
+{
+	ScopedLock sl(dataSourceLock);
+	result = _result;
+}
+
 ValueTree EnviDataSource::getConfig() const
 {
 	ScopedLock sl(dataSourceLock);
@@ -345,6 +358,31 @@ void EnviDataSource::collectFinished(const Result collectStatus)
 {
 	ScopedLock sl(dataSourceLock);
 	owner.sourceWrite (this, collectStatus);
+}
+
+void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
+{
+	ScopedLock sl(dataSourceLock);
+	if (valueIndex >= result.getNumValues())
+	{
+		_INF("Trying to set a value that's not defined");
+		return;
+	}
+	result[valueIndex].value	= value;
+	result[valueIndex].sampleTime	= Time::getCurrentTime();
+}
+
+const int EnviDataSource::addValue(const String &valueName, const EnviData::Unit unit)
+{
+	ScopedLock sl(dataSourceLock);
+	result.addValue (EnviData::Value (valueName, unit));
+	return (result.getNumValues() - 1);
+}
+
+void EnviDataSource::copyValues (const EnviData &dataToCopyFrom)
+{
+	ScopedLock sl(dataSourceLock);
+	result = dataToCopyFrom;
 }
 
 void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0)

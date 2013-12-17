@@ -14,9 +14,8 @@
 EnviDSDHT11::EnviDSDHT11(EnviApplication &owner)
 	: Thread("EnviDSDHT11"), gpioPin(-1), EnviDataSource(owner, "dht11")
 {
-	result.addValue (EnviData::Value("temperature", EnviData::Celsius));
-	result.addValue (EnviData::Value("temperature", EnviData::Fahrenheit));
-	result.addValue (EnviData::Value("humidity", EnviData::Percent));
+	addValue ("Temperature", EnviData::Celsius);
+	addValue ("Humidity", EnviData::Percent);
 }
 
 EnviDSDHT11::~EnviDSDHT11()
@@ -93,20 +92,6 @@ void EnviDSDHT11::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
-#ifndef JUCE_LINUX
-bool EnviDSDHT11::readDHTValue()
-{
-	ScopedLock sl (dataSourceLock);
-	Random r(Time::getHighResolutionTicks());
-	result[0].value 	= getRandomFloat(100.0f);
-	result[0].sampleTime	= Time::getCurrentTime();
-	result[1].value 	= getRandomFloat(200.0f);
-	result[1].sampleTime	= Time::getCurrentTime();
-	result[2].value		= getRandomFloat(100.0f);
-	result[2].sampleTime	= Time::getCurrentTime();
-	return (true);
-}
-#else
 bool EnviDSDHT11::readDHTValue()
 {
 	uint8_t laststate = HIGH;
@@ -161,13 +146,8 @@ bool EnviDSDHT11::readDHTValue()
 	// print it out if data is good
 	if ((j >= 40) && (dht11_dat[4] == ((dht11_dat[0] + dht11_dat[1] + dht11_dat[2] + dht11_dat[3]) & 0xFF)) )
 	{
-		ScopedLock sl (dataSourceLock);
-		result[0].value 		= String (_STR(dht11_dat[2])+"."+_STR(dht11_dat[3])).getFloatValue();
-		result[0].sampleTime	= Time::getCurrentTime();
-		result[1].value 		= dht11_dat[2] * 9. / 5. + 32;
-		result[1].sampleTime	= Time::getCurrentTime();
-		result[2].value			= String (_STR(dht11_dat[0])+"."+_STR(dht11_dat[1])).getFloatValue();
-		result[2].sampleTime	= Time::getCurrentTime();
+		setValue (1, String (_STR(dht11_dat[0])+"."+_STR(dht11_dat[1])).getFloatValue());
+		setValue (0, String (_STR(dht11_dat[2])+"."+_STR(dht11_dat[3])).getFloatValue());
 
 		_DBG("EnviDSDHT11::readDHTValue got values");
 		_DBG(_STR(temperatureFahrenheit)+" "+_STR(temperatureCelsius)+" "+_STR(humidity));
@@ -180,4 +160,3 @@ bool EnviDSDHT11::readDHTValue()
 		return (false);
 	}
 }
-#endif

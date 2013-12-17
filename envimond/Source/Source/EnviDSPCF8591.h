@@ -31,7 +31,8 @@ class EnviDSPCF8591 : public EnviDataSource, public Thread, public AsyncUpdater
 	private:
 		int i2cAddr;
 		int pinBase;
-		bool pinMap[4];
+		int pcfFd;
+		int pinMap[4];
 };
 
 

@@ -4,8 +4,8 @@
 EnviDSDHT22::EnviDSDHT22(EnviApplication &owner)
 	: Thread("EnviDSDHT22"), gpioPin(-1), EnviDataSource(owner, "dht22")
 {
-	result.addValue (EnviData::Value("temperature", EnviData::Celsius));
-	result.addValue (EnviData::Value("humidity", EnviData::Percent));
+	addValue ("Temperature", EnviData::Celsius);
+	addValue ("Humidity", EnviData::Percent);
 }
 
 EnviDSDHT22::~EnviDSDHT22()
@@ -79,17 +79,9 @@ void EnviDSDHT22::run()
 
 void EnviDSDHT22::handleAsyncUpdate()
 {
-	setValues (true, Result::ok(), temperatureCelsius, humidity);
+	collectFinished (Result::ok());
 }
 
-#ifndef JUCE_LINUX
-bool EnviDSDHT22::readDHTValue()
-{
-	ScopedLock sl (dataSourceLock);
-	setValues (true, Result::ok(), getRandomFloat(100.0f), getRandomFloat(100.0f));
-	return (true);
-}
-#else
 bool EnviDSDHT22::readDHTValue()
 {
 	uint8_t laststate = HIGH;
@@ -152,8 +144,8 @@ bool EnviDSDHT22::readDHTValue()
 		if ((dht22_dat[2] & 0x80) != 0) 
 			t *= -1;
 		
-		temperatureCelsius 	= t;
-		humidity		= h;
+		setValue (0, t);
+		setValue (1, h);
 		_DBG("EnviDSDHT22::readDHTValue got values: "+String::formatted("Humidity: %.2f Temperature: %.2f", h, t));
 		
 		return (true);
@@ -166,4 +158,3 @@ bool EnviDSDHT22::readDHTValue()
 	}
 
 }
-#endif

@@ -50,7 +50,7 @@ class EnviApplication : public MultiTimer
 		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
-		StringArray allowedSources;
+		StringArray disabledSources;
 		File dataSourcesDir;
 		bool valid;
 #ifdef JUCE_LINUX

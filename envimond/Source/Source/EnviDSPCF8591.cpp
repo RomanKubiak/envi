@@ -2,13 +2,9 @@
 #include "EnviApplication.h"
 
 EnviDSPCF8591::EnviDSPCF8591(EnviApplication &owner)
-	: Thread("EnviDSPCF8591"), i2cAddr(-1), EnviDataSource(owner, "pcf8591")
+	: Thread("EnviDSPCF8591"), i2cAddr(-1), EnviDataSource(owner, "pcf8591"), pcfFd(-1)
 {
-	pinMap[0] = pinMap[1] = pinMap[2] = pinMap[3] = false;
-	result.addValue (EnviData::Value("AIN0", EnviData::Integer));
-	result.addValue (EnviData::Value("AIN1", EnviData::Integer));
-	result.addValue (EnviData::Value("AIN2", EnviData::Integer));
-	result.addValue (EnviData::Value("AIN3", EnviData::Integer));
+	pinMap[0] = pinMap[1] = pinMap[2] = pinMap[3] = -1;
 }
 
 EnviDSPCF8591::~EnviDSPCF8591()
@@ -26,6 +22,18 @@ const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 	if (instanceConfig.isValid())
 	{
 		i2cAddr		= (bool)instanceConfig.hasProperty(Ids::i2cAddr) ? (int)getProperty(Ids::i2cAddr).toString().getHexValue32() : 0x48;
+
+		pcfFd		= pcf8591Setup (pinBase = (getInstanceNumber() * 4) + 100, i2cAddr);
+
+		if (pcfFd < 0)
+		{
+			return (Result::fail ("pcf8591Setup failed for i2cAddr: "+_STR(i2cAddr)+" with pinBase: "+_STR(pinBase)));
+		}
+		else
+		{
+			_DBG("EnviDSPCF8591::initialize pcf8591Setup seuccees i2cAddr: "+_STR(i2cAddr)+" pinBase: "+_STR(pinBase));
+		}
+
 		if (instanceConfig.getNumChildren() > 0)
 		{
 			for (int i=0; i<instanceConfig.getNumChildren(); i++)
@@ -37,11 +45,7 @@ const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 					if (pin >= 0 && pin <= 3)
 					{
 						_DBG("EnviDSPCF8591::initialize using pin: "+_STR(pin));
-						pinMap[pin] 		= true;
-						if (instanceConfig.getChild(i).hasProperty(Ids::name))
-							result[pin].name 	= instanceConfig.getChild(i).getProperty(Ids::name).toString();
-						if (instanceConfig.getChild(i).hasProperty(Ids::unit))
-							result[pin].unit 	= EnviData::stringToUnit (instanceConfig.getChild(i).getProperty(Ids::unit).toString());
+						pinMap[pin] 		= addValue (instanceConfig.getChild(i).getProperty(Ids::name).toString(), EnviData::stringToUnit (instanceConfig.getChild(i).getProperty(Ids::unit).toString()));
 					}
 					else
 					{
@@ -98,25 +102,28 @@ void EnviDSPCF8591::run()
 
 void EnviDSPCF8591::handleAsyncUpdate()
 {
+	collectFinished (Result::ok());
 }
 
-#ifndef JUCE_LINUX
-bool EnviDSPCF8591::readPCFvalues()
-{
-	ScopedLock sl (dataSourceLock);
-	return (true);
-}
-#else
 bool EnviDSPCF8591::readPCFvalues()
 {
 	ScopedLock sl (dataSourceLock);
 	for (int i=0; i<4; i++)
 	{
-		if (pinMap[i])
+		if (pinMap[i] >= 0)
 		{
 			_DBG("EnviDSPCF8591::readPCFvalues reading pin: "+_STR(i));
+			const int value = analogRead(pinBase+i);
+			if (value < 0)
+			{
+				_DBG("EnviDSPCF8591::readPCFvalues negative value on pin read: "+_STR(value));
+			}
+			else
+			{
+				_DBG("EnviDSPCF8591::readPCFvalues got value: "+_STR(value));
+				setValue (pinMap[i], value);
+			}
 		}
 	}
 	return (true);
 }
-#endif

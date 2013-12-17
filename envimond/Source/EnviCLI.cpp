@@ -28,12 +28,12 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			{"store-file",		required_argument,	0, 's'},
 			{"store-format",	required_argument,	0, 'S'},
 			{"listen-port",		required_argument,	0, 'p'},
-			{"enable-source",	required_argument,	0, 'e'},
+			{"disabled-sources",	required_argument,	0, 'D'},
 			{"sources-dir",		required_argument,  0, 'd'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long (argc, argv, "vbhf:l:s:S:p:e:d:", long_options, &option_index);
+		c = getopt_long (argc, argv, "vbhf:l:s:S:p:D:d:", long_options, &option_index);
 
 		if (c == -1)
 			break;
@@ -68,8 +68,8 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			case 'p':
 				arguments.set ("listen-port", _STR(optarg));
 				break;
-			case 'e':
-				arguments.set ("enable-source", _STR(optarg));
+			case 'D':
+				arguments.set ("disabled-sources", _STR(optarg));
 				break;
 			case 'd':
 				arguments.set ("sources-dir", _STR(optarg));

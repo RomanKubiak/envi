@@ -64,6 +64,7 @@ class EnviData
 		EnviData(const String &firstValueName, const Unit valueUnit);
 		EnviData(const String &firstValueName, const var firstValueValue=var::null, const Time firstValueSampleTime=Time());
 		bool operator== (const EnviData& other) noexcept;
+		void operator= (const EnviData& other) noexcept;
 		EnviData::Value& operator[] (int arrayIndex) const;
 
 		void copyValues(const EnviData &valuesToUpdateFrom);
@@ -112,6 +113,9 @@ class EnviDataSource : public ChangeBroadcaster
 		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0);
 		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1);
 		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1, const var value2);
+		void setValue (const unsigned int valueIndex, const var value);
+		const int addValue (const String &valueName, const EnviData::Unit unit);
+		void copyValues (const EnviData &dataToCopyFrom);
 		const var getProperty (const Identifier &identifier) const;
 		void setProperty (const Identifier identifier, const var &value);
 		const int getInterval() const;
@@ -122,6 +126,7 @@ class EnviDataSource : public ChangeBroadcaster
 		const Identifier getType() const;
 		const int getTimeout() const;
 		const EnviData getResult() const;
+		void setResult (const EnviData &_result);
 		ValueTree getConfig() const;
 		bool startSource();
 		void stopSource();
@@ -137,10 +142,10 @@ class EnviDataSource : public ChangeBroadcaster
 		ValueTree instanceConfig;
 		EnviApplication &owner;
 		CriticalSection dataSourceLock;
-		EnviData result;
 		HashMap <String,Expression> valueExpressions;
 
 	private:
+		EnviData result;
 		Time startTime, endTime;
 		bool disabled;
 		int instanceNumber;
