@@ -18,7 +18,8 @@ EnviData::EnviData()
 EnviData::EnviData(const EnviData &other)
 	:	values(other.values),
 		dataSourceName(other.dataSourceName),
-		dataSourceInstanceNumber(other.dataSourceInstanceNumber)
+		dataSourceInstanceNumber(other.dataSourceInstanceNumber),
+		dataSourceType(other.dataSourceType)
 {
 }
 
@@ -54,6 +55,7 @@ void EnviData::operator= (const EnviData& other) noexcept
 	values 				= other.values;
 	dataSourceName 			= other.dataSourceName;
 	dataSourceInstanceNumber 	= other.dataSourceInstanceNumber;
+	dataSourceType			= other.dataSourceType;
 }
 
 bool EnviData::operator== (const EnviData& other) noexcept
@@ -99,8 +101,11 @@ const EnviData EnviData::fromJSON(const String &jsonString, const int dataSource
 {
 	EnviData enviData;
 	var data				= JSON::parse (jsonString);
-	enviData.dataSourceName = data["name"];
-	enviData.dataSourceType	= data["type"];
+	_DBG("EnviData::fromJSON result");
+	_DBG("\t"+JSON::toString(data));
+	
+	enviData.dataSourceName 		= data["name"];
+	enviData.dataSourceType			= data["type"];
 	enviData.dataSourceInstanceNumber	= dataSourceInstanceNumber;
 	var values				= data["values"];
 
@@ -110,7 +115,7 @@ const EnviData EnviData::fromJSON(const String &jsonString, const int dataSource
 
 		value.value			= values[i]["value"];
 		value.error			= values[i]["error"];
-		value.sampleTime	= Time(values[i]["sampleTime"]);
+		value.sampleTime		= ((int64)values[i]["sampleTime"] > 0) ? Time(values[i]["sampleTime"]) : Time::getCurrentTime();
 		value.index			= values[i]["index"];
 
 		enviData.addValue (value);
@@ -152,6 +157,8 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 	{
 		ret
 			<< enviData.dataSourceName				<< separator
+			<< _STR(enviData.dataSourceInstanceNumber)		<< separator
+			<< enviData.dataSourceType				<< separator
 			<< enviData[i].name 					<< separator
 			<< unitToString(enviData[i].unit) 			<< separator
 			<< enviData[i].value.toString() 			<< separator
@@ -171,9 +178,11 @@ const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTa
 		String sql;
 		sql << "INSERT INTO "
 			<< dataTable
-			<< "(sourceId, valueName, valueValue, timestamp, valueError, valueUnit)"
+			<< "(sourceName, sourceType, sourceInstance, valueName, valueValue, timestamp, valueError, valueUnit)"
 			<< " VALUES ("
-			<< enviData.dataSourceInstanceNumber			<< ","
+			<< "'" << enviData.dataSourceName			<< "',"
+			<< "'" << enviData.dataSourceType			<< "',"
+			<< (int)enviData.dataSourceInstanceNumber		<< ","
 			<< "'"	<< enviData[i].name				<< "',"
 			<< "'"	<< (float)enviData[i].value			<< "',"
 			<< "'"	<< enviData[i].sampleTime.toMilliseconds()	<< "',"
@@ -235,29 +244,29 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 		return (EnviData::Float);
 	if (unit == "Text")
 		return (EnviData::Text);
-	if (unit == "A")
+	if (unit == "A" || unit == "Amp")
 		return (EnviData::Amp);
-	if (unit == "V")
+	if (unit == "V" || unit == "Volt")
 		return (EnviData::Volt);
-	if (unit == "degC")
+	if (unit == "degC" || unit == "Celsius")
 		return (EnviData::Celsius);
-	if (unit == "dB")
+	if (unit == "dB" || unit == "Decibel")
 		return (EnviData::Decibel);
-	if (unit == "lx")
+	if (unit == "lx" || unit == "Lux")
 		return (EnviData::Lux);
-	if (unit == "Hz")
+	if (unit == "Hz" || unit == "Hertz")
 		return (EnviData::Hertz);
 	if (unit == "Ohm")
 		return (EnviData::Ohm);
-	if (unit == "F")
+	if (unit == "F" || unit == "Farad")
 		return (EnviData::Farad);
-	if (unit == "W")
+	if (unit == "W" || unit == "Watt")
 		return (EnviData::Watt);
-	if (unit == "kWH")
+	if (unit == "kWH" || unit == "KiloWattHour")
 		return (EnviData::KiloWattHour);
-	if (unit == "%")
+	if (unit == "%" || unit == "Percent")
 		return (EnviData::Percent);
-	if (unit == "degF")
+	if (unit == "degF" || unit == "Fahrenheit")
 		return (EnviData::Fahrenheit);
 	return (EnviData::Unknown);
 }

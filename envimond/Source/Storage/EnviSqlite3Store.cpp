@@ -12,7 +12,7 @@
 #include "EnviApplication.h"
 
 EnviSqlite3Store::EnviSqlite3Store(EnviApplication &owner)
-	: EnviDataStore (owner), db(nullptr), queryCacheSize(6),
+	: EnviDataStore (owner), db(nullptr), queryCacheSize(1),
 		queryCount(0), transactionCount(0), transactionTimeAvg(0)
 {
 }

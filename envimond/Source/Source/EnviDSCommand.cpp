@@ -109,9 +109,10 @@ void EnviDSCommand::run()
 
 void EnviDSCommand::handleAsyncUpdate()
 {
+	_DBG("EnviDSCommand::handleAsyncUpdate");
 	{
 		ScopedLock sl(safeResultLock);
-		copyValues (safeResult);
+		setResult (safeResult);
 	}
 
 	collectFinished (Result::ok());
@@ -119,6 +120,7 @@ void EnviDSCommand::handleAsyncUpdate()
 
 void EnviDSCommand::processExpressions()
 {
+	_DBG("EnviDSCommand::processExpressions");
 	for (int i=0; i<safeResult.getNumValues(); i++)
 	{
 		if (hasExpression(safeResult[i].name))
@@ -144,6 +146,7 @@ void EnviDSCommand::processCommandOutput (const String _commandOutput)
 
 		safeResult = EnviData::fromJSON(commandOutput, getInstanceNumber());
 
+		_DBG("EnviDSCommand::processCommandOutput safeResult: ["+EnviData::toCSVString(safeResult).trim()+"]");
 		if (safeResult.getNumValues() > 0)
 		{
 			processExpressions();
