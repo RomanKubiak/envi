@@ -5,6 +5,13 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
+      <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
+        <FILE id="FQlmjf" name="getopt.c" compile="1" resource="0" file="Source/Externals/getopt.c"/>
+        <FILE id="aS4fyy" name="getopt.h" compile="0" resource="0" file="Source/Externals/getopt.h"/>
+        <FILE id="ArY89g" name="sqlite3.c" compile="1" resource="0" file="Source/Externals/sqlite3.c"/>
+        <FILE id="Cijhqt" name="sqlite3.h" compile="0" resource="0" file="Source/Externals/sqlite3.h"/>
+        <FILE id="iN0v9m" name="sqlite3ext.h" compile="0" resource="0" file="Source/Externals/sqlite3ext.h"/>
+      </GROUP>
       <GROUP id="{CEA7D5EF-0A70-CE8D-CC9D-3621BB641A1E}" name="Network">
         <FILE id="Xr8LdV" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/Network/EnviHTTP.cpp"/>
         <FILE id="ytmL4F" name="EnviHTTP.h" compile="0" resource="0" file="Source/Network/EnviHTTP.h"/>
@@ -66,7 +73,11 @@
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS/>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+      </MODULEPATHS>
     </VS2010>
     <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w">
       <CONFIGURATIONS>
@@ -74,7 +85,11 @@
                        headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
       </CONFIGURATIONS>
-      <MODULEPATHS/>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+      </MODULEPATHS>
     </CODEBLOCKS>
     <LINUX_MAKE targetFolder="Builds/Linux" extraLinkerFlags="" externalLibraries="wiringPi&#10;X11&#10;dl&#10;rt&#10;envi-debug"
                 extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w">
@@ -85,10 +100,18 @@
         <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
                        targetName="envimond" linuxArchitecture="-march=armv6"/>
       </CONFIGURATIONS>
-      <MODULEPATHS/>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+      </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
-  <MODULES/>
+  <MODULES>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
   <JUCEOPTIONS JUCE_LOG_ASSERTIONS="enabled" JUCE_CHECK_MEMORY_LEAKS="enabled"
                JUCE_INCLUDE_ZLIB_CODE="enabled"/>
 </JUCERPROJECT>

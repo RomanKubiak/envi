@@ -81,7 +81,10 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 */
 	enviHTTP	    = new EnviHTTP(*this);
 	enviDB		    = new EnviDB(*this);
+
+#ifdef JUCE_LINUX
 	enviWiringPi	= new EnviWiringPi(*this);
+#endif
 }
 
 EnviApplication::~EnviApplication()

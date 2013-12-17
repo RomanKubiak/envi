@@ -23,6 +23,7 @@ const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 	{
 		i2cAddr		= (bool)instanceConfig.hasProperty(Ids::i2cAddr) ? (int)getProperty(Ids::i2cAddr).toString().getHexValue32() : 0x48;
 
+#ifdef JUCE_LINUX
 		pcfFd		= pcf8591Setup (pinBase = (getInstanceNumber() * 4) + 100, i2cAddr);
 
 		if (pcfFd < 0)
@@ -33,7 +34,7 @@ const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 		{
 			_DBG("EnviDSPCF8591::initialize pcf8591Setup seuccees i2cAddr: "+_STR(i2cAddr)+" pinBase: "+_STR(pinBase));
 		}
-
+#endif
 		if (instanceConfig.getNumChildren() > 0)
 		{
 			for (int i=0; i<instanceConfig.getNumChildren(); i++)
@@ -105,6 +106,7 @@ void EnviDSPCF8591::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
+#ifdef JUCE_LINUX
 bool EnviDSPCF8591::readPCFvalues()
 {
 	ScopedLock sl (dataSourceLock);
@@ -127,3 +129,9 @@ bool EnviDSPCF8591::readPCFvalues()
 	}
 	return (true);
 }
+#else
+bool EnviDSPCF8591::readPCFvalues()
+{
+	return (true);
+}
+#endif

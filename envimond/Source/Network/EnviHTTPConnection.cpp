@@ -93,4 +93,5 @@ const bool EnviHTTPConnection::sendResponse()
 	_DBG("EnviHTTPConnection::sendResponse");
 	_DBG(processingUrl.toString(true));
 	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: 10\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n0123456789");
+	return (true);
 }

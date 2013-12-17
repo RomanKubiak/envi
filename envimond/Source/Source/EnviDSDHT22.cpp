@@ -82,6 +82,7 @@ void EnviDSDHT22::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
+#ifdef JUCE_LINUX
 bool EnviDSDHT22::readDHTValue()
 {
 	uint8_t laststate = HIGH;
@@ -158,3 +159,9 @@ bool EnviDSDHT22::readDHTValue()
 	}
 
 }
+#else
+bool EnviDSDHT22::readDHTValue()
+{
+	return (true);
+}
+#endif

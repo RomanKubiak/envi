@@ -15,7 +15,10 @@
 #include "EnviDataSource.h"
 #include "EnviDB.h"
 #include "EnviHTTP.h"
+
+#ifdef JUCE_LINUX
 #include "EnviWiringPi.h"
+#endif
 
 class EnviApplication : public MultiTimer
 {
