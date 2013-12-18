@@ -24,21 +24,7 @@ EnviSqlite3Store::~EnviSqlite3Store()
 
 const Result EnviSqlite3Store::openStore()
 {
-	if (owner.getCLI().isSet("store-file"))
-	{
-		storeFile = File(owner.getCLI().getParameter("store-file"));
-	}
-	else
-	{
-		if (owner.getApplicationProperties().getUserSettings())
-		{
-			storeFile = File (owner.getApplicationProperties().getUserSettings()->getFile().getParentDirectory().getChildFile("data.sqlite3"));
-		}
-		else
-		{
-			return (Result::fail("Can't set any default storage file"));
-		}
-	}
+	storeFile = owner.getEnviStoreFile();
 
 	int rc = sqlite3_open (storeFile.getFullPathName().toUTF8(), &db);
 

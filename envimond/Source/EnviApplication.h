@@ -36,20 +36,19 @@ class EnviApplication : public MultiTimer
 		void timerCallback(int timerId);
 		const Result findDataSourcesOnDisk();
 		EnviCLI &getCLI();
-		ApplicationProperties &getApplicationProperties();
-		
 		EnviDataSource *createInstance(const File &sourceState);
 		EnviDataSource *createInstance(const ValueTree dataSourceInstance);
 		void sourceWrite(EnviDataSource *dataSource, const Result &failureReason);
 		const int getNumInstances(const Identifier dsType);
 		EnviDataSource *getInstanceFromType(const Identifier dsType);
 		const bool isValid();
-
+		const File getEnviSourcesDir();
+		const File getEnviScriptsDir();
+		const File getEnviStoreFile();
+		const File getEnviLogFile();
 		JUCE_LEAK_DETECTOR(EnviApplication);
 
 	private:
-		PropertySet defaultPropertyStorage;
-		ApplicationProperties applicationProperties;
 		EnviCLI enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;

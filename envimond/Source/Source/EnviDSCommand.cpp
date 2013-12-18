@@ -12,7 +12,7 @@
 #include "EnviApplication.h"
 
 EnviDSCommand::EnviDSCommand(EnviApplication &owner)
-	: Thread("EnviDSCommand"), commandLine(String::empty), EnviDataSource(owner, "cmd")
+	: Thread("EnviDSCommand"), EnviDataSource(owner, "cmd")
 {
 }
 
@@ -30,7 +30,13 @@ const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 
 	if (instanceConfig.isValid())
 	{
-		commandLine	= instanceConfig.hasProperty (Ids::cmd)	? getProperty(Ids::cmd).toString() : String::empty;
+		command.set (0, instanceConfig.hasProperty (Ids::cmd)	? getProperty(Ids::cmd).toString() : String::empty);
+		command.set (1, instanceConfig.hasProperty (Ids::args)	? getProperty(Ids::args).toString() : String::empty);
+
+		if (!File::isAbsolutePath(command[0]))
+		{
+			command.set (0, owner.getEnviScriptsDir().getChildFile(command[0]).getFullPathName());
+		}
 
 		if (instanceConfig.getNumChildren() > 0)
 			return (setAllExpressions());
@@ -69,7 +75,7 @@ void EnviDSCommand::run()
 				return;
 			}
 
-			if (commandLine.isEmpty())
+			if (command[0].isEmpty())
 			{
 				_WRN("Command is an empty string (not set in XML?), disabling");
 				setDisabled (true);
@@ -79,17 +85,17 @@ void EnviDSCommand::run()
 			ChildProcess childProc;
 			commandOutput = String::empty;
 
-			if (childProc.start(commandLine))
+			if (childProc.start(command))
 			{
 				if (childProc.waitForProcessToFinish(getTimeout()))
 				{
-					_DBG("Command success: ["+commandLine+"]");
+					_DBG("Command success: ["+command.joinIntoString(" ").trim()+"]");
 					processCommandOutput(childProc.readAllProcessOutput().trim());
 				}
 				else
 				{
 					_DBG("timeout reached: "+_STR(getTimeout()));
-					_DBG("command: "+commandLine);
+					_DBG("command: "+command.joinIntoString(" "));
 
 					_WRN("["+getName()+"] timeout");
 
@@ -101,7 +107,7 @@ void EnviDSCommand::run()
 			}
 			else
 			{
-				_WRN("["+getName()+"] failed to start child process");
+				_WRN("["+getName()+"] failed to start child process ["+command.joinIntoString(" ").trim()+"]");
 			}
 		} while (wait (-1));
 	}
@@ -139,7 +145,7 @@ void EnviDSCommand::processCommandOutput (const String _commandOutput)
 {
 	_DBG("EnviDSCommand::processCommandOutput ["+_commandOutput+"]");
 	commandOutput = _commandOutput;
-	
+
 	if (!commandOutput.isEmpty())
 	{
 		ScopedLock sl(safeResultLock);
@@ -156,6 +162,6 @@ void EnviDSCommand::processCommandOutput (const String _commandOutput)
 	}
 	else
 	{
-		_WRN("["+getName()+"] empty output from command: ["+commandLine+"]");
+		_WRN("["+getName()+"] empty output from command: ["+command.joinIntoString(" ").trim()+"]");
 	}
 }

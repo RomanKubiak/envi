@@ -52,6 +52,7 @@ namespace Ids
 	DECLARE_ID (timeout);
 	DECLARE_ID (type);
 	DECLARE_ID (cmd);
+	DECLARE_ID (args);
 	DECLARE_ID (dht11);
 	DECLARE_ID (dht22);
 	DECLARE_ID (pcf8591);

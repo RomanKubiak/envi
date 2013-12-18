@@ -34,7 +34,7 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 
 	if (enviCLI.isSet("log-file"))
 	{
-		Result res = EnviLog::getInstance()->setLogToFile (enviCLI.getParameter("log-file"));
+		Result res = EnviLog::getInstance()->setLogToFile (getEnviLogFile());
 
 		if (!res.wasOk())
 		{
@@ -54,28 +54,15 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 		disabledSources = StringArray::fromTokens(enviCLI.getParameter("disabled-sources"), ",", "'\"");
 	}
 
-	PropertiesFile::Options options;
-	options.applicationName		= "envi";
-	options.filenameSuffix		= "xml";
-
-#ifdef JUCE_LINUX
-	options.folderName			= ".envi";
-#else
-	options.folderName			= "envi";
-#endif
-
-	options.storageFormat 		= PropertiesFile::storeAsXML;
-	applicationProperties.setStorageParameters (options);
-	
 	Result res = findDataSourcesOnDisk();
-	
+
 	if (!res.wasOk())
 	{
 		_ERR("Can't initialize sources: ["+res.getErrorMessage()+"]");
 		valid = false;
 		return;
 	}
-	
+
 	/*
 	 *	Envi application classes
 	 */
@@ -100,11 +87,6 @@ const bool EnviApplication::isValid()
 EnviCLI &EnviApplication::getCLI()
 {
 	return (enviCLI);
-}
-
-ApplicationProperties &EnviApplication::getApplicationProperties()
-{
-	return (applicationProperties);
 }
 
 const Result EnviApplication::runDispatchLoop()
@@ -225,12 +207,7 @@ EnviDataSource *EnviApplication::createInstance(const File &sourceState)
 
 const Result EnviApplication::findDataSourcesOnDisk()
 {
-	if (applicationProperties.getUserSettings() == nullptr)
-	{
-		return (Result::fail("Not ready yet"));
-	}
-
-	File dataSourcesFolder (enviCLI.isSet("sources-dir") ? enviCLI.getParameter("sources-dir") : applicationProperties.getUserSettings()->getFile().getParentDirectory());
+	File dataSourcesFolder (getEnviSourcesDir());
 
 	if (dataSourcesFolder.isDirectory())
 	{
@@ -309,4 +286,52 @@ const int EnviApplication::getNumInstances(const Identifier dsType)
 	}
 
 	return (instances);
+}
+
+const File EnviApplication::getEnviSourcesDir()
+{
+	if (enviCLI.isSet("sources-dir"))
+	{
+		return (File(enviCLI.getParameter("sources-dir")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/sources"));
+	}
+}
+
+const File EnviApplication::getEnviScriptsDir()
+{
+	if (enviCLI.isSet("scripts-dir"))
+	{
+		return (File(enviCLI.getParameter("scripts-dir")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/scripts"));
+	}
+}
+
+const File EnviApplication::getEnviStoreFile()
+{
+	if (enviCLI.isSet("store-file"))
+	{
+		return (File(enviCLI.getParameter("store-file")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/data.db"));
+	}
+}
+
+const File EnviApplication::getEnviLogFile()
+{
+	if (enviCLI.isSet("log-file"))
+	{
+		return (File(enviCLI.getParameter("log-file")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/envi.log"));
+	}
 }

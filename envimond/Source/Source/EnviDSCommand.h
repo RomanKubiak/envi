@@ -29,8 +29,8 @@ class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 		JUCE_LEAK_DETECTOR(EnviDSCommand);
 
 	private:
+		StringArray command;
 		String commandOutput;
-		String commandLine;
 		CriticalSection safeResultLock;
 		EnviData safeResult;
 		HashMap<String,Expression> valueExpressions;
