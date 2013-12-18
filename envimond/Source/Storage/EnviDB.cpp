@@ -98,8 +98,6 @@ void EnviDB::writeResult(EnviDataSource *dataSource)
 {
 	{
 		ScopedLock sl(dataQueue.getLock());
-		_DBG("EnviDB::writeResult");
-		_DBG(EnviData::toCSVString(dataSource->getResult()));
 		dataQueue.add (new EnviData(dataSource->getResult()));
 	}
 

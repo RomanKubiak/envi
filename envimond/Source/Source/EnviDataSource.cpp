@@ -101,9 +101,7 @@ const EnviData EnviData::fromJSON(const String &jsonString, const int dataSource
 {
 	EnviData enviData;
 	var data				= JSON::parse (jsonString);
-	_DBG("EnviData::fromJSON result");
-	_DBG("\t"+JSON::toString(data));
-	
+
 	enviData.dataSourceName 		= data["name"];
 	enviData.dataSourceType			= data["type"];
 	enviData.dataSourceInstanceNumber	= dataSourceInstanceNumber;
@@ -398,11 +396,11 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 {
 	{
 		ScopedLock sl(dataSourceLock);
-	
+
 		result[0].value 	= value0;
 		result[0].sampleTime	= Time::getCurrentTime();
 	}
-	
+
 	if (finishCollectNow)
 	{
 		collectFinished (collectStatus);
@@ -413,13 +411,13 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 {
 	{
 		ScopedLock sl(dataSourceLock);
-	
+
 		result[0].value 	= value0;
 		result[0].sampleTime	= Time::getCurrentTime();
 		result[1].value 	= value1;
 		result[1].sampleTime	= Time::getCurrentTime();
 	}
-	
+
 	if (finishCollectNow)
 	{
 		collectFinished (collectStatus);
@@ -430,7 +428,7 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 {
 	{
 		ScopedLock sl(dataSourceLock);
-	
+
 		result[0].value 	= value0;
 		result[0].sampleTime	= Time::getCurrentTime();
 		result[1].value 	= value1;
@@ -438,7 +436,7 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 		result[2].value 	= value2;
 		result[2].sampleTime	= Time::getCurrentTime();
 	}
-	
+
 	if (finishCollectNow)
 	{
 		collectFinished (collectStatus);
