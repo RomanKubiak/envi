@@ -227,6 +227,8 @@ const String EnviData::unitToString(const EnviData::Unit unit)
 			return ("W");
 		case KiloWattHour:
 			return ("kWH");
+		case Pascal:
+			return ("Pa");
 		case Unknown:
 		default:
 			break;
@@ -266,6 +268,8 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 		return (EnviData::Percent);
 	if (unit == "degF" || unit == "Fahrenheit")
 		return (EnviData::Fahrenheit);
+	if (unit == "Pa" || unit == "Pascal")
+		return (EnviData::Pascal);
 	return (EnviData::Unknown);
 }
 

@@ -14,7 +14,7 @@
 juce_ImplementSingleton (EnviLog)
 
 EnviLog::EnviLog()
-	: owner(nullptr), logToConsole(false), logLevel(3)
+	: owner(nullptr), logToConsole(true), logLevel(3)
 {
 	Logger::setCurrentLogger (this);
 }
@@ -36,8 +36,9 @@ void EnviLog::logMessage (const int level, const String &message)
 
 	const String msg = Time::getCurrentTime().formatted ("%Y-%m-%d %H:%M:%S") +" ENVI ["+levelToString(level)+"]: "+message;
 
+#ifdef DEBUG
 	Logger::outputDebugString (msg);
-
+#endif
 	if (logToConsole)
 	{
 		std::cout << msg << std::endl;

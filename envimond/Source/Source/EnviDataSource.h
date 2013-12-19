@@ -34,6 +34,7 @@ class EnviData
 			Farad,
 			Watt,
 			KiloWattHour,
+			Pascal,
 			Unknown
 		};
 
