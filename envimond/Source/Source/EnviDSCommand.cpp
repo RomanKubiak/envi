@@ -139,6 +139,8 @@ void EnviDSCommand::processExpressions()
 			}
 		}
 	}
+
+	_DBG("EnviDSCommand::processExpressions safeResult: ["+EnviData::toCSVString(safeResult).trim()+"]");
 }
 
 void EnviDSCommand::processCommandOutput (const String _commandOutput)

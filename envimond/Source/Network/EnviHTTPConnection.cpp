@@ -9,9 +9,11 @@
 */
 
 #include "EnviHTTPConnection.h"
+#include "EnviHTTP.h"
+#include "EnviApplication.h"
 
-EnviHTTPConnection::EnviHTTPConnection(StreamingSocket *_socket)
-	: socket(_socket), Thread("EnviHTTPConnection"), gotRequestHeaders(false)
+EnviHTTPConnection::EnviHTTPConnection(EnviHTTP &_owner, StreamingSocket *_socket)
+	: socket(_socket), Thread("EnviHTTPConnection"), gotRequestHeaders(false), owner(_owner)
 {
 	_DBG("EnviHTTPConnection::ctor host connected: "+socket->getHostName());
 
@@ -92,6 +94,21 @@ const bool EnviHTTPConnection::sendResponse()
 {
 	_DBG("EnviHTTPConnection::sendResponse");
 	_DBG(processingUrl.toString(true));
-	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: 10\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n0123456789");
+
+	var ret;
+
+	for (int i=0; i<owner.getOwner().getNumDataSources(); i++)
+	{
+        EnviDataSource *ds = owner.getOwner().getDataSource(i);
+
+        if (ds != nullptr)
+		{
+			ret.append (ds->getSummary());
+		}
+	}
+
+	const String summaryString = JSON::toString (ret);
+
+	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: "+_STR(summaryString.length())+"\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n"+summaryString);
 	return (true);
 }

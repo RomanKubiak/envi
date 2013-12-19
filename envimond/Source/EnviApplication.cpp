@@ -335,3 +335,15 @@ const File EnviApplication::getEnviLogFile()
 		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/envi.log"));
 	}
 }
+
+const int EnviApplication::getNumSources()
+{
+	ScopedLock sl(dataSources.getLock());
+	return (dataSources.size());
+}
+
+EnviDataSource *EnviApplication::getSource(const int sourceIndex)
+{
+	ScopedLock sl(dataSources.getLock());
+	return (dataSources[sourceIndex]);
+}

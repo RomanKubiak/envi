@@ -78,6 +78,7 @@ class EnviData
 		static const String toJSON(const EnviData &enviData);
 		static const String toCSVString(const EnviData &enviData, const String &separator=";");
 		static const StringArray toSQL(const EnviData &enviData, const String &dataTable="data", const String &unitTable="units");
+		static const var toVAR(const EnviData &enviData);
 		static const String unitToString(const Unit unit);
 		static const Unit stringToUnit(const String &unit);
 
@@ -137,6 +138,9 @@ class EnviDataSource : public ChangeBroadcaster
 		const Result setValueExpression (const String &valueName, const String &expressionString);
 		const Result setAllExpressions();
 		const bool hasExpression(const String &valueName);
+		virtual const int getMaxHistorySize();
+		virtual const var getSummary();
+		Array <EnviData> getHistory();
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
@@ -144,6 +148,7 @@ class EnviDataSource : public ChangeBroadcaster
 		EnviApplication &owner;
 		CriticalSection dataSourceLock;
 		HashMap <String,Expression> valueExpressions;
+		Array <EnviData> history;
 
 	private:
 		EnviData result;

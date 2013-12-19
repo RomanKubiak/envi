@@ -122,7 +122,7 @@ const EnviData EnviData::fromJSON(const String &jsonString, const int dataSource
 	return (enviData);
 }
 
-const String EnviData::toJSON(const EnviData &enviData)
+const var EnviData::toVAR(const EnviData &enviData)
 {
 	String ret;
 	DynamicObject *ds = new DynamicObject();
@@ -145,7 +145,12 @@ const String EnviData::toJSON(const EnviData &enviData)
 	}
 	ds->setProperty ("values", values);
 
-	return (JSON::toString(var(ds)));
+	return (var(ds));
+}
+
+const String EnviData::toJSON(const EnviData &enviData)
+{
+	return (JSON::toString(toVAR(enviData)));
 }
 
 const String EnviData::toCSVString(const EnviData &enviData, const String &separator)
@@ -328,6 +333,11 @@ const int EnviDataSource::getInstanceNumber() const
 	return (getProperty(Ids::instance));
 }
 
+const int EnviDataSource::getMaxHistorySize()
+{
+	return (getProperty (Ids::historyMaxSize));
+}
+
 void EnviDataSource::setInstanceNumber(const int instanceNumber)
 {
 	setProperty (Ids::instance, instanceNumber);
@@ -365,9 +375,35 @@ void EnviDataSource::stopSource()
 	endTime = Time::getCurrentTime();
 }
 
+Array <EnviData> EnviDataSource::getHistory()
+{
+	ScopedLock sl(dataSourceLock);
+	return (history);
+}
+
+const var EnviDataSource::getSummary()
+{
+	ScopedLock sl(dataSourceLock);
+	var result;
+	for (int i=0; i<history.size(); i++)
+	{
+		result.append (EnviData::toVAR (history[i]));
+	}
+
+	return (result);
+}
+
 void EnviDataSource::collectFinished(const Result collectStatus)
 {
 	ScopedLock sl(dataSourceLock);
+
+	history.insert (0, getResult());
+
+	if (history.size() >= getMaxHistorySize())
+	{
+		history.removeLast ();
+	}
+
 	owner.sourceWrite (this, collectStatus);
 }
 

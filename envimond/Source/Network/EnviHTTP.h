@@ -23,7 +23,7 @@ class EnviHTTP : public Thread
 		void run();
 		void processConnection (StreamingSocket *connectedSocket);
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
-
+		EnviApplication &getOwner();
 		JUCE_LEAK_DETECTOR(EnviHTTP);
 
 	private:

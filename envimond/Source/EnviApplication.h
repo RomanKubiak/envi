@@ -42,6 +42,10 @@ class EnviApplication : public MultiTimer
 		const int getNumInstances(const Identifier dsType);
 		EnviDataSource *getInstanceFromType(const Identifier dsType);
 		const bool isValid();
+
+		const int getNumSources();
+		EnviDataSource *getSource(const int sourceIndex);
+
 		const File getEnviSourcesDir();
 		const File getEnviScriptsDir();
 		const File getEnviStoreFile();

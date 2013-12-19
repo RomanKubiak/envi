@@ -18,7 +18,7 @@ EnviHTTP::EnviHTTP(EnviApplication &_owner) : owner(_owner), Thread("EnviHTTP")
 
 	if (serverSocket != nullptr)
 	{
-		if (!serverSocket->createListener((bool)owner.getCLI().isSet("listen-port") ? owner.getCLI().getParameter("listen-port").getIntValue() : 31337))
+		if (!serverSocket->createListener((bool)owner.getCLI().isSet("listen-port") ? owner.getCLI().getParameter("listen-port").getIntValue() : 9999))
 		{
 			_ERR("Can't listen on specified TCP port: "+_STR(serverSocket->getPort()));
 		}
@@ -40,6 +40,11 @@ EnviHTTP::~EnviHTTP()
 		stopThread (4000);
 		serverSocket = nullptr;
 	}
+}
+
+EnviApplication &EnviHTTP::getOwner()
+{
+	return (owner);
 }
 
 void EnviHTTP::run()
@@ -64,6 +69,6 @@ void EnviHTTP::processConnection (StreamingSocket *socket)
 {
 	if (socket)
 	{
-		connectionPool.add (new EnviHTTPConnection (socket));
+		connectionPool.add (new EnviHTTPConnection (*this, socket));
 	}
 }

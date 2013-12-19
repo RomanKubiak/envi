@@ -13,11 +13,12 @@
 
 #include "EnviIncludes.h"
 class EnviApplication;
+class EnviHTTP;
 
 class EnviHTTPConnection : public Thread
 {
 	public:
-		EnviHTTPConnection(StreamingSocket *_socket);
+		EnviHTTPConnection(EnviHTTP &_owner, StreamingSocket *_socket);
 		~EnviHTTPConnection();
 		void run();
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
@@ -29,6 +30,7 @@ class EnviHTTPConnection : public Thread
 		URL processingUrl;
 		bool gotRequestHeaders;
 		StreamingSocket *socket;
+		EnviHTTP &owner;
 };
 
 #endif  // ENVIHTTPCONNECTION_H_INCLUDED
