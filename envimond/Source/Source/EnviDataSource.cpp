@@ -138,7 +138,7 @@ const var EnviData::toVAR(const EnviData &enviData)
 		value->setProperty ("value", enviData[i].value.toString());
 		value->setProperty ("unit", unitToString(enviData[i].unit));
 		value->setProperty ("error", enviData[i].error);
-		value->setProperty ("sampleTime", enviData[i].sampleTime.getMilliseconds());
+		value->setProperty ("sampleTime", enviData[i].sampleTime.toMilliseconds());
 		value->setProperty ("index", enviData[i].index);
 
 		values.append (value);
@@ -297,6 +297,12 @@ const var EnviDataSource::getProperty (const Identifier &identifier) const
 	return (instanceConfig.getProperty (identifier));
 }
 
+const var EnviDataSource::getProperty (const Identifier &identifier, const var defaultReturnValue) const
+{
+	ScopedLock sl (dataSourceLock);
+	return (instanceConfig.getProperty (identifier, defaultReturnValue));
+}
+
 void EnviDataSource::setProperty (const Identifier identifier, const var &value)
 {
 	ScopedLock sl (dataSourceLock);
@@ -335,7 +341,7 @@ const int EnviDataSource::getInstanceNumber() const
 
 const int EnviDataSource::getMaxHistorySize()
 {
-	return (getProperty (Ids::historyMaxSize));
+	return (getProperty (Ids::historyMaxSize, 10));
 }
 
 void EnviDataSource::setInstanceNumber(const int instanceNumber)

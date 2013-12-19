@@ -68,18 +68,27 @@ int EnviHTTPConnection::writeStringToSocket(StreamingSocket *socket, const Strin
 
 const bool EnviHTTPConnection::getRequestHeaders()
 {
-	MemoryBlock readBuffer(8192);
+	MemoryBlock readBuffer(8192, true);
 	if (socket->read (readBuffer.getData(), 8192, false))
 	{
-		String request = readBuffer.toString();
-		if (request.startsWith("GET"))
+		if (readBuffer.getSize() > 0)
 		{
-			processingUrl = request.fromFirstOccurrenceOf("GET ", false, true).upToFirstOccurrenceOf("HTTP/",false,false);
-			return (gotRequestHeaders = true);
+			// _DBG("EnviHTTPConnection::getRequestHeaders");
+			// _DBG("\t"+String::toHexString (readBuffer.getData(), readBuffer.getSize()));
+			String request = readBuffer.toString();
+			if (request.startsWith("GET"))
+			{
+				processingUrl = request.fromFirstOccurrenceOf("GET ", false, true).upToFirstOccurrenceOf("HTTP/",false,false);
+				return (gotRequestHeaders = true);
+			}
+			else
+			{
+				_DBG("EnviHTTPConnection can't process non GET requests");
+				return (false);
+			}
 		}
 		else
 		{
-			_DBG("EnviHTTPConnection can't process non GET requests");
 			return (false);
 		}
 	}
@@ -93,9 +102,10 @@ const bool EnviHTTPConnection::getRequestHeaders()
 const bool EnviHTTPConnection::sendResponse()
 {
 	_DBG("EnviHTTPConnection::sendResponse");
-	_DBG(processingUrl.toString(true));
 
 	var ret;
+
+	_DBG("\t num data sources: "+_STR(owner.getOwner().getNumDataSources()));
 
 	for (int i=0; i<owner.getOwner().getNumDataSources(); i++)
 	{
@@ -103,12 +113,13 @@ const bool EnviHTTPConnection::sendResponse()
 
         if (ds != nullptr)
 		{
+			_DBG("\t\t adding data source: ["+ds->getName()+"]");
 			ret.append (ds->getSummary());
 		}
 	}
 
 	const String summaryString = JSON::toString (ret);
 
-	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: "+_STR(summaryString.length())+"\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n"+summaryString);
+	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: "+_STR(summaryString.length())+"\nContent-type: application/json; charset=UTF-8\nConnection: close\n\n"+summaryString);
 	return (true);
 }

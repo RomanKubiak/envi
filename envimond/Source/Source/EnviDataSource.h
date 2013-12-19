@@ -119,6 +119,7 @@ class EnviDataSource : public ChangeBroadcaster
 		const int addValue (const String &valueName, const EnviData::Unit unit);
 		void copyValues (const EnviData &dataToCopyFrom);
 		const var getProperty (const Identifier &identifier) const;
+		const var getProperty (const Identifier &identifier, const var defaultReturnValue) const;
 		void setProperty (const Identifier identifier, const var &value);
 		const int getInterval() const;
 		const int getInstanceNumber() const;
