@@ -112,6 +112,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviData.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Externals\getopt.c">
       <Filter>envimond\Source\Externals</Filter>
     </ClCompile>
@@ -471,6 +474,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviData.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Externals\getopt.h">
       <Filter>envimond\Source\Externals</Filter>
     </ClInclude>

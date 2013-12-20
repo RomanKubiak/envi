@@ -137,7 +137,7 @@ void EnviApplication::timerCallback(int timerId)
 			return;
 		}
 
-		_DBG("Timer triggered for data source type: ["+ds->getType().toString()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
+		_DBG("Timer triggered for data source type: ["+ds->getType()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
 
 		if (!ds->startSource())
 		{
@@ -281,7 +281,7 @@ const int EnviApplication::getNumInstances(const Identifier dsType)
 
 	for (int i=0; i<dataSources.size(); i++)
 	{
-		if (dataSources[i]->getType() == dsType)
+		if (dataSources[i]->getType() == dsType.toString())
 			instances++;
 	}
 

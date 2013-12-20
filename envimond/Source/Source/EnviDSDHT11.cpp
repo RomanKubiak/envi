@@ -28,7 +28,7 @@ EnviDSDHT11::~EnviDSDHT11()
 
 const Result EnviDSDHT11::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig.copyPropertiesFrom (_instanceConfig, nullptr);
+	EnviDataSource::initialize (_instanceConfig);
 
 	if (instanceConfig.isValid())
 	{

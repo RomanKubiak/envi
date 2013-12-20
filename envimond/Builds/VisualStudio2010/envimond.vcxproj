@@ -127,6 +127,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviData.cpp"/>
     <ClCompile Include="..\..\Source\Externals\getopt.c"/>
     <ClCompile Include="..\..\Source\Externals\sqlite3.c"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp"/>
@@ -425,6 +426,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviData.h"/>
     <ClInclude Include="..\..\Source\Externals\getopt.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h"/>

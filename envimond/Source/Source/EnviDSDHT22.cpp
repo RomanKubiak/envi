@@ -18,7 +18,7 @@ EnviDSDHT22::~EnviDSDHT22()
 
 const Result EnviDSDHT22::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig.copyPropertiesFrom (_instanceConfig, nullptr);
+	EnviDataSource::initialize (_instanceConfig);
 
 	if (instanceConfig.isValid())
 	{
@@ -131,10 +131,10 @@ bool EnviDSDHT22::readDHTValue()
 			j++;
 		}
 	}
-	
+
 	// check we read 40 bits (8bit x 5 ) + verify checksum in the last byte
 	// print it out if data is good
-	if ((j >= 40) && (dht22_dat[4] == ((dht22_dat[0] + dht22_dat[1] + dht22_dat[2] + dht22_dat[3]) & 0xFF)) ) 
+	if ((j >= 40) && (dht22_dat[4] == ((dht22_dat[0] + dht22_dat[1] + dht22_dat[2] + dht22_dat[3]) & 0xFF)) )
 	{
 		ScopedLock sl (dataSourceLock);
 		float t, h;
@@ -142,15 +142,15 @@ bool EnviDSDHT22::readDHTValue()
 		h /= 10;
 		t = (float)(dht22_dat[2] & 0x7F)* 256 + (float)dht22_dat[3];
 		t /= 10.0;
-		if ((dht22_dat[2] & 0x80) != 0) 
+		if ((dht22_dat[2] & 0x80) != 0)
 			t *= -1;
-		
+
 		setValue (0, t);
 		setValue (1, h);
 		_DBG("EnviDSDHT22::readDHTValue got values: "+String::formatted("Humidity: %.2f Temperature: %.2f", h, t));
-		
+
 		return (true);
-		
+
 	}
 	else
 	{

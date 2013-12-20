@@ -17,7 +17,7 @@
 
 #define ENVI_DB_SCHEMA "\
 CREATE TABLE IF NOT EXISTS units	(id INTEGER PRIMARY KEY, enumId   INTEGER,  symbol TEXT);\
-CREATE TABLE IF NOT EXISTS sources	(id INTEGER PRIMARY KEY, enumId   INTEGER,  name TEXT, interval INTEGER, config TEXT);\
+CREATE TABLE IF NOT EXISTS sources	(id INTEGER PRIMARY KEY, type TEXT,  name TEXT, instance INTEGER, interval INTEGER, config TEXT);\
 CREATE TABLE IF NOT EXISTS data		(id INTEGER PRIMARY KEY, sourceName TEXT, sourceType TEXT, sourceInstance INTEGER , valueName TEXT, valueValue REAL, valueUnit INTEGER, valueError INTEGER, timestamp TIMESTAMP);\
 "
 

@@ -72,7 +72,7 @@ namespace Ids
 	DECLARE_ID (unit);
 	DECLARE_ID (deviceId);
 	DECLARE_ID (stats);
-	DECLARE_ID (historyMaxSize);
+	DECLARE_ID (dataCacheSize);
 };
 
 static inline float getRandomFloat (const float limit)

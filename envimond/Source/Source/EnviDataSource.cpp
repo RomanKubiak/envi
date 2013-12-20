@@ -11,283 +11,26 @@
 #include "EnviDataSource.h"
 #include "EnviApplication.h"
 
-EnviData::EnviData()
-{
-}
 
-EnviData::EnviData(const EnviData &other)
-	:	values(other.values),
-		dataSourceName(other.dataSourceName),
-		dataSourceInstanceNumber(other.dataSourceInstanceNumber),
-		dataSourceType(other.dataSourceType)
-{
-}
-
-EnviData::EnviData(const String &firstValueName, const var firstValueValue, const Time firstValueSampleTime)
-	: dataSourceInstanceNumber(0)
-{
-	if (firstValueName != String::empty)
-	{
-		EnviData::Value value;
-		value.name			= firstValueName;
-		value.value			= firstValueValue;
-		value.sampleTime	= firstValueSampleTime;
-
-		values.add (value);
-	}
-}
-
-EnviData::EnviData(const String &firstValueName, const Unit valueUnit)
-	: dataSourceInstanceNumber(0)
-{
-	if (firstValueName != String::empty)
-	{
-		EnviData::Value value;
-		value.name		= firstValueName;
-		value.unit		= valueUnit;
-
-		values.add (value);
-	}
-}
-
-void EnviData::operator= (const EnviData& other) noexcept
-{
-	values 				= other.values;
-	dataSourceName 			= other.dataSourceName;
-	dataSourceInstanceNumber 	= other.dataSourceInstanceNumber;
-	dataSourceType			= other.dataSourceType;
-}
-
-bool EnviData::operator== (const EnviData& other) noexcept
-{
-	if (values.size() != other.values.size())
-		return (false);
-
-	for (int i=0; i<values.size(); i++)
-	{
-		if (values[i].unit != other.values[i].unit || values[i].value != other.values[i].value)
-			return (false);
-	}
-
-	return (true);
-}
-
-EnviData::Value& EnviData::operator[] (int arrayIndex) const
-{
-	return (values.getReference (arrayIndex));
-}
-
-void EnviData::copyValues(const EnviData &valuesToUpdateFrom)
-{
-	values = valuesToUpdateFrom.values;
-}
-
-const int EnviData::getNumValues() const
-{
-	return (values.size());
-}
-
-void EnviData::addValue(const EnviData::Value valueToAdd)
-{
-	values.add (valueToAdd);
-}
-
-const int EnviData::getSize() const
-{
-	return (dataSourceName.length() + sizeof(Value) * getNumValues());
-}
-
-const EnviData EnviData::fromJSON(const String &jsonString, const int dataSourceInstanceNumber)
-{
-	EnviData enviData;
-	var data				= JSON::parse (jsonString);
-
-	enviData.dataSourceName 		= data["name"];
-	enviData.dataSourceType			= data["type"];
-	enviData.dataSourceInstanceNumber	= dataSourceInstanceNumber;
-	var values				= data["values"];
-
-	for (int i=0; i<values.size(); i++)
-	{
-		EnviData::Value value(values[i]["name"], stringToUnit(values[i]["unit"]));
-
-		value.value			= values[i]["value"];
-		value.error			= values[i]["error"];
-		value.sampleTime		= ((int64)values[i]["sampleTime"] > 0) ? Time(values[i]["sampleTime"]) : Time::getCurrentTime();
-		value.index			= values[i]["index"];
-
-		enviData.addValue (value);
-	}
-
-	return (enviData);
-}
-
-const var EnviData::toVAR(const EnviData &enviData)
-{
-	String ret;
-	DynamicObject *ds = new DynamicObject();
-	ds->setProperty ("name", enviData.dataSourceName);
-	ds->setProperty ("type", enviData.dataSourceType);
-	ds->setProperty ("instance", enviData.dataSourceInstanceNumber);
-	var values;
-
-	for (int i=0; i<enviData.getNumValues(); i++)
-	{
-		DynamicObject *value = new DynamicObject();
-		value->setProperty ("name", enviData[i].name);
-		value->setProperty ("value", enviData[i].value.toString());
-		value->setProperty ("unit", unitToString(enviData[i].unit));
-		value->setProperty ("error", enviData[i].error);
-		value->setProperty ("sampleTime", enviData[i].sampleTime.toMilliseconds());
-		value->setProperty ("index", enviData[i].index);
-
-		values.append (value);
-	}
-	ds->setProperty ("values", values);
-
-	return (var(ds));
-}
-
-const String EnviData::toJSON(const EnviData &enviData)
-{
-	return (JSON::toString(toVAR(enviData)));
-}
-
-const String EnviData::toCSVString(const EnviData &enviData, const String &separator)
-{
-	String ret;
-	for (int i=0; i<enviData.getNumValues(); i++)
-	{
-		ret
-			<< enviData.dataSourceName				<< separator
-			<< _STR(enviData.dataSourceInstanceNumber)		<< separator
-			<< enviData.dataSourceType				<< separator
-			<< enviData[i].name 					<< separator
-			<< unitToString(enviData[i].unit) 			<< separator
-			<< enviData[i].value.toString() 			<< separator
-			<< _STR(enviData[i].sampleTime.toMilliseconds())	<< separator
-			<< _STR(enviData[i].error) 				<< separator
-			<< "\n";
-	}
-	return (ret);
-}
-
-const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTable, const String &unitTable)
-{
-	StringArray queries;
-
-	for (int i=0; i<enviData.getNumValues(); i++)
-	{
-		String sql;
-		sql << "INSERT INTO "
-			<< dataTable
-			<< "(sourceName, sourceType, sourceInstance, valueName, valueValue, timestamp, valueError, valueUnit)"
-			<< " VALUES ("
-			<< "'" << enviData.dataSourceName			<< "',"
-			<< "'" << enviData.dataSourceType			<< "',"
-			<< (int)enviData.dataSourceInstanceNumber		<< ","
-			<< "'"	<< enviData[i].name				<< "',"
-			<< "'"	<< (float)enviData[i].value			<< "',"
-			<< "'"	<< enviData[i].sampleTime.toMilliseconds()	<< "',"
-			<< (int)enviData[i].error				<< ","
-			<< (int)enviData[i].unit				<< ");";
-
-		queries.add (sql);
-	}
-
-	return (queries);
-}
-
-const String EnviData::unitToString(const EnviData::Unit unit)
-{
-	switch (unit)
-	{
-		case Integer:
-			return ("Integer");
-		case Float:
-			return ("Float");
-		case Text:
-			return ("Text");
-		case Percent:
-			return ("%");
-		case Volt:
-			return ("V");
-		case Amp:
-			return ("A");
-		case Celsius:
-			return ("degC");
-		case Fahrenheit:
-			return ("degF");
-		case Decibel:
-			return ("dB");
-		case Lux:
-			return ("lx");
-		case Hertz:
-			return ("Hz");
-		case Ohm:
-			return ("Ohm");
-		case Farad:
-			return ("F");
-		case Watt:
-			return ("W");
-		case KiloWattHour:
-			return ("kWH");
-		case Pascal:
-			return ("Pa");
-		case Unknown:
-		default:
-			break;
-	}
-	return ("U");
-}
-
-const EnviData::Unit EnviData::stringToUnit(const String &unit)
-{
-	if (unit == "Integer")
-		return (EnviData::Integer);
-	if (unit == "Float")
-		return (EnviData::Float);
-	if (unit == "Text")
-		return (EnviData::Text);
-	if (unit == "A" || unit == "Amp")
-		return (EnviData::Amp);
-	if (unit == "V" || unit == "Volt")
-		return (EnviData::Volt);
-	if (unit == "degC" || unit == "Celsius")
-		return (EnviData::Celsius);
-	if (unit == "dB" || unit == "Decibel")
-		return (EnviData::Decibel);
-	if (unit == "lx" || unit == "Lux")
-		return (EnviData::Lux);
-	if (unit == "Hz" || unit == "Hertz")
-		return (EnviData::Hertz);
-	if (unit == "Ohm")
-		return (EnviData::Ohm);
-	if (unit == "F" || unit == "Farad")
-		return (EnviData::Farad);
-	if (unit == "W" || unit == "Watt")
-		return (EnviData::Watt);
-	if (unit == "kWH" || unit == "KiloWattHour")
-		return (EnviData::KiloWattHour);
-	if (unit == "%" || unit == "Percent")
-		return (EnviData::Percent);
-	if (unit == "degF" || unit == "Fahrenheit")
-		return (EnviData::Fahrenheit);
-	if (unit == "Pa" || unit == "Pascal")
-		return (EnviData::Pascal);
-	return (EnviData::Unknown);
-}
 
 EnviDataSource::EnviDataSource(EnviApplication &_owner, const Identifier &_type)
 	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this)
 {
-	setProperty (Ids::type, _type.toString());
+	setType (_type);
+
+	if (owner.getCLI().isSet("data-cache"))
+	{
+        dataCacheSize = owner.getCLI().getParameter("data-cache").getIntValue();
+	}
 }
 
 const Result EnviDataSource::initialize(const ValueTree _instanceConfig)
 {
-	ScopedLock sl (dataSourceLock);
-	instanceConfig 	= _instanceConfig.createCopy();
+	{
+		ScopedLock sl (dataSourceLock);
+		instanceConfig 	= _instanceConfig.createCopy();
+		result.name		= getName();
+	}
 	return (Result::ok());
 }
 
@@ -319,9 +62,19 @@ void EnviDataSource::setName(const String &name)
 	setProperty (Ids::name, name);
 }
 
-const Identifier EnviDataSource::getType() const
+const String EnviDataSource::getType() const
 {
 	return (getProperty(Ids::type).toString());
+}
+
+void EnviDataSource::setType (const Identifier _type)
+{
+	{
+		ScopedLock sl (dataSourceLock);
+		result.type = _type.toString();
+	}
+
+	setProperty (Ids::type, _type.toString());
 }
 
 const int EnviDataSource::getInterval() const
@@ -339,15 +92,15 @@ const int EnviDataSource::getInstanceNumber() const
 	return (getProperty(Ids::instance));
 }
 
-const int EnviDataSource::getMaxHistorySize()
+const int EnviDataSource::getDataCacheSize()
 {
-	return (getProperty (Ids::historyMaxSize, 10));
+	return (getProperty (Ids::dataCacheSize, 10));
 }
 
 void EnviDataSource::setInstanceNumber(const int instanceNumber)
 {
 	setProperty (Ids::instance, instanceNumber);
-	result.dataSourceInstanceNumber = instanceNumber;
+	result.instance = instanceNumber;
 }
 
 const EnviData EnviDataSource::getResult() const
@@ -405,7 +158,7 @@ void EnviDataSource::collectFinished(const Result collectStatus)
 
 	history.insert (0, getResult());
 
-	if (history.size() >= getMaxHistorySize())
+	if (history.size() >= getDataCacheSize())
 	{
 		history.removeLast ();
 	}
@@ -421,8 +174,8 @@ void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
 		_INF("Trying to set a value that's not defined");
 		return;
 	}
-	result[valueIndex].value	= value;
-	result[valueIndex].sampleTime	= Time::getCurrentTime();
+	result[valueIndex].value		= value;
+	result[valueIndex].timestamp	= Time::getCurrentTime();
 }
 
 const int EnviDataSource::addValue(const String &valueName, const EnviData::Unit unit)
@@ -444,7 +197,7 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 		ScopedLock sl(dataSourceLock);
 
 		result[0].value 	= value0;
-		result[0].sampleTime	= Time::getCurrentTime();
+		result[0].timestamp	= Time::getCurrentTime();
 	}
 
 	if (finishCollectNow)
@@ -459,9 +212,9 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 		ScopedLock sl(dataSourceLock);
 
 		result[0].value 	= value0;
-		result[0].sampleTime	= Time::getCurrentTime();
+		result[0].timestamp	= Time::getCurrentTime();
 		result[1].value 	= value1;
-		result[1].sampleTime	= Time::getCurrentTime();
+		result[1].timestamp	= Time::getCurrentTime();
 	}
 
 	if (finishCollectNow)
@@ -476,11 +229,11 @@ void EnviDataSource::setValues (const bool finishCollectNow, const Result collec
 		ScopedLock sl(dataSourceLock);
 
 		result[0].value 	= value0;
-		result[0].sampleTime	= Time::getCurrentTime();
+		result[0].timestamp	= Time::getCurrentTime();
 		result[1].value 	= value1;
-		result[1].sampleTime	= Time::getCurrentTime();
+		result[1].timestamp	= Time::getCurrentTime();
 		result[2].value 	= value2;
-		result[2].sampleTime	= Time::getCurrentTime();
+		result[2].timestamp	= Time::getCurrentTime();
 	}
 
 	if (finishCollectNow)
@@ -562,6 +315,23 @@ const double EnviDataSource::evaluateExpression (const double inputData, const S
 	return (result);
 }
 
+const String EnviDataSource::getResitrationQuery(const String &dsTable)
+{
+	String query;
+	query 	<< "INSERT INTO " << dsTable << " (type, name, instance, interval, config) VALUES ("
+			<< "'" 		<< getType()
+			<< "','"	<< getName()
+			<< "',"		<< _STR(getInstanceNumber())
+			<< ","		<< _STR(getInterval())
+			<< ",'"		<< instanceConfig.toXmlString()
+			<< "')";
+
+	return (query);
+}
+
+/*
+ * Scoped
+ */
 EnviDataSource::EnviExpScope::EnviExpScope(EnviDataSource &_owner): owner(_owner)
 {
 }

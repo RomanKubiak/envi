@@ -26,7 +26,7 @@ EnviDSCommand::~EnviDSCommand()
 
 const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig = _instanceConfig.createCopy();
+	EnviDataSource::initialize (_instanceConfig);
 
 	if (instanceConfig.isValid())
 	{
@@ -115,6 +115,9 @@ void EnviDSCommand::handleAsyncUpdate()
 		setResult (safeResult);
 	}
 
+	_DBG("EnviDSCommand::handleAsyncUpdate");
+	_DBG("\n"+EnviData::toCSVString(getResult()));
+
 	collectFinished (Result::ok());
 }
 
@@ -142,7 +145,7 @@ void EnviDSCommand::processCommandOutput (const String _commandOutput)
 	{
 		ScopedLock sl(safeResultLock);
 
-		safeResult = EnviData::fromJSON(commandOutput, getInstanceNumber());
+		safeResult = EnviData::fromJSON(commandOutput, getName(), getInstanceNumber(), getType());
 
 		if (safeResult.getNumValues() > 0)
 		{

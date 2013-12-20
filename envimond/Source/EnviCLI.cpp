@@ -30,10 +30,12 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			{"disabled-sources",	required_argument,	0, 'D'},
 			{"sources-dir",			required_argument,  0, 'd'},
 			{"scripts-dir",			required_argument,  0, 'x'},
+			{"query-cache",			required_argument,  0, 'q'},
+			{"data-cache",			required_argument,  0, 'C'},
 			{0, 0, 0, 0}
 		};
 
-		c = getopt_long (argc, argv, "bhf:l:s:S:p:D:d:x:", long_options, &option_index);
+		c = getopt_long (argc, argv, "bhf:l:s:S:p:D:d:x:q::C", long_options, &option_index);
 
 		if (c == -1)
 			break;
@@ -74,7 +76,12 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			case 'x':
 				arguments.set ("scripts-dir", _STR(optarg));
 				break;
-
+			case 'q':
+				arguments.set ("query-cache", _STR(optarg));
+				break;
+			case 'C':
+				arguments.set ("data-cache", _STR(optarg));
+				break;
 			default:
 				break;
 		}
@@ -120,6 +127,8 @@ void EnviCLI::printHelp()
 			<< "\t-L, --list-sources     \t\tPrint a list of available data sources and exit\n"
 			<< "\t-d, --sources-dir=FILE \t\tWhere to look for data sources configs\n"
 			<< "\t-x, --scripts-dir=FILE \t\tWhere to look for scripts defined in data sources\n"
+			<< "\t-q, --query-cache=VALUE \tSet the number of queries to hold in memory before sending to storage\n"
+			<< "\t-C, --data-cache=VALUE \t\tSet the number of collected samples to keep in memory\n"
 			<< "\n"
 			<< "Don't report bugs, i don't care :)\n"
 			<< "For updates (i doubt there will be any) go to: https://github.com/RomanKubiak/envi \n\n";

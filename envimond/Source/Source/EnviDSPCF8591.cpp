@@ -17,7 +17,7 @@ EnviDSPCF8591::~EnviDSPCF8591()
 
 const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 {
-	instanceConfig = _instanceConfig.createCopy();
+	EnviDataSource::initialize (_instanceConfig);
 
 	if (instanceConfig.isValid())
 	{
@@ -42,7 +42,7 @@ const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 				if (instanceConfig.getChild(i).hasProperty(Ids::pin))
 				{
 					const int pin = instanceConfig.getChild(i).getProperty(Ids::pin);
-					
+
 					if (pin >= 0 && pin <= 3)
 					{
 						_DBG("EnviDSPCF8591::initialize using pin: "+_STR(pin));

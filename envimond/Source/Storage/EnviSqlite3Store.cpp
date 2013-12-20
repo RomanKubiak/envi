@@ -12,9 +12,13 @@
 #include "EnviApplication.h"
 
 EnviSqlite3Store::EnviSqlite3Store(EnviApplication &owner)
-	: EnviDataStore (owner), db(nullptr), queryCacheSize(1),
+	: EnviDataStore (owner), db(nullptr), queryCacheSize(4),
 		queryCount(0), transactionCount(0), transactionTimeAvg(0)
 {
+	if (owner.getCLI().isSet("query-cache"))
+	{
+		queryCacheSize = owner.getCLI().getParameter("query-cache").getIntValue();
+	}
 }
 
 EnviSqlite3Store::~EnviSqlite3Store()
