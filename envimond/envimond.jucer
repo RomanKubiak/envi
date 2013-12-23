@@ -23,6 +23,15 @@
               file="Source/Network/EnviHTTPConnection.h"/>
       </GROUP>
       <GROUP id="{8152FBDB-7753-31BE-06F1-AAEC91628D7C}" name="Source">
+        <FILE id="eeP22B" name="EnviDSJavascript.cpp" compile="1" resource="0"
+              file="Source/Source/EnviDSJavascript.cpp"/>
+        <FILE id="Vxzuvv" name="EnviDSJavascript.h" compile="0" resource="0"
+              file="Source/Source/EnviDSJavascript.h"/>
+        <FILE id="vQ9Mhl" name="EnviDSTrigger.cpp" compile="1" resource="0"
+              file="Source/Source/EnviDSTrigger.cpp"/>
+        <FILE id="kd8Np4" name="EnviDSTrigger.h" compile="0" resource="0" file="Source/Source/EnviDSTrigger.h"/>
+        <FILE id="TwEF4L" name="EnviDSFile.cpp" compile="1" resource="0" file="Source/Source/EnviDSFile.cpp"/>
+        <FILE id="hFNr9n" name="EnviDSFile.h" compile="0" resource="0" file="Source/Source/EnviDSFile.h"/>
         <FILE id="vKCWsv" name="EnviDSPCF8591.cpp" compile="1" resource="0"
               file="Source/Source/EnviDSPCF8591.cpp"/>
         <FILE id="FkYtY6" name="EnviDSPCF8591.h" compile="0" resource="0" file="Source/Source/EnviDSPCF8591.h"/>

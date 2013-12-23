@@ -57,6 +57,9 @@ namespace Ids
 	DECLARE_ID (dht22);
 	DECLARE_ID (pcf8591);
 	DECLARE_ID (ds18b20);
+	DECLARE_ID (file);
+	DECLARE_ID (javascript);
+	DECLARE_ID (trigger);
 	DECLARE_ID (port);
 	DECLARE_ID (storeFile);
 	DECLARE_ID (i2cAddr);
@@ -73,6 +76,8 @@ namespace Ids
 	DECLARE_ID (deviceId);
 	DECLARE_ID (stats);
 	DECLARE_ID (dataCacheSize);
+	DECLARE_ID (path);
+	DECLARE_ID (matchRegex);
 };
 
 static inline float getRandomFloat (const float limit)

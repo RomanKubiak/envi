@@ -127,6 +127,15 @@
     <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp">
       <Filter>envimond\Source\Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Source\EnviDSJavascript.cpp">
+      <Filter>envimond\Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Source\EnviDSTrigger.cpp">
+      <Filter>envimond\Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Source\EnviDSFile.cpp">
+      <Filter>envimond\Source\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Source\EnviDSPCF8591.cpp">
       <Filter>envimond\Source\Source</Filter>
     </ClCompile>
@@ -491,6 +500,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h">
       <Filter>envimond\Source\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Source\EnviDSJavascript.h">
+      <Filter>envimond\Source\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Source\EnviDSTrigger.h">
+      <Filter>envimond\Source\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Source\EnviDSFile.h">
+      <Filter>envimond\Source\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Source\EnviDSPCF8591.h">
       <Filter>envimond\Source\Source</Filter>

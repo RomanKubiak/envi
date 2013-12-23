@@ -13,6 +13,9 @@
 #include "EnviDSDHT22.h"
 #include "EnviDSDHT11.h"
 #include "EnviDSPCF8591.h"
+#include "EnviDSFile.h"
+#include "EnviDSTrigger.h"
+#include "EnviDSJavascript.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
 	: enviCLI(argc, argv), valid(true)
@@ -139,9 +142,14 @@ void EnviApplication::timerCallback(int timerId)
 
 		_DBG("Timer triggered for data source type: ["+ds->getType()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
 
-		if (!ds->startSource())
+		Result res = ds->startSource();
+		if (!res.wasOk())
 		{
-			_WRN("Timer trigger for data source \""+ds->getName()+"\", execute failed");
+			_WRN("Timer trigger for data source \""+ds->getName()+"\", execute failed ["+res.getErrorMessage()+"]");
+		}
+		else
+		{
+			_DBG(ds->getType()+"] name: ["+ds->getName()+"] started");
 		}
 	}
 }
@@ -269,6 +277,18 @@ EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 	else if (dsType == Ids::pcf8591)
 	{
 		return (new EnviDSPCF8591(*this));
+	}
+	else if (dsType == Ids::file)
+	{
+		return (new EnviDSFile(*this));
+	}
+	else if (dsType == Ids::trigger)
+	{
+		return (new EnviDSTrigger(*this));
+	}
+	else if (dsType == Ids::javascript)
+	{
+		return (new EnviDSJavascript(*this));
 	}
 	return (nullptr);
 }

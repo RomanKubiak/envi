@@ -52,15 +52,18 @@ const Result EnviDSCommand::execute()
 		if (isThreadRunning())
 		{
 			notify();
+			return (Result::fail(getType()+" ["+getName()+"] is already running"));
 		}
 		else
 		{
 			startThread();
+			return (Result::ok());
 		}
-		return (Result::ok());
 	}
-
-	return (Result::ok());
+	else
+	{
+		return (Result::fail(getType()+" ["+getName()+"] is disabled"));
+	}
 }
 
 void EnviDSCommand::run()
@@ -69,10 +72,7 @@ void EnviDSCommand::run()
 	{
 		do
 		{
-			if (threadShouldExit())
-			{
-				return;
-			}
+			SHOULD_WE_EXIT();
 
 			if (command[0].isEmpty())
 			{

@@ -121,7 +121,7 @@ ValueTree EnviDataSource::getConfig() const
 	return (instanceConfig);
 }
 
-bool EnviDataSource::startSource()
+const Result EnviDataSource::startSource()
 {
 	ScopedLock sl(dataSourceLock);
 	startTime = Time::getCurrentTime();
@@ -171,7 +171,7 @@ void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
 	ScopedLock sl(dataSourceLock);
 	if (valueIndex >= result.getNumValues())
 	{
-		_INF("Trying to set a value that's not defined");
+		_INF("Trying to set a value that's not defined index ["+_STR(valueIndex)+" value ["+value.toString()+"]");
 		return;
 	}
 	result[valueIndex].value		= value;
@@ -313,6 +313,28 @@ const double EnviDataSource::evaluateExpression (const double inputData, const S
 		_WRN("Evaluating expression failed source: ["+getName()+"], error: ["+error+"]");
 	}
 	return (result);
+}
+
+const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
+{
+	ScopedLock sl(dataSourceLock);
+
+	for (int i=0; i<getResult().getNumValues(); i++)
+	{
+		String error;
+		const double result = valueExpressions[getResult()[i].name].evaluate(enviExpScope.setData(inputData[i]), error);
+
+		if (!error.isEmpty())
+		{
+			return (Result::fail ("Evaluating expressions failed for value name ["+getResult()[i].name+"] reson ["+error+"]"));
+		}
+		else
+		{
+			setValue (i, result);
+		}
+	}
+
+	return (Result::ok());
 }
 
 const String EnviDataSource::getResitrationQuery(const String &dsTable)

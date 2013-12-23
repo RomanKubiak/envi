@@ -122,6 +122,21 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
+    <Unit filename="../../Source/Source/EnviDSJavascript.cpp"/>
+    <Unit filename="../../Source/Source/EnviDSJavascript.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Source/EnviDSTrigger.cpp"/>
+    <Unit filename="../../Source/Source/EnviDSTrigger.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Source/EnviDSFile.cpp"/>
+    <Unit filename="../../Source/Source/EnviDSFile.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/Source/EnviDSPCF8591.cpp"/>
     <Unit filename="../../Source/Source/EnviDSPCF8591.h">
       <Option compile="0"/>

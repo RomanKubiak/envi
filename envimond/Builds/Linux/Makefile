@@ -54,6 +54,9 @@ OBJECTS := \
   $(OBJDIR)/sqlite3_42a04441.o \
   $(OBJDIR)/EnviHTTP_b152028e.o \
   $(OBJDIR)/EnviHTTPConnection_ceb1734c.o \
+  $(OBJDIR)/EnviDSJavascript_b93d6c6d.o \
+  $(OBJDIR)/EnviDSTrigger_d517e982.o \
+  $(OBJDIR)/EnviDSFile_a4da9d3c.o \
   $(OBJDIR)/EnviDSPCF8591_acb629f2.o \
   $(OBJDIR)/EnviDSDHT22_1d6cc3ba.o \
   $(OBJDIR)/EnviDataSource_d73fb816.o \
@@ -113,6 +116,21 @@ $(OBJDIR)/EnviHTTP_b152028e.o: ../../Source/Network/EnviHTTP.cpp
 $(OBJDIR)/EnviHTTPConnection_ceb1734c.o: ../../Source/Network/EnviHTTPConnection.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviHTTPConnection.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDSJavascript_b93d6c6d.o: ../../Source/Source/EnviDSJavascript.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSJavascript.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDSTrigger_d517e982.o: ../../Source/Source/EnviDSTrigger.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSTrigger.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviDSFile_a4da9d3c.o: ../../Source/Source/EnviDSFile.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviDSFile.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviDSPCF8591_acb629f2.o: ../../Source/Source/EnviDSPCF8591.cpp

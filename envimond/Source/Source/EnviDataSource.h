@@ -13,6 +13,8 @@
 
 #include "EnviData.h"
 
+#define SHOULD_WE_EXIT()	if (threadShouldExit()) { _DBG(getType()+" ["+getName()+"] thread should exit"); return; }
+
 class EnviDataSource : public ChangeBroadcaster
 {
 	public:
@@ -55,13 +57,14 @@ class EnviDataSource : public ChangeBroadcaster
 		const EnviData getResult() const;
 		void setResult (const EnviData &_result);
 		ValueTree getConfig() const;
-		bool startSource();
+		const Result startSource();
 		void stopSource();
 		void setDisabled(const bool shouldBeDisabled);
 		bool isDisabled() const;
 		const double evaluateExpression (const double inputData, const String &valueName);
 		const Result setValueExpression (const String &valueName, const String &expressionString);
 		const Result setAllExpressions();
+		const Result evaluateAllExpressions(Array <double> inputData);
 		const bool hasExpression(const String &valueName);
 		virtual const int getDataCacheSize();
 		virtual const var getSummary();
