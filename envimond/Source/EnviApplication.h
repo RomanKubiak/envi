@@ -53,7 +53,7 @@ class EnviApplication : public MultiTimer
 		JUCE_LEAK_DETECTOR(EnviApplication);
 
 	private:
-		EnviCLI enviCLI;
+		ScopedPointer <EnviCLI> enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
 		StringArray disabledSources;

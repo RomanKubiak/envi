@@ -13,7 +13,7 @@
 
 #include "EnviData.h"
 
-#define SHOULD_WE_EXIT()	if (threadShouldExit()) { _DBG(getType()+" ["+getName()+"] thread should exit"); return; }
+#define SHOULD_WE_EXIT()	if (threadShouldExit()) { _INF(getType()+" ["+getName()+"] thread should exit"); return; }
 
 class EnviDataSource : public ChangeBroadcaster
 {

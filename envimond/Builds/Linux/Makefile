@@ -50,11 +50,13 @@ endif
 
 OBJECTS := \
   $(OBJDIR)/EnviData_6447626f.o \
+  $(OBJDIR)/bit_ecebd8a7.o \
   $(OBJDIR)/getopt_1199f4d.o \
+  $(OBJDIR)/lua_ed7df0d2.o \
   $(OBJDIR)/sqlite3_42a04441.o \
   $(OBJDIR)/EnviHTTP_b152028e.o \
   $(OBJDIR)/EnviHTTPConnection_ceb1734c.o \
-  $(OBJDIR)/EnviDSJavascript_b93d6c6d.o \
+  $(OBJDIR)/EnviDSLua_f364ea42.o \
   $(OBJDIR)/EnviDSTrigger_d517e982.o \
   $(OBJDIR)/EnviDSFile_a4da9d3c.o \
   $(OBJDIR)/EnviDSPCF8591_acb629f2.o \
@@ -98,9 +100,19 @@ $(OBJDIR)/EnviData_6447626f.o: ../../Source/EnviData.cpp
 	@echo "Compiling EnviData.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
+$(OBJDIR)/bit_ecebd8a7.o: ../../Source/Externals/bit.c
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling bit.c"
+	@$(CC) $(CFLAGS) -o "$@" -c "$<"
+
 $(OBJDIR)/getopt_1199f4d.o: ../../Source/Externals/getopt.c
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling getopt.c"
+	@$(CC) $(CFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/lua_ed7df0d2.o: ../../Source/Externals/lua.c
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling lua.c"
 	@$(CC) $(CFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/sqlite3_42a04441.o: ../../Source/Externals/sqlite3.c
@@ -118,9 +130,9 @@ $(OBJDIR)/EnviHTTPConnection_ceb1734c.o: ../../Source/Network/EnviHTTPConnection
 	@echo "Compiling EnviHTTPConnection.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/EnviDSJavascript_b93d6c6d.o: ../../Source/Source/EnviDSJavascript.cpp
+$(OBJDIR)/EnviDSLua_f364ea42.o: ../../Source/Source/EnviDSLua.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviDSJavascript.cpp"
+	@echo "Compiling EnviDSLua.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviDSTrigger_d517e982.o: ../../Source/Source/EnviDSTrigger.cpp

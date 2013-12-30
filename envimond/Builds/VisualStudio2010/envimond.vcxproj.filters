@@ -11,6 +11,12 @@
     <Filter Include="envimond\Source\Externals">
       <UniqueIdentifier>{C31649FC-C95B-8743-99D4-9920A938AA04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="envimond\Source\Externals\LuaBridge">
+      <UniqueIdentifier>{A4279036-847D-27E0-4E5F-B0742232F17F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="envimond\Source\Externals\LuaBridge\detail">
+      <UniqueIdentifier>{145208ED-1F86-5EDF-AA14-FC3EFD731531}</UniqueIdentifier>
+    </Filter>
     <Filter Include="envimond\Source\Network">
       <UniqueIdentifier>{D21658E4-99E8-160D-97DF-72B4DB3ED5F7}</UniqueIdentifier>
     </Filter>
@@ -115,7 +121,13 @@
     <ClCompile Include="..\..\Source\EnviData.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Externals\bit.c">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Externals\getopt.c">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Externals\lua.c">
       <Filter>envimond\Source\Externals</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Externals\sqlite3.c">
@@ -127,7 +139,7 @@
     <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp">
       <Filter>envimond\Source\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Source\EnviDSJavascript.cpp">
+    <ClCompile Include="..\..\Source\Source\EnviDSLua.cpp">
       <Filter>envimond\Source\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Source\EnviDSTrigger.cpp">
@@ -486,6 +498,72 @@
     <ClInclude Include="..\..\Source\EnviData.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\ClassInfo.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Constructor.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\dump.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\FuncTraits.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Iterator.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\LuaException.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\LuaHelpers.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\LuaRef.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Namespace.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Stack.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\TypeList.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\TypeTraits.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Userdata.h">
+      <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\LuaBridge.h">
+      <Filter>envimond\Source\Externals\LuaBridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\RefCountedObject.h">
+      <Filter>envimond\Source\Externals\LuaBridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\RefCountedPtr.h">
+      <Filter>envimond\Source\Externals\LuaBridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\luaconf.h">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\lualib.h">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\lauxlib.h">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\lua.h">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Externals\lua.hpp">
+      <Filter>envimond\Source\Externals</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Externals\getopt.h">
       <Filter>envimond\Source\Externals</Filter>
     </ClInclude>
@@ -501,7 +579,7 @@
     <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h">
       <Filter>envimond\Source\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Source\EnviDSJavascript.h">
+    <ClInclude Include="..\..\Source\Source\EnviDSLua.h">
       <Filter>envimond\Source\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Source\EnviDSTrigger.h">

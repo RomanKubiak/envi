@@ -128,11 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\EnviData.cpp"/>
+    <ClCompile Include="..\..\Source\Externals\bit.c"/>
     <ClCompile Include="..\..\Source\Externals\getopt.c"/>
+    <ClCompile Include="..\..\Source\Externals\lua.c"/>
     <ClCompile Include="..\..\Source\Externals\sqlite3.c"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp"/>
-    <ClCompile Include="..\..\Source\Source\EnviDSJavascript.cpp"/>
+    <ClCompile Include="..\..\Source\Source\EnviDSLua.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSTrigger.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSFile.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSPCF8591.cpp"/>
@@ -430,12 +432,34 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\EnviData.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\ClassInfo.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Constructor.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\dump.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\FuncTraits.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Iterator.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\LuaException.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\LuaHelpers.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\LuaRef.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Namespace.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Stack.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\TypeList.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\TypeTraits.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Userdata.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\LuaBridge.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\RefCountedObject.h"/>
+    <ClInclude Include="..\..\Source\Externals\LuaBridge\RefCountedPtr.h"/>
+    <ClInclude Include="..\..\Source\Externals\luaconf.h"/>
+    <ClInclude Include="..\..\Source\Externals\lualib.h"/>
+    <ClInclude Include="..\..\Source\Externals\lauxlib.h"/>
+    <ClInclude Include="..\..\Source\Externals\lua.h"/>
+    <ClInclude Include="..\..\Source\Externals\lua.hpp"/>
     <ClInclude Include="..\..\Source\Externals\getopt.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h"/>
     <ClInclude Include="..\..\Source\Network\EnviHTTP.h"/>
     <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h"/>
-    <ClInclude Include="..\..\Source\Source\EnviDSJavascript.h"/>
+    <ClInclude Include="..\..\Source\Source\EnviDSLua.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSTrigger.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSFile.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSPCF8591.h"/>

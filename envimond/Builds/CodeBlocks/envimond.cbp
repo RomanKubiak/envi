@@ -30,6 +30,7 @@
           <Add directory="../../Source/Source"/>
           <Add directory="../../Source/Storage"/>
           <Add directory="../../Source/Network"/>
+          <Add directory="../../Source/Externals"/>
         </Compiler>
         <Linker>
           <Add library="comdlg32"/>
@@ -64,6 +65,11 @@
           <Add option="-DJUCER_CODEBLOCKS_20734A5D=1"/>
           <Add directory="."/>
           <Add directory="..\..\JuceLibraryCode"/>
+          <Add directory="../../Source"/>
+          <Add directory="../../Source/Source"/>
+          <Add directory="../../Source/Storage"/>
+          <Add directory="../../Source/Network"/>
+          <Add directory="../../Source/Externals"/>
         </Compiler>
         <Linker>
           <Add option="-s"/>
@@ -98,7 +104,97 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
+    <Unit filename="../../Source/Externals/bit.c"/>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/CFunctions.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/ClassInfo.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/Constructor.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/dump.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/FuncTraits.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/Iterator.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/LuaException.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/LuaHelpers.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/LuaRef.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/Namespace.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/Stack.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/TypeList.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/TypeTraits.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/detail/Userdata.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/LuaBridge.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/RefCountedObject.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/LuaBridge/RefCountedPtr.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/luaconf.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/lualib.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/Externals/getopt.c"/>
+    <Unit filename="../../Source/Externals/lauxlib.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/lua.c"/>
+    <Unit filename="../../Source/Externals/lua.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/Externals/lua.hpp">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../Source/Externals/getopt.h">
       <Option compile="0"/>
       <Option link="0"/>
@@ -122,8 +218,8 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
-    <Unit filename="../../Source/Source/EnviDSJavascript.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSJavascript.h">
+    <Unit filename="../../Source/Source/EnviDSLua.cpp"/>
+    <Unit filename="../../Source/Source/EnviDSLua.h">
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>

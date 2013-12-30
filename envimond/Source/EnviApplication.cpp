@@ -15,27 +15,29 @@
 #include "EnviDSPCF8591.h"
 #include "EnviDSFile.h"
 #include "EnviDSTrigger.h"
-#include "EnviDSJavascript.h"
+#include "EnviDSLua.h"
 
 EnviApplication::EnviApplication(int argc, char* argv[])
-	: enviCLI(argc, argv), valid(true)
+	: enviCLI(nullptr), valid(true)
 {
+	enviCLI = new EnviCLI (argc, argv);
+
 	EnviLog::getInstance()->setOwner(this);
-	if (enviCLI.isSet("log-console"))
+	if (enviCLI->isSet("log-console"))
 	{
 		EnviLog::getInstance()->setLogToConsole(true);
 	}
 
-	_DBG(enviCLI.getAllArguments().getDescription());
+	_DBG(enviCLI->getAllArguments().getDescription());
 
-	if (enviCLI.isSet("help"))
+	if (enviCLI->isSet("help"))
 	{
-		enviCLI.printHelp();
+		enviCLI->printHelp();
 		valid = false;
 		return;
 	}
 
-	if (enviCLI.isSet("log-file"))
+	if (enviCLI->isSet("log-file"))
 	{
 		Result res = EnviLog::getInstance()->setLogToFile (getEnviLogFile());
 
@@ -47,14 +49,14 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 		}
 	}
 
-	if (enviCLI.isSet("log-level"))
+	if (enviCLI->isSet("log-level"))
 	{
-		EnviLog::getInstance()->setLogLevel (enviCLI.getParameter("log-level").getIntValue());
+		EnviLog::getInstance()->setLogLevel (enviCLI->getParameter("log-level").getIntValue());
 	}
 
-	if (enviCLI.isSet("disabled-sources"))
+	if (enviCLI->isSet("disabled-sources"))
 	{
-		disabledSources = StringArray::fromTokens(enviCLI.getParameter("disabled-sources"), ",", "'\"");
+		disabledSources = StringArray::fromTokens(enviCLI->getParameter("disabled-sources"), ",", "'\"");
 	}
 
 	Result res = findDataSourcesOnDisk();
@@ -89,7 +91,7 @@ const bool EnviApplication::isValid()
 
 EnviCLI &EnviApplication::getCLI()
 {
-	return (enviCLI);
+	return (*enviCLI);
 }
 
 const Result EnviApplication::runDispatchLoop()
@@ -158,7 +160,7 @@ EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstan
 {
 	const String type = dataSourceInstance.getProperty(Ids::type);
 
-	if (disabledSources.indexOf (type) >= 0 && enviCLI.isSet("disabled-sources"))
+	if (disabledSources.indexOf (type) >= 0 && enviCLI->isSet("disabled-sources"))
 	{
 		_WRN("Data source type: ["+type+"] disabled on command line");
 		return (nullptr);
@@ -286,9 +288,9 @@ EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 	{
 		return (new EnviDSTrigger(*this));
 	}
-	else if (dsType == Ids::javascript)
+	else if (dsType == Ids::lua)
 	{
-		return (new EnviDSJavascript(*this));
+		return (new EnviDSLua(*this));
 	}
 	return (nullptr);
 }
@@ -310,9 +312,9 @@ const int EnviApplication::getNumInstances(const Identifier dsType)
 
 const File EnviApplication::getEnviSourcesDir()
 {
-	if (enviCLI.isSet("sources-dir"))
+	if (enviCLI->isSet("sources-dir"))
 	{
-		return (File(enviCLI.getParameter("sources-dir")));
+		return (File(enviCLI->getParameter("sources-dir")));
 	}
 	else
 	{
@@ -322,9 +324,9 @@ const File EnviApplication::getEnviSourcesDir()
 
 const File EnviApplication::getEnviScriptsDir()
 {
-	if (enviCLI.isSet("scripts-dir"))
+	if (enviCLI->isSet("scripts-dir"))
 	{
-		return (File(enviCLI.getParameter("scripts-dir")));
+		return (File(enviCLI->getParameter("scripts-dir")));
 	}
 	else
 	{
@@ -334,9 +336,9 @@ const File EnviApplication::getEnviScriptsDir()
 
 const File EnviApplication::getEnviStoreFile()
 {
-	if (enviCLI.isSet("store-file"))
+	if (enviCLI->isSet("store-file"))
 	{
-		return (File(enviCLI.getParameter("store-file")));
+		return (File(enviCLI->getParameter("store-file")));
 	}
 	else
 	{
@@ -346,9 +348,9 @@ const File EnviApplication::getEnviStoreFile()
 
 const File EnviApplication::getEnviLogFile()
 {
-	if (enviCLI.isSet("log-file"))
+	if (enviCLI->isSet("log-file"))
 	{
-		return (File(enviCLI.getParameter("log-file")));
+		return (File(enviCLI->getParameter("log-file")));
 	}
 	else
 	{

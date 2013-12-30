@@ -8,7 +8,36 @@
       <FILE id="Lma834" name="EnviData.cpp" compile="1" resource="0" file="Source/EnviData.cpp"/>
       <FILE id="YCOd1D" name="EnviData.h" compile="0" resource="0" file="Source/EnviData.h"/>
       <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
+        <FILE id="mzpyeC" name="bit.c" compile="1" resource="0" file="Source/Externals/bit.c"/>
+        <GROUP id="{6D9CF2B8-206A-9A50-9D31-F65EF3AEF4B9}" name="LuaBridge">
+          <GROUP id="{D1DC1D46-44D2-D7B2-EA8D-021B21436F0C}" name="detail">
+            <FILE id="BHgVUo" name="CFunctions.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/CFunctions.h"/>
+            <FILE id="NAaZwk" name="ClassInfo.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/ClassInfo.h"/>
+            <FILE id="NeJvf2" name="Constructor.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/Constructor.h"/>
+            <FILE id="xWYC9R" name="dump.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/dump.h"/>
+            <FILE id="P3YgTU" name="FuncTraits.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/FuncTraits.h"/>
+            <FILE id="uHNC5Z" name="Iterator.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/Iterator.h"/>
+            <FILE id="lHh7vd" name="LuaException.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/LuaException.h"/>
+            <FILE id="ZVByRn" name="LuaHelpers.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/LuaHelpers.h"/>
+            <FILE id="agdJ8z" name="LuaRef.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/LuaRef.h"/>
+            <FILE id="KVg5kc" name="Namespace.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/Namespace.h"/>
+            <FILE id="izN2A7" name="Stack.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/Stack.h"/>
+            <FILE id="MonccP" name="TypeList.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/TypeList.h"/>
+            <FILE id="P4UszT" name="TypeTraits.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/TypeTraits.h"/>
+            <FILE id="Zv1Lpa" name="Userdata.h" compile="0" resource="0" file="Source/Externals/LuaBridge/detail/Userdata.h"/>
+          </GROUP>
+          <FILE id="t6IwgM" name="LuaBridge.h" compile="0" resource="0" file="Source/Externals/LuaBridge/LuaBridge.h"/>
+          <FILE id="tvpXYD" name="RefCountedObject.h" compile="0" resource="0"
+                file="Source/Externals/LuaBridge/RefCountedObject.h"/>
+          <FILE id="QCE9Wf" name="RefCountedPtr.h" compile="0" resource="0" file="Source/Externals/LuaBridge/RefCountedPtr.h"/>
+        </GROUP>
+        <FILE id="S4QTuD" name="luaconf.h" compile="0" resource="0" file="Source/Externals/luaconf.h"/>
+        <FILE id="PSg0o3" name="lualib.h" compile="0" resource="0" file="Source/Externals/lualib.h"/>
         <FILE id="FQlmjf" name="getopt.c" compile="1" resource="0" file="Source/Externals/getopt.c"/>
+        <FILE id="zC7BuN" name="lauxlib.h" compile="0" resource="0" file="Source/Externals/lauxlib.h"/>
+        <FILE id="cD35Ve" name="lua.c" compile="1" resource="0" file="Source/Externals/lua.c"/>
+        <FILE id="F312IZ" name="lua.h" compile="0" resource="0" file="Source/Externals/lua.h"/>
+        <FILE id="IoVQiE" name="lua.hpp" compile="0" resource="0" file="Source/Externals/lua.hpp"/>
         <FILE id="aS4fyy" name="getopt.h" compile="0" resource="0" file="Source/Externals/getopt.h"/>
         <FILE id="ArY89g" name="sqlite3.c" compile="1" resource="0" file="Source/Externals/sqlite3.c"/>
         <FILE id="Cijhqt" name="sqlite3.h" compile="0" resource="0" file="Source/Externals/sqlite3.h"/>
@@ -23,10 +52,8 @@
               file="Source/Network/EnviHTTPConnection.h"/>
       </GROUP>
       <GROUP id="{8152FBDB-7753-31BE-06F1-AAEC91628D7C}" name="Source">
-        <FILE id="eeP22B" name="EnviDSJavascript.cpp" compile="1" resource="0"
-              file="Source/Source/EnviDSJavascript.cpp"/>
-        <FILE id="Vxzuvv" name="EnviDSJavascript.h" compile="0" resource="0"
-              file="Source/Source/EnviDSJavascript.h"/>
+        <FILE id="xp8TCL" name="EnviDSLua.cpp" compile="1" resource="0" file="Source/Source/EnviDSLua.cpp"/>
+        <FILE id="NpIRR6" name="EnviDSLua.h" compile="0" resource="0" file="Source/Source/EnviDSLua.h"/>
         <FILE id="vQ9Mhl" name="EnviDSTrigger.cpp" compile="1" resource="0"
               file="Source/Source/EnviDSTrigger.cpp"/>
         <FILE id="kd8Np4" name="EnviDSTrigger.h" compile="0" resource="0" file="Source/Source/EnviDSTrigger.h"/>
@@ -93,8 +120,9 @@
     <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"
-                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"/>
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>

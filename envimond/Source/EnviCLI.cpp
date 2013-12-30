@@ -12,6 +12,7 @@
 
 EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 {
+	_DBG("EnviCLI::ctor");
 	int c = -1;
 	int option_index = 0;
 

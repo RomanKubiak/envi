@@ -30,6 +30,10 @@
 #define _ERR(msg)				_LOG(LOG_ERROR, msg)
 #define _WRN(msg)				_LOG(LOG_WARN, msg)
 #define _INF(msg)				_LOG(LOG_INFO, msg)
+#define _DSERR(msg)				_ERR(getType()+" ["+getName()+"] "+msg)
+#define _DSINF(msg)				_INF(getType()+" ["+getName()+"] "+msg)
+#define _DSWRN(msg)				_WRN(getType()+" ["+getName()+"] "+msg)
+#define _DSDBG(msg)				_DBG(getType()+" ["+getName()+"] "+msg)
 
 #define ENVI_TIMER_OFFSET		10
 
@@ -58,7 +62,7 @@ namespace Ids
 	DECLARE_ID (pcf8591);
 	DECLARE_ID (ds18b20);
 	DECLARE_ID (file);
-	DECLARE_ID (javascript);
+	DECLARE_ID (lua);
 	DECLARE_ID (trigger);
 	DECLARE_ID (port);
 	DECLARE_ID (storeFile);
@@ -78,6 +82,7 @@ namespace Ids
 	DECLARE_ID (dataCacheSize);
 	DECLARE_ID (path);
 	DECLARE_ID (matchRegex);
+	DECLARE_ID (source);
 };
 
 static inline float getRandomFloat (const float limit)
