@@ -130,8 +130,9 @@
         <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS>
-    <LINUX_MAKE targetFolder="Builds/Linux" extraLinkerFlags="" externalLibraries="wiringPi&#10;X11&#10;dl&#10;rt"
-                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w">
+    <LINUX_MAKE targetFolder="Builds/Linux_ARM" extraLinkerFlags="" externalLibraries="wiringPi&#10;X11&#10;dl&#10;rt"
+                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w"
+                extraDefs="WIRING_PI=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="envimond" linuxArchitecture="-march=armv6" binaryPath="/usr/local/bin/"
@@ -144,6 +145,20 @@
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
+    <LINUX_MAKE targetFolder="Builds/Linux_x86" externalLibraries="X11&#10;dl&#10;rt">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
+                       targetName="envimond" headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals&#10;~/devel/JUCE"
+                       binaryPath="/usr/local/bin/"/>
+        <CONFIGURATION name="Release" libraryPath="/usr/X11R6/lib/" isDebug="0" optimisation="2"
+                       targetName="envimond" headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals&#10;~/devel/JUCE"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>

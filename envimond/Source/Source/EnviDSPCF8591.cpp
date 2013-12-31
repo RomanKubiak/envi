@@ -1,3 +1,5 @@
+#ifdef WIRING_PI
+
 #include "EnviDSPCF8591.h"
 #include "EnviApplication.h"
 
@@ -106,7 +108,6 @@ void EnviDSPCF8591::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
-#ifdef JUCE_LINUX
 bool EnviDSPCF8591::readPCFvalues()
 {
 	ScopedLock sl (dataSourceLock);
@@ -129,9 +130,5 @@ bool EnviDSPCF8591::readPCFvalues()
 	}
 	return (true);
 }
-#else
-bool EnviDSPCF8591::readPCFvalues()
-{
-	return (true);
-}
+
 #endif

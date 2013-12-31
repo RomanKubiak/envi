@@ -17,7 +17,7 @@ static void writeToLog (const int lvl, const char *msg)
 }
 
 EnviDSLua::EnviDSLua(EnviApplication &owner)
-	: Thread("EnviDSLua"), EnviDataSource(owner, "lua"), luaState(0)
+	: 	Thread("EnviDSLua"), EnviDataSource(owner, "lua"), luaState(0)
 {
 }
 
@@ -43,6 +43,27 @@ const Result EnviDSLua::initialize(const ValueTree _instanceConfig)
 		luaState = lua_open();
 		luaL_openlibs(luaState);
 		wrap(luaState);
+
+		Result compileRes = compileLua(sourceCode);
+
+		if (compileRes.wasOk())
+		{
+			luabridge::LuaRef luaEnviInit(luaState);
+			luaEnviInit = luabridge::getGlobal (luaState, "envi_init");
+
+			try
+			{
+				luaEnviInit();
+			}
+			catch (luabridge::LuaException const& e)
+			{
+				std::cerr && e.what ();
+			}
+		}
+		else
+		{
+            return (compileRes);
+		}
 	}
 
 	return (Result::ok());
@@ -71,21 +92,22 @@ const Result EnviDSLua::execute()
 
 void EnviDSLua::run()
 {
+	luabridge::LuaRef luaEnviRun(luaState);
+	luaEnviRun = luabridge::getGlobal (luaState, "envi_run");
+
 	while (1)
 	{
 		do
 		{
-			if (sourceCode.existsAsFile())
+			try
 			{
-				Result res = startLuaScript (sourceCode);
-
-				if (!res.wasOk())
-				{
-					_DSERR(res.getErrorMessage());
-					return;
-				}
+				luaEnviRun();
 			}
-
+			catch (luabridge::LuaException const& e)
+			{
+				std::cerr && e.what ();
+				return;
+			}
 			SHOULD_WE_EXIT();
 
 		} while (wait (-1));
@@ -97,7 +119,7 @@ void EnviDSLua::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
-const Result EnviDSLua::startLuaScript(const File &_sourceCode)
+const Result EnviDSLua::compileLua(const File &_sourceCode)
 {
 	if (_sourceCode.existsAsFile())
 	{

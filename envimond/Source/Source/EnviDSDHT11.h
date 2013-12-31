@@ -11,16 +11,18 @@
 #ifndef ENVIDSDHT11_H_INCLUDED
 #define ENVIDSDHT11_H_INCLUDED
 
+#ifdef WIRING_PI
+
 #include "EnviIncludes.h"
 #include "EnviDataSource.h"
 
-#ifdef JUCE_LINUX
 #include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#endif
+
 #define DHT_MAXTIMINGS 85
+
 class EnviApplication;
 
 class EnviDSDHT11 : public EnviDataSource, public Thread, public AsyncUpdater
@@ -46,5 +48,5 @@ class EnviDSDHT11 : public EnviDataSource, public Thread, public AsyncUpdater
 		float humidity;
 };
 
-
+#endif
 #endif  // ENVIDSDHT11_H_INCLUDED

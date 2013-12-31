@@ -59,9 +59,11 @@ class EnviApplication : public MultiTimer
 		StringArray disabledSources;
 		File dataSourcesDir;
 		bool valid;
-#ifdef JUCE_LINUX
+
+#ifdef WIRING_PI
 		ScopedPointer <EnviWiringPi> enviWiringPi;
 #endif
+
 		OwnedArray <EnviDataSource,CriticalSection> dataSources;
 };
 

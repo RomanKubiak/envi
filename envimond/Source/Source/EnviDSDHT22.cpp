@@ -1,3 +1,5 @@
+#ifdef WIRING_PI
+
 #include "EnviDSDHT22.h"
 #include "EnviApplication.h"
 
@@ -82,7 +84,6 @@ void EnviDSDHT22::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
-#ifdef JUCE_LINUX
 bool EnviDSDHT22::readDHTValue()
 {
 	uint8_t laststate = HIGH;
@@ -158,10 +159,5 @@ bool EnviDSDHT22::readDHTValue()
 		return (false);
 	}
 
-}
-#else
-bool EnviDSDHT22::readDHTValue()
-{
-	return (true);
 }
 #endif

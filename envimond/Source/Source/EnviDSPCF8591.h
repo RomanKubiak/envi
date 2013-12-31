@@ -1,16 +1,16 @@
 #ifndef ENVIDSPCF8591_H_INCLUDED
 #define ENVIDSPCF8591_H_INCLUDED
 
+#ifdef WIRING_PI
+
 #include "EnviIncludes.h"
 #include "EnviDataSource.h"
 
-#ifdef JUCE_LINUX
 #include <wiringPi.h>
 #include <pcf8591.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#endif
 
 #define DHT_MAXTIMINGS 85
 
@@ -36,4 +36,5 @@ class EnviDSPCF8591 : public EnviDataSource, public Thread, public AsyncUpdater
 };
 
 
+#endif
 #endif  // ENVIDSPCF8591_H_INCLUDED

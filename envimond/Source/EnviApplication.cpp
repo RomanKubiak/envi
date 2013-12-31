@@ -264,21 +264,9 @@ void EnviApplication::sourceWrite(EnviDataSource *dataSource, const Result &fail
 
 EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 {
-	if (dsType == Ids::dht11)
-	{
-		return (new EnviDSDHT11(*this));
-	}
-	else if (dsType == Ids::cmd)
+	if (dsType == Ids::cmd)
 	{
 		return (new EnviDSCommand(*this));
-	}
-	else if (dsType == Ids::dht22)
-	{
-		return (new EnviDSDHT22(*this));
-	}
-	else if (dsType == Ids::pcf8591)
-	{
-		return (new EnviDSPCF8591(*this));
 	}
 	else if (dsType == Ids::file)
 	{
@@ -292,6 +280,20 @@ EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 	{
 		return (new EnviDSLua(*this));
 	}
+#ifdef WIRING_PI
+	else if (dsType == Ids::dht11)
+	{
+		return (new EnviDSDHT11(*this));
+	}
+	else if (dsType == Ids::dht22)
+	{
+		return (new EnviDSDHT22(*this));
+	}
+	else if (dsType == Ids::pcf8591)
+	{
+		return (new EnviDSPCF8591(*this));
+	}
+#endif // WIRING_PI
 	return (nullptr);
 }
 

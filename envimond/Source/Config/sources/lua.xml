@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataSource type="lua" name="Lua data source" timeout="2000" interval="3000" source="test.lua">
+</dataSource>

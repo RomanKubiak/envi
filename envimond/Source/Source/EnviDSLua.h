@@ -34,7 +34,7 @@ class EnviDSLua : public EnviDataSource, public Thread, public AsyncUpdater
 		void run();
 		void handleAsyncUpdate();
 		void wrap(lua_State *L);
-		const Result startLuaScript(const File &sourceCode);
+		const Result compileLua(const File &sourceCode);
 		void collectDone();
 		void setResultValue(const int index, const double value);
 		void addResultValue(const char *valueName, const int unit);

@@ -1,8 +1,9 @@
 #ifndef ENVIWIRINGPI_H_INCLUDED
 #define ENVIWIRINGPI_H_INCLUDED
 
+#ifdef WIRING_PI
+
 #include "EnviIncludes.h"
-#ifdef JUCE_LINUX
 #include <wiringPi.h>
 
 class EnviApplication;
@@ -21,4 +22,5 @@ class EnviWiringPi
 };
 
 #endif
+
 #endif

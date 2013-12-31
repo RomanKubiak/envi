@@ -1,15 +1,15 @@
 #ifndef ENVIDSDHT22_H_INCLUDED
 #define ENVIDSDHT22_H_INCLUDED
 
+#ifdef WIRING_PI
+
 #include "EnviIncludes.h"
 #include "EnviDataSource.h"
 
-#ifdef JUCE_LINUX
 #include <wiringPi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#endif
 
 #define DHT_MAXTIMINGS 85
 
@@ -37,5 +37,5 @@ class EnviDSDHT22 : public EnviDataSource, public Thread, public AsyncUpdater
 		float humidity;
 };
 
-
+#endif
 #endif  // ENVIDSDHT22_H_INCLUDED

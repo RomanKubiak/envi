@@ -1,13 +1,4 @@
-/*
-  ==============================================================================
-
-    EnviDSDHT.cpp
-    Created: 7 Dec 2013 11:40:03pm
-    Author:  Administrator
-
-  ==============================================================================
-*/
-
+#ifdef WIRING_PI
 #include "EnviDSDHT11.h"
 #include "EnviApplication.h"
 
@@ -92,7 +83,6 @@ void EnviDSDHT11::handleAsyncUpdate()
 	collectFinished (Result::ok());
 }
 
-#ifdef JUCE_LINUX
 bool EnviDSDHT11::readDHTValue()
 {
 	uint8_t laststate = HIGH;
@@ -161,9 +151,5 @@ bool EnviDSDHT11::readDHTValue()
 		return (false);
 	}
 }
-#else
-bool EnviDSDHT11::readDHTValue()
-{
-	return (true);
-}
+
 #endif
