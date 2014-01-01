@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataSource type="file" name="File-MCP3424-AIN0" timeout="2000" interval="3000" path="/sys/bus/i2c/devices/0-0068/iio:device0/in_voltage0_raw">
+</dataSource>

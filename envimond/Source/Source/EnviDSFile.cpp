@@ -57,7 +57,7 @@ const Result EnviDSFile::execute()
 		if (isThreadRunning())
 		{
 			notify();
-			return (Result::fail(getType()+" ["+getName()+"] is already running"));
+			return (Result::ok());
 		}
 		else
 		{
@@ -73,8 +73,8 @@ const Result EnviDSFile::execute()
 
 void EnviDSFile::handleAsyncUpdate()
 {
-	_DBG("EnviDSFile::handleAsyncUpdate");
-	_DBG("\n"+EnviData::toCSVString(getResult()));
+	_DSDBG("EnviDSFile::handleAsyncUpdate");
+	_DSDBG("RESULT: "+EnviData::toCSVString(getResult()).trim());
 	collectFinished (Result::ok());
 }
 
@@ -84,8 +84,14 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 
 	if (matchRegex.isEmpty())
 	{
-		_DBG ("EnviDSFile::processExpressions no regex defined");
-		results.add (stringResult.getDoubleValue());
+		_DSDBG ("EnviDSFile::processExpressions no regex defined");
+		StringArray lines = StringArray::fromLines (stringResult.trim());
+		for (int i=0; i<lines.size(); i++)
+		{
+			_DSDBG ("\t set result index: "+_STR(i)+" value ["+_STR(lines[i].getDoubleValue())+"]");
+			results.add (lines[i].getDoubleValue());
+			setValue (i, lines[i].getDoubleValue());
+		}
 	}
 	else
 	{
@@ -94,11 +100,12 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 		const std::string textToSearch = stringResult.toStdString();
 		std::regex_search(textToSearch.begin(), textToSearch.end(), match, rgx);
 
-		_DBG ("EnviDSFile::processExpressions declared values: ["+_STR(getResult().getNumValues())+"] regex matches: ["+_STR(match.size())+"]");
+		_DSDBG ("EnviDSFile::processExpressions declared values: ["+_STR(getResult().getNumValues())+"] regex matches: ["+_STR(match.size())+"]");
 
 		for (int i=0; i<match.size(); i++)
 		{
-			results.add (String(match[i]).getDoubleValue());
+			results.add (_STR(match[i]).getDoubleValue());
+			setValue (i, _STR(match[i]).getDoubleValue());
 		}
 	}
 
@@ -113,7 +120,7 @@ void EnviDSFile::run()
 		{
 			SHOULD_WE_EXIT();
 
-			_DBG("EnviDSFile::run try to read: ["+filePath.getFullPathName()+"]");
+			_DSDBG("EnviDSFile::run try to read: ["+filePath.getFullPathName()+"]");
 
 			ScopedPointer <FileReader> fileReader(new FileReader(*this, filePath));
 

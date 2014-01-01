@@ -151,7 +151,7 @@ void EnviApplication::timerCallback(int timerId)
 		}
 		else
 		{
-			_DBG(ds->getType()+"] name: ["+ds->getName()+"] started");
+			_DBG("["+ds->getType()+"] name: ["+ds->getName()+"] started");
 		}
 	}
 }
