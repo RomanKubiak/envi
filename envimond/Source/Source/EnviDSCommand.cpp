@@ -52,7 +52,7 @@ const Result EnviDSCommand::execute()
 		if (isThreadRunning())
 		{
 			notify();
-			return (Result::fail(getType()+" ["+getName()+"] is already running"));
+			return (Result::ok());
 		}
 		else
 		{

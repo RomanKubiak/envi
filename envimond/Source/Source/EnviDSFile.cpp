@@ -100,7 +100,7 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 		const std::string textToSearch = stringResult.toStdString();
 		std::regex_search(textToSearch.begin(), textToSearch.end(), match, rgx);
 
-		_DSDBG ("EnviDSFile::processExpressions declared values: ["+_STR(getResult().getNumValues())+"] regex matches: ["+_STR(match.size())+"]");
+		_DSDBG ("EnviDSFile::processExpressions declared values: ["+_STR(getResult().getNumValues())+"] regex matches: ["+_STR((int)match.size())+"]");
 
 		for (int i=0; i<match.size(); i++)
 		{

@@ -148,7 +148,7 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Linux_x86" externalLibraries="X11&#10;dl&#10;rt"
-                extraDefs="LUA_USE_LINUX">
+                extraDefs="LUA_USE_LINUX" extraCompilerFlags="-w -std=c++11">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="envimond" headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals&#10;~/devel/JUCE"
