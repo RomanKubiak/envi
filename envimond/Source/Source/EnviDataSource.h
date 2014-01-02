@@ -34,8 +34,8 @@ class EnviDataSource : public ChangeBroadcaster
 		EnviDataSource(EnviApplication &_owner, const Identifier &_type);
 		virtual ~EnviDataSource() {}
 		virtual const Result execute() 		= 0;
-		virtual const String getRegistrationQuery(const String &dsTable);
 		virtual const Result initialize(const ValueTree _instanceConfig);
+
 		void collectFinished(const Result collectStatus);
 		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0);
 		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1);

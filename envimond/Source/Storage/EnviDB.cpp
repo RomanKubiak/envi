@@ -50,8 +50,17 @@ const bool EnviDB::init()
 
 	if (res.wasOk())
 	{
-		startThread();
-		return (true);
+		res = enviStore->registerSources();
+		if (res.wasOk())
+		{
+			startThread();
+			return (true);
+		}
+		else
+		{
+			_ERR("EnviDB::init can't register sources ["+res.getErrorMessage()+"]");
+			return (false);
+		}
 	}
 	else
 	{

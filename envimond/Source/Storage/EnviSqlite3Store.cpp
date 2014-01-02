@@ -171,3 +171,58 @@ const bool EnviSqlite3Store::isValid()
 {
 	return (db != nullptr);
 }
+
+const var EnviSqlite3Store::fetchArray(const String &sql)
+{
+	var result;
+
+	char *errmsg;
+	sqlite3_stmt *statement;
+	//char *zSQL = sqlite3_mprintf ("SELECT id FROM sources WHERE name='%q' AND type='%q' AND instance=%d", (const char *)ds->getName().toUTF8(), (const char *)ds->getType().toUTF8(), ds->getInstanceNumber());
+
+	if (sqlite3_prepare_v2 (db, sql.toUTF8(), -1, &statement, nullptr) == SQLITE_OK)
+	{
+		while (sqlite3_step (statement) == SQLITE_ROW)
+		{
+            for (int i=0; i<sqlite3_column_count(statement); i++)
+			{
+				switch (sqlite3_column_type (statement, i))
+				{
+					case SQLITE_INTEGER:
+					case SQLITE_FLOAT:
+					case SQLITE_BLOB:
+					case SQLITE_NULL:
+					case SQLITE_TEXT:
+					default:
+						break;
+				}
+			}
+		}
+
+		if (sqlite3_finalize (statement) != SQLITE_OK)
+		{
+			lastSqlite3Error = _STR(sqlite3_errmsg(db));
+		}
+	}
+	else
+	{
+		lastSqlite3Error = _STR(sqlite3_errmsg(db));
+	}
+}
+
+const Result EnviSqlite3Store::registerSources()
+{
+	_DBG("EnviSqlite3Store::registerSources");
+
+	for (int i=0; i<owner.getNumDataSources(); i++)
+	{
+		EnviDataSource *ds = owner.getDataSource(i);
+
+		if (ds != nullptr)
+		{
+
+		}
+	}
+
+	return (Result::ok());
+}

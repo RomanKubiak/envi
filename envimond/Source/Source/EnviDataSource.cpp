@@ -176,7 +176,7 @@ void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
 	}
 	result[valueIndex].value	= value;
 	result[valueIndex].timestamp	= Time::getCurrentTime();
-	
+
 	_DBG ("EnviDataSource::setValue index ["+_STR(valueIndex)+"] value ["+EnviData::toCSVString(getResult()).trim()+"]");
 }
 
@@ -281,7 +281,7 @@ const Result EnviDataSource::setValueExpression (const String &valueName, const 
 
 	if (expressionString.isEmpty() || expressionString == "result")
 		return (Result::ok());
-	
+
 	if (valueExpressions.contains (valueName))
 	{
 		_WRN("Data source: ["+getName()+"], re-setting expression for value: "+valueName);
@@ -309,10 +309,10 @@ const bool EnviDataSource::hasExpression(const String &valueName)
 const double EnviDataSource::evaluateExpression (const double inputData, const String &valueName)
 {
 	ScopedLock sl(dataSourceLock);
-	
+
 	if (hasExpression(valueName))
 		return (0.0);
-	
+
 	String error;
 
 	const double result = valueExpressions[valueName].evaluate(enviExpScope.setData(inputData), error);
@@ -334,7 +334,7 @@ const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
 		{
 			String error;
 			const double result = valueExpressions[getResult()[i].name].evaluate(enviExpScope.setData(inputData[i]), error);
-	
+
 			if (!error.isEmpty())
 			{
 				return (Result::fail ("Evaluating expressions failed for value name ["+getResult()[i].name+"] reson ["+error+"]"));
@@ -347,20 +347,6 @@ const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
 	}
 
 	return (Result::ok());
-}
-
-const String EnviDataSource::getRegistrationQuery(const String &dsTable)
-{
-	String query;
-	query 	<< "INSERT INTO " << dsTable << " (type, name, instance, interval, config) VALUES ("
-			<< "'" 		<< getType()
-			<< "','"	<< getName()
-			<< "',"		<< _STR(getInstanceNumber())
-			<< ","		<< _STR(getInterval())
-			<< ",'"		<< instanceConfig.toXmlString()
-			<< "')";
-
-	return (query);
 }
 
 /*
