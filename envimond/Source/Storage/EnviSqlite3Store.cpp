@@ -162,6 +162,24 @@ const Result EnviSqlite3Store::createDatabase()
 	return (Result::ok());
 }
 
+const Result EnviSqlite3Store::insert(const String &sql, int64 &lastInsertId)
+{
+	char *errmsg = nullptr;
+
+	if (sqlite3_exec (db, sql.toUTF8(), nullptr, nullptr, &errmsg) != SQLITE_OK)
+	{
+		String errorMessage = CharPointer_UTF8(errmsg);
+		sqlite3_free (errmsg);
+		return (Result::fail("insert() failed [" + errorMessage + "]"));
+	}
+	else
+	{
+		lastInsertId = sqlite3_last_insert_rowid (db);
+	}
+
+	return (Result::ok());
+}
+
 const Result EnviSqlite3Store::rotate()
 {
 	return (Result::ok());
@@ -172,41 +190,79 @@ const bool EnviSqlite3Store::isValid()
 	return (db != nullptr);
 }
 
-const var EnviSqlite3Store::fetchArray(const String &sql)
+const Result EnviSqlite3Store::fetchArray(const String &sql, var &destination)
 {
-	var result;
-
 	char *errmsg;
 	sqlite3_stmt *statement;
-	//char *zSQL = sqlite3_mprintf ("SELECT id FROM sources WHERE name='%q' AND type='%q' AND instance=%d", (const char *)ds->getName().toUTF8(), (const char *)ds->getType().toUTF8(), ds->getInstanceNumber());
 
 	if (sqlite3_prepare_v2 (db, sql.toUTF8(), -1, &statement, nullptr) == SQLITE_OK)
 	{
+		const int columns = sqlite3_column_count(statement);
+
 		while (sqlite3_step (statement) == SQLITE_ROW)
 		{
-            for (int i=0; i<sqlite3_column_count(statement); i++)
+			var rowData;
+
+            for (int i=0; i<columns; i++)
 			{
 				switch (sqlite3_column_type (statement, i))
 				{
 					case SQLITE_INTEGER:
+						rowData.append (sqlite3_column_int (statement, i));
+						break;
 					case SQLITE_FLOAT:
+						rowData.append (sqlite3_column_double (statement, i));
+						break;
 					case SQLITE_BLOB:
+						break;
 					case SQLITE_NULL:
+						rowData.append (var::null);
+						break;
 					case SQLITE_TEXT:
 					default:
+						rowData.append (sqlite3_column_text (statement, i));
 						break;
 				}
 			}
-		}
 
+			if (rowData != var::null)
+				destination.append (rowData);
+		}
 		if (sqlite3_finalize (statement) != SQLITE_OK)
 		{
-			lastSqlite3Error = _STR(sqlite3_errmsg(db));
+			return (Result::fail ("sqlite3_finalize failed ["+_STR(sqlite3_errmsg(db))));
 		}
 	}
 	else
 	{
-		lastSqlite3Error = _STR(sqlite3_errmsg(db));
+		return (Result::fail ("sqlite3_prepare_v2 failed ["+_STR(sqlite3_errmsg(db))));
+	}
+
+	return (Result::ok());
+}
+
+const Result EnviSqlite3Store::writeRegistration(EnviDataSource *ds)
+{
+	String sql;
+	int64 registrationId;
+
+	sql << "INSERT INTO sources (name, type, instance) VALUES ('"
+		<< ds->getName()
+		<< "','"
+		<< ds->getType()
+		<< "',"
+		<< ds->getInstanceNumber()
+		<< ")";
+
+	const Result res = insert (sql, registrationId);
+
+	if (res.wasOk())
+	{
+		return (Result::ok());
+	}
+    else
+	{
+		return (res);
 	}
 }
 
@@ -218,9 +274,24 @@ const Result EnviSqlite3Store::registerSources()
 	{
 		EnviDataSource *ds = owner.getDataSource(i);
 
+		var data;
+
 		if (ds != nullptr)
 		{
-
+			Result res = fetchArray ("SELECT id FROM sources WHERE name='"+ds->getName()+"' AND type='"+ds->getType()+"' AND instance="+_STR(ds->getInstanceNumber()), data);
+			if (res.wasOk())
+			{
+				if (data == var::null)
+				{
+					// DS not registered yet, do that now
+					return (writeRegistration (ds));
+				}
+				_DBG("\t got data for ds\n"+JSON::toString (data));
+			}
+			else
+			{
+				_WRN("Can't get information for ds ["+res.getErrorMessage()+"]");
+			}
 		}
 	}
 

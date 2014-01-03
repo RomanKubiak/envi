@@ -17,7 +17,7 @@
 
 #define ENVI_DB_SCHEMA "\
 CREATE TABLE IF NOT EXISTS units	(id INTEGER PRIMARY KEY, enumId   INTEGER,  symbol TEXT);\
-CREATE TABLE IF NOT EXISTS sources	(id INTEGER PRIMARY KEY, type TEXT,  name TEXT, instance INTEGER, interval INTEGER);\
+CREATE TABLE IF NOT EXISTS sources	(id INTEGER PRIMARY KEY, type TEXT,  name TEXT, instance INTEGER);\
 CREATE TABLE IF NOT EXISTS data		(id INTEGER PRIMARY KEY, sourceName TEXT, sourceType TEXT, sourceInstance INTEGER , valueName TEXT, valueValue REAL, valueUnit INTEGER, valueError INTEGER, timestamp TIMESTAMP);\
 "
 
@@ -39,8 +39,9 @@ class EnviSqlite3Store : public EnviDataStore
 		const Result transactionExecute(const String &query);
 		const Result transactionCommit();
 		const Result transactionRollback();
-
-		const var fetchArray(const String &sql);
+		const Result writeRegistration(EnviDataSource *ds);
+		const Result insert(const String &sql, int64 &lastInsertId);
+		const Result fetchArray(const String &sql, var &destination);
 
 		JUCE_LEAK_DETECTOR(EnviSqlite3Store);
 
