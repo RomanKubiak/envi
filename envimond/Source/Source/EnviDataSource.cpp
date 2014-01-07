@@ -176,8 +176,6 @@ void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
 	}
 	result[valueIndex].value	= value;
 	result[valueIndex].timestamp	= Time::getCurrentTime();
-
-	_DBG ("EnviDataSource::setValue index ["+_STR(valueIndex)+"] value ["+EnviData::toCSVString(getResult()).trim()+"]");
 }
 
 const int EnviDataSource::addValue(const String &valueName, const EnviData::Unit unit)

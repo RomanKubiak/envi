@@ -81,7 +81,8 @@ namespace Ids
 	DECLARE_ID (stats);
 	DECLARE_ID (dataCacheSize);
 	DECLARE_ID (path);
-	DECLARE_ID (matchRegex);
+	DECLARE_ID (regex);
+	DECLARE_ID (regexMatch);
 	DECLARE_ID (source);
 };
 

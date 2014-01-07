@@ -10,7 +10,7 @@
 
 #include "EnviDSFile.h"
 #include "EnviApplication.h"
-#include <regex>
+#include "Externals/slre/slre.h"
 
 EnviDSFile::EnviDSFile(EnviApplication &owner)
 	: Thread("EnviDSFile"), EnviDataSource(owner, "file")
@@ -32,13 +32,14 @@ const Result EnviDSFile::initialize(const ValueTree _instanceConfig)
 	if (instanceConfig.isValid())
 	{
 		filePath 				= File (instanceConfig.hasProperty (Ids::path)				? File(getProperty(Ids::path).toString()) 			: File::nonexistent);
-		matchRegex				= instanceConfig.hasProperty (Ids::matchRegex) 				? getProperty(Ids::matchRegex).toString() 			: String::empty;
 
 		for (int i=0; i<instanceConfig.getNumChildren(); i++)
 		{
 			ValueTree v = instanceConfig.getChild(i);
 			if (v.hasType (Ids::dataValue))
 			{
+				regexStrings.add (v.hasProperty (Ids::regex)		? v.getProperty(Ids::regex).toString() 	: String::empty);
+				regexMatches.add (v.hasProperty (Ids::regexMatch)	? (int)v.getProperty(Ids::regexMatch) 	: 0);
 				addValue (v.getProperty(Ids::name), EnviData::stringToUnit(v.getProperty(Ids::unit)));
 			}
 		}
@@ -82,30 +83,33 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 {
 	Array <double> results;
 
-	if (matchRegex.isEmpty())
+	for (int i=0; i<regexStrings.size(); i++)
 	{
-		_DSDBG ("EnviDSFile::processExpressions no regex defined");
-		StringArray lines = StringArray::fromLines (stringResult.trim());
-		for (int i=0; i<lines.size(); i++)
+		if (regexStrings[i].isEmpty())
 		{
-			_DSDBG ("\t set result index: "+_STR(i)+" value ["+_STR(lines[i].getDoubleValue())+"]");
-			results.add (lines[i].getDoubleValue());
-			setValue (i, lines[i].getDoubleValue());
+			_DSDBG ("EnviDSFile::processExpressions no regex defined");
+			StringArray lines = StringArray::fromLines (stringResult.trim());
+			for (int i=0; i<lines.size(); i++)
+			{
+				results.add (lines[i].getDoubleValue());
+				setValue (i, lines[i].getDoubleValue());
+			}
 		}
-	}
-	else
-	{
-		std::regex rgx(matchRegex.toStdString());
-		std::smatch match;
-		const std::string textToSearch = stringResult.toStdString();
-		std::regex_search(textToSearch.begin(), textToSearch.end(), match, rgx);
-
-		_DSDBG ("EnviDSFile::processExpressions declared values: ["+_STR(getResult().getNumValues())+"] regex matches: ["+_STR((int)match.size())+"]");
-
-		for (int i=0; i<match.size(); i++)
+		else
 		{
-			results.add (_STR(match[i]).getDoubleValue());
-			setValue (i, _STR(match[i]).getDoubleValue());
+			struct slre_cap caps[regexMatches[i]+1];
+			_DBG("\tmatches: "+_STR(regexMatches[i]+1));
+			if (slre_match(regexStrings[i].toUTF8(), stringResult.toUTF8(), strlen(stringResult.toUTF8()), caps, regexMatches[i]+1) >0 )
+			{
+				for (int j=0; j<regexMatches[i]+1; j++)
+				{
+					_DSDBG("\tlen="+_STR(caps[j].len)+" ["+_STR(caps[j].ptr)+"]");
+				}
+			}
+			else
+			{
+				_DSDBG("slre_match returned nothing");
+			}
 		}
 	}
 

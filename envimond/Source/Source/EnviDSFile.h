@@ -47,7 +47,8 @@ class EnviDSFile : public EnviDataSource, public Thread, public AsyncUpdater
 	private:
 		CriticalSection safeResultLock;
 		EnviData safeResult;
-		String matchRegex;
+		StringArray regexStrings;
+		Array <int> regexMatches;
 		File filePath;
 		String data;
 };
