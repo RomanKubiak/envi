@@ -59,6 +59,8 @@ class EnviDataSource : public ChangeBroadcaster
 		ValueTree getConfig() const;
 		const Result startSource();
 		void stopSource();
+		void setIndex(const int64 sourceIndex);
+		const int64 getIndex() const ;
 		void setDisabled(const bool shouldBeDisabled);
 		bool isDisabled() const;
 		const double evaluateExpression (const double inputData, const String &valueName);

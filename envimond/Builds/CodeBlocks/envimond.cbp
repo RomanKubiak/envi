@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="--log-console --log-level=3" />
 				<Compiler>
 					<Add option="-march=corei7-avx" />
 					<Add option="-std=c++11" />
@@ -660,6 +661,10 @@
 		<Unit filename="../../Source/Externals/lua.hpp" />
 		<Unit filename="../../Source/Externals/luaconf.h" />
 		<Unit filename="../../Source/Externals/lualib.h" />
+		<Unit filename="../../Source/Externals/slre/slre.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Externals/slre/slre.h" />
 		<Unit filename="../../Source/Externals/sqlite3.c">
 			<Option compilerVar="CC" />
 		</Unit>

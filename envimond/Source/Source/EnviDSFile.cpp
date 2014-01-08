@@ -97,13 +97,19 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 		}
 		else
 		{
-			struct slre_cap caps[regexMatches[i]+1];
-			_DBG("\tmatches: "+_STR(regexMatches[i]+1));
-			if (slre_match(regexStrings[i].toUTF8(), stringResult.toUTF8(), strlen(stringResult.toUTF8()), caps, regexMatches[i]+1) >0 )
+			const int regexMatchIndex = regexMatches[i];
+
+			struct slre_cap *caps = (struct slre_cap *)malloc (sizeof (struct slre_cap) * regexMatchIndex + 1);
+
+			if (slre_match(regexStrings[i].toUTF8(), stringResult.toUTF8(), strlen(stringResult.toUTF8()), caps, regexMatchIndex+1) >0 )
 			{
-				for (int j=0; j<regexMatches[i]+1; j++)
+				if (caps[regexMatchIndex].len > 0)
 				{
-					_DSDBG("\tlen="+_STR(caps[j].len)+" ["+_STR(caps[j].ptr)+"]");
+					String result (caps[regexMatches[i]].ptr, caps[regexMatches[i]].len);
+					results.add (result.getDoubleValue());
+					setValue (i, result.getDoubleValue());
+
+					_DSDBG("Match resulted in value ["+result+"]");
 				}
 			}
 			else

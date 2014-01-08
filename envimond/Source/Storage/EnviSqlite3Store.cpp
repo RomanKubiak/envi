@@ -286,6 +286,14 @@ const Result EnviSqlite3Store::registerSources()
 					// DS not registered yet, do that now
 					return (writeRegistration (ds));
 				}
+				else
+				{
+					if (data[0][0] != var::null)
+					{
+						_DBG("\t setting index ["+data[0][0].toString()+"] to ds ["+ds->getName()+"]");
+						ds->setIndex (data[0][0]);
+					}
+				}
 				_DBG("\t got data for ds\n"+JSON::toString (data));
 			}
 			else

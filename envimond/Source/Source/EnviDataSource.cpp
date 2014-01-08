@@ -446,3 +446,13 @@ double EnviDataSource::EnviExpScope::evaluateFunction (const String &functionNam
 	}
 	return (0.0);
 }
+
+void EnviDataSource::setIndex(const int64 sourceIndex)
+{
+	setProperty(Ids::index, sourceIndex);
+}
+
+const int64 EnviDataSource::getIndex() const
+{
+	return (getProperty(Ids::index));
+}
