@@ -266,6 +266,55 @@ const Result EnviSqlite3Store::writeRegistration(EnviDataSource *ds)
 	}
 }
 
+const Result EnviSqlite3Store::registerUnits()
+{
+	_DBG("EnviSqlite3Store::registerUnits");
+	Result transactionResult = transactionBegin ();
+
+	if (transactionResult.wasOk())
+	{
+		Result deleteResult = transactionExecute ("DELETE FROM units");
+		Result insertResult = Result::ok();
+
+		if (deleteResult.wasOk())
+		{
+			String sql;
+			for (int i=0; i<EnviData::Unknown; i++)
+			{
+				sql = 	"INSERT INTO units (enumId, symbol, name) VALUES(";
+				sql << (int)i;
+				sql << ",'";
+				sql << EnviData::unitToSymbol((EnviData::Unit)i);
+				sql << "','";
+				sql << EnviData::unitToName((EnviData::Unit)i);
+				sql << "')";
+
+				insertResult = transactionExecute (sql);
+				 if (!insertResult.wasOk())
+				 {
+				 	break;
+				 }
+			}
+
+			if (insertResult.wasOk())
+			{
+				return (transactionCommit());
+			}
+			else
+			{
+				transactionRollback();
+				return (insertResult);
+			}
+		}
+		else
+		{
+			return (deleteResult);
+		}
+	}
+
+	return (transactionResult);
+}
+
 const Result EnviSqlite3Store::registerSources()
 {
 	_DBG("EnviSqlite3Store::registerSources");

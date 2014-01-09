@@ -134,7 +134,7 @@ const var EnviData::toVAR(const EnviData &enviData)
 		DynamicObject *value = new DynamicObject();
 		value->setProperty ("name", enviData[i].name);
 		value->setProperty ("value", enviData[i].value.toString());
-		value->setProperty ("unit", unitToString(enviData[i].unit));
+		value->setProperty ("unit", enviData[i].unit);
 		value->setProperty ("error", enviData[i].error);
 		value->setProperty ("timestamp", enviData[i].timestamp.toMilliseconds());
 
@@ -160,7 +160,7 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 			<< _STR(enviData.instance)						<< separator
 			<< enviData.type								<< separator
 			<< enviData[i].name 							<< separator
-			<< unitToString(enviData[i].unit) 				<< separator
+			<< enviData[i].unit				 				<< separator
 			<< enviData[i].value.toString() 				<< separator
 			<< _STR(enviData[i].timestamp.toMilliseconds())	<< separator
 			<< _STR(enviData[i].error) 						<< separator
@@ -195,7 +195,49 @@ const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTa
 	return (queries);
 }
 
-const String EnviData::unitToString(const EnviData::Unit unit)
+
+const String EnviData::unitToSymbol(const Unit unit)
+{
+	switch (unit)
+	{
+		case Integer:
+			return ("int");
+		case Float:
+			return ("f");
+		case Text:
+			return ("str");
+		case Percent:
+			return ("%");
+		case Volt:
+			return ("V");
+		case Amp:
+			return ("A");
+		case Celsius:
+			return ("C");
+		case Fahrenheit:
+			return ("F");
+		case Decibel:
+			return ("dB");
+		case Lux:
+			return ("lx");
+		case Hertz:
+			return ("Hz");
+		case Ohm:
+			return ("Ohm");
+		case Farad:
+			return ("Farad");
+		case Watt:
+			return ("Watt");
+		case Pascal:
+			return ("Pascal");
+		case Unknown:
+		default:
+			break;
+	}
+	return ("Unknown");
+}
+
+const String EnviData::unitToName(const Unit unit)
 {
 	switch (unit)
 	{
@@ -206,49 +248,49 @@ const String EnviData::unitToString(const EnviData::Unit unit)
 		case Text:
 			return ("Text");
 		case Percent:
-			return ("%");
+			return ("Percent");
 		case Volt:
-			return ("V");
+			return ("Volt");
 		case Amp:
-			return ("A");
+			return ("Ampere");
 		case Celsius:
 			return ("Celsius");
 		case Fahrenheit:
 			return ("Fahrenheit");
 		case Decibel:
-			return ("dB");
+			return ("Decibel");
 		case Lux:
-			return ("lx");
+			return ("Lux");
 		case Hertz:
-			return ("Hz");
+			return ("Hertz");
 		case Ohm:
 			return ("Ohm");
 		case Farad:
-			return ("F");
+			return ("Farad");
 		case Watt:
-			return ("W");
+			return ("Watt");
 		case Pascal:
 			return ("Pascal");
 		case Unknown:
 		default:
 			break;
 	}
-	return ("U");
+	return ("Unknown");
 }
 
 const EnviData::Unit EnviData::stringToUnit(const String &unit)
 {
-	if (unit == "Integer")
+	if (unit == "Integer" || unit == "int")
 		return (EnviData::Integer);
-	if (unit == "Float")
+	if (unit == "Float" || unit == "f")
 		return (EnviData::Float);
-	if (unit == "Text")
+	if (unit == "Text" || unit == "str")
 		return (EnviData::Text);
 	if (unit == "A" || unit == "Amp")
 		return (EnviData::Amp);
 	if (unit == "V" || unit == "Volt")
 		return (EnviData::Volt);
-	if (unit == "degC" || unit == "Celsius")
+	if (unit == "C" || unit == "Celsius")
 		return (EnviData::Celsius);
 	if (unit == "dB" || unit == "Decibel")
 		return (EnviData::Decibel);

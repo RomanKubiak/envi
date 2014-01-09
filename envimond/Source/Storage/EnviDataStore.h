@@ -25,7 +25,8 @@ class EnviDataStore
         virtual const Result rotate()															= 0;
 		virtual const bool isValid()															= 0;
 		virtual const Result flush()															= 0;
-		virtual const Result registerSources()													{ return Result::ok(); }
+		virtual const Result registerSources()													{ return (Result::ok()); }
+		virtual const Result registerUnits()													{ return (Result::ok()); }
 	protected:
 		EnviApplication &owner;
 };

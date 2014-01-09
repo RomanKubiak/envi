@@ -53,8 +53,17 @@ const bool EnviDB::init()
 		res = enviStore->registerSources();
 		if (res.wasOk())
 		{
-			startThread();
-			return (true);
+			res = enviStore->registerUnits();
+			if (res.wasOk())
+			{
+				startThread();
+				return (true);
+			}
+			else
+			{
+				_ERR("EnviDB::init can't register units ["+res.getErrorMessage()+"]");
+				return (false);
+			}
 		}
 		else
 		{

@@ -74,7 +74,8 @@ class EnviData
 		static const String toCSVString(const EnviData &enviData, const String &separator=";");
 		static const StringArray toSQL(const EnviData &enviData, const String &dataTable="data", const String &unitTable="units");
 		static const var toVAR(const EnviData &enviData);
-		static const String unitToString(const Unit unit);
+		static const String unitToName(const Unit unit);
+		static const String unitToSymbol(const Unit unit);
 		static const Unit stringToUnit(const String &unit);
 
 		String name;
