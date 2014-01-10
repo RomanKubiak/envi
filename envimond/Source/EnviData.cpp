@@ -10,7 +10,7 @@
 
 #include "EnviData.h"
 
-EnviData::EnviData()
+EnviData::EnviData() : sourceId(-1)
 {
 }
 
@@ -18,12 +18,13 @@ EnviData::EnviData(const EnviData &other)
 	:	values(other.values),
 		name(other.name),
 		instance(other.instance),
-		type(other.type)
+		type(other.type),
+		sourceId(other.sourceId)
 {
 }
 
 EnviData::EnviData(const String &firstValueName, const var firstValueValue, const Time firstValueSampleTime)
-	: instance(0)
+	: instance(0), sourceId(-1)
 {
 	if (firstValueName != String::empty)
 	{
@@ -37,7 +38,7 @@ EnviData::EnviData(const String &firstValueName, const var firstValueValue, cons
 }
 
 EnviData::EnviData(const String &firstValueName, const Unit valueUnit)
-	: instance(0)
+	: instance(0), sourceId(-1)
 {
 	if (firstValueName != String::empty)
 	{
@@ -55,6 +56,7 @@ void EnviData::operator= (const EnviData& other) noexcept
 	name 		= other.name;
 	instance 	= other.instance;
 	type		= other.type;
+	sourceId 	= other.sourceId;
 }
 
 bool EnviData::operator== (const EnviData& other) noexcept
@@ -78,7 +80,11 @@ EnviData::Value& EnviData::operator[] (int arrayIndex) const
 
 void EnviData::copyValues(const EnviData &valuesToUpdateFrom)
 {
-	values = valuesToUpdateFrom.values;
+	for (int i=0; i<values.size(); i++)
+	{
+		values[i].value 	= valuesToUpdateFrom[i].value;
+        values[i].timestamp	= valuesToUpdateFrom[i].timestamp;
+	}
 }
 
 const int EnviData::getNumValues() const
@@ -96,14 +102,10 @@ const int EnviData::getSize() const
 	return (sizeof(instance) + sizeof(type)+name.length() + sizeof(Value) * getNumValues());
 }
 
-const EnviData EnviData::fromJSON(const String &jsonString, const String &dsName, const int dsInstance, const String &dsType)
+const EnviData EnviData::fromJSON(const String &jsonString)
 {
 	EnviData enviData;
 	var data				= JSON::parse (jsonString);
-
-	enviData.name 		= dsName;
-	enviData.type		= dsType;
-	enviData.instance	= dsInstance;
 	var values			= data["values"];
 
 	for (int i=0; i<values.size(); i++)
@@ -164,6 +166,9 @@ const String EnviData::toCSVString(const EnviData &enviData, const String &separ
 			<< enviData[i].value.toString() 				<< separator
 			<< _STR(enviData[i].timestamp.toMilliseconds())	<< separator
 			<< _STR(enviData[i].error) 						<< separator
+			<< _STR(enviData.sourceId)						<< separator
+			<< _STR(enviData[i].valueId)					<< separator
+
 			<< "\n";
 	}
 	return (ret);
@@ -178,16 +183,13 @@ const StringArray EnviData::toSQL(const EnviData &enviData, const String &dataTa
 		String sql;
 		sql << "INSERT INTO "
 			<< dataTable
-			<< "(sourceName, sourceType, sourceInstance, valueName, valueValue, timestamp, valueError, valueUnit)"
+			<< "(sourceId, valueId, valueValue, timestamp, valueError)"
 			<< " VALUES ("
-			<< "'" << enviData.name								<< "',"
-			<< "'" << enviData.type								<< "',"
-			<< (int)enviData.instance							<< ","
-			<< "'"	<< enviData[i].name							<< "',"
-			<< "'"	<< (float)enviData[i].value					<< "',"
-			<< "'"	<< enviData[i].timestamp.toMilliseconds()	<< "',"
-			<< (int)enviData[i].error							<< ","
-			<< (int)enviData[i].unit							<< ");";
+			<< enviData.sourceId						<< ","
+			<< enviData[i].valueId						<< ","
+			<< (float)enviData[i].value					<< ","
+			<< enviData[i].timestamp.toMilliseconds()	<< ","
+			<< (int)enviData[i].error					<< ")";
 
 		queries.add (sql);
 	}
@@ -311,4 +313,10 @@ const EnviData::Unit EnviData::stringToUnit(const String &unit)
 	if (unit == "Pa" || unit == "Pascal")
 		return (EnviData::Pascal);
 	return (EnviData::Unknown);
+}
+
+void EnviData::setValueId(const int valueIndex, const int valueId)
+{
+    if (values.size() >= valueIndex)
+		values.getReference(valueIndex).valueId = valueId;
 }

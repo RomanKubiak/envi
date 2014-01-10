@@ -27,6 +27,7 @@ class EnviDataStore
 		virtual const Result flush()															= 0;
 		virtual const Result registerSources()													{ return (Result::ok()); }
 		virtual const Result registerUnits()													{ return (Result::ok()); }
+		virtual const Result registerValues()													{ return (Result::ok()); }
 	protected:
 		EnviApplication &owner;
 };

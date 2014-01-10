@@ -258,6 +258,7 @@ const Result EnviSqlite3Store::writeRegistration(EnviDataSource *ds)
 
 	if (res.wasOk())
 	{
+		ds->setIndex (registrationId);
 		return (Result::ok());
 	}
     else
@@ -315,6 +316,54 @@ const Result EnviSqlite3Store::registerUnits()
 	return (transactionResult);
 }
 
+const Result EnviSqlite3Store::registerValues()
+{
+	_DBG("EnviSqlite3Store::registerValues");
+	Result transactionResult = transactionBegin ();
+
+	if (transactionResult.wasOk())
+	{
+		Result deleteResult = transactionExecute ("DELETE FROM vals");
+		Result insertResult = Result::ok();
+
+		if (deleteResult.wasOk())
+		{
+			for (int i=0; i<owner.getNumDataSources(); i++)
+			{
+				EnviDataSource *ds = owner.getDataSource(i);
+
+				for (int j=0; j<ds->getResultRef().getNumValues(); j++)
+				{
+					String sql;
+					int64 registrationId;
+					sql = 	"INSERT INTO vals (name, unit) VALUES('";
+					sql << ds->getResultRef().values[j].name
+						<< "',"
+						<< ds->getResultRef().values[j].unit
+						<< ")";
+
+					insertResult = insert (sql, registrationId);
+
+					if (insertResult.wasOk())
+					{
+                        ds->getResultRef().setValueId (j, registrationId);
+					}
+					else
+					{
+						return (transactionRollback());
+					}
+				}
+			}
+		}
+		else
+		{
+			return (transactionRollback());
+		}
+	}
+
+	return (transactionCommit());
+}
+
 const Result EnviSqlite3Store::registerSources()
 {
 	_DBG("EnviSqlite3Store::registerSources");
@@ -333,17 +382,22 @@ const Result EnviSqlite3Store::registerSources()
 				if (data == var::null)
 				{
 					// DS not registered yet, do that now
-					return (writeRegistration (ds));
-				}
-				else
-				{
-					if (data[0][0] != var::null)
+					const Result writeResult = writeRegistration (ds);
+					if (!writeResult.wasOk())
 					{
-						_DBG("\t setting index ["+data[0][0].toString()+"] to ds ["+ds->getName()+"]");
-						ds->setIndex (data[0][0]);
+						return (writeResult);
+					}
+					else
+					{
+						continue;
 					}
 				}
-				_DBG("\t got data for ds\n"+JSON::toString (data));
+
+				if (data.isArray() && data[0][0] != var::null)
+				{
+					_DBG("EnviSqlite3Store::registerSources setting index ["+data[0][0].toString()+"] to ds ["+ds->getName()+"]");
+					ds->setIndex (data[0][0]);
+				}
 			}
 			else
 			{

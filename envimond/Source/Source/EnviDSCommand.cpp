@@ -39,7 +39,13 @@ const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 		}
 
 		if (instanceConfig.getNumChildren() > 0)
+		{
+			for (int i=0; i<instanceConfig.getNumChildren(); i++)
+			{
+				addValue (instanceConfig.getChild(i).getProperty(Ids::name), EnviData::stringToUnit(instanceConfig.getChild(i).getProperty(Ids::unit)));
+			}
 			return (setAllExpressions());
+		}
 	}
 
 	return (Result::ok());
@@ -84,6 +90,8 @@ void EnviDSCommand::run()
 			ChildProcess childProc;
 			commandOutput = String::empty;
 
+			_DSDBG("exec ["+command.joinIntoString(",")+"]");
+
 			if (childProc.start(command))
 			{
 				if (childProc.waitForProcessToFinish(getTimeout()))
@@ -112,7 +120,7 @@ void EnviDSCommand::handleAsyncUpdate()
 {
 	{
 		ScopedLock sl(safeResultLock);
-		setResult (safeResult);
+		copyValues (safeResult);
 	}
 
 	_DBG("EnviDSCommand::handleAsyncUpdate");
@@ -131,7 +139,8 @@ void EnviDSCommand::processExpressions()
 
 			if (result != (double)safeResult[i].value)
 			{
-				safeResult[i].value = result;
+				safeResult[i].value 	= result;
+				safeResult[i].timestamp = Time::getCurrentTime();
 			}
 		}
 	}
@@ -145,14 +154,14 @@ void EnviDSCommand::processCommandOutput (const String _commandOutput)
 	{
 		ScopedLock sl(safeResultLock);
 
-		safeResult = EnviData::fromJSON(commandOutput, getName(), getInstanceNumber(), getType());
+		safeResult = EnviData::fromJSON(commandOutput);
 
 		if (safeResult.getNumValues() > 0)
 		{
 			processExpressions();
-		}
 
-		triggerAsyncUpdate();
+			triggerAsyncUpdate();
+		}
 	}
 	else
 	{

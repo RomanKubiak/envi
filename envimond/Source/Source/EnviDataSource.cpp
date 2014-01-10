@@ -109,12 +109,6 @@ const EnviData EnviDataSource::getResult() const
 	return (result);
 }
 
-void EnviDataSource::setResult (const EnviData &_result)
-{
-	ScopedLock sl(dataSourceLock);
-	result = _result;
-}
-
 ValueTree EnviDataSource::getConfig() const
 {
 	ScopedLock sl(dataSourceLock);
@@ -188,7 +182,7 @@ const int EnviDataSource::addValue(const String &valueName, const EnviData::Unit
 void EnviDataSource::copyValues (const EnviData &dataToCopyFrom)
 {
 	ScopedLock sl(dataSourceLock);
-	result = dataToCopyFrom;
+	result.copyValues (dataToCopyFrom);
 }
 
 void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0)
@@ -450,9 +444,19 @@ double EnviDataSource::EnviExpScope::evaluateFunction (const String &functionNam
 void EnviDataSource::setIndex(const int64 sourceIndex)
 {
 	setProperty(Ids::index, sourceIndex);
+	{
+		ScopedLock sl(dataSourceLock);
+		result.sourceId = getIndex();
+	}
 }
 
 const int64 EnviDataSource::getIndex() const
 {
 	return (getProperty(Ids::index));
+}
+
+EnviData &EnviDataSource::getResultRef()
+{
+	ScopedLock sl(dataSourceLock);
+	return (result);
 }

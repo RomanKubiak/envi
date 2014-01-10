@@ -18,7 +18,8 @@
 #define ENVI_DB_SCHEMA "\
 CREATE TABLE IF NOT EXISTS units	(id INTEGER PRIMARY KEY, enumId   INTEGER,  symbol TEXT, name TEXT);\
 CREATE TABLE IF NOT EXISTS sources	(id INTEGER PRIMARY KEY, type TEXT,  name TEXT, instance INTEGER);\
-CREATE TABLE IF NOT EXISTS data		(id INTEGER PRIMARY KEY, sourceName TEXT, sourceType TEXT, sourceInstance INTEGER , valueName TEXT, valueValue REAL, valueUnit INTEGER, valueError INTEGER, timestamp TIMESTAMP);\
+CREATE TABLE IF NOT EXISTS vals		(id INTEGER PRIMARY KEY, name TEXT, unit INTEGER);\
+CREATE TABLE IF NOT EXISTS data		(id INTEGER PRIMARY KEY, sourceId INTEGER , valueId INTEGER, valueValue REAL, valueError INTEGER, timestamp TIMESTAMP);\
 "
 
 class EnviSqlite3Store : public EnviDataStore
@@ -35,6 +36,7 @@ class EnviSqlite3Store : public EnviDataStore
 		const Result flush();
 		const Result registerSources();
 		const Result registerUnits();
+		const Result registerValues();
 		const Result createDatabase();
 		const Result transactionBegin();
 		const Result transactionExecute(const String &query);

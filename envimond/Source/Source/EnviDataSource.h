@@ -55,7 +55,6 @@ class EnviDataSource : public ChangeBroadcaster
 		const String getType() const;
 		const int getTimeout() const;
 		const EnviData getResult() const;
-		void setResult (const EnviData &_result);
 		ValueTree getConfig() const;
 		const Result startSource();
 		void stopSource();
@@ -71,6 +70,7 @@ class EnviDataSource : public ChangeBroadcaster
 		virtual const int getDataCacheSize();
 		virtual const var getSummary();
 		Array <EnviData> getHistory();
+		EnviData &getResultRef();
 
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
