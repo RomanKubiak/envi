@@ -11,6 +11,9 @@
     <Filter Include="envimond\Source\Externals">
       <UniqueIdentifier>{C31649FC-C95B-8743-99D4-9920A938AA04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="envimond\Source\Externals\slre">
+      <UniqueIdentifier>{BFC5AE79-B191-B846-53C1-5D3FA3284E91}</UniqueIdentifier>
+    </Filter>
     <Filter Include="envimond\Source\Externals\LuaBridge">
       <UniqueIdentifier>{A4279036-847D-27E0-4E5F-B0742232F17F}</UniqueIdentifier>
     </Filter>
@@ -118,8 +121,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\EnviData.cpp">
-      <Filter>envimond\Source</Filter>
+    <ClCompile Include="..\..\Source\Externals\slre\slre.c">
+      <Filter>envimond\Source\Externals\slre</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Externals\bit.c">
       <Filter>envimond\Source\Externals</Filter>
@@ -484,6 +487,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_Messaging.cpp">
       <Filter>Juce Modules\juce_events\native</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>Juce Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
@@ -495,8 +501,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\EnviData.h">
-      <Filter>envimond\Source</Filter>
+    <ClInclude Include="..\..\Source\Externals\slre\slre.h">
+      <Filter>envimond\Source\Externals\slre</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h">
       <Filter>envimond\Source\Externals\LuaBridge\detail</Filter>
@@ -1044,11 +1050,20 @@
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
+      <Filter>Juce Library Code</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\Externals\slre\LICENSE">
+      <Filter>envimond\Source\Externals\slre</Filter>
+    </None>
+    <None Include="..\..\Source\Externals\slre\README.md">
+      <Filter>envimond\Source\Externals\slre</Filter>
+    </None>
     <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info">
       <Filter>Juce Modules\juce_core</Filter>
     </None>

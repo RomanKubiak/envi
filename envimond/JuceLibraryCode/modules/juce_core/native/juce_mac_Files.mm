@@ -257,7 +257,7 @@ File File::getSpecialLocation (const SpecialLocationType type)
             return File (resultPath.convertToPrecomposedUnicode());
     }
 
-    return File();
+    return File::nonexistent;
 }
 
 //==============================================================================
@@ -271,7 +271,7 @@ String File::getVersion() const
                     return nsStringToJuce (name);
     }
 
-    return String();
+    return String::empty;
 }
 
 //==============================================================================

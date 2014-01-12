@@ -106,7 +106,6 @@
                 static bool createdOnceAlready = false; \
 \
                 const bool problem = alreadyInside || ((doNotRecreateAfterDeletion) && createdOnceAlready); \
-                jassert (! problem); \
                 if (! problem) \
                 { \
                     createdOnceAlready = true; \

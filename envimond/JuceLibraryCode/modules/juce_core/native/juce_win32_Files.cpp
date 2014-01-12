@@ -93,7 +93,7 @@ namespace WindowsFileHelpers
         if (SHGetSpecialFolderPath (0, path, type, FALSE))
             return File (String (path));
 
-        return File();
+        return File::nonexistent;
     }
 
     File getModuleFileName (HINSTANCE moduleHandle)
@@ -542,7 +542,7 @@ File JUCE_CALLTYPE File::getSpecialLocation (const SpecialLocationType type)
 
         default:
             jassertfalse; // unknown type?
-            return File();
+            return File::nonexistent;
     }
 
     return WindowsFileHelpers::getSpecialFolderPath (csidlType);

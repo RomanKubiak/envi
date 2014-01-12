@@ -46,7 +46,6 @@ class EnviDSFile : public EnviDataSource, public Thread, public AsyncUpdater
 
 	private:
 		CriticalSection safeResultLock;
-		EnviData safeResult;
 		StringArray regexStrings;
 		Array <int> regexMatches;
 		File filePath;

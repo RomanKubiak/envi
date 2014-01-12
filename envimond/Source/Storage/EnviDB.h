@@ -31,7 +31,7 @@ class EnviDB : public Thread
 	private:
 		ScopedPointer <EnviDataStore> enviStore;
 		EnviApplication &owner;
-		OwnedArray <EnviData, CriticalSection> dataQueue;
+		Array <var, CriticalSection> dataQueue;
 };
 
 

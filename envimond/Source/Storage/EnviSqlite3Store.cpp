@@ -50,9 +50,9 @@ const Result EnviSqlite3Store::closeStore()
 	return (Result::ok());
 }
 
-const Result EnviSqlite3Store::storeData(const EnviData &dataToStore)
+const Result EnviSqlite3Store::storeData(const var &dataToStore)
 {
-	sqlQueries.addArray (EnviData::toSQL (dataToStore), 0, -1);
+	sqlQueries.addArray (toSQL (dataToStore), 0, -1);
 
 	if (sqlQueries.size() >= queryCacheSize)
 	{
@@ -258,7 +258,7 @@ const Result EnviSqlite3Store::writeRegistration(EnviDataSource *ds)
 
 	if (res.wasOk())
 	{
-		ds->setIndex (registrationId);
+		ds->setStorageIndex (registrationId);
 		return (Result::ok());
 	}
     else
@@ -280,14 +280,14 @@ const Result EnviSqlite3Store::registerUnits()
 		if (deleteResult.wasOk())
 		{
 			String sql;
-			for (int i=0; i<EnviData::Unknown; i++)
+			for (int i=0; i<Unknown; i++)
 			{
 				sql = 	"INSERT INTO units (enumId, symbol, name) VALUES(";
 				sql << (int)i;
 				sql << ",'";
-				sql << EnviData::unitToSymbol((EnviData::Unit)i);
+				sql << unitToSymbol((Unit)i);
 				sql << "','";
-				sql << EnviData::unitToName((EnviData::Unit)i);
+				sql << unitToName((Unit)i);
 				sql << "')";
 
 				insertResult = transactionExecute (sql);
@@ -332,21 +332,21 @@ const Result EnviSqlite3Store::registerValues()
 			{
 				EnviDataSource *ds = owner.getDataSource(i);
 
-				for (int j=0; j<ds->getResultRef().getNumValues(); j++)
+				for (int j=0; j<ds->getNumValues(); j++)
 				{
 					String sql;
 					int64 registrationId;
 					sql = 	"INSERT INTO vals (name, unit) VALUES('";
-					sql << ds->getResultRef().values[j].name
+					sql << ds->getValueName (j)
 						<< "',"
-						<< ds->getResultRef().values[j].unit
+						<< ds->getValueUnit (j)
 						<< ")";
 
 					insertResult = insert (sql, registrationId);
 
 					if (insertResult.wasOk())
 					{
-                        ds->getResultRef().setValueId (j, registrationId);
+                        ds->setValueStorageId (j, registrationId);
 					}
 					else
 					{
@@ -396,7 +396,7 @@ const Result EnviSqlite3Store::registerSources()
 				if (data.isArray() && data[0][0] != var::null)
 				{
 					_DBG("EnviSqlite3Store::registerSources setting index ["+data[0][0].toString()+"] to ds ["+ds->getName()+"]");
-					ds->setIndex (data[0][0]);
+					ds->setStorageIndex (data[0][0]);
 				}
 			}
 			else

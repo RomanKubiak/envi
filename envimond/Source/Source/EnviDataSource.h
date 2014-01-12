@@ -11,7 +11,7 @@
 #ifndef ENVIDATASOURCE_H_INCLUDED
 #define ENVIDATASOURCE_H_INCLUDED
 
-#include "EnviData.h"
+#include "EnviIncludes.h"
 
 #define SHOULD_WE_EXIT()	if (threadShouldExit()) { _INF(getType()+" ["+getName()+"] thread should exit"); return; }
 
@@ -35,15 +35,10 @@ class EnviDataSource : public ChangeBroadcaster
 		virtual ~EnviDataSource() {}
 		virtual const Result execute() 		= 0;
 		virtual const Result initialize(const ValueTree _instanceConfig);
-
 		void collectFinished(const Result collectStatus);
-		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0);
-		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1);
-		void setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1, const var value2);
 		void setValue (const unsigned int valueIndex, const var value);
 		void setType (const Identifier _type);
-		const int addValue (const String &valueName, const EnviData::Unit unit);
-		void copyValues (const EnviData &dataToCopyFrom);
+		const int addValue (const String &valueName, const Unit unit);
 		const var getProperty (const Identifier &identifier) const;
 		const var getProperty (const Identifier &identifier, const var defaultReturnValue) const;
 		void setProperty (const Identifier identifier, const var &value);
@@ -54,12 +49,11 @@ class EnviDataSource : public ChangeBroadcaster
 		void setName(const String &name);
 		const String getType() const;
 		const int getTimeout() const;
-		const EnviData getResult() const;
 		ValueTree getConfig() const;
 		const Result startSource();
 		void stopSource();
-		void setIndex(const int64 sourceIndex);
-		const int64 getIndex() const ;
+		void setStorageIndex(const int64 sourceIndex);
+		const int64 getStorageIndex() const ;
 		void setDisabled(const bool shouldBeDisabled);
 		bool isDisabled() const;
 		const double evaluateExpression (const double inputData, const String &valueName);
@@ -68,10 +62,13 @@ class EnviDataSource : public ChangeBroadcaster
 		const Result evaluateAllExpressions(Array <double> inputData);
 		const bool hasExpression(const String &valueName);
 		virtual const int getDataCacheSize();
-		virtual const var getSummary();
-		Array <EnviData> getHistory();
-		EnviData &getResultRef();
-
+		const int getNumValues() const;
+		const String getValueName(const int valueIndex) const;
+		const Unit getValueUnit(const int valueIndex) const;
+		void setValueStorageId(const int valueIndex, const int storageId);
+		var getHistory();
+		var &getResultRef();
+		var getResult() const;
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
@@ -79,10 +76,13 @@ class EnviDataSource : public ChangeBroadcaster
 		EnviApplication &owner;
 		CriticalSection dataSourceLock;
 		HashMap <String,Expression> valueExpressions;
-		Array <EnviData> history;
 
 	private:
-		EnviData result;
+		void setValueProperty(const int valueIndex, const Identifier &propertyName, const var &propertyValue);
+		const var getValueProperty(const int valueIndex, const Identifier &propertyName) const;
+		var info;
+		var values;
+		var history;
 		Time startTime, endTime;
 		bool disabled;
 		int instanceNumber;

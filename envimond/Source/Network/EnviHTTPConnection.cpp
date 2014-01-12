@@ -110,12 +110,6 @@ const bool EnviHTTPConnection::sendResponse()
 	for (int i=0; i<owner.getOwner().getNumDataSources(); i++)
 	{
         EnviDataSource *ds = owner.getOwner().getDataSource(i);
-
-        if (ds != nullptr)
-		{
-			_DBG("\t\t adding data source: ["+ds->getName()+"]");
-			ret.append (ds->getSummary());
-		}
 	}
 
 	const String summaryString = JSON::toString (ret);

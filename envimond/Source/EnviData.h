@@ -16,25 +16,6 @@
 class EnviData
 {
 	public:
-		enum Unit
-		{
-			Integer,
-			Text,
-			Float,
-			Percent,
-			Volt,
-			Amp,
-			Celsius,
-			Fahrenheit,
-			Decibel,
-			Lux,
-			Hertz,
-			Ohm,
-			Farad,
-			Watt,
-			Pascal,
-			Unknown
-		};
 
 		struct Value
 		{

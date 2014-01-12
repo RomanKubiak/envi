@@ -48,7 +48,7 @@ const Result EnviDSPCF8591::initialize(const ValueTree _instanceConfig)
 					if (pin >= 0 && pin <= 3)
 					{
 						_DBG("EnviDSPCF8591::initialize using pin: "+_STR(pin));
-						pinMap[pin] 		= addValue (instanceConfig.getChild(i).getProperty(Ids::name).toString(), EnviData::stringToUnit (instanceConfig.getChild(i).getProperty(Ids::unit).toString()));
+						pinMap[pin] 		= addValue (instanceConfig.getChild(i).getProperty(Ids::name).toString(), stringToUnit (instanceConfig.getChild(i).getProperty(Ids::unit).toString()));
 					}
 					else
 					{

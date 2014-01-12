@@ -107,12 +107,12 @@ void EnviDB::run()
 		{
 			for (int i=0; i<dataQueue.size(); i++)
 			{
-				const Result res = enviStore->storeData (*dataQueue[i]);
+				Result res = enviStore->storeData (dataQueue.getReference(i));
 				if (!res.wasOk())
 				{
 					_WRN("EnviDB::run storeData failed ["+res.getErrorMessage()+"]");
 				}
-				dataQueue.remove (i, true);
+				dataQueue.remove (i);
 			}
 		}
 		else
@@ -126,7 +126,7 @@ void EnviDB::writeResult(EnviDataSource *dataSource)
 {
 	{
 		ScopedLock sl(dataQueue.getLock());
-		dataQueue.add (new EnviData(dataSource->getResult()));
+		dataQueue.add (dataSource->getResult());
 	}
 
 	notify();

@@ -51,16 +51,16 @@ const Result EnviDataFileCSV::flush()
 	return (Result::ok());
 }
 
-const Result EnviDataFileCSV::appendData(const EnviData &data)
+const Result EnviDataFileCSV::appendData(const var &data)
 {
-	dataSize += data.getSize();
+	dataSize += data.getArray()->size();
 
 	if (dataSize >= bufferSize)
 	{
 		return (flush());
 	}
 
-	csvData.add (EnviData::toCSVString(data));
+	csvData.add (toCSVString(data));
 	return (Result::ok());
 }
 
@@ -87,7 +87,7 @@ const Result EnviDataFileJSON::flush()
 
 	for (int i=0; i<storedData.size(); i++)
 	{
-		if (!fileToWriteTo.appendText (EnviData::toJSON(storedData[i])))
+		if (!fileToWriteTo.appendText (toJSON(storedData[i])))
 		{
 			storedData.clear();
 			return (Result::fail ("EnviDataFileJSON::flush failed to append data to file: ["+fileToWriteTo.getFullPathName()+"]"));
@@ -98,9 +98,9 @@ const Result EnviDataFileJSON::flush()
 	return (Result::ok());
 }
 
-const Result EnviDataFileJSON::appendData(const EnviData &data)
+const Result EnviDataFileJSON::appendData(const var &data)
 {
-	dataSize += data.getSize();
+	dataSize += data.getArray()->size();
 
 	if (dataSize >= bufferSize)
 	{
@@ -193,7 +193,7 @@ const Result EnviFlatFileStore::closeStore()
 	return (Result::ok());
 }
 
-const Result EnviFlatFileStore::storeData(const EnviData &dataToStore)
+const Result EnviFlatFileStore::storeData(const var &dataToStore)
 {
 	if (isValid())
 	{

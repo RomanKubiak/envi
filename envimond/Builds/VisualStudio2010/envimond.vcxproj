@@ -18,10 +18,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
@@ -125,7 +127,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\EnviData.cpp"/>
+    <ClCompile Include="..\..\Source\Externals\slre\slre.c"/>
     <ClCompile Include="..\..\Source\Externals\bit.c"/>
     <ClCompile Include="..\..\Source\Externals\getopt.c"/>
     <ClCompile Include="..\..\Source\Externals\lua.c"/>
@@ -424,12 +426,13 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_Messaging.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\juce_core.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_data_structures\juce_data_structures.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\EnviData.h"/>
+    <ClInclude Include="..\..\Source\Externals\slre\slre.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\ClassInfo.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\Constructor.h"/>
@@ -612,9 +615,12 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_events\native\juce_win32_HiddenMessageWindow.h"/>
     <ClInclude Include="..\..\..\..\JUCE\modules\juce_events\juce_events.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\Externals\slre\LICENSE"/>
+    <None Include="..\..\Source\Externals\slre\README.md"/>
     <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info"/>
     <None Include="..\..\..\..\JUCE\modules\juce_data_structures\juce_module_info"/>
     <None Include="..\..\..\..\JUCE\modules\juce_events\juce_module_info"/>

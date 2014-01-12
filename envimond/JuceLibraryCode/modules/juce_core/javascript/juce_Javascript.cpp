@@ -298,10 +298,11 @@ struct JavascriptEngine::RootObject   : public DynamicObject
 
                 if (r == returnWasHit)   return r;
                 if (r == breakWasHit)    break;
+                if (r == continueWasHit) continue;
 
                 iterator->perform (s, nullptr);
 
-                if (isDoLoop && r != continueWasHit && ! condition->getResult (s))
+                if (isDoLoop && ! condition->getResult (s))
                     break;
             }
 
@@ -1243,7 +1244,7 @@ struct JavascriptEngine::RootObject   : public DynamicObject
             if (matchIf (TokenTypes::openParen))        return parseSuffixes (matchCloseParen (parseExpression()));
             if (matchIf (TokenTypes::true_))            return parseSuffixes (new LiteralValue (location, (int) 1));
             if (matchIf (TokenTypes::false_))           return parseSuffixes (new LiteralValue (location, (int) 0));
-            if (matchIf (TokenTypes::null_))            return parseSuffixes (new LiteralValue (location, var()));
+            if (matchIf (TokenTypes::null_))            return parseSuffixes (new LiteralValue (location, var::null));
             if (matchIf (TokenTypes::undefined))        return parseSuffixes (new Expression (location));
 
             if (currentType == TokenTypes::literal)

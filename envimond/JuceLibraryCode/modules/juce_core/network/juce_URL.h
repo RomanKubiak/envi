@@ -251,7 +251,7 @@ public:
     InputStream* createInputStream (bool usePostCommand,
                                     OpenStreamProgressCallback* progressCallback = nullptr,
                                     void* progressCallbackContext = nullptr,
-                                    String extraHeaders = String(),
+                                    String extraHeaders = String::empty,
                                     int connectionTimeOutMs = 0,
                                     StringPairArray* responseHeaders = nullptr) const;
 

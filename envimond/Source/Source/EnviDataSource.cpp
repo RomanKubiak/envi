@@ -14,7 +14,8 @@
 
 
 EnviDataSource::EnviDataSource(EnviApplication &_owner, const Identifier &_type)
-	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this)
+	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this),
+		info(new DynamicObject()), values(new DynamicObject())
 {
 	setType (_type);
 
@@ -29,7 +30,6 @@ const Result EnviDataSource::initialize(const ValueTree _instanceConfig)
 	{
 		ScopedLock sl (dataSourceLock);
 		instanceConfig 	= _instanceConfig.createCopy();
-		result.name		= getName();
 	}
 	return (Result::ok());
 }
@@ -71,7 +71,6 @@ void EnviDataSource::setType (const Identifier _type)
 {
 	{
 		ScopedLock sl (dataSourceLock);
-		result.type = _type.toString();
 	}
 
 	setProperty (Ids::type, _type.toString());
@@ -100,13 +99,6 @@ const int EnviDataSource::getDataCacheSize()
 void EnviDataSource::setInstanceNumber(const int instanceNumber)
 {
 	setProperty (Ids::instance, instanceNumber);
-	result.instance = instanceNumber;
-}
-
-const EnviData EnviDataSource::getResult() const
-{
-	ScopedLock sl(dataSourceLock);
-	return (result);
 }
 
 ValueTree EnviDataSource::getConfig() const
@@ -128,112 +120,104 @@ void EnviDataSource::stopSource()
 	endTime = Time::getCurrentTime();
 }
 
-Array <EnviData> EnviDataSource::getHistory()
+void EnviDataSource::setStorageIndex(const int64 sourceIndex)
+{
+	setProperty(Ids::index, sourceIndex);
+	{
+		ScopedLock sl(dataSourceLock);
+	}
+}
+
+const int64 EnviDataSource::getStorageIndex() const
+{
+	return (getProperty(Ids::index));
+}
+
+void EnviDataSource::setValueStorageId(const int valueIndex, const int storageId)
+{
+	setValueProperty (valueIndex, Ids::index, storageId);
+}
+
+const int EnviDataSource::getNumValues() const
+{
+	ScopedLock sl(dataSourceLock);
+	if (values.getArray())
+		return (values.getArray()->size());
+	else 
+		return (-1);
+}
+
+const String EnviDataSource::getValueName(const int valueIndex) const
+{
+	return (getValueProperty(valueIndex, Ids::name));
+}
+
+const Unit EnviDataSource::getValueUnit(const int valueIndex) const
+{
+	return ((Unit)(int)getValueProperty(valueIndex, Ids::unit));
+}
+
+var &EnviDataSource::getResultRef()
+{
+	ScopedLock sl(dataSourceLock);
+	return (values);
+}
+
+var EnviDataSource::getResult() const
+{
+	return (values);
+}
+
+var EnviDataSource::getHistory()
 {
 	ScopedLock sl(dataSourceLock);
 	return (history);
-}
-
-const var EnviDataSource::getSummary()
-{
-	ScopedLock sl(dataSourceLock);
-	var result;
-	for (int i=0; i<history.size(); i++)
-	{
-		result.append (EnviData::toVAR (history[i]));
-	}
-
-	return (result);
 }
 
 void EnviDataSource::collectFinished(const Result collectStatus)
 {
 	ScopedLock sl(dataSourceLock);
 
-	history.insert (0, getResult());
+	history.append (getResult());
 
-	if (history.size() >= getDataCacheSize())
+	if (history.getArray()->size() >= getDataCacheSize())
 	{
-		history.removeLast ();
+		history.getArray()->removeLast ();
 	}
 
 	owner.sourceWrite (this, collectStatus);
 }
 
+void EnviDataSource::setValueProperty(const int valueIndex, const Identifier &propertyName, const var &propertyValue)
+{
+	ScopedLock sl(dataSourceLock);
+	values[valueIndex].getDynamicObject()->setProperty (propertyName, propertyValue);
+}
+
+const var EnviDataSource::getValueProperty(const int valueIndex, const Identifier &propertyName) const
+{
+	ScopedLock sl(dataSourceLock);
+	return (values[valueIndex].getDynamicObject()->getProperty (propertyName));
+}
+
 void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
 {
 	ScopedLock sl(dataSourceLock);
-	if (valueIndex >= result.getNumValues())
+	if (valueIndex >= values.getArray()->size())
 	{
 		_INF("Trying to set a value that's not defined index ["+_STR(valueIndex)+"] value ["+value.toString()+"]");
 		return;
 	}
-	result[valueIndex].value	= value;
-	result[valueIndex].timestamp	= Time::getCurrentTime();
+
+	setValueProperty (valueIndex, Ids::value, value);
+	setValueProperty (valueIndex, Ids::timestamp, Time::getCurrentTime().toMilliseconds());
 }
 
-const int EnviDataSource::addValue(const String &valueName, const EnviData::Unit unit)
+const int EnviDataSource::addValue(const String &valueName, const Unit unit)
 {
 	ScopedLock sl(dataSourceLock);
-	result.addValue (EnviData::Value (valueName, unit));
-	return (result.getNumValues() - 1);
-}
-
-void EnviDataSource::copyValues (const EnviData &dataToCopyFrom)
-{
-	ScopedLock sl(dataSourceLock);
-	result.copyValues (dataToCopyFrom);
-}
-
-void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0)
-{
-	{
-		ScopedLock sl(dataSourceLock);
-
-		result[0].value 	= value0;
-		result[0].timestamp	= Time::getCurrentTime();
-	}
-
-	if (finishCollectNow)
-	{
-		collectFinished (collectStatus);
-	}
-}
-
-void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1)
-{
-	{
-		ScopedLock sl(dataSourceLock);
-
-		result[0].value 	= value0;
-		result[0].timestamp	= Time::getCurrentTime();
-		result[1].value 	= value1;
-		result[1].timestamp	= Time::getCurrentTime();
-	}
-
-	if (finishCollectNow)
-	{
-		collectFinished (collectStatus);
-	}
-}
-
-void EnviDataSource::setValues (const bool finishCollectNow, const Result collectStatus, const var value0, const var value1, const var value2)
-{
-	{
-		ScopedLock sl(dataSourceLock);
-
-		result[0].value 	= value0;
-		result[0].timestamp	= Time::getCurrentTime();
-		result[1].value 	= value1;
-		result[1].timestamp	= Time::getCurrentTime();
-		result[2].value 	= value2;
-		result[2].timestamp	= Time::getCurrentTime();
-	}
-
-	if (finishCollectNow)
-	{
-		collectFinished (collectStatus);
-	}
+	values.append (var (new DynamicObject()));
+	return (values.getArray()->size() - 1);
 }
 
 void EnviDataSource::setDisabled(const bool shouldBeDisabled)
@@ -320,16 +304,16 @@ const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
 {
 	ScopedLock sl(dataSourceLock);
 
-	for (int i=0; i<getResult().getNumValues(); i++)
+	for (int i=0; i<getResult().getArray()->size(); i++)
 	{
-		if (hasExpression(getResult()[i].name))
+		if (hasExpression(getValueProperty(i, Ids::name)))
 		{
 			String error;
-			const double result = valueExpressions[getResult()[i].name].evaluate(enviExpScope.setData(inputData[i]), error);
+			const double result = valueExpressions[getValueProperty(i, Ids::name)].evaluate(enviExpScope.setData(inputData[i]), error);
 
 			if (!error.isEmpty())
 			{
-				return (Result::fail ("Evaluating expressions failed for value name ["+getResult()[i].name+"] reson ["+error+"]"));
+				return (Result::fail ("Evaluating expressions failed for value name ["+getValueProperty(i, Ids::name).toString()+"] reson ["+error+"]"));
 			}
 			else
 			{
@@ -342,7 +326,7 @@ const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
 }
 
 /*
- * Scoped
+ * Scope
  */
 EnviDataSource::EnviExpScope::EnviExpScope(EnviDataSource &_owner): owner(_owner)
 {
@@ -439,24 +423,4 @@ double EnviDataSource::EnviExpScope::evaluateFunction (const String &functionNam
 			return (exp(*parameters));
 	}
 	return (0.0);
-}
-
-void EnviDataSource::setIndex(const int64 sourceIndex)
-{
-	setProperty(Ids::index, sourceIndex);
-	{
-		ScopedLock sl(dataSourceLock);
-		result.sourceId = getIndex();
-	}
-}
-
-const int64 EnviDataSource::getIndex() const
-{
-	return (getProperty(Ids::index));
-}
-
-EnviData &EnviDataSource::getResultRef()
-{
-	ScopedLock sl(dataSourceLock);
-	return (result);
 }

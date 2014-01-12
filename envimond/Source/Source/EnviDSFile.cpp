@@ -40,7 +40,7 @@ const Result EnviDSFile::initialize(const ValueTree _instanceConfig)
 			{
 				regexStrings.add (v.hasProperty (Ids::regex)		? v.getProperty(Ids::regex).toString() 	: String::empty);
 				regexMatches.add (v.hasProperty (Ids::regexMatch)	? (int)v.getProperty(Ids::regexMatch) 	: 0);
-				addValue (v.getProperty(Ids::name), EnviData::stringToUnit(v.getProperty(Ids::unit)));
+				addValue (v.getProperty(Ids::name), stringToUnit(v.getProperty(Ids::unit)));
 			}
 		}
 
@@ -75,7 +75,6 @@ const Result EnviDSFile::execute()
 void EnviDSFile::handleAsyncUpdate()
 {
 	_DSDBG("EnviDSFile::handleAsyncUpdate");
-	_DSDBG("RESULT: "+EnviData::toCSVString(getResult()).trim());
 	collectFinished (Result::ok());
 }
 

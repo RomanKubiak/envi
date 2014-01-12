@@ -5,9 +5,13 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
-      <FILE id="Lma834" name="EnviData.cpp" compile="1" resource="0" file="Source/EnviData.cpp"/>
-      <FILE id="YCOd1D" name="EnviData.h" compile="0" resource="0" file="Source/EnviData.h"/>
       <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
+        <GROUP id="{70125ECB-6CC9-748E-3728-AE8386D7752C}" name="slre">
+          <FILE id="EV40bu" name="LICENSE" compile="0" resource="1" file="Source/Externals/slre/LICENSE"/>
+          <FILE id="l1lwkS" name="README.md" compile="0" resource="1" file="Source/Externals/slre/README.md"/>
+          <FILE id="aBa4s0" name="slre.c" compile="1" resource="0" file="Source/Externals/slre/slre.c"/>
+          <FILE id="pcWSf9" name="slre.h" compile="0" resource="0" file="Source/Externals/slre/slre.h"/>
+        </GROUP>
         <FILE id="mzpyeC" name="bit.c" compile="1" resource="0" file="Source/Externals/bit.c"/>
         <GROUP id="{6D9CF2B8-206A-9A50-9D31-F65EF3AEF4B9}" name="LuaBridge">
           <GROUP id="{D1DC1D46-44D2-D7B2-EA8D-021B21436F0C}" name="detail">

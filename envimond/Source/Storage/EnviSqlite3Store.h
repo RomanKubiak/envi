@@ -30,7 +30,7 @@ class EnviSqlite3Store : public EnviDataStore
 		const Result openStore();
 		const Result createDataFile();
 		const Result closeStore();
-		const Result storeData(const EnviData &dataToStore);
+		const Result storeData(const var &dataToStore);
 		const Result rotate();
 		const bool isValid();
 		const Result flush();

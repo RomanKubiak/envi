@@ -21,7 +21,7 @@ class EnviDataStore
 		virtual ~EnviDataStore() {}
 		virtual const Result openStore()														= 0;
 		virtual const Result closeStore()														= 0;
-        virtual const Result storeData(const EnviData &dataToStore)								= 0;
+        virtual const Result storeData(const var &dataToStore)									= 0;
         virtual const Result rotate()															= 0;
 		virtual const bool isValid()															= 0;
 		virtual const Result flush()															= 0;

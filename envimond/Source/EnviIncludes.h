@@ -44,6 +44,26 @@ enum EnviDataSourceIndex
 	DHT11_DS	= 0x00f0
 };
 
+enum Unit
+{
+	Integer,
+	Text,
+	Float,
+	Percent,
+	Volt,
+	Amp,
+	Celsius,
+	Fahrenheit,
+	Decibel,
+	Lux,
+	Hertz,
+	Ohm,
+	Farad,
+	Watt,
+	Pascal,
+	Unknown
+};
+
 namespace Ids
 {
 	#define DECLARE_ID(name)      const Identifier name (#name)
@@ -84,10 +104,149 @@ namespace Ids
 	DECLARE_ID (regex);
 	DECLARE_ID (regexMatch);
 	DECLARE_ID (source);
+	DECLARE_ID (value);
+	DECLARE_ID (timestamp);
 };
 
 static inline float getRandomFloat (const float limit)
 {
 	return (Random::getSystemRandom().nextFloat() * limit);
+}
+
+static const StringArray toSQL(const var &enviValue)
+{
+	return (StringArray());
+}
+
+static const String toCSVString(const var &enviValue)
+{
+	return (String::empty);
+}
+
+static const String toJSON(const var &enviValue)
+{
+	return (String::empty);
+}
+
+static const var fromJSON(const String &enviValueJSONRepresentation)
+{
+	return (var::null);
+}
+
+static const String unitToSymbol(const Unit unit)
+{
+	switch (unit)
+	{
+		case Integer:
+			return ("int");
+		case Float:
+			return ("f");
+		case Text:
+			return ("str");
+		case Percent:
+			return ("%");
+		case Volt:
+			return ("V");
+		case Amp:
+			return ("A");
+		case Celsius:
+			return ("C");
+		case Fahrenheit:
+			return ("F");
+		case Decibel:
+			return ("dB");
+		case Lux:
+			return ("lx");
+		case Hertz:
+			return ("Hz");
+		case Ohm:
+			return ("Ohm");
+		case Farad:
+			return ("Farad");
+		case Watt:
+			return ("Watt");
+		case Pascal:
+			return ("Pascal");
+		case Unknown:
+		default:
+			break;
+	}
+	return ("Unknown");
+}
+
+static const String unitToName(const Unit unit)
+{
+	switch (unit)
+	{
+		case Integer:
+			return ("Integer");
+		case Float:
+			return ("Float");
+		case Text:
+			return ("Text");
+		case Percent:
+			return ("Percent");
+		case Volt:
+			return ("Volt");
+		case Amp:
+			return ("Ampere");
+		case Celsius:
+			return ("Celsius");
+		case Fahrenheit:
+			return ("Fahrenheit");
+		case Decibel:
+			return ("Decibel");
+		case Lux:
+			return ("Lux");
+		case Hertz:
+			return ("Hertz");
+		case Ohm:
+			return ("Ohm");
+		case Farad:
+			return ("Farad");
+		case Watt:
+			return ("Watt");
+		case Pascal:
+			return ("Pascal");
+		case Unknown:
+		default:
+			break;
+	}
+	return ("Unknown");
+}
+
+static const Unit stringToUnit(const String &unit)
+{
+	if (unit == "Integer" || unit == "int")
+		return (Integer);
+	if (unit == "Float" || unit == "f")
+		return (Float);
+	if (unit == "Text" || unit == "str")
+		return (Text);
+	if (unit == "A" || unit == "Amp")
+		return (Amp);
+	if (unit == "V" || unit == "Volt")
+		return (Volt);
+	if (unit == "C" || unit == "Celsius")
+		return (Celsius);
+	if (unit == "dB" || unit == "Decibel")
+		return (Decibel);
+	if (unit == "lx" || unit == "Lux")
+		return (Lux);
+	if (unit == "Hz" || unit == "Hertz")
+		return (Hertz);
+	if (unit == "Ohm")
+		return (Ohm);
+	if (unit == "F" || unit == "Farad")
+		return (Farad);
+	if (unit == "W" || unit == "Watt")
+		return (Watt);
+	if (unit == "%" || unit == "Percent")
+		return (Percent);
+	if (unit == "Fahrenheit")
+		return (Fahrenheit);
+	if (unit == "Pa" || unit == "Pascal")
+		return (Pascal);
+	return (Unknown);
 }
 #endif  // ENVIINCLUDES_H_INCLUDED

@@ -49,7 +49,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/EnviData_6447626f.o \
+  $(OBJDIR)/slre_95efb89.o \
   $(OBJDIR)/bit_ecebd8a7.o \
   $(OBJDIR)/getopt_1199f4d.o \
   $(OBJDIR)/lua_ed7df0d2.o \
@@ -72,6 +72,7 @@ OBJECTS := \
   $(OBJDIR)/EnviCLI_b2488c5.o \
   $(OBJDIR)/EnviLog_249cfce9.o \
   $(OBJDIR)/Envimond_e1dc027d.o \
+  $(OBJDIR)/BinaryData_ce4232d4.o \
   $(OBJDIR)/juce_core_aff681cc.o \
   $(OBJDIR)/juce_data_structures_bdd6d488.o \
   $(OBJDIR)/juce_events_79b2840.o \
@@ -95,10 +96,10 @@ strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
-$(OBJDIR)/EnviData_6447626f.o: ../../Source/EnviData.cpp
+$(OBJDIR)/slre_95efb89.o: ../../Source/Externals/slre/slre.c
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviData.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+	@echo "Compiling slre.c"
+	@$(CC) $(CFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/bit_ecebd8a7.o: ../../Source/Externals/bit.c
 	-@mkdir -p $(OBJDIR)
@@ -208,6 +209,11 @@ $(OBJDIR)/EnviLog_249cfce9.o: ../../Source/EnviLog.cpp
 $(OBJDIR)/Envimond_e1dc027d.o: ../../Source/Envimond.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling Envimond.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/BinaryData_ce4232d4.o: ../../JuceLibraryCode/BinaryData.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling BinaryData.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/juce_core_aff681cc.o: ../../JuceLibraryCode/modules/juce_core/juce_core.cpp

@@ -144,7 +144,7 @@ void EnviDSLua::collectDone()
 
 void EnviDSLua::addResultValue(const char *valueName, const int unit)
 {
-	addValue (_STR(valueName), (EnviData::Unit)unit);
+	addValue (_STR(valueName), (Unit)unit);
 }
 
 void EnviDSLua::setResultValue(const int index, const double value)
@@ -154,7 +154,7 @@ void EnviDSLua::setResultValue(const int index, const double value)
 
 int EnviDSLua::getNumValues()
 {
-	return (getResult().getNumValues());
+	return (EnviDataSource::getNumValues());
 }
 
 void EnviDSLua::wrap(lua_State *L)

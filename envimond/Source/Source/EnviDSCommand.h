@@ -25,14 +25,12 @@ class EnviDSCommand : public EnviDataSource, public Thread, public AsyncUpdater
 		void run();
 		void handleAsyncUpdate();
 		void processCommandOutput(const String _commandOutput);
-		void processExpressions();
 		JUCE_LEAK_DETECTOR(EnviDSCommand);
 
 	private:
 		StringArray command;
 		String commandOutput;
 		CriticalSection safeResultLock;
-		EnviData safeResult;
 		HashMap<String,Expression> valueExpressions;
 };
 
