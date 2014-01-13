@@ -52,8 +52,8 @@ class EnviDataSource : public ChangeBroadcaster
 		ValueTree getConfig() const;
 		const Result startSource();
 		void stopSource();
-		void setStorageIndex(const int64 sourceIndex);
-		const int64 getStorageIndex() const ;
+		void setSourceStorageId(const int64 sourceStorageId);
+		const int64 getSourceStorageId() const ;
 		void setDisabled(const bool shouldBeDisabled);
 		bool isDisabled() const;
 		const double evaluateExpression (const double inputData, const String &valueName);
@@ -65,7 +65,7 @@ class EnviDataSource : public ChangeBroadcaster
 		const int getNumValues() const;
 		const String getValueName(const int valueIndex) const;
 		const Unit getValueUnit(const int valueIndex) const;
-		void setValueStorageId(const int valueIndex, const int storageId);
+		void setValueStorageId(const int valueIndex, const int64 storageId);
 		var getHistory();
 		var &getResultRef();
 		var getResult() const;

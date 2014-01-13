@@ -38,7 +38,7 @@ const Result EnviDSLua::initialize(const ValueTree _instanceConfig)
 	if (instanceConfig.isValid())
 	{
 		sourceCode = owner.getEnviScriptsDir().getChildFile(instanceConfig.getProperty(Ids::source).toString());
-		_INF("Lua script: ["+sourceCode.getFullPathName()+"]");
+		_DSINF("Lua script: ["+sourceCode.getFullPathName()+"]");
 
 		luaState = lua_open();
 		luaL_openlibs(luaState);
@@ -48,12 +48,23 @@ const Result EnviDSLua::initialize(const ValueTree _instanceConfig)
 
 		if (compileRes.wasOk())
 		{
+			_DSDBG("Script compiled OK");
 			luabridge::LuaRef luaEnviInit(luaState);
 			luaEnviInit = luabridge::getGlobal (luaState, "envi_init");
 
 			try
 			{
 				luaEnviInit();
+
+				if (getNumValues() <= 0)
+				{
+					setDisabled (true);
+					return (Result::fail ("Init function did not register any values, source disabled"));
+				}
+				else
+				{
+					_DSDBG("EnviDSLua::initialize envi_init registered values ["+_STR(getNumValues()));
+				}
 			}
 			catch (luabridge::LuaException const& e)
 			{
@@ -62,6 +73,7 @@ const Result EnviDSLua::initialize(const ValueTree _instanceConfig)
 		}
 		else
 		{
+			_DSWRN ("Failed to compile lua script");
             return (compileRes);
 		}
 	}

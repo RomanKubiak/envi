@@ -121,7 +121,7 @@
         <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2010>
-    <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w -std=c++11">
+    <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w -std=gnu++0x -march=corei7-avx">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"
                        headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"/>

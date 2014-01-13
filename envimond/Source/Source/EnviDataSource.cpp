@@ -14,8 +14,7 @@
 
 
 EnviDataSource::EnviDataSource(EnviApplication &_owner, const Identifier &_type)
-	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this),
-		info(new DynamicObject()), values(new DynamicObject())
+	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this)
 {
 	setType (_type);
 
@@ -120,22 +119,26 @@ void EnviDataSource::stopSource()
 	endTime = Time::getCurrentTime();
 }
 
-void EnviDataSource::setStorageIndex(const int64 sourceIndex)
+void EnviDataSource::setSourceStorageId(const int64 sourceStorageId)
 {
-	setProperty(Ids::index, sourceIndex);
+	setProperty(Ids::index, sourceStorageId);
 	{
 		ScopedLock sl(dataSourceLock);
+		for (int i=0; i<getNumValues(); i++)
+		{
+			setValueProperty (i, Ids::sourceStorageId, sourceStorageId);
+		}
 	}
 }
 
-const int64 EnviDataSource::getStorageIndex() const
+const int64 EnviDataSource::getSourceStorageId() const
 {
-	return (getProperty(Ids::index));
+	return (getProperty(Ids::sourceStorageId));
 }
 
-void EnviDataSource::setValueStorageId(const int valueIndex, const int storageId)
+void EnviDataSource::setValueStorageId(const int valueIndex, const int64 valueStorageId)
 {
-	setValueProperty (valueIndex, Ids::index, storageId);
+	setValueProperty (valueIndex, Ids::valueStorageId, valueStorageId);
 }
 
 const int EnviDataSource::getNumValues() const
@@ -143,7 +146,7 @@ const int EnviDataSource::getNumValues() const
 	ScopedLock sl(dataSourceLock);
 	if (values.getArray())
 		return (values.getArray()->size());
-	else 
+	else
 		return (-1);
 }
 
@@ -216,7 +219,11 @@ void EnviDataSource::setValue (const unsigned int valueIndex, const var value)
 const int EnviDataSource::addValue(const String &valueName, const Unit unit)
 {
 	ScopedLock sl(dataSourceLock);
-	values.append (var (new DynamicObject()));
+	DynamicObject *obj = new DynamicObject();
+	obj->setProperty (Ids::name, valueName);
+	obj->setProperty (Ids::unit, (int)unit);
+
+	values.append (var(obj));
 	return (values.getArray()->size() - 1);
 }
 
@@ -319,6 +326,10 @@ const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
 			{
 				setValue (i, result);
 			}
+		}
+		else
+		{
+			setValue (i, inputData[i]);
 		}
 	}
 

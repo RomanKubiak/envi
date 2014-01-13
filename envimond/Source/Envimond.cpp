@@ -30,7 +30,5 @@ int main (int argc, char* argv[])
 
 	deleteAndZero (enviApplication);
 
-	getchar();
-
 	return (0);
 }

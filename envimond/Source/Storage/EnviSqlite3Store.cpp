@@ -12,7 +12,7 @@
 #include "EnviApplication.h"
 
 EnviSqlite3Store::EnviSqlite3Store(EnviApplication &owner)
-	: EnviDataStore (owner), db(nullptr), queryCacheSize(4),
+	: EnviDataStore (owner), db(nullptr), queryCacheSize(1),
 		queryCount(0), transactionCount(0), transactionTimeAvg(0)
 {
 	if (owner.getCLI().isSet("query-cache"))
@@ -52,6 +52,8 @@ const Result EnviSqlite3Store::closeStore()
 
 const Result EnviSqlite3Store::storeData(const var &dataToStore)
 {
+	_DBG("EnviSqlite3Store::storeData");
+
 	sqlQueries.addArray (toSQL (dataToStore), 0, -1);
 
 	if (sqlQueries.size() >= queryCacheSize)
@@ -64,6 +66,8 @@ const Result EnviSqlite3Store::storeData(const var &dataToStore)
 
 const Result EnviSqlite3Store::flush()
 {
+	_DBG("EnviSqlite3Store::flush");
+
 	Result res = transactionBegin();
 
 	if (res.wasOk())
@@ -258,7 +262,7 @@ const Result EnviSqlite3Store::writeRegistration(EnviDataSource *ds)
 
 	if (res.wasOk())
 	{
-		ds->setStorageIndex (registrationId);
+		ds->setSourceStorageId (registrationId);
 		return (Result::ok());
 	}
     else
@@ -395,8 +399,7 @@ const Result EnviSqlite3Store::registerSources()
 
 				if (data.isArray() && data[0][0] != var::null)
 				{
-					_DBG("EnviSqlite3Store::registerSources setting index ["+data[0][0].toString()+"] to ds ["+ds->getName()+"]");
-					ds->setStorageIndex (data[0][0]);
+					ds->setSourceStorageId (data[0][0]);
 				}
 			}
 			else
@@ -407,4 +410,27 @@ const Result EnviSqlite3Store::registerSources()
 	}
 
 	return (Result::ok());
+}
+
+const StringArray EnviSqlite3Store::toSQL(const var &enviValue)
+{
+	StringArray result;
+
+	if (enviValue.getArray() == nullptr)
+		return (result);
+
+	for (int i=0; i<enviValue.getArray()->size(); i++)
+	{
+        var &v = enviValue.getArray()->getReference (i);
+
+        String sql = "INSERT INTO data (sourceId, valueId, value, error, timestamp) VALUES (";
+        sql << (int64)v.getProperty(Ids::sourceStorageId, var::null) 	<< ","
+			<< (int64)v.getProperty(Ids::valueStorageId, var::null) 	<< ","
+			<< (double)v.getProperty(Ids::value, var::null) 			<< ","
+			<< (int)v.getProperty(Ids::error, var::null) 				<< ","
+			<< (int64)v.getProperty(Ids::timestamp, var::null)			<< ")";
+
+        result.add (sql);
+	}
+	return (result);
 }

@@ -42,8 +42,12 @@ const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 		{
 			for (int i=0; i<instanceConfig.getNumChildren(); i++)
 			{
-				addValue (instanceConfig.getChild(i).getProperty(Ids::name), stringToUnit(instanceConfig.getChild(i).getProperty(Ids::unit)));
+				if (instanceConfig.getChild(i).hasType(Ids::dataValue))
+					addValue (instanceConfig.getChild(i).getProperty(Ids::name), stringToUnit(instanceConfig.getChild(i).getProperty(Ids::unit)));
 			}
+
+			_DSDBG("EnviDSCommand::initialize values ["+_STR(getNumValues())+"]");
+
 			return (setAllExpressions());
 		}
 	}
@@ -127,6 +131,23 @@ void EnviDSCommand::processCommandOutput (const String _commandOutput)
 
 	if (!commandOutput.isEmpty())
 	{
+		StringArray lines = StringArray::fromLines (commandOutput);
+		Array <double> results;
+
+		for (int i=0; i<lines.size(); i++)
+		{
+			results.add (lines[i].getDoubleValue());
+		}
+		Result res = evaluateAllExpressions (results);
+
+		if (res.wasOk())
+		{
+			triggerAsyncUpdate();
+		}
+		else
+		{
+			_DSWRN(res.getErrorMessage());
+		}
 	}
 	else
 	{

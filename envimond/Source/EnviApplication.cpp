@@ -174,7 +174,11 @@ EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstan
 			ScopedLock sl(dataSources.getLock());
 			dataSources.add (ds);
 
-			ds->initialize (dataSourceInstance);
+			Result res = ds->initialize (dataSourceInstance);
+			if (!res.wasOk())
+			{
+				_WRN("Data source type ["+type+"] name ["+ds->getName()+"] failed to initialize ["+res.getErrorMessage()+"]");
+			}
 			ds->setInstanceNumber (getNumInstances(type));
 
 			startTimer (ENVI_TIMER_OFFSET + dataSources.indexOf(ds), ds->getInterval());

@@ -98,6 +98,8 @@ namespace Ids
 	DECLARE_ID (pin);
 	DECLARE_ID (unit);
 	DECLARE_ID (deviceId);
+	DECLARE_ID (sourceStorageId);
+	DECLARE_ID (valueStorageId);
 	DECLARE_ID (stats);
 	DECLARE_ID (dataCacheSize);
 	DECLARE_ID (path);
@@ -106,16 +108,12 @@ namespace Ids
 	DECLARE_ID (source);
 	DECLARE_ID (value);
 	DECLARE_ID (timestamp);
+	DECLARE_ID (error);
 };
 
 static inline float getRandomFloat (const float limit)
 {
 	return (Random::getSystemRandom().nextFloat() * limit);
-}
-
-static const StringArray toSQL(const var &enviValue)
-{
-	return (StringArray());
 }
 
 static const String toCSVString(const var &enviValue)
