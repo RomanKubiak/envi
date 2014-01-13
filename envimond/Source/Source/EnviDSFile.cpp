@@ -44,6 +44,8 @@ const Result EnviDSFile::initialize(const ValueTree _instanceConfig)
 			}
 		}
 
+		_DSDBG("EnviDSFile::initialize values ["+_STR(getNumValues())+"]");
+
 		if (instanceConfig.getNumChildren() > 0)
 			return (setAllExpressions());
 	}
@@ -81,18 +83,15 @@ void EnviDSFile::handleAsyncUpdate()
 const Result EnviDSFile::processExpressions(const String &stringResult)
 {
 	Array <double> results;
+	StringArray lines = StringArray::fromLines (stringResult.trim());
 
 	for (int i=0; i<regexStrings.size(); i++)
 	{
 		if (regexStrings[i].isEmpty())
 		{
 			_DSDBG ("EnviDSFile::processExpressions no regex defined");
-			StringArray lines = StringArray::fromLines (stringResult.trim());
-			for (int i=0; i<lines.size(); i++)
-			{
-				results.add (lines[i].getDoubleValue());
-				setValue (i, lines[i].getDoubleValue());
-			}
+			results.add (lines[i].getDoubleValue());
+			setValue (i, lines[i].getDoubleValue());
 		}
 		else
 		{
