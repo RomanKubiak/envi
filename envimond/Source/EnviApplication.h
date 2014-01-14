@@ -15,6 +15,7 @@
 #include "EnviDataSource.h"
 #include "EnviDB.h"
 #include "EnviHTTP.h"
+#include "EnviLiveIPC.h"
 
 #ifdef JUCE_LINUX
 #include "EnviWiringPi.h"
@@ -56,6 +57,7 @@ class EnviApplication : public MultiTimer
 		ScopedPointer <EnviCLI> enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
+		ScopedPointer <EnviLiveIPC> enviLiveIPC;
 		StringArray disabledSources;
 		File dataSourcesDir;
 		bool valid;

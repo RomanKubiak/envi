@@ -116,21 +116,6 @@ static inline float getRandomFloat (const float limit)
 	return (Random::getSystemRandom().nextFloat() * limit);
 }
 
-static const String toCSVString(const var &enviValue)
-{
-	return (String::empty);
-}
-
-static const String toJSON(const var &enviValue)
-{
-	return (String::empty);
-}
-
-static const var fromJSON(const String &enviValueJSONRepresentation)
-{
-	return (var::null);
-}
-
 static const String unitToSymbol(const Unit unit)
 {
 	switch (unit)

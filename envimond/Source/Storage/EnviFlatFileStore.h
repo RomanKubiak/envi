@@ -80,6 +80,7 @@ class EnviFlatFileStore : public EnviDataStore
 		const String getExtension();
 		static const FileType getFileType(const String &extensionToCheck);
 		const Result flush();
+		static const String toCSVString(const var &enviValue);
 		JUCE_LEAK_DETECTOR(EnviFlatFileStore);
 
 	private:

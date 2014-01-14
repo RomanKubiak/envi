@@ -622,6 +622,8 @@
 		<Unit filename="../../Source/EnviCLI.cpp" />
 		<Unit filename="../../Source/EnviCLI.h" />
 		<Unit filename="../../Source/EnviIncludes.h" />
+		<Unit filename="../../Source/EnviLiveIPC.cpp" />
+		<Unit filename="../../Source/EnviLiveIPC.h" />
 		<Unit filename="../../Source/EnviLog.cpp" />
 		<Unit filename="../../Source/EnviLog.h" />
 		<Unit filename="../../Source/Envimond.cpp" />

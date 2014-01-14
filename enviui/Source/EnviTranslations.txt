@@ -1,0 +1,4 @@
+﻿language: Polish
+countries: pl
+"Connecting"	= "Łączenie"
+"Error" 	= "Błąd"

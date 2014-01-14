@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="blwUvL" name="enviui" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.enviui" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0">
+  <MAINGROUP id="qIhr5h" name="enviui">
+    <GROUP id="{DBE51B61-72F7-C8EA-927E-8E05AA829D81}" name="Source">
+      <GROUP id="{5ADA96EA-0912-D9E4-6CD1-CB4EA221B506}" name="Fonts">
+        <FILE id="iPuXrm" name="DejaVuSans.ttf" compile="0" resource="1" file="Source/Fonts/DejaVuSans.ttf"/>
+        <FILE id="RdGfV0" name="DejaVuSansCondensed.ttf" compile="0" resource="1"
+              file="Source/Fonts/DejaVuSansCondensed.ttf"/>
+        <FILE id="ZphXpm" name="DejaVuSansMono.ttf" compile="0" resource="1"
+              file="Source/Fonts/DejaVuSansMono.ttf"/>
+      </GROUP>
+      <FILE id="maiqD5" name="EnviTranslations.txt" compile="0" resource="1"
+            file="Source/EnviTranslations.txt"/>
+      <FILE id="c0Qdr1" name="EnviUIStatus.cpp" compile="1" resource="0"
+            file="Source/EnviUIStatus.cpp"/>
+      <FILE id="CiQREt" name="EnviUIStatus.h" compile="0" resource="0" file="Source/EnviUIStatus.h"/>
+      <FILE id="bGngyn" name="EnviTabSummary.cpp" compile="1" resource="0"
+            file="Source/EnviTabSummary.cpp"/>
+      <FILE id="Bv9kjH" name="EnviTabSummary.h" compile="0" resource="0"
+            file="Source/EnviTabSummary.h"/>
+      <FILE id="VYTi7n" name="EnviUIIncludes.h" compile="0" resource="0"
+            file="Source/EnviUIIncludes.h"/>
+      <FILE id="rlUf7U" name="EnviIPCClient.cpp" compile="1" resource="0"
+            file="Source/EnviIPCClient.cpp"/>
+      <FILE id="JR9ojX" name="EnviIPCClient.h" compile="0" resource="0" file="Source/EnviIPCClient.h"/>
+      <FILE id="uq1nvG" name="EnviUIMain.cpp" compile="1" resource="0" file="Source/EnviUIMain.cpp"/>
+      <FILE id="USt0NQ" name="EnviUIMain.h" compile="0" resource="0" file="Source/EnviUIMain.h"/>
+      <FILE id="i05YYU" name="EnviUIApplication.cpp" compile="1" resource="0"
+            file="Source/EnviUIApplication.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2010 targetFolder="Builds/VisualStudio2010">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="1" optimisation="1" targetName="enviui"/>
+        <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
+                       isDebug="0" optimisation="2" targetName="enviui"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2010>
+    <CODEBLOCKS targetFolder="Builds/CodeBlocks" extraCompilerFlags="-w -std=gnu++0x -march=corei7-avx">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="enviui"
+                       headerPath="../../Source&#10;"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="enviui"
+                       headerPath="../../Source&#10;"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
