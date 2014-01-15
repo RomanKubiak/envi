@@ -187,6 +187,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviUIMainWindow.cpp">
+      <Filter>enviui\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviUIStatus.cpp">
       <Filter>enviui\Source</Filter>
     </ClCompile>
@@ -1014,6 +1017,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviUIMainWindow.h">
+      <Filter>enviui\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EnviUIStatus.h">
       <Filter>enviui\Source</Filter>
     </ClInclude>

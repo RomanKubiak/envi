@@ -15,34 +15,42 @@
 class EnviUIMain;
 class EnviIPCClient;
 
-class EnviIPCConnectionChecker : public Thread
+class EnviIPCRequestJob : public ThreadPoolJob, public AsyncUpdater
 {
 	public:
-		EnviIPCConnectionChecker(EnviIPCClient &_owner);
-		~EnviIPCConnectionChecker();
-		void run();
+		EnviIPCRequestJob(URL requestURL, const var &_requestData, EnviIPCallback *_requestCallback);
+		~EnviIPCRequestJob();
+		static bool progressCallback(void *context, int bytesSent, int totalBytes);
+		ThreadPoolJob::JobStatus runJob();
+		void handleAsyncUpdate();
 
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnviIPCConnectionChecker)
+		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnviIPCRequestJob)
 
 	private:
-		EnviIPCClient &owner;
+		CriticalSection jobLock;
+		StringPairArray responseHeaders;
+		InputStream *webInputStream;
+		URL requestURL;
+		var requestData;
+		var responseData;
+		EnviIPCallback *requestCallback;
 };
 
-class EnviIPCClient : public InterprocessConnection, public AsyncUpdater
+class EnviIPCClient : public AsyncUpdater
 {
 	public:
 		EnviIPCClient(EnviUIMain &_owner);
 		~EnviIPCClient();
-		void connectionMade();
-		void connectionLost();
-		void messageReceived (const MemoryBlock& message);
+		void run();
 		void handleAsyncUpdate();
+		void request (const var requestData, EnviIPCallback *requestCallback = nullptr);
 
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnviIPCClient)
 
 	private:
-		ScopedPointer <EnviIPCConnectionChecker> enviIPCConnectionChecker;
+		ThreadPool requestPool;
 		EnviUIMain &owner;
+		URL requestURL;
 };
 
 #endif  // ENVIIPCCLIENT_H_INCLUDED

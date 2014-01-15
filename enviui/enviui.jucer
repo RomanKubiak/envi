@@ -5,6 +5,10 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="qIhr5h" name="enviui">
     <GROUP id="{DBE51B61-72F7-C8EA-927E-8E05AA829D81}" name="Source">
+      <FILE id="t0RyPd" name="EnviUIMainWindow.h" compile="0" resource="0"
+            file="Source/EnviUIMainWindow.h"/>
+      <FILE id="zHnd8z" name="EnviUIMainWindow.cpp" compile="1" resource="0"
+            file="Source/EnviUIMainWindow.cpp"/>
       <GROUP id="{5ADA96EA-0912-D9E4-6CD1-CB4EA221B506}" name="Fonts">
         <FILE id="iPuXrm" name="DejaVuSans.ttf" compile="0" resource="1" file="Source/Fonts/DejaVuSans.ttf"/>
         <FILE id="RdGfV0" name="DejaVuSansCondensed.ttf" compile="0" resource="1"

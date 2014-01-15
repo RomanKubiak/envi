@@ -26,6 +26,7 @@ class EnviUIMain   : public Component
 		~EnviUIMain();
 		void paint (Graphics&);
 		void resized();
+		void moved();
 		const UIStatus getStatus() const;
 		void setStatus(const UIStatus newStatus);
 

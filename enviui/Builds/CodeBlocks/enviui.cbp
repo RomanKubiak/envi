@@ -91,6 +91,11 @@
       <Add library="kernel32"/>
       <Add library="comctl32"/>
     </Linker>
+    <Unit filename="../../Source/EnviUIMainWindow.h">
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../Source/EnviUIMainWindow.cpp"/>
     <Unit filename="../../Source/Fonts/DejaVuSans.ttf">
       <Option compile="0"/>
       <Option link="0"/>

@@ -125,6 +125,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviUIMainWindow.cpp"/>
     <ClCompile Include="..\..\Source\EnviUIStatus.cpp"/>
     <ClCompile Include="..\..\Source\EnviTabSummary.cpp"/>
     <ClCompile Include="..\..\Source\EnviIPCClient.cpp"/>
@@ -882,6 +883,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_gui_basics\juce_gui_basics.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviUIMainWindow.h"/>
     <ClInclude Include="..\..\Source\EnviUIStatus.h"/>
     <ClInclude Include="..\..\Source\EnviTabSummary.h"/>
     <ClInclude Include="..\..\Source\EnviUIIncludes.h"/>

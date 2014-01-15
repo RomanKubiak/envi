@@ -19,7 +19,7 @@ namespace BinaryData
     const int            DejaVuSansMono_ttfSize = 335068;
 
     extern const char*   EnviTranslations_txt;
-    const int            EnviTranslations_txtSize = 86;
+    const int            EnviTranslations_txtSize = 83;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

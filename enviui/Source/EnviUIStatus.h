@@ -36,7 +36,9 @@ class EnviUIMain;
                                                                     //[/Comments]
 */
 class EnviUIStatus  : public Component,
-                      public Timer
+                      public Timer,
+                      public EnviIPCallback,
+                      public ButtonListener
 {
 public:
     //==============================================================================
@@ -46,10 +48,14 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     void timerCallback();
+    void requestSuccess (const var responseData, const var requestData, StringPairArray responseHeaders);
+    void requestFailed (const var responseData, const var requestData, StringPairArray responseHeaders);
+    void sendRequest();
     //[/UserMethods]
 
     void paint (Graphics& g);
     void resized();
+    void buttonClicked (Button* buttonThatWasClicked);
 
 
 
@@ -58,10 +64,13 @@ private:
     EnviUIMain &owner;
     String message;
     double progNum;
+    bool requestSent;
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<ProgressBar> prog;
+    ScopedPointer<TextButton> cancelBtn;
+    ScopedPointer<Label> messageLbl;
 
 
     //==============================================================================

@@ -3,7 +3,6 @@
 
 Typeface::Ptr EnviUILookAndFeel::getTypefaceForFont (const Font &font)
 {
-	_DBG("EnviUILookAndFeel::getTypefaceForFont");
 	return (Typeface::createSystemTypefaceFor (BinaryData::DejaVuSans_ttf, BinaryData::DejaVuSans_ttfSize));
 }
 
@@ -30,6 +29,7 @@ EnviUIMain::EnviUIMain() : uiStatus(UIConnecting)
 
 EnviUIMain::~EnviUIMain()
 {
+	Logger::setCurrentLogger (nullptr);
 	LookAndFeel::setDefaultLookAndFeel (nullptr);
 	deleteAndZero (enviUILookAndFeel);
 }
@@ -43,6 +43,10 @@ void EnviUIMain::resized()
 {
 	enviUIStatus->setBounds (0,0,getWidth(),getHeight());
 	enviTabs->setBounds (0,0,getWidth(),getHeight());
+}
+
+void EnviUIMain::moved()
+{
 }
 
 const EnviUIMain::UIStatus EnviUIMain::getStatus() const
