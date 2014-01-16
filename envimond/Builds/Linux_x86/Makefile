@@ -49,7 +49,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/EnviLiveIPC_11dc0f35.o \
+  $(OBJDIR)/EnviIPCServer_944afaa4.o \
   $(OBJDIR)/slre_95efb89.o \
   $(OBJDIR)/bit_ecebd8a7.o \
   $(OBJDIR)/getopt_1199f4d.o \
@@ -97,9 +97,9 @@ strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
-$(OBJDIR)/EnviLiveIPC_11dc0f35.o: ../../Source/EnviLiveIPC.cpp
+$(OBJDIR)/EnviIPCServer_944afaa4.o: ../../Source/EnviIPCServer.cpp
 	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviLiveIPC.cpp"
+	@echo "Compiling EnviIPCServer.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/slre_95efb89.o: ../../Source/Externals/slre/slre.c

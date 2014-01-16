@@ -5,8 +5,9 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
-      <FILE id="zwokCX" name="EnviLiveIPC.cpp" compile="1" resource="0" file="Source/EnviLiveIPC.cpp"/>
-      <FILE id="fHLXKN" name="EnviLiveIPC.h" compile="0" resource="0" file="Source/EnviLiveIPC.h"/>
+      <FILE id="dhou2N" name="EnviIPCServer.cpp" compile="1" resource="0"
+            file="Source/EnviIPCServer.cpp"/>
+      <FILE id="fuARuO" name="EnviIPCServer.h" compile="0" resource="0" file="Source/EnviIPCServer.h"/>
       <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
         <GROUP id="{70125ECB-6CC9-748E-3728-AE8386D7752C}" name="slre">
           <FILE id="EV40bu" name="LICENSE" compile="0" resource="1" file="Source/Externals/slre/LICENSE"/>

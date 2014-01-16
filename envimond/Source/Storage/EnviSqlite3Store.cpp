@@ -52,8 +52,6 @@ const Result EnviSqlite3Store::closeStore()
 
 const Result EnviSqlite3Store::storeData(const var &dataToStore)
 {
-	_DBG("EnviSqlite3Store::storeData");
-
 	sqlQueries.addArray (toSQL (dataToStore), 0, -1);
 
 	if (sqlQueries.size() >= queryCacheSize)
@@ -66,8 +64,6 @@ const Result EnviSqlite3Store::storeData(const var &dataToStore)
 
 const Result EnviSqlite3Store::flush()
 {
-	_DBG("EnviSqlite3Store::flush");
-
 	Result res = transactionBegin();
 
 	if (res.wasOk())
@@ -273,7 +269,6 @@ const Result EnviSqlite3Store::writeRegistration(EnviDataSource *ds)
 
 const Result EnviSqlite3Store::registerUnits()
 {
-	_DBG("EnviSqlite3Store::registerUnits");
 	Result transactionResult = transactionBegin ();
 
 	if (transactionResult.wasOk())
@@ -322,7 +317,6 @@ const Result EnviSqlite3Store::registerUnits()
 
 const Result EnviSqlite3Store::registerValues()
 {
-	_DBG("EnviSqlite3Store::registerValues");
 	Result transactionResult = transactionBegin ();
 
 	if (transactionResult.wasOk())
@@ -370,8 +364,6 @@ const Result EnviSqlite3Store::registerValues()
 
 const Result EnviSqlite3Store::registerSources()
 {
-	_DBG("EnviSqlite3Store::registerSources");
-
 	for (int i=0; i<owner.getNumDataSources(); i++)
 	{
 		EnviDataSource *ds = owner.getDataSource(i);

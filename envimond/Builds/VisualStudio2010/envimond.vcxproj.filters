@@ -121,7 +121,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\EnviLiveIPC.cpp">
+    <ClCompile Include="..\..\Source\EnviIPCServer.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Externals\slre\slre.c">
@@ -504,7 +504,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\EnviLiveIPC.h">
+    <ClInclude Include="..\..\Source\EnviIPCServer.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Externals\slre\slre.h">

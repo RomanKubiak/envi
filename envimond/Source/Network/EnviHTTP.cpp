@@ -12,13 +12,13 @@
 #include "EnviHTTPConnection.h"
 #include "EnviApplication.h"
 
-EnviHTTP::EnviHTTP(EnviApplication &_owner) : owner(_owner), Thread("EnviHTTP")
+EnviHTTP::EnviHTTP(EnviHTTPProvider *_provider, const int listenPort) : provider(_provider), Thread("EnviHTTP")
 {
 	serverSocket = new StreamingSocket();
 
 	if (serverSocket != nullptr)
 	{
-		if (!serverSocket->createListener((bool)owner.getCLI().isSet("listen-port") ? owner.getCLI().getParameter("listen-port").getIntValue() : 9999))
+		if (!serverSocket->createListener(listenPort))
 		{
 			_ERR("Can't listen on specified TCP port: "+_STR(serverSocket->getPort()));
 		}
@@ -42,9 +42,9 @@ EnviHTTP::~EnviHTTP()
 	}
 }
 
-EnviApplication &EnviHTTP::getOwner()
+EnviHTTPProvider *EnviHTTP::getProvider()
 {
-	return (owner);
+	return (provider);
 }
 
 void EnviHTTP::run()

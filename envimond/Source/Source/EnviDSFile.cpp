@@ -44,8 +44,6 @@ const Result EnviDSFile::initialize(const ValueTree _instanceConfig)
 			}
 		}
 
-		_DSDBG("EnviDSFile::initialize values ["+_STR(getNumValues())+"]");
-
 		if (instanceConfig.getNumChildren() > 0)
 			return (setAllExpressions());
 	}
@@ -76,7 +74,6 @@ const Result EnviDSFile::execute()
 
 void EnviDSFile::handleAsyncUpdate()
 {
-	_DSDBG("EnviDSFile::handleAsyncUpdate");
 	collectFinished (Result::ok());
 }
 
@@ -89,7 +86,6 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 	{
 		if (regexStrings[i].isEmpty())
 		{
-			_DSDBG ("EnviDSFile::processExpressions no regex defined");
 			results.add (lines[i].getDoubleValue());
 			setValue (i, lines[i].getDoubleValue());
 		}
@@ -106,14 +102,9 @@ const Result EnviDSFile::processExpressions(const String &stringResult)
 					String result (caps[regexMatches[i]].ptr, caps[regexMatches[i]].len);
 					results.add (result.getDoubleValue());
 					setValue (i, result.getDoubleValue());
-
-					_DSDBG("Match resulted in value ["+result+"]");
 				}
 			}
-			else
-			{
-				_DSDBG("slre_match returned nothing");
-			}
+
 		}
 	}
 
@@ -127,8 +118,6 @@ void EnviDSFile::run()
 		do
 		{
 			SHOULD_WE_EXIT();
-
-			_DSDBG("EnviDSFile::run try to read: ["+filePath.getFullPathName()+"]");
 
 			ScopedPointer <FileReader> fileReader(new FileReader(*this, filePath));
 
@@ -181,7 +170,6 @@ void EnviDSFile::FileReader::run()
 {
 	if (fileToRead.existsAsFile())
 	{
-		_DBG("EnviDSFile::FileReader::run reading: ["+fileToRead.getFullPathName()+"]");
 		readData = fileToRead.loadFileAsString();
 	}
 	else

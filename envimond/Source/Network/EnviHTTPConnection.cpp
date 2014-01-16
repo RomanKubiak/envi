@@ -44,16 +44,22 @@ void EnviHTTPConnection::run()
 			/* normal */
 			if (getRequestHeaders())
 			{
-				sendResponse();
+				return;
+			}
+			else
+			{
+				_WRN("\tgetRequestHeaders failed");
 			}
 		}
 		else if (ret == 0)
 		{
 			/* timeout */
+			_WRN("\ttimeout");
 		}
 		else if (ret == -1)
 		{
 			/* error */
+			_WRN("\terror");
 		}
 
 		_DBG("EnviHTTPConnection finished");
@@ -68,6 +74,8 @@ int EnviHTTPConnection::writeStringToSocket(StreamingSocket *socket, const Strin
 
 const bool EnviHTTPConnection::getRequestHeaders()
 {
+	_DBG("EnviHTTPConnection::getRequestHeaders");
+
 	MemoryBlock readBuffer(8192, true);
 	if (socket->read (readBuffer.getData(), 8192, false))
 	{
@@ -79,12 +87,24 @@ const bool EnviHTTPConnection::getRequestHeaders()
 			if (request.startsWith("GET"))
 			{
 				processingUrl = request.fromFirstOccurrenceOf("GET ", false, true).upToFirstOccurrenceOf("HTTP/",false,false);
-				return (gotRequestHeaders = true);
+
+				if (owner.getProvider() && owner.getProvider()->isValidURL(processingUrl))
+					return (sendResponse(processingUrl));
+				else
+					return (sendDefaultResponse("No handler for url ["+processingUrl.toString(true)+"]"));
+			}
+			else if (request.startsWith("POST"))
+			{
+				processingUrl = request.fromFirstOccurrenceOf("POST ", false, true).upToFirstOccurrenceOf("HTTP/",false,false);
+
+				if (owner.getProvider() && owner.getProvider()->isValidURL(processingUrl))
+					return (sendResponse(processingUrl));
+				else
+					return (sendDefaultResponse("No handler for url ["+processingUrl.toString(true)+"]"));
 			}
 			else
 			{
-				_DBG("EnviHTTPConnection can't process non GET requests");
-				return (false);
+				return (sendDefaultResponse("Can't process this request (must be POST or GET)"));
 			}
 		}
 		else
@@ -99,21 +119,17 @@ const bool EnviHTTPConnection::getRequestHeaders()
 	}
 }
 
-const bool EnviHTTPConnection::sendResponse()
+const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
+{
+	_DBG("EnviHTTPConnection::sendDefaultResponse");
+
+	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: "+_STR(message.length())+"\nContent-type: application/json; charset=UTF-8\nConnection: close\n\n"+message);
+	return (true);
+}
+
+const bool EnviHTTPConnection::sendResponse(const URL &url)
 {
 	_DBG("EnviHTTPConnection::sendResponse");
-
-	var ret;
-
-	_DBG("\t num data sources: "+_STR(owner.getOwner().getNumDataSources()));
-
-	for (int i=0; i<owner.getOwner().getNumDataSources(); i++)
-	{
-        EnviDataSource *ds = owner.getOwner().getDataSource(i);
-	}
-
-	const String summaryString = JSON::toString (ret);
-
-	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: "+_STR(summaryString.length())+"\nContent-type: application/json; charset=UTF-8\nConnection: close\n\n"+summaryString);
+	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: 4\nContent-type: application/json; charset=UTF-8\nConnection: close\n\nmeh.");
 	return (true);
 }

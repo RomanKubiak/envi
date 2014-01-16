@@ -46,8 +46,6 @@ const Result EnviDSCommand::initialize(const ValueTree _instanceConfig)
 					addValue (instanceConfig.getChild(i).getProperty(Ids::name), stringToUnit(instanceConfig.getChild(i).getProperty(Ids::unit)));
 			}
 
-			_DSDBG("EnviDSCommand::initialize values ["+_STR(getNumValues())+"]");
-
 			return (setAllExpressions());
 		}
 	}
@@ -93,8 +91,6 @@ void EnviDSCommand::run()
 
 			ChildProcess childProc;
 			commandOutput = String::empty;
-
-			_DSDBG("exec ["+command.joinIntoString(",")+"]");
 
 			if (childProc.start(command))
 			{

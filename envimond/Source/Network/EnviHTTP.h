@@ -15,19 +15,26 @@
 class EnviApplication;
 class EnviHTTPConnection;
 
+class EnviHTTPProvider
+{
+	public:
+		virtual const bool isValidURL (const URL &url)					= 0;
+        virtual const MemoryBlock getResponseForURL (const URL &url) 	= 0;
+};
+
 class EnviHTTP : public Thread
 {
 	public:
-		EnviHTTP(EnviApplication &_owner);
+		EnviHTTP(EnviHTTPProvider *_provider, const int listenPort);
 		~EnviHTTP();
 		void run();
 		void processConnection (StreamingSocket *connectedSocket);
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
-		EnviApplication &getOwner();
+		EnviHTTPProvider *getProvider();
 		JUCE_LEAK_DETECTOR(EnviHTTP);
 
 	private:
-		EnviApplication &owner;
+		EnviHTTPProvider *provider;
 		ScopedPointer <StreamingSocket> serverSocket;
 		OwnedArray <EnviHTTPConnection> connectionPool;
 };

@@ -71,9 +71,9 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	/*
 	 *	Envi application classes
 	 */
-	enviHTTP	    = new EnviHTTP(*this);
+	enviIPCServer	= new EnviIPCServer(*this);
+	enviHTTP	    = new EnviHTTP(enviIPCServer, (bool)getCLI().isSet("listen-port") ? getCLI().getParameter("listen-port").getIntValue() : 9999);
 	enviDB		    = new EnviDB(*this);
-	enviLiveIPC		= new EnviLiveIPC(*this);
 
 #ifdef WIRING_PI
 	enviWiringPi	= new EnviWiringPi(*this);
@@ -143,16 +143,10 @@ void EnviApplication::timerCallback(int timerId)
 			return;
 		}
 
-		_DBG("Timer triggered for data source type: ["+ds->getType()+"] name: ["+ds->getName()+"] instance: ["+_STR(ds->getInstanceNumber())+"]");
-
 		Result res = ds->startSource();
 		if (!res.wasOk())
 		{
 			_WRN("Timer trigger for data source \""+ds->getName()+"\", execute failed ["+res.getErrorMessage()+"]");
-		}
-		else
-		{
-			_DBG("["+ds->getType()+"] name: ["+ds->getName()+"] started");
 		}
 	}
 }
@@ -375,4 +369,14 @@ EnviDataSource *EnviApplication::getSource(const int sourceIndex)
 {
 	ScopedLock sl(dataSources.getLock());
 	return (dataSources[sourceIndex]);
+}
+
+const bool EnviApplication::isValidURL (const URL &url)
+{
+	return (false);
+}
+
+const MemoryBlock EnviApplication::getResponseForURL (const URL &url)
+{
+	return (MemoryBlock());
 }

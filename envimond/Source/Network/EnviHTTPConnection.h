@@ -23,7 +23,8 @@ class EnviHTTPConnection : public Thread
 		void run();
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
 		const bool getRequestHeaders();
-		const bool sendResponse();
+		const bool sendResponse(const URL &url);
+		const bool sendDefaultResponse(const String &message);
 		JUCE_LEAK_DETECTOR(EnviHTTPConnection);
 
 	private:

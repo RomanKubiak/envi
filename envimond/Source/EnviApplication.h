@@ -15,7 +15,7 @@
 #include "EnviDataSource.h"
 #include "EnviDB.h"
 #include "EnviHTTP.h"
-#include "EnviLiveIPC.h"
+#include "EnviIPCServer.h"
 
 #ifdef JUCE_LINUX
 #include "EnviWiringPi.h"
@@ -51,13 +51,17 @@ class EnviApplication : public MultiTimer
 		const File getEnviScriptsDir();
 		const File getEnviStoreFile();
 		const File getEnviLogFile();
+
+		const bool isValidURL (const URL &url);
+        const MemoryBlock getResponseForURL (const URL &url);
+
 		JUCE_LEAK_DETECTOR(EnviApplication);
 
 	private:
 		ScopedPointer <EnviCLI> enviCLI;
 		ScopedPointer <EnviDB> enviDB;
 		ScopedPointer <EnviHTTP> enviHTTP;
-		ScopedPointer <EnviLiveIPC> enviLiveIPC;
+		ScopedPointer <EnviIPCServer> enviIPCServer;
 		StringArray disabledSources;
 		File dataSourcesDir;
 		bool valid;
