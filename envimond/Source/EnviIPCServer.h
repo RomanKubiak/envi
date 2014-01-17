@@ -12,6 +12,7 @@
 #define ENVIIPCSERVER_H_INCLUDED
 
 #include "EnviHTTP.h"
+#include "EnviJSONRPC.h"
 
 class EnviIPCServer : public Thread, public EnviHTTPProvider
 {
@@ -19,9 +20,12 @@ class EnviIPCServer : public Thread, public EnviHTTPProvider
 		EnviIPCServer (EnviApplication &_owner);
 		void run();
 		const bool isValidURL (const URL &url);
-        const MemoryBlock getResponseForURL (const URL &url);
+        const Result getResponse (const URL &requestUrl, const MemoryBlock &requestData, StringPairArray &responseHeaders, String &responseData);
+
+		JUCE_LEAK_DETECTOR(EnviIPCServer);
 
 	private:
+		EnviJSONRPC jsonRPC;
 		EnviApplication &owner;
 };
 

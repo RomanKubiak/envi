@@ -49,6 +49,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/EnviJSONRPC_da331522.o \
   $(OBJDIR)/EnviIPCServer_944afaa4.o \
   $(OBJDIR)/slre_95efb89.o \
   $(OBJDIR)/bit_ecebd8a7.o \
@@ -96,6 +97,11 @@ clean:
 strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/EnviJSONRPC_da331522.o: ../../Source/EnviJSONRPC.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviJSONRPC.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviIPCServer_944afaa4.o: ../../Source/EnviIPCServer.cpp
 	-@mkdir -p $(OBJDIR)

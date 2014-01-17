@@ -18,8 +18,11 @@ class EnviHTTPConnection;
 class EnviHTTPProvider
 {
 	public:
-		virtual const bool isValidURL (const URL &url)					= 0;
-        virtual const MemoryBlock getResponseForURL (const URL &url) 	= 0;
+		virtual const bool isValidURL (const URL &url)											= 0;
+        virtual const Result getResponse (	const URL &requestUrl,
+												const MemoryBlock &requestData,
+												StringPairArray &responseHeaders,
+												String &responseData) = 0;
 };
 
 class EnviHTTP : public Thread

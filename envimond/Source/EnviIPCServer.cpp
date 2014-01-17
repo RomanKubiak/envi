@@ -23,12 +23,30 @@ const bool EnviIPCServer::isValidURL (const URL &url)
 {
 	_DBG("EnviIPCServer::isValidURL");
 	_DBG(url.toString(true));
+
+	if (url.toString(false) == "/")
+	{
+		return (true);
+	}
 	return (false);
 }
 
-const MemoryBlock EnviIPCServer::getResponseForURL (const URL &url)
+const Result EnviIPCServer::getResponse (const URL &requestUrl, const MemoryBlock &requestData, StringPairArray &responseHeaders, String &responseData)
 {
-	_DBG("EnviIPCServer::getResponseForURL");
-	_DBG(url.toString(true));
-	return (MemoryBlock());
+	_DBG("EnviIPCServer::getResponse");
+	_DBG(requestUrl.toString(true));
+
+	DynamicObject *dso = new DynamicObject();
+	dso->setProperty ("result", "Hello JSON-RPC");
+	dso->setProperty ("error", var::null);
+	dso->setProperty ("id", 1);
+	var response(dso);
+
+	responseHeaders.set ("Content-type", "application/json");
+
+	if (requestUrl.toString(false) == "/")
+	{
+        responseData = JSON::toString(response);
+	}
+	return (Result::ok());
 }

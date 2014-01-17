@@ -69,15 +69,16 @@ void EnviHTTPConnection::run()
 
 int EnviHTTPConnection::writeStringToSocket(StreamingSocket *socket, const String &stringToWrite)
 {
-	return (socket->write (stringToWrite.toUTF8(), stringToWrite.length()));
+	int ret = socket->write (stringToWrite.toUTF8(), stringToWrite.length());
+	return (ret == stringToWrite.length());
 }
 
 const bool EnviHTTPConnection::getRequestHeaders()
 {
 	_DBG("EnviHTTPConnection::getRequestHeaders");
 
-	MemoryBlock readBuffer(8192, true);
-	if (socket->read (readBuffer.getData(), 8192, false))
+	MemoryBlock readBuffer(8192*4, true);
+	if (socket->read (readBuffer.getData(), 8192*4, false))
 	{
 		if (readBuffer.getSize() > 0)
 		{
@@ -86,21 +87,45 @@ const bool EnviHTTPConnection::getRequestHeaders()
 			String request = readBuffer.toString();
 			if (request.startsWith("GET"))
 			{
-				processingUrl = request.fromFirstOccurrenceOf("GET ", false, true).upToFirstOccurrenceOf("HTTP/",false,false);
+				processingUrl = request.fromFirstOccurrenceOf("GET ", false, true).upToFirstOccurrenceOf("HTTP/",false,false).trim();
 
 				if (owner.getProvider() && owner.getProvider()->isValidURL(processingUrl))
-					return (sendResponse(processingUrl));
+				{
+					StringPairArray responseHeaders;
+					String responseData;
+
+					Result res = owner.getProvider()->getResponse(processingUrl, readBuffer, responseHeaders, responseData);
+
+					if (res.wasOk())
+					{
+						return (sendResponse(responseHeaders, responseData));
+					}
+				}
 				else
+				{
 					return (sendDefaultResponse("No handler for url ["+processingUrl.toString(true)+"]"));
+				}
 			}
 			else if (request.startsWith("POST"))
 			{
-				processingUrl = request.fromFirstOccurrenceOf("POST ", false, true).upToFirstOccurrenceOf("HTTP/",false,false);
+				processingUrl = request.fromFirstOccurrenceOf("POST ", false, true).upToFirstOccurrenceOf("HTTP/",false,false).trim();
 
 				if (owner.getProvider() && owner.getProvider()->isValidURL(processingUrl))
-					return (sendResponse(processingUrl));
+				{
+					StringPairArray responseHeaders;
+					String responseData;
+
+					Result res = owner.getProvider()->getResponse(processingUrl, readBuffer, responseHeaders, responseData);
+
+					if (res.wasOk())
+					{
+						return (sendResponse(responseHeaders, responseData));
+					}
+				}
 				else
+				{
 					return (sendDefaultResponse("No handler for url ["+processingUrl.toString(true)+"]"));
+				}
 			}
 			else
 			{
@@ -127,9 +152,24 @@ const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
 	return (true);
 }
 
-const bool EnviHTTPConnection::sendResponse(const URL &url)
+const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeaders, const String &responseData)
 {
 	_DBG("EnviHTTPConnection::sendResponse");
-	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: 4\nContent-type: application/json; charset=UTF-8\nConnection: close\n\nmeh.");
-	return (true);
+	String resp = "HTTP/1.1 200 OK\nServer: envimond/"+_STR(ProjectInfo::versionString)+"\n";
+
+	for (int i=0; i<responseHeaders.size(); i++)
+	{
+		resp << responseHeaders.getAllKeys() [i];
+		resp << ": ";
+		resp << responseHeaders.getAllValues() [i];
+		resp << "\n";
+	}
+	resp << "Content-length: " << responseData.length() << "\n";
+	resp << "Connection: close\n";
+	resp << "Date: " << Time::getCurrentTime().formatted ("%a, %d %b %Y %H:%M:%S %Z") << "\n";
+	resp << "\n";
+	resp << responseData;
+
+	_DBG(resp);
+	return (writeStringToSocket(socket, resp));
 }

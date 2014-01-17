@@ -125,6 +125,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviJSONRPC.cpp"/>
     <ClCompile Include="..\..\Source\EnviIPCServer.cpp"/>
     <ClCompile Include="..\..\Source\Externals\slre\slre.c"/>
     <ClCompile Include="..\..\Source\Externals\bit.c"/>
@@ -431,6 +432,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviJSONRPC.h"/>
     <ClInclude Include="..\..\Source\EnviIPCServer.h"/>
     <ClInclude Include="..\..\Source\Externals\slre\slre.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h"/>

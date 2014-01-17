@@ -121,6 +121,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\EnviJSONRPC.cpp">
+      <Filter>envimond\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\EnviIPCServer.cpp">
       <Filter>envimond\Source</Filter>
     </ClCompile>
@@ -504,6 +507,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\EnviJSONRPC.h">
+      <Filter>envimond\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\EnviIPCServer.h">
       <Filter>envimond\Source</Filter>
     </ClInclude>
