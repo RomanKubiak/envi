@@ -22,6 +22,21 @@
   ==============================================================================
 */
 
+class MessageManager::QuitMessage   : public MessageManager::MessageBase
+{
+public:
+    QuitMessage() {}
+
+    void messageCallback() override
+    {
+        if (MessageManager* const mm = MessageManager::instance)
+            mm->quitMessageReceived = true;
+    }
+
+    JUCE_DECLARE_NON_COPYABLE (QuitMessage)
+};
+
+//==============================================================================
 MessageManager::MessageManager() noexcept
   : quitMessagePosted (false),
     quitMessageReceived (false),
@@ -81,6 +96,12 @@ void MessageManager::runDispatchLoop()
     runDispatchLoopUntil (-1);
 }
 
+void MessageManager::stopDispatchLoop()
+{
+    (new QuitMessage())->post();
+    quitMessagePosted = true;
+}
+
 bool MessageManager::runDispatchLoopUntil (int millisecondsToRunFor)
 {
     jassert (isThisTheMessageThread()); // must only be called by the message thread
@@ -101,26 +122,6 @@ bool MessageManager::runDispatchLoopUntil (int millisecondsToRunFor)
     }
 
     return ! quitMessageReceived;
-}
-
-class MessageManager::QuitMessage   : public MessageManager::MessageBase
-{
-public:
-    QuitMessage() {}
-
-    void messageCallback() override
-    {
-        if (MessageManager* const mm = MessageManager::instance)
-            mm->quitMessageReceived = true;
-    }
-
-    JUCE_DECLARE_NON_COPYABLE (QuitMessage)
-};
-
-void MessageManager::stopDispatchLoop()
-{
-    (new QuitMessage())->post();
-    quitMessagePosted = true;
 }
 
 #endif

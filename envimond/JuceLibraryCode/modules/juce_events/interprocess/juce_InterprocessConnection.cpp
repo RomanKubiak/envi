@@ -141,7 +141,7 @@ String InterprocessConnection::getConnectedHostName() const
         return "localhost";
     }
 
-    return String();
+    return String::empty;
 }
 
 //==============================================================================

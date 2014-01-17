@@ -134,7 +134,7 @@ struct JUCEApplicationBase::MultipleInstanceHandler {};
 #if JUCE_ANDROID
 
 StringArray JUCEApplicationBase::getCommandLineParameterArray() { return StringArray(); }
-String JUCEApplicationBase::getCommandLineParameters()          { return String(); }
+String JUCEApplicationBase::getCommandLineParameters()          { return String::empty; }
 
 #else
 

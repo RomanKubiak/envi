@@ -80,7 +80,7 @@ File File::getSpecialLocation (const SpecialLocationType type)
             break;
     }
 
-    return File();
+    return File::nonexistent;
 }
 
 bool File::moveToTrash() const

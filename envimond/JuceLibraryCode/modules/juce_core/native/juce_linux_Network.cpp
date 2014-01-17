@@ -309,7 +309,7 @@ private:
         {
             char c = 0;
             if (read (&c, 1) != 1)
-                return String();
+                return String::empty;
 
             buffer.writeByte (c);
 
@@ -324,7 +324,7 @@ private:
         if (header.startsWithIgnoreCase ("HTTP/"))
             return header;
 
-        return String();
+        return String::empty;
     }
 
     static void writeValueIfNotPresent (MemoryOutputStream& dest, const String& headers, const String& key, const String& value)
@@ -432,7 +432,7 @@ private:
             if (lines[i].startsWithIgnoreCase (itemName))
                 return lines[i].substring (itemName.length()).trim();
 
-        return String();
+        return String::empty;
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WebInputStream)

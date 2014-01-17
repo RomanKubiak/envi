@@ -17,6 +17,7 @@
         <Compiler>
           <Add option="-O0"/>
           <Add option="-std=gnu++0x"/>
+          <Add option="-march=pentium4"/>
           <Add option="-mstackrealign"/>
           <Add option="-g"/>
           <Add option="-w"/>
@@ -57,6 +58,7 @@
         <Compiler>
           <Add option="-Os"/>
           <Add option="-std=gnu++0x"/>
+          <Add option="-march=pentium4"/>
           <Add option="-mstackrealign"/>
           <Add option="-w"/>
           <Add option="-march=corei7-avx"/>

@@ -194,7 +194,7 @@ bool NamedPipe::openInternal (const String& pipeName, const bool createPipe)
     pimpl = new Pimpl (File::getSpecialLocation (File::tempDirectory)
                          .getChildFile (File::createLegalFileName (pipeName)).getFullPathName(), createPipe);
    #else
-    pimpl = new Pimpl (File::isAbsoultePath(pipeName) ? pipeName : "/tmp/" + File::createLegalFileName (pipeName), createPipe);
+    pimpl = new Pimpl ("/tmp/" + File::createLegalFileName (pipeName), createPipe);
    #endif
 
     if (createPipe && ! pimpl->createFifos())

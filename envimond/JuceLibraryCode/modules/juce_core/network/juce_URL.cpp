@@ -181,7 +181,7 @@ namespace URLHelpers
                      << "\"; filename=\"" << file.getFileName() << "\"\r\n";
 
                 const String mimeType (url.getMimeTypesOfUploadFiles()
-                                          .getValue (paramName, String()));
+                                          .getValue (paramName, String::empty));
 
                 if (mimeType.isNotEmpty())
                     data << "Content-Type: " << mimeType << "\r\n";
@@ -253,7 +253,7 @@ String URL::getSubPath() const
 {
     const int startOfPath = URLHelpers::findStartOfPath (url);
 
-    return startOfPath <= 0 ? String()
+    return startOfPath <= 0 ? String::empty
                             : url.substring (startOfPath);
 }
 
@@ -363,7 +363,7 @@ String URL::readEntireTextStream (const bool usePostCommand) const
     if (in != nullptr)
         return in->readEntireStreamAsString();
 
-    return String();
+    return String::empty;
 }
 
 XmlElement* URL::readEntireXmlStream (const bool usePostCommand) const
@@ -470,5 +470,5 @@ bool URL::launchInDefaultBrowser() const
     if (u.containsChar ('@') && ! u.containsChar (':'))
         u = "mailto:" + u;
 
-    return Process::openDocument (u, String());
+    return Process::openDocument (u, String::empty);
 }
