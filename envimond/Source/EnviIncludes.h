@@ -64,6 +64,19 @@ enum Unit
 	Unknown
 };
 
+enum EnviHTTPMethod
+{
+	GET,
+	POST,
+	PUT,
+	CONNECT,
+	OPTIONS,
+	DELETE,
+	HEAD,
+	TRACE,
+	UNKNOWN
+};
+
 namespace Ids
 {
 	#define DECLARE_ID(name)      const Identifier name (#name)

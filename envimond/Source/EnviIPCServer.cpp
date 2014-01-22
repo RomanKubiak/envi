@@ -21,32 +21,31 @@ void EnviIPCServer::run()
 
 const bool EnviIPCServer::isValidURL (const URL &url)
 {
-	_DBG("EnviIPCServer::isValidURL");
-	_DBG(url.toString(true));
-
-	if (url.toString(false) == "/")
+	if (	url.toString(false) == "/"
+		|| 	url.toString(false) == "/envi")
 	{
 		return (true);
 	}
 	return (false);
 }
 
-const Result EnviIPCServer::getResponse (const URL &requestUrl, const MemoryBlock &requestData, StringPairArray &responseHeaders, String &responseData)
+const Result EnviIPCServer::getResponse (	const URL &requestUrl,
+											const EnviHTTPMethod methodUsed,
+											const MemoryBlock &requestData,
+											const String &requestHeaders,
+											const String &requestBody,
+											StringPairArray &responseHeaders,
+											String &responseData)
 {
-	_DBG("EnviIPCServer::getResponse");
-	_DBG(requestUrl.toString(true));
-
-	DynamicObject *dso = new DynamicObject();
-	dso->setProperty ("result", "Hello JSON-RPC");
-	dso->setProperty ("error", var::null);
-	dso->setProperty ("id", 1);
-	var response(dso);
-
 	responseHeaders.set ("Content-type", "application/json");
 
 	if (requestUrl.toString(false) == "/")
 	{
-        responseData = JSON::toString(response);
+		responseData = JSON::toString(EnviJSONRPC::fromRequest(requestBody).getResponseWithParam("Responding"));
+	}
+	else if (requestUrl.toString(false) == "/envi")
+	{
+		responseData = "ENVIMOND/"+_STR(ProjectInfo::versionString)+"\r\n";
 	}
 	return (Result::ok());
 }

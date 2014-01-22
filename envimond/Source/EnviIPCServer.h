@@ -20,7 +20,13 @@ class EnviIPCServer : public Thread, public EnviHTTPProvider
 		EnviIPCServer (EnviApplication &_owner);
 		void run();
 		const bool isValidURL (const URL &url);
-        const Result getResponse (const URL &requestUrl, const MemoryBlock &requestData, StringPairArray &responseHeaders, String &responseData);
+        const Result getResponse (	const URL &requestUrl,
+									const EnviHTTPMethod methodUsed,
+									const MemoryBlock &requestData,
+									const String &requestHeaders,
+									const String &requestBody,
+									StringPairArray &responseHeaders,
+									String &responseData);
 
 		JUCE_LEAK_DETECTOR(EnviIPCServer);
 

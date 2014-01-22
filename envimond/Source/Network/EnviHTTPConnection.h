@@ -25,12 +25,18 @@ class EnviHTTPConnection : public Thread
 		const bool getRequestHeaders();
 		const bool sendResponse(const StringPairArray &responseHeaders, const String &responseBody);
 		const bool sendDefaultResponse(const String &message);
+		const EnviHTTPMethod getRequestMethod(const String &headers);
+		const URL getRequestURL(const EnviHTTPMethod method, const String &headers);
+		const bool readRequestData ();
+		static const String getMethodName(const EnviHTTPMethod method);
 		JUCE_LEAK_DETECTOR(EnviHTTPConnection);
 
 	private:
-		URL processingUrl;
+		String requestBody, requestHeaders, requestString;
+		URL requestURL;
 		bool gotRequestHeaders;
 		StreamingSocket *socket;
+		MemoryBlock requestData;
 		EnviHTTP &owner;
 };
 

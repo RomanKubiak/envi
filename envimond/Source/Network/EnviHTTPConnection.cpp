@@ -73,68 +73,107 @@ int EnviHTTPConnection::writeStringToSocket(StreamingSocket *socket, const Strin
 	return (ret == stringToWrite.length());
 }
 
+const bool EnviHTTPConnection::readRequestData()
+{
+	MemoryBlock temp (8192,true);
+	int dataRead = 0;
+
+	while (socket->waitUntilReady(true, 0))
+	{
+		dataRead = socket->read (temp.getData(), 8192, false);
+
+		if (dataRead > 0)
+		{
+			requestData.append (temp.getData(), temp.getSize());
+			continue;
+		}
+
+		if (dataRead < 0)
+		{
+			return (false);
+		}
+	}
+
+	const String requestDataAsString = requestData.toString();
+
+	requestHeaders 	= requestDataAsString.upToFirstOccurrenceOf("\r\n\r\n", false, true);
+	requestBody		= requestDataAsString.fromFirstOccurrenceOf("\r\n\r\n", false, true);
+
+	return (true);
+}
+
+const String EnviHTTPConnection::getMethodName(const EnviHTTPMethod method)
+{
+	switch (method)
+	{
+	case GET:
+		return ("GET");
+	case POST:
+		return ("POST");
+	case OPTIONS:
+		return ("OPTIONS");
+	case CONNECT:
+		return ("CONNECT");
+	case HEAD:
+		return ("HEAD");
+	default:
+		break;
+	}
+
+	return ("UNKNOWN");
+}
+
+const EnviHTTPMethod EnviHTTPConnection::getRequestMethod(const String &headers)
+{
+	if (headers.startsWith("GET"))
+	{
+		return (GET);
+	}
+	else if (headers.startsWith("POST"))
+	{
+		return (POST);
+	}
+	else
+	{
+		return (UNKNOWN);
+	}
+}
+
+const URL EnviHTTPConnection::getRequestURL(const EnviHTTPMethod method, const String &headers)
+{
+	return (URL(headers.fromFirstOccurrenceOf(getMethodName(method),false,true).upToFirstOccurrenceOf("HTTP/1.",false,false).trim()));
+}
+
 const bool EnviHTTPConnection::getRequestHeaders()
 {
-	_DBG("EnviHTTPConnection::getRequestHeaders");
-
-	MemoryBlock readBuffer(8192*4, true);
-	if (socket->read (readBuffer.getData(), 8192*4, false))
+	if (readRequestData())
 	{
-		if (readBuffer.getSize() > 0)
+		const EnviHTTPMethod method = getRequestMethod(requestHeaders);
+
+		if (method != UNKNOWN)
 		{
-			// _DBG("EnviHTTPConnection::getRequestHeaders");
-			// _DBG("\t"+String::toHexString (readBuffer.getData(), readBuffer.getSize()));
-			String request = readBuffer.toString();
-			if (request.startsWith("GET"))
+			requestURL = getRequestURL (method, requestHeaders);
+
+			if (owner.getProvider() && owner.getProvider()->isValidURL(requestURL))
 			{
-				processingUrl = request.fromFirstOccurrenceOf("GET ", false, true).upToFirstOccurrenceOf("HTTP/",false,false).trim();
+				StringPairArray responseHeaders;
+				String responseData;
 
-				if (owner.getProvider() && owner.getProvider()->isValidURL(processingUrl))
+				Result res = owner.getProvider()->getResponse(requestURL, method, requestData, requestHeaders, requestBody, responseHeaders, responseData);
+
+				if (res.wasOk())
 				{
-					StringPairArray responseHeaders;
-					String responseData;
-
-					Result res = owner.getProvider()->getResponse(processingUrl, readBuffer, responseHeaders, responseData);
-
-					if (res.wasOk())
-					{
-						return (sendResponse(responseHeaders, responseData));
-					}
-				}
-				else
-				{
-					return (sendDefaultResponse("No handler for url ["+processingUrl.toString(true)+"]"));
-				}
-			}
-			else if (request.startsWith("POST"))
-			{
-				processingUrl = request.fromFirstOccurrenceOf("POST ", false, true).upToFirstOccurrenceOf("HTTP/",false,false).trim();
-
-				if (owner.getProvider() && owner.getProvider()->isValidURL(processingUrl))
-				{
-					StringPairArray responseHeaders;
-					String responseData;
-
-					Result res = owner.getProvider()->getResponse(processingUrl, readBuffer, responseHeaders, responseData);
-
-					if (res.wasOk())
-					{
-						return (sendResponse(responseHeaders, responseData));
-					}
-				}
-				else
-				{
-					return (sendDefaultResponse("No handler for url ["+processingUrl.toString(true)+"]"));
+					return (sendResponse(responseHeaders, responseData));
 				}
 			}
 			else
 			{
-				return (sendDefaultResponse("Can't process this request (must be POST or GET)"));
+				return (sendDefaultResponse("No handler for url ["+requestURL.toString(true)+"]"));
 			}
 		}
 		else
 		{
-			return (false);
+			return (sendDefaultResponse("Unknown HTTP method used"));
 		}
 	}
 	else
@@ -155,7 +194,7 @@ const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
 const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeaders, const String &responseData)
 {
 	_DBG("EnviHTTPConnection::sendResponse");
-	String resp = "HTTP/1.1 200 OK\nServer: envimond/"+_STR(ProjectInfo::versionString)+"\n";
+	String resp = "HTTP/1.1 200 OK\nServer: JUCE/"+SystemStats::getJUCEVersion()+"\n";
 
 	for (int i=0; i<responseHeaders.size(); i++)
 	{
@@ -170,6 +209,6 @@ const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeade
 	resp << "\n";
 	resp << responseData;
 
-	_DBG(resp);
+	//_DBG(resp);
 	return (writeStringToSocket(socket, resp));
 }
