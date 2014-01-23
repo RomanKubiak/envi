@@ -152,9 +152,15 @@ const bool EnviHTTPConnection::getRequestHeaders()
 
 		if (method != UNKNOWN)
 		{
-			requestURL = getRequestURL (method, requestHeaders);
+			requestURL 					= getRequestURL (method, requestHeaders);
+			const File staticFileToSend	= owner.isStaticURL(requestURL.toString(false));
 
-			if (owner.getProvider() && owner.getProvider()->isValidURL(requestURL))
+			if (staticFileToSend != File::nonexistent)
+			{
+				/** handle a static url request */
+				return (sendStaticResponse (staticFileToSend));
+			}
+			else if (owner.getProvider() && owner.getProvider()->isValidURL(requestURL))
 			{
 				StringPairArray responseHeaders;
 				String responseData;
@@ -185,16 +191,13 @@ const bool EnviHTTPConnection::getRequestHeaders()
 
 const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
 {
-	_DBG("EnviHTTPConnection::sendDefaultResponse");
-
-	writeStringToSocket(socket, "HTTP/1.1 200 OK\nServer: Envimond\nContent-Length: "+_STR(message.length())+"\nContent-type: application/json; charset=UTF-8\nConnection: close\n\n"+message);
+	writeStringToSocket(socket, getStatndardResponseHeaders()+"Content-Length: "+_STR(message.length())+"\nContent-type: application/json; charset=UTF-8\nConnection: close\n\n"+message);
 	return (true);
 }
 
 const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeaders, const String &responseData)
 {
-	_DBG("EnviHTTPConnection::sendResponse");
-	String resp = "HTTP/1.1 200 OK\nServer: JUCE/"+SystemStats::getJUCEVersion()+"\n";
+	String resp = getStatndardResponseHeaders();
 
 	for (int i=0; i<responseHeaders.size(); i++)
 	{
@@ -211,4 +214,26 @@ const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeade
 
 	//_DBG(resp);
 	return (writeStringToSocket(socket, resp));
+}
+
+const String EnviHTTPConnection::getStatndardResponseHeaders()
+{
+	return ("HTTP/1.1 200 OK\nServer: JUCE/"+SystemStats::getJUCEVersion()+"\n");
+}
+
+const bool EnviHTTPConnection::sendFile(const File &fileToSend)
+{
+	return (true);
+}
+
+const bool EnviHTTPConnection::sendStaticResponse(const File &fileToSend)
+{
+	if (fileToSend.existsAsFile())
+	{
+		sendFile (fileToSend);
+	}
+	else
+	{
+		return (sendDefaultResponse ("Requested static resource not found"));
+	}
 }

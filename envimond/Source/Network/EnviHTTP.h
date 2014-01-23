@@ -12,6 +12,7 @@
 #define ENVIHTTP_H_INCLUDED
 
 #include "EnviIncludes.h"
+#include "Externals/juce_WildcardFileFilter.h"
 class EnviApplication;
 class EnviHTTPConnection;
 
@@ -37,9 +38,24 @@ class EnviHTTP : public Thread
 		void processConnection (StreamingSocket *connectedSocket);
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
 		EnviHTTPProvider *getProvider();
+		void setStaticFolder (const String &urlToMap, const File filesystemLocation, const WildcardFileFilter fileWildcard);
+		const File isStaticURL(const String &urlToCheck) const;
 		JUCE_LEAK_DETECTOR(EnviHTTP);
 
 	private:
+		struct StaticMapEntry
+		{
+			StaticMapEntry(const String _url, const File _filesystemLocation, const WildcardFileFilter _fileFilter)
+				: url(_url), filesystemLocation(_filesystemLocation), fileFilter(_fileFilter) {}
+			StaticMapEntry(const StaticMapEntry &other)
+				: url(other.url), filesystemLocation(other.filesystemLocation), fileFilter(other.fileFilter) {}
+			StaticMapEntry()
+				: fileFilter(String::empty, String::empty, String::empty) {}
+			String				url;
+			File 				filesystemLocation;
+			WildcardFileFilter 	fileFilter;
+		};
+		Array <StaticMapEntry,CriticalSection> staticUrlMap;
 		EnviHTTPProvider *provider;
 		ScopedPointer <StreamingSocket> serverSocket;
 		OwnedArray <EnviHTTPConnection> connectionPool;

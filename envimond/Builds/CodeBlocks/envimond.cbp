@@ -15,7 +15,6 @@
 				<Compiler>
 					<Add option="-O0" />
 					<Add option="-std=gnu++0x" />
-					<Add option="-march=pentium4" />
 					<Add option="-mstackrealign" />
 					<Add option="-g" />
 					<Add option="-w" />
@@ -23,6 +22,8 @@
 					<Add option="-D__MINGW__=1" />
 					<Add option="-D__MINGW_EXTENSION=" />
 					<Add option="-DJUCER_CODEBLOCKS_20734A5D=1" />
+					<Add option="-DJUCE_APP_VERSION=1.0.0" />
+					<Add option="-DJUCE_APP_VERSION_HEX=0x10000" />
 					<Add directory="." />
 					<Add directory="../../JuceLibraryCode" />
 					<Add directory="../../Source" />
@@ -54,13 +55,14 @@
 				<Compiler>
 					<Add option="-Os" />
 					<Add option="-std=gnu++0x" />
-					<Add option="-march=pentium4" />
 					<Add option="-mstackrealign" />
 					<Add option="-w" />
 					<Add option="-march=corei7-avx" />
 					<Add option="-D__MINGW__=1" />
 					<Add option="-D__MINGW_EXTENSION=" />
 					<Add option="-DJUCER_CODEBLOCKS_20734A5D=1" />
+					<Add option="-DJUCE_APP_VERSION=1.0.0" />
+					<Add option="-DJUCE_APP_VERSION_HEX=0x10000" />
 					<Add directory="." />
 					<Add directory="../../JuceLibraryCode" />
 					<Add directory="../../Source" />
@@ -655,6 +657,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../Source/Externals/getopt.h" />
+		<Unit filename="../../Source/Externals/juce_FileFilter.cpp" />
+		<Unit filename="../../Source/Externals/juce_FileFilter.h" />
+		<Unit filename="../../Source/Externals/juce_WildcardFileFilter.cpp" />
+		<Unit filename="../../Source/Externals/juce_WildcardFileFilter.h" />
 		<Unit filename="../../Source/Externals/lauxlib.h" />
 		<Unit filename="../../Source/Externals/lua.c">
 			<Option compilerVar="CC" />

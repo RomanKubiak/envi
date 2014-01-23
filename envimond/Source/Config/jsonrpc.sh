@@ -12,4 +12,4 @@ else
 	OPTS=""
 fi
 
-curl $OPTS --noproxy 127.0.0.1 -H 'Content-Type: application/json' -H 'Accept: Application/json' --data "$DATA" http://127.0.0.1:9999
+curl $OPTS --noproxy 127.0.0.1 -H 'Content-Type: application/json' -H 'Accept: Application/json' --data "$DATA" http://127.0.0.1:9999/static/index.html

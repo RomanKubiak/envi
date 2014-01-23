@@ -72,3 +72,29 @@ void EnviHTTP::processConnection (StreamingSocket *socket)
 		connectionPool.add (new EnviHTTPConnection (*this, socket));
 	}
 }
+
+const File EnviHTTP::isStaticURL(const String &urlToCheck) const
+{
+	File urlToCheckAsPath(urlToCheck);
+
+	const ScopedLock sl(staticUrlMap.getLock());
+	for (int i=0; i<staticUrlMap.size(); i++)
+	{
+		StaticMapEntry &mapEntry = staticUrlMap.getReference(i);
+
+		if (urlToCheck.startsWith (mapEntry.url))
+		{
+			return (mapEntry.filesystemLocation.getChildFile(urlToCheck.fromFirstOccurrenceOf (mapEntry.url,false,false)));
+		}
+	}
+
+	return (File::nonexistent);
+}
+
+void EnviHTTP::setStaticFolder (const String &urlToMap, const File filesystemLocation, const WildcardFileFilter fileWildcard)
+{
+	StaticMapEntry mapEntry = {urlToMap, filesystemLocation, fileWildcard};
+
+	const ScopedLock sl(staticUrlMap.getLock());
+	staticUrlMap.add (mapEntry);
+}

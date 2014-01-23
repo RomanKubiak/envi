@@ -18,14 +18,15 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=armv6
   endif
 
-  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
+  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -D "JUCE_APP_VERSION=1.0.0" -D "JUCE_APP_VERSION_HEX=0x10000" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w -std=c++11
   CXXFLAGS += $(CFLAGS)
   LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lwiringPi -lX11 -ldl -lrt 
   LDDEPS :=
-  RESFLAGS :=  -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
+  RESFLAGS :=  -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -D "JUCE_APP_VERSION=1.0.0" -D "JUCE_APP_VERSION_HEX=0x10000" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
   TARGET := envimond
   BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
+  CLEANCMD = rm -rf $(OUTDIR)/$(TARGET) $(OBJDIR)
 endif
 
 ifeq ($(CONFIG),Release)
@@ -38,19 +39,22 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=armv6
   endif
 
-  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "NDEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
+  CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "NDEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -D "JUCE_APP_VERSION=1.0.0" -D "JUCE_APP_VERSION_HEX=0x10000" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -O3 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w -std=c++11
   CXXFLAGS += $(CFLAGS)
   LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -fvisibility=hidden -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lwiringPi -lX11 -ldl -lrt 
   LDDEPS :=
-  RESFLAGS :=  -D "LINUX=1" -D "NDEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
+  RESFLAGS :=  -D "LINUX=1" -D "NDEBUG=1" -D "WIRING_PI=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C5E2A7=1" -D "JUCE_APP_VERSION=1.0.0" -D "JUCE_APP_VERSION_HEX=0x10000" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
   TARGET := envimond
   BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
+  CLEANCMD = rm -rf $(OUTDIR)/$(TARGET) $(OBJDIR)
 endif
 
 OBJECTS := \
   $(OBJDIR)/EnviJSONRPC_da331522.o \
   $(OBJDIR)/EnviIPCServer_944afaa4.o \
+  $(OBJDIR)/juce_FileFilter_3afcc0a0.o \
+  $(OBJDIR)/juce_WildcardFileFilter_af9ab61a.o \
   $(OBJDIR)/slre_95efb89.o \
   $(OBJDIR)/bit_ecebd8a7.o \
   $(OBJDIR)/getopt_1199f4d.o \
@@ -90,9 +94,7 @@ $(OUTDIR)/$(TARGET): $(OBJECTS) $(LDDEPS) $(RESOURCES)
 
 clean:
 	@echo Cleaning envimond
-	-@rm -f $(OUTDIR)/$(TARGET)
-	-@rm -rf $(OBJDIR)/*
-	-@rm -rf $(OBJDIR)
+	@$(CLEANCMD)
 
 strip:
 	@echo Stripping envimond
@@ -106,6 +108,16 @@ $(OBJDIR)/EnviJSONRPC_da331522.o: ../../Source/EnviJSONRPC.cpp
 $(OBJDIR)/EnviIPCServer_944afaa4.o: ../../Source/EnviIPCServer.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviIPCServer.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/juce_FileFilter_3afcc0a0.o: ../../Source/Externals/juce_FileFilter.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling juce_FileFilter.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/juce_WildcardFileFilter_af9ab61a.o: ../../Source/Externals/juce_WildcardFileFilter.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling juce_WildcardFileFilter.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/slre_95efb89.o: ../../Source/Externals/slre/slre.c

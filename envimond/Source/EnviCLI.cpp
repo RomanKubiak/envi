@@ -31,6 +31,7 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			{"disabled-sources",	required_argument,	0, 'D'},
 			{"sources-dir",			required_argument,  0, 'd'},
 			{"scripts-dir",			required_argument,  0, 'x'},
+			{"html-dir",			required_argument,  0, 't'},
 			{"query-cache",			required_argument,  0, 'q'},
 			{"data-cache",			required_argument,  0, 'C'},
 			{0, 0, 0, 0}
@@ -76,6 +77,9 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 				break;
 			case 'x':
 				arguments.set ("scripts-dir", _STR(optarg));
+				break;
+			case 't':
+				arguments.set ("html-dir", _STR(optarg));
 				break;
 			case 'q':
 				arguments.set ("query-cache", _STR(optarg));
@@ -128,6 +132,7 @@ void EnviCLI::printHelp()
 			<< "\t-L, --list-sources     \t\tPrint a list of available data sources and exit\n"
 			<< "\t-d, --sources-dir=FILE \t\tWhere to look for data sources configs\n"
 			<< "\t-x, --scripts-dir=FILE \t\tWhere to look for scripts defined in data sources\n"
+			<< "\t-t, --html-dir=FILE \t\tWhere to look for static HTML pages served by the internal HTTP server\n"
 			<< "\t-q, --query-cache=VALUE \tSet the number of queries to hold in memory before sending to storage\n"
 			<< "\t-C, --data-cache=VALUE \t\tSet the number of collected samples to keep in memory\n"
 			<< "\n"

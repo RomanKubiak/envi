@@ -73,6 +73,7 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 */
 	enviIPCServer	= new EnviIPCServer(*this);
 	enviHTTP	    = new EnviHTTP(enviIPCServer, (bool)getCLI().isSet("listen-port") ? getCLI().getParameter("listen-port").getIntValue() : 9999);
+	enviHTTP->setStaticFolder ("/static", getEnviStaticHTMLDir(), WildcardFileFilter ("*.js;*.css;*.html", "*", "Static pages"));
 	enviDB		    = new EnviDB(*this);
 
 #ifdef WIRING_PI
@@ -139,7 +140,7 @@ void EnviApplication::timerCallback(int timerId)
 	{
 		if (ds->isDisabled())
 		{
-			_WRN("Timer triggered for data source \""+ds->getName()+"\". Source is disabled");
+			_INF("Timer triggered for data source \""+ds->getName()+"\". Source is disabled");
 			return;
 		}
 
@@ -356,6 +357,18 @@ const File EnviApplication::getEnviLogFile()
 	else
 	{
 		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/envi.log"));
+	}
+}
+
+const File EnviApplication::getEnviStaticHTMLDir()
+{
+	if (enviCLI->isSet("html-dir"))
+	{
+		return (File(enviCLI->getParameter("html-dir")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/html"));
 	}
 }
 
