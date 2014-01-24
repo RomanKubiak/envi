@@ -69,6 +69,7 @@ void EnviHTTP::processConnection (StreamingSocket *socket)
 {
 	if (socket)
 	{
+		const ScopedLock sl(connectionPool.getLock());
 		connectionPool.add (new EnviHTTPConnection (*this, socket));
 	}
 }
@@ -97,4 +98,51 @@ void EnviHTTP::setStaticFolder (const String &urlToMap, const File filesystemLoc
 
 	const ScopedLock sl(staticUrlMap.getLock());
 	staticUrlMap.add (mapEntry);
+}
+
+void EnviHTTP::setMimeTypes (const char *mimeTypeData, const int mimeTypeDataSize)
+{
+    StringArray lines = StringArray::fromLines (String(mimeTypeData, mimeTypeDataSize));
+
+    for (int i=0; i<lines.size(); i++)
+	{
+        StringArray entries = StringArray::fromTokens (lines[i].trim()," ", "\"'");
+        const String mimetype = entries[0];
+        entries.remove (0);
+        for (int j=0; j<entries.size(); j++)
+		{
+			mimeTypes.set (entries[j], mimetype);
+		}
+	}
+}
+
+const String EnviHTTP::getMimeTypeFor(const File &fileToCheck)
+{
+	const ScopedLock sl (mimeTypes.getLock());
+	const String ext = fileToCheck.getFileExtension().substring(1);
+
+	if (mimeTypes.contains (ext))
+	{
+		return (mimeTypes[ext]);
+	}
+	else
+	{
+		return ("application/octet-stream");
+	}
+}
+
+int EnviHTTP::getNumClientConnections()
+{
+	const ScopedLock sl(connectionPool.getLock());
+	return (connectionPool.size());
+}
+
+void EnviHTTP::changeListenerCallback (ChangeBroadcaster* source)
+{
+	EnviHTTPConnection *conn = dynamic_cast<EnviHTTPConnection*>(source);
+	if (conn != nullptr)
+	{
+		const ScopedLock sl(connectionPool.getLock());
+		connectionPool.removeObject (conn);
+	}
 }

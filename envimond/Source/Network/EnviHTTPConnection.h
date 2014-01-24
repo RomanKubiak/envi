@@ -15,17 +15,18 @@
 class EnviApplication;
 class EnviHTTP;
 
-class EnviHTTPConnection : public Thread
+class EnviHTTPConnection : public Thread, public ChangeBroadcaster
 {
 	public:
 		EnviHTTPConnection(EnviHTTP &_owner, StreamingSocket *_socket);
 		~EnviHTTPConnection();
 		void run();
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
-		const bool getRequestHeaders();
+		const bool respond();
 		const bool sendResponse(const StringPairArray &responseHeaders, const String &responseBody);
 		const bool sendDefaultResponse(const String &message);
 		const bool sendStaticResponse(const File &fileToSend);
+		const bool sendStatusResponse(const URL &requestURL);
 		const bool sendFile(const File &fileToSend);
 		const EnviHTTPMethod getRequestMethod(const String &headers);
 		const URL getRequestURL(const EnviHTTPMethod method, const String &headers);

@@ -148,6 +148,9 @@
     <ClCompile Include="..\..\Source\Externals\sqlite3.c">
       <Filter>envimond\Source\Externals</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Network\EnviHTTPFileCache.cpp">
+      <Filter>envimond\Source\Network</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp">
       <Filter>envimond\Source\Network</Filter>
     </ClCompile>
@@ -602,6 +605,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h">
       <Filter>envimond\Source\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Network\EnviHTTPFileCache.h">
+      <Filter>envimond\Source\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Network\EnviHTTP.h">
       <Filter>envimond\Source\Network</Filter>
@@ -1082,6 +1088,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\mime.types">
+      <Filter>envimond\Source</Filter>
+    </None>
     <None Include="..\..\Source\Externals\slre\LICENSE">
       <Filter>envimond\Source\Externals\slre</Filter>
     </None>

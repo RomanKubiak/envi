@@ -684,6 +684,8 @@
 		<Unit filename="../../Source/Network/EnviHTTP.h" />
 		<Unit filename="../../Source/Network/EnviHTTPConnection.cpp" />
 		<Unit filename="../../Source/Network/EnviHTTPConnection.h" />
+		<Unit filename="../../Source/Network/EnviHTTPFileCache.cpp" />
+		<Unit filename="../../Source/Network/EnviHTTPFileCache.h" />
 		<Unit filename="../../Source/Source/EnviDSCommand.cpp" />
 		<Unit filename="../../Source/Source/EnviDSCommand.h" />
 		<Unit filename="../../Source/Source/EnviDSDHT11.cpp" />
@@ -709,6 +711,7 @@
 		<Unit filename="../../Source/Storage/EnviFlatFileStore.h" />
 		<Unit filename="../../Source/Storage/EnviSqlite3Store.cpp" />
 		<Unit filename="../../Source/Storage/EnviSqlite3Store.h" />
+		<Unit filename="../../Source/mime.types" />
 		<Extensions>
 			<code_completion />
 			<envvars />

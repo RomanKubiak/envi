@@ -11,7 +11,7 @@
 #ifndef ENVIHTTP_H_INCLUDED
 #define ENVIHTTP_H_INCLUDED
 
-#include "EnviIncludes.h"
+#include "EnviHTTPFileCache.h"
 #include "Externals/juce_WildcardFileFilter.h"
 class EnviApplication;
 class EnviHTTPConnection;
@@ -29,17 +29,21 @@ class EnviHTTPProvider
 											String &responseData) = 0;
 };
 
-class EnviHTTP : public Thread
+class EnviHTTP : public Thread, public ChangeListener
 {
 	public:
 		EnviHTTP(EnviHTTPProvider *_provider, const int listenPort);
 		~EnviHTTP();
 		void run();
+		void setMimeTypes (const char *mimeTypeData, const int mimeTypeDataSize);
+		const String getMimeTypeFor(const File &fileToCheck);
 		void processConnection (StreamingSocket *connectedSocket);
 		int writeStringToSocket(StreamingSocket *socket, const String &stringToWrite);
 		EnviHTTPProvider *getProvider();
+		int getNumClientConnections();
 		void setStaticFolder (const String &urlToMap, const File filesystemLocation, const WildcardFileFilter fileWildcard);
 		const File isStaticURL(const String &urlToCheck) const;
+		void changeListenerCallback (ChangeBroadcaster* source);
 		JUCE_LEAK_DETECTOR(EnviHTTP);
 
 	private:
@@ -58,7 +62,8 @@ class EnviHTTP : public Thread
 		Array <StaticMapEntry,CriticalSection> staticUrlMap;
 		EnviHTTPProvider *provider;
 		ScopedPointer <StreamingSocket> serverSocket;
-		OwnedArray <EnviHTTPConnection> connectionPool;
+		OwnedArray <EnviHTTPConnection,CriticalSection> connectionPool;
+		HashMap<String,String,DefaultHashFunctions,CriticalSection> mimeTypes;
 };
 
 #endif  // ENVIHTTP_H_INCLUDED

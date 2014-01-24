@@ -60,6 +60,7 @@ OBJECTS := \
   $(OBJDIR)/getopt_1199f4d.o \
   $(OBJDIR)/lua_ed7df0d2.o \
   $(OBJDIR)/sqlite3_42a04441.o \
+  $(OBJDIR)/EnviHTTPFileCache_cca67b42.o \
   $(OBJDIR)/EnviHTTP_b152028e.o \
   $(OBJDIR)/EnviHTTPConnection_ceb1734c.o \
   $(OBJDIR)/EnviDSLua_f364ea42.o \
@@ -144,6 +145,11 @@ $(OBJDIR)/sqlite3_42a04441.o: ../../Source/Externals/sqlite3.c
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling sqlite3.c"
 	@$(CC) $(CFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/EnviHTTPFileCache_cca67b42.o: ../../Source/Network/EnviHTTPFileCache.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling EnviHTTPFileCache.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviHTTP_b152028e.o: ../../Source/Network/EnviHTTP.cpp
 	-@mkdir -p $(OBJDIR)

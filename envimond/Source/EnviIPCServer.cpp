@@ -21,8 +21,8 @@ void EnviIPCServer::run()
 
 const bool EnviIPCServer::isValidURL (const URL &url)
 {
-	if (	url.toString(false) == "/"
-		|| 	url.toString(false) == "/envi")
+	if (	url.toString(false) == "/jsonrpc"
+		|| 	url.toString(false) == "/ping")
 	{
 		return (true);
 	}
@@ -39,11 +39,11 @@ const Result EnviIPCServer::getResponse (	const URL &requestUrl,
 {
 	responseHeaders.set ("Content-type", "application/json");
 
-	if (requestUrl.toString(false) == "/")
+	if (requestUrl.toString(false) == "/jsonrpc")
 	{
 		responseData = JSON::toString(EnviJSONRPC::fromRequest(requestBody).getResponseWithParam("Responding"));
 	}
-	else if (requestUrl.toString(false) == "/envi")
+	else if (requestUrl.toString(false) == "/ping")
 	{
 		responseData = "ENVIMOND/"+_STR(ProjectInfo::versionString)+"\r\n";
 	}

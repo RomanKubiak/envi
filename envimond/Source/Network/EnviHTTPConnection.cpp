@@ -15,54 +15,49 @@
 EnviHTTPConnection::EnviHTTPConnection(EnviHTTP &_owner, StreamingSocket *_socket)
 	: socket(_socket), Thread("EnviHTTPConnection"), gotRequestHeaders(false), owner(_owner)
 {
-	_DBG("EnviHTTPConnection::ctor host connected: "+socket->getHostName());
-
+	{
+		MessageManagerLock mmlock;
+		addChangeListener (&owner);
+	}
 	startThread();
 }
 
 EnviHTTPConnection::~EnviHTTPConnection()
 {
+	removeChangeListener (&owner);
+	signalThreadShouldExit();
+	waitForThreadToExit (500);
 }
 
 void EnviHTTPConnection::run()
 {
-	_DBG("EnviHTTPConnection::run");
 	while (1)
 	{
 		const int ret = socket->waitUntilReady (true, 2500);
 
-		_DBG("\twaitUntilReady returned: "+_STR(ret));
-
 		if (threadShouldExit())
 		{
-			_DBG("EnviHTTPConnection::run thread signalled to exit: "+socket->getHostName());
 			return;
 		}
 
 		if (ret == 1)
 		{
 			/* normal */
-			if (getRequestHeaders())
+			if (!respond())
 			{
-				return;
-			}
-			else
-			{
-				_WRN("\tgetRequestHeaders failed");
+				_WRN("\tEnviHTTPConnection respond() failed");
 			}
 		}
 		else if (ret == 0)
 		{
-			/* timeout */
-			_WRN("\ttimeout");
+			_WRN("\tEnviHTTPConnection timeout!");
 		}
 		else if (ret == -1)
 		{
-			/* error */
-			_WRN("\terror");
+			_WRN("\tEnviHTTPConnection error");
 		}
 
-		_DBG("EnviHTTPConnection finished");
+		sendChangeMessage ();
 		return;
 	}
 }
@@ -144,7 +139,7 @@ const URL EnviHTTPConnection::getRequestURL(const EnviHTTPMethod method, const S
 	return (URL(headers.fromFirstOccurrenceOf(getMethodName(method),false,true).upToFirstOccurrenceOf("HTTP/1.",false,false).trim()));
 }
 
-const bool EnviHTTPConnection::getRequestHeaders()
+const bool EnviHTTPConnection::respond()
 {
 	if (readRequestData())
 	{
@@ -153,12 +148,19 @@ const bool EnviHTTPConnection::getRequestHeaders()
 		if (method != UNKNOWN)
 		{
 			requestURL 					= getRequestURL (method, requestHeaders);
+			if (requestURL.toString(false) == "/")
+				requestURL = requestURL.withNewSubPath("index.html");
+
 			const File staticFileToSend	= owner.isStaticURL(requestURL.toString(false));
 
-			if (staticFileToSend != File::nonexistent)
+			if (staticFileToSend != File::nonexistent && staticFileToSend.existsAsFile())
 			{
 				/** handle a static url request */
 				return (sendStaticResponse (staticFileToSend));
+			}
+			else if (requestURL.toString(true).startsWith ("/status"))
+			{
+				return (sendStatusResponse (requestURL));
 			}
 			else if (owner.getProvider() && owner.getProvider()->isValidURL(requestURL))
 			{
@@ -191,7 +193,7 @@ const bool EnviHTTPConnection::getRequestHeaders()
 
 const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
 {
-	writeStringToSocket(socket, getStatndardResponseHeaders()+"Content-Length: "+_STR(message.length())+"\nContent-type: application/json; charset=UTF-8\nConnection: close\n\n"+message);
+	writeStringToSocket(socket, getStatndardResponseHeaders()+"Content-Length: "+_STR(message.length())+"\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n"+message);
 	return (true);
 }
 
@@ -223,17 +225,46 @@ const String EnviHTTPConnection::getStatndardResponseHeaders()
 
 const bool EnviHTTPConnection::sendFile(const File &fileToSend)
 {
-	return (true);
+	while (1)
+	{
+		const int ret = socket->waitUntilReady(false, 1000);
+
+		if (ret == 1)
+		{
+			/* normal, write */
+			return (sendDefaultResponse ("Cache"));
+		}
+		else if (ret == -1)
+		{
+			return (false);
+		}
+		else if (ret == 0)
+		{
+			/* timeout */
+			return (false);
+		}
+	}
+
+	sendDefaultResponse (fileToSend.getFullPathName()+"/"+_STR(File::descriptionOfSizeInBytes (fileToSend.getSize()))+"/"+owner.getMimeTypeFor (fileToSend));
+	return (false);
 }
 
 const bool EnviHTTPConnection::sendStaticResponse(const File &fileToSend)
 {
 	if (fileToSend.existsAsFile())
 	{
-		sendFile (fileToSend);
+		return (sendFile (fileToSend));
 	}
 	else
 	{
 		return (sendDefaultResponse ("Requested static resource not found"));
 	}
+}
+
+const bool EnviHTTPConnection::sendStatusResponse(const URL &requestURL)
+{
+	String resp = "<html><body>Status<br />";
+	resp << "</body></html>";
+
+	return (sendDefaultResponse (resp));
 }
