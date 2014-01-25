@@ -18,10 +18,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
@@ -52,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;../../Source;../../Source/Source;../../Source/Storage;../../Source/Network;../../Source/Externals;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CONSOLE;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2010_78A501D=1;JUCE_APP_VERSION=1.0.0;JUCE_APP_VERSION_HEX=0x10000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2010_78A501D=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -93,7 +95,7 @@
     <ClCompile>
       <Optimization>MinSpace</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CONSOLE;WIN32;_WINDOWS;NDEBUG;JUCER_VS2010_78A501D=1;JUCE_APP_VERSION=1.0.0;JUCE_APP_VERSION_HEX=0x10000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;WIN32;_WINDOWS;NDEBUG;JUCER_VS2010_78A501D=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -134,7 +136,7 @@
     <ClCompile Include="..\..\Source\Externals\getopt.c"/>
     <ClCompile Include="..\..\Source\Externals\lua.c"/>
     <ClCompile Include="..\..\Source\Externals\sqlite3.c"/>
-    <ClCompile Include="..\..\Source\Network\EnviHTTPFileCache.cpp"/>
+    <ClCompile Include="..\..\Source\Network\EnviHTTPCache.cpp"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp"/>
     <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSLua.cpp"/>
@@ -465,7 +467,7 @@
     <ClInclude Include="..\..\Source\Externals\getopt.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h"/>
-    <ClInclude Include="..\..\Source\Network\EnviHTTPFileCache.h"/>
+    <ClInclude Include="..\..\Source\Network\EnviHTTPCache.h"/>
     <ClInclude Include="..\..\Source\Network\EnviHTTP.h"/>
     <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSLua.h"/>
@@ -627,7 +629,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\mime.types"/>
+    <None Include="..\..\Source\Config\html\mime.types"/>
     <None Include="..\..\Source\Externals\slre\LICENSE"/>
     <None Include="..\..\Source\Externals\slre\README.md"/>
     <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info"/>

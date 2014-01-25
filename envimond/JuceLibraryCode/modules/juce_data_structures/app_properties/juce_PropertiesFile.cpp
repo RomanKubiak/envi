@@ -90,8 +90,8 @@ File PropertiesFile::Options::getDefaultFile() const
     File dir (File::getSpecialLocation (commonToAllUsers ? File::commonApplicationDataDirectory
                                                          : File::userApplicationDataDirectory));
 
-    if (dir == File())
-        return File();
+    if (dir == File::nonexistent)
+        return File::nonexistent;
 
     dir = dir.getChildFile (folderName.isNotEmpty() ? folderName
                                                     : applicationName);
@@ -165,7 +165,7 @@ bool PropertiesFile::save()
     stopTimer();
 
     if (options.doNotSave
-         || file == File()
+         || file == File::nonexistent
          || file.isDirectory()
          || ! file.getParentDirectory().createDirectory())
         return false;
@@ -195,7 +195,7 @@ bool PropertiesFile::loadAsXml()
                 {
                     getAllProperties().set (name,
                                             e->getFirstChildElement() != nullptr
-                                                ? e->getFirstChildElement()->createDocument ("", true)
+                                                ? e->getFirstChildElement()->createDocument (String::empty, true)
                                                 : e->getStringAttribute (PropertyFileConstants::valueAttribute));
                 }
             }
@@ -234,7 +234,7 @@ bool PropertiesFile::saveAsXml()
     if (pl != nullptr && ! pl->isLocked())
         return false; // locking failure..
 
-    if (doc.writeToFile (file, String()))
+    if (doc.writeToFile (file, String::empty))
     {
         needsWriting = false;
         return true;

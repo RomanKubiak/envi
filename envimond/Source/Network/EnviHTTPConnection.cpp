@@ -189,6 +189,8 @@ const bool EnviHTTPConnection::respond()
 		_DBG("EnviHTTPConnection read failed");
 		return (false);
 	}
+
+	return (false);
 }
 
 const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
@@ -225,28 +227,26 @@ const String EnviHTTPConnection::getStatndardResponseHeaders()
 
 const bool EnviHTTPConnection::sendFile(const File &fileToSend)
 {
-	while (1)
+	EnviHTTPCacheBlob blob = EnviHTTPCache::getFromFile (fileToSend, owner.getMimeTypeFor(fileToSend));
+	if (blob.isValid())
 	{
-		const int ret = socket->waitUntilReady(false, 1000);
+		while (1)
+		{
+			const int ret = socket->waitUntilReady(false, 1000);
 
-		if (ret == 1)
-		{
-			/* normal, write */
-			return (sendDefaultResponse ("Cache"));
-		}
-		else if (ret == -1)
-		{
-			return (false);
-		}
-		else if (ret == 0)
-		{
-			/* timeout */
-			return (false);
+			if (ret == 1)
+			{
+			}
+			else if (ret == 0 || ret == -1)
+			{
+				return (false);
+			}
 		}
 	}
-
-	sendDefaultResponse (fileToSend.getFullPathName()+"/"+_STR(File::descriptionOfSizeInBytes (fileToSend.getSize()))+"/"+owner.getMimeTypeFor (fileToSend));
-	return (false);
+	else
+	{
+		return (sendDefaultResponse (fileToSend.getFullPathName()+"/"+_STR(File::descriptionOfSizeInBytes (fileToSend.getSize()))+"/"+owner.getMimeTypeFor (fileToSend)));
+	}
 }
 
 const bool EnviHTTPConnection::sendStaticResponse(const File &fileToSend)

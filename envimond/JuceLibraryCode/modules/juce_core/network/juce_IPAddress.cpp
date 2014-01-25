@@ -55,7 +55,7 @@ IPAddress::IPAddress (uint32 n) noexcept
 IPAddress::IPAddress (const String& adr)
 {
     StringArray tokens;
-    tokens.addTokens (adr, ".", String());
+    tokens.addTokens (adr, ".", String::empty);
 
     for (int i = 0; i < 4; ++i)
         address[i] = (uint8) tokens[i].getIntValue();

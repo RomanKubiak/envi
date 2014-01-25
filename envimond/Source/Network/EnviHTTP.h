@@ -11,7 +11,7 @@
 #ifndef ENVIHTTP_H_INCLUDED
 #define ENVIHTTP_H_INCLUDED
 
-#include "EnviHTTPFileCache.h"
+#include "EnviHTTPCache.h"
 #include "Externals/juce_WildcardFileFilter.h"
 class EnviApplication;
 class EnviHTTPConnection;

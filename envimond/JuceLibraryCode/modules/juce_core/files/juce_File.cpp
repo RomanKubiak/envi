@@ -75,7 +75,7 @@ const File File::nonexistent;
 String File::parseAbsolutePath (const String& p)
 {
     if (p.isEmpty())
-        return String();
+        return String::empty;
 
 #if JUCE_WINDOWS
     // Windows..
@@ -322,7 +322,7 @@ String File::getFileNameWithoutExtension() const
 
 bool File::isAChildOf (const File& potentialParent) const
 {
-    if (potentialParent.fullPath.isEmpty())
+    if (potentialParent == File::nonexistent)
         return false;
 
     const String ourPath (getPathUpToLastSlash());
@@ -482,11 +482,11 @@ bool File::loadFileAsData (MemoryBlock& destBlock) const
 String File::loadFileAsString() const
 {
     if (! existsAsFile())
-        return String();
+        return String::empty;
 
     FileInputStream in (*this);
     return in.openedOk() ? in.readEntireStreamAsString()
-                         : String();
+                         : String::empty;
 }
 
 void File::readLines (StringArray& destLines) const
@@ -598,7 +598,7 @@ String File::getFileExtension() const
     if (indexOfDot > fullPath.lastIndexOfChar (separator))
         return fullPath.substring (indexOfDot);
 
-    return String();
+    return String::empty;
 }
 
 bool File::hasFileExtension (StringRef possibleSuffix) const
@@ -629,7 +629,7 @@ bool File::hasFileExtension (StringRef possibleSuffix) const
 File File::withFileExtension (StringRef newExtension) const
 {
     if (fullPath.isEmpty())
-        return File();
+        return File::nonexistent;
 
     String filePart (getFileName());
 

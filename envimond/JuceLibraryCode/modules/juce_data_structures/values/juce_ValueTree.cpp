@@ -168,7 +168,7 @@ public:
             }
             else
             {
-                undoManager->perform (new SetPropertyAction (this, name, newValue, var(), true, false));
+                undoManager->perform (new SetPropertyAction (this, name, newValue, var::null, true, false));
             }
         }
     }
@@ -188,7 +188,7 @@ public:
         else
         {
             if (properties.contains (name))
-                undoManager->perform (new SetPropertyAction (this, name, var(), properties [name], false, true));
+                undoManager->perform (new SetPropertyAction (this, name, var::null, properties [name], false, true));
         }
     }
 
@@ -206,7 +206,7 @@ public:
         else
         {
             for (int i = properties.size(); --i >= 0;)
-                undoManager->perform (new SetPropertyAction (this, properties.getName(i), var(),
+                undoManager->perform (new SetPropertyAction (this, properties.getName(i), var::null,
                                                              properties.getValueAt(i), false, true));
         }
     }
@@ -230,7 +230,7 @@ public:
                 return ValueTree (s);
         }
 
-        return ValueTree();
+        return ValueTree::invalid;
     }
 
     ValueTree getOrCreateChildWithName (const Identifier typeToMatch, UndoManager* undoManager)
@@ -257,7 +257,7 @@ public:
                 return ValueTree (s);
         }
 
-        return ValueTree();
+        return ValueTree::invalid;
     }
 
     bool isAChildOf (const SharedObject* const possibleParent) const noexcept
@@ -444,7 +444,7 @@ public:
         }
         else
         {
-            output.writeString (String());
+            output.writeString (String::empty);
             output.writeCompressedInt (0);
             output.writeCompressedInt (0);
         }
@@ -846,17 +846,17 @@ ValueTree ValueTree::getChild (int index) const
 
 ValueTree ValueTree::getChildWithName (const Identifier type) const
 {
-    return object != nullptr ? object->getChildWithName (type) : ValueTree();
+    return object != nullptr ? object->getChildWithName (type) : ValueTree::invalid;
 }
 
 ValueTree ValueTree::getOrCreateChildWithName (const Identifier type, UndoManager* undoManager)
 {
-    return object != nullptr ? object->getOrCreateChildWithName (type, undoManager) : ValueTree();
+    return object != nullptr ? object->getOrCreateChildWithName (type, undoManager) : ValueTree::invalid;
 }
 
 ValueTree ValueTree::getChildWithProperty (const Identifier propertyName, const var& propertyValue) const
 {
-    return object != nullptr ? object->getChildWithProperty (propertyName, propertyValue) : ValueTree();
+    return object != nullptr ? object->getChildWithProperty (propertyName, propertyValue) : ValueTree::invalid;
 }
 
 bool ValueTree::isAChildOf (const ValueTree& possibleParent) const
@@ -962,7 +962,7 @@ ValueTree ValueTree::fromXml (const XmlElement& xml)
 String ValueTree::toXmlString() const
 {
     const ScopedPointer<XmlElement> xml (createXml());
-    return xml != nullptr ? xml->createDocument ("") : String();
+    return xml != nullptr ? xml->createDocument (String::empty) : String::empty;
 }
 
 //==============================================================================
@@ -976,7 +976,7 @@ ValueTree ValueTree::readFromStream (InputStream& input)
     const String type (input.readString());
 
     if (type.isEmpty())
-        return ValueTree();
+        return ValueTree::invalid;
 
     ValueTree v (type);
 

@@ -5,7 +5,7 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
-      <FILE id="dmjYd7" name="mime.types" compile="0" resource="1" file="Source/mime.types"/>
+      <FILE id="GPGpRO" name="mime.types" compile="0" resource="1" file="Source/Config/html/mime.types"/>
       <FILE id="JnV2hf" name="EnviJSONRPC.cpp" compile="1" resource="0" file="Source/EnviJSONRPC.cpp"/>
       <FILE id="qepmAu" name="EnviJSONRPC.h" compile="0" resource="0" file="Source/EnviJSONRPC.h"/>
       <FILE id="dhou2N" name="EnviIPCServer.cpp" compile="1" resource="0"
@@ -62,10 +62,9 @@
         <FILE id="iN0v9m" name="sqlite3ext.h" compile="0" resource="0" file="Source/Externals/sqlite3ext.h"/>
       </GROUP>
       <GROUP id="{CEA7D5EF-0A70-CE8D-CC9D-3621BB641A1E}" name="Network">
-        <FILE id="ubl0qC" name="EnviHTTPFileCache.cpp" compile="1" resource="0"
-              file="Source/Network/EnviHTTPFileCache.cpp"/>
-        <FILE id="wrc853" name="EnviHTTPFileCache.h" compile="0" resource="0"
-              file="Source/Network/EnviHTTPFileCache.h"/>
+        <FILE id="ubl0qC" name="EnviHTTPCache.cpp" compile="1" resource="0"
+              file="Source/Network/EnviHTTPCache.cpp"/>
+        <FILE id="wrc853" name="EnviHTTPCache.h" compile="0" resource="0" file="Source/Network/EnviHTTPCache.h"/>
         <FILE id="Xr8LdV" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/Network/EnviHTTP.cpp"/>
         <FILE id="ytmL4F" name="EnviHTTP.h" compile="0" resource="0" file="Source/Network/EnviHTTP.h"/>
         <FILE id="jUFxrp" name="EnviHTTPConnection.cpp" compile="1" resource="0"

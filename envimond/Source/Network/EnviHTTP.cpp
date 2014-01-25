@@ -74,18 +74,16 @@ void EnviHTTP::processConnection (StreamingSocket *socket)
 	}
 }
 
-const File EnviHTTP::isStaticURL(const String &urlToCheck) const
+const File EnviHTTP::isStaticURL(const String &urlAsString) const
 {
-	File urlToCheckAsPath(urlToCheck);
-
 	const ScopedLock sl(staticUrlMap.getLock());
 	for (int i=0; i<staticUrlMap.size(); i++)
 	{
 		StaticMapEntry &mapEntry = staticUrlMap.getReference(i);
 
-		if (urlToCheck.startsWith (mapEntry.url))
+		if (urlAsString.startsWith (mapEntry.url))
 		{
-			return (mapEntry.filesystemLocation.getChildFile(urlToCheck.fromFirstOccurrenceOf (mapEntry.url,false,false)));
+			return (mapEntry.filesystemLocation.getChildFile(urlAsString.fromFirstOccurrenceOf (mapEntry.url,false,false)));
 		}
 	}
 
@@ -94,10 +92,8 @@ const File EnviHTTP::isStaticURL(const String &urlToCheck) const
 
 void EnviHTTP::setStaticFolder (const String &urlToMap, const File filesystemLocation, const WildcardFileFilter fileWildcard)
 {
-	StaticMapEntry mapEntry = {urlToMap, filesystemLocation, fileWildcard};
-
 	const ScopedLock sl(staticUrlMap.getLock());
-	staticUrlMap.add (mapEntry);
+	staticUrlMap.add (StaticMapEntry (urlToMap, filesystemLocation, fileWildcard));
 }
 
 void EnviHTTP::setMimeTypes (const char *mimeTypeData, const int mimeTypeDataSize)

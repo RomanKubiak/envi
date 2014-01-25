@@ -35,7 +35,7 @@ public:
 
         switch (t.getAndAdvance())
         {
-            case 0:      result = var(); return Result::ok();
+            case 0:      result = var::null; return Result::ok();
             case '{':    return parseObject (t, result);
             case '[':    return parseArray  (t, result);
         }
@@ -100,6 +100,7 @@ public:
         return Result::ok();
     }
 
+private:
     static Result parseAny (String::CharPointerType& t, var& result)
     {
         t = t.findEndOfWhitespace();
@@ -147,7 +148,7 @@ public:
                 if (t2.getAndAdvance() == 'u' && t2.getAndAdvance() == 'l' && t2.getAndAdvance() == 'l')
                 {
                     t = t2;
-                    result = var();
+                    result = var::null;
                     return Result::ok();
                 }
                 break;
@@ -159,7 +160,6 @@ public:
         return createFail ("Syntax error", &t);
     }
 
-private:
     static Result createFail (const char* const message, const String::CharPointerType* location = nullptr)
     {
         String m (message);
@@ -254,7 +254,7 @@ private:
                     if (c2 != ':')
                         return createFail ("Expected ':', but found", &oldT);
 
-                    resultProperties.set (propertyName, var());
+                    resultProperties.set (propertyName, var::null);
                     var* propertyValue = resultProperties.getVarPointer (propertyName);
 
                     Result r2 (parseAny (t, *propertyValue));
@@ -300,7 +300,7 @@ private:
                 return createFail ("Unexpected end-of-input in array declaration");
 
             t = oldT;
-            destArray->add (var());
+            destArray->add (var::null);
             Result r (parseAny (t, destArray->getReference (destArray->size() - 1)));
 
             if (r.failed())
@@ -460,6 +460,51 @@ public:
         out << ']';
     }
 
+/*    static void writeObject (OutputStream& out, DynamicObject& object,
+                             const int indentLevel, const bool allOnOneLine)
+    {
+        NamedValueSet& props = object.getProperties();
+
+        out << '{';
+        if (! allOnOneLine)
+            out << newLine;
+
+        LinkedListPointer<NamedValueSet::NamedValue>* i = &(props.values);
+
+        for (;;)
+        {
+            NamedValueSet::NamedValue* const v = i->get();
+
+            if (v == nullptr)
+                break;
+
+            if (! allOnOneLine)
+                writeSpaces (out, indentLevel + indentSize);
+
+            out << '"';
+            writeString (out, v->name);
+            out << "\": ";
+            write (out, v->value, indentLevel + indentSize, allOnOneLine);
+
+            if (v->nextListItem.get() != nullptr)
+            {
+                if (allOnOneLine)
+                    out << ", ";
+                else
+                    out << ',' << newLine;
+            }
+            else if (! allOnOneLine)
+                out << newLine;
+
+            i = &(v->nextListItem);
+        }
+
+        if (! allOnOneLine)
+            writeSpaces (out, indentLevel);
+
+        out << '}';
+    }*/
+
     enum { indentSize = 2 };
 };
 
@@ -468,18 +513,8 @@ var JSON::parse (const String& text)
 {
     var result;
 
-    if (! parse (text, result))
-        result = var();
-
-    return result;
-}
-
-var JSON::fromString (StringRef text)
-{
-    var result;
-
-    if (! JSONParser::parseAny (text.text, result))
-        result = var();
+    if (! JSONParser::parseObjectOrArray (text.getCharPointer(), result))
+        result = var::null;
 
     return result;
 }
@@ -575,7 +610,7 @@ public:
     {
         switch (r.nextInt (depth > 3 ? 6 : 8))
         {
-            case 0:     return var();
+            case 0:     return var::null;
             case 1:     return r.nextInt();
             case 2:     return r.nextInt64();
             case 3:     return r.nextBool();
@@ -603,7 +638,7 @@ public:
             }
 
             default:
-                return var();
+                return var::null;
         }
     }
 

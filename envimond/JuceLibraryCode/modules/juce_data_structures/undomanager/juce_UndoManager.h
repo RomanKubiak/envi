@@ -107,7 +107,7 @@ public:
         @see beginNewTransaction
     */
     bool perform (UndoableAction* action,
-                  const String& actionName = String());
+                  const String& actionName = String::empty);
 
     /** Starts a new group of actions that together will be treated as a single transaction.
 
@@ -118,7 +118,7 @@ public:
         @param actionName   a description of the transaction that is about to be
                             performed
     */
-    void beginNewTransaction (const String& actionName = String());
+    void beginNewTransaction (const String& actionName = String::empty);
 
     /** Changes the name stored for the current transaction.
 
