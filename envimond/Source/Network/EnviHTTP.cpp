@@ -55,12 +55,11 @@ void EnviHTTP::run()
 
 		if (streamingSocket != nullptr)
 		{
-			_DBG("EnviHTTP accepted connection from: "+streamingSocket->getHostName());
 			processConnection (streamingSocket.release());
 		}
 		else
 		{
-			_DBG("EnviHTTP accepted connection, failed to create conversation socket");
+			_ERR("EnviHTTP accepted connection, failed to create conversation socket");
 		}
 	}
 }
@@ -83,7 +82,9 @@ const File EnviHTTP::isStaticURL(const String &urlAsString) const
 
 		if (urlAsString.startsWith (mapEntry.url))
 		{
-			return (mapEntry.filesystemLocation.getChildFile(urlAsString.fromFirstOccurrenceOf (mapEntry.url,false,false)));
+			const File file = mapEntry.filesystemLocation.getChildFile(urlAsString.fromFirstOccurrenceOf (mapEntry.url,false,false));
+			if (mapEntry.fileFilter.isFileSuitable(file))
+				return (file);
 		}
 	}
 
@@ -139,6 +140,78 @@ void EnviHTTP::changeListenerCallback (ChangeBroadcaster* source)
 	if (conn != nullptr)
 	{
 		const ScopedLock sl(connectionPool.getLock());
+		logAccess (conn);
 		connectionPool.removeObject (conn);
+	}
+}
+
+const bool EnviHTTP::canCache(const File &fileToCheck) const
+{
+	if (fileToCheck.getSize() < (1024 * 1024 * 5))
+	{
+		return (true);
+	}
+
+	return (false);
+}
+
+void EnviHTTP::setAccessLog (const File &fileToLogTo)
+{
+	if (fileToLogTo.hasWriteAccess())
+	{
+		accessLog = new FileLogger (fileToLogTo, String::empty);
+	}
+}
+
+void EnviHTTP::setErrorLog (const File &fileToLogTo)
+{
+	if (fileToLogTo.hasWriteAccess())
+	{
+		errorLog = new FileLogger (fileToLogTo, String::empty);
+	}
+}
+
+const String EnviHTTP::getLogTimestamp()
+{
+	return (Time::getCurrentTime().formatted("[%d/%b/%Y %H:%M:%S]"));
+}
+
+void EnviHTTP::logError(EnviHTTPConnection *source, const String &messageIfAny)
+{
+	if (errorLog)
+	{
+		accessLog->logMessage (	source->getHostname()
+								+" "
+								+getLogTimestamp()
+								+" \""
+								+EnviHTTPConnection::getMethodName(source->getHTTPMethod())
+								+" "
+								+source->getRequestURL().toString(true)
+								+"\" "
+								+_STR(source->getResponseCode())
+								+" "
+								+_STR(source->getResponseSize())
+								+ (messageIfAny.isEmpty() ? (" "+messageIfAny) : String::empty)
+							);
+	}
+}
+
+void EnviHTTP::logAccess(EnviHTTPConnection *source, const String &messageIfAny)
+{
+	if (accessLog)
+	{
+		accessLog->logMessage (	source->getHostname()
+								+" "
+								+getLogTimestamp()
+								+" \""
+								+EnviHTTPConnection::getMethodName(source->getHTTPMethod())
+								+" "
+								+source->getRequestURL().toString(true)
+								+"\" "
+								+_STR(source->getResponseCode())
+								+" "
+								+_STR(source->getResponseSize())
+								+ (messageIfAny.isEmpty() ? (" "+messageIfAny) : String::empty)
+							);
 	}
 }

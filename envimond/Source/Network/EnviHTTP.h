@@ -44,6 +44,12 @@ class EnviHTTP : public Thread, public ChangeListener
 		void setStaticFolder (const String &urlToMap, const File filesystemLocation, const WildcardFileFilter fileWildcard);
 		const File isStaticURL(const String &urlToCheck) const;
 		void changeListenerCallback (ChangeBroadcaster* source);
+		const bool canCache(const File &fileToCheck) const;
+		void setAccessLog (const File &fileToLogTo);
+		void setErrorLog (const File &fileToLogTo);
+		void logError(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
+		void logAccess(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
+		static const String getLogTimestamp();
 		JUCE_LEAK_DETECTOR(EnviHTTP);
 
 	private:
@@ -64,6 +70,7 @@ class EnviHTTP : public Thread, public ChangeListener
 		ScopedPointer <StreamingSocket> serverSocket;
 		OwnedArray <EnviHTTPConnection,CriticalSection> connectionPool;
 		HashMap<String,String,DefaultHashFunctions,CriticalSection> mimeTypes;
+		ScopedPointer <FileLogger> accessLog, errorLog;
 };
 
 #endif  // ENVIHTTP_H_INCLUDED

@@ -31,7 +31,9 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 			{"disabled-sources",	required_argument,	0, 'D'},
 			{"sources-dir",			required_argument,  0, 'd'},
 			{"scripts-dir",			required_argument,  0, 'x'},
-			{"html-dir",			required_argument,  0, 't'},
+			{"html-root",			required_argument,  0, 't'},
+			{"html-access-log",		required_argument,  0, 'A'},
+			{"html-error-log",		required_argument,  0, 'E'},
 			{"query-cache",			required_argument,  0, 'q'},
 			{"data-cache",			required_argument,  0, 'C'},
 			{0, 0, 0, 0}
@@ -79,7 +81,13 @@ EnviCLI::EnviCLI (const int argc, char *argv[]) : valid(false)
 				arguments.set ("scripts-dir", _STR(optarg));
 				break;
 			case 't':
-				arguments.set ("html-dir", _STR(optarg));
+				arguments.set ("html-root", _STR(optarg));
+				break;
+			case 'A':
+				arguments.set ("html-access-log", _STR(optarg));
+				break;
+			case 'E':
+				arguments.set ("html-error-log", _STR(optarg));
 				break;
 			case 'q':
 				arguments.set ("query-cache", _STR(optarg));

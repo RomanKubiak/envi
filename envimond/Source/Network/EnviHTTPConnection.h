@@ -14,6 +14,7 @@
 #include "EnviIncludes.h"
 class EnviApplication;
 class EnviHTTP;
+class EnviHTTPCacheBlob;
 
 class EnviHTTPConnection : public Thread, public ChangeBroadcaster
 {
@@ -27,6 +28,7 @@ class EnviHTTPConnection : public Thread, public ChangeBroadcaster
 		const bool sendDefaultResponse(const String &message);
 		const bool sendStaticResponse(const File &fileToSend);
 		const bool sendStatusResponse(const URL &requestURL);
+		const bool sendNotFoundResponse();
 		const bool sendFile(const File &fileToSend);
 		const EnviHTTPMethod getRequestMethod(const String &headers);
 		const URL getRequestURL(const EnviHTTPMethod method, const String &headers);
@@ -34,15 +36,28 @@ class EnviHTTPConnection : public Thread, public ChangeBroadcaster
 		const bool readRequestData ();
 		static const String getMethodName(const EnviHTTPMethod method);
 		static const String getStatndardResponseHeaders();
+		const bool writeHeadersForBlob (const EnviHTTPCacheBlob &blob);
+		const bool writeHeadersForFile(const File &file);
+		const bool writeDataFromFile(const File &file);
+		const bool writeDataFromBlob(const EnviHTTPCacheBlob &blob);
+		const String getHostname();
+		const int getPort();
+		const EnviHTTPMethod getHTTPMethod();
+		const URL getRequestURL();
+		const int getResponseCode();
+		const int64 getResponseSize();
 		JUCE_LEAK_DETECTOR(EnviHTTPConnection);
 
 	private:
+		EnviHTTPMethod httpMethod;
 		String requestBody, requestHeaders, requestString;
 		URL requestURL;
 		bool gotRequestHeaders;
 		StreamingSocket *socket;
 		MemoryBlock requestData;
 		EnviHTTP &owner;
+		int64 responseSize;
+		int responseCode;
 };
 
 #endif  // ENVIHTTPCONNECTION_H_INCLUDED

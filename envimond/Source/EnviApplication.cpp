@@ -73,8 +73,12 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 */
 	enviIPCServer	= new EnviIPCServer(*this);
 	enviHTTP	    = new EnviHTTP(enviIPCServer, (bool)getCLI().isSet("listen-port") ? getCLI().getParameter("listen-port").getIntValue() : 9999);
-	enviHTTP->setStaticFolder ("/", getEnviStaticHTMLDir(), WildcardFileFilter ("*.js;*.css;*.html", "*", "Static pages"));
+	
+	enviHTTP->setStaticFolder ("/", getEnviStaticHTMLDir(), WildcardFileFilter ("*.js;*.css;*.html;*.png;*.jpg;*.gif", "*", "Static pages"));
 	enviHTTP->setMimeTypes (BinaryData::mime_types, BinaryData::mime_typesSize);
+	enviHTTP->setAccessLog (getEnviHTTPAccessLogFile());
+	enviHTTP->setErrorLog (getEnviHTTPErrorLogFile());
+
 	enviDB		    = new EnviDB(*this);
 
 #ifdef WIRING_PI
@@ -363,13 +367,37 @@ const File EnviApplication::getEnviLogFile()
 
 const File EnviApplication::getEnviStaticHTMLDir()
 {
-	if (enviCLI->isSet("html-dir"))
+	if (enviCLI->isSet("html-root"))
 	{
-		return (File(enviCLI->getParameter("html-dir")));
+		return (File(enviCLI->getParameter("html-root")));
 	}
 	else
 	{
 		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/html"));
+	}
+}
+
+const File EnviApplication::getEnviHTTPErrorLogFile()
+{
+	if (enviCLI->isSet("html-error-log"))
+	{
+		return (File(enviCLI->getParameter("html-error-log")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/error.log"));
+	}
+}
+
+const File EnviApplication::getEnviHTTPAccessLogFile()
+{
+	if (enviCLI->isSet("html-access-log"))
+	{
+		return (File(enviCLI->getParameter("html-access-log")));
+	}
+	else
+	{
+		return (File::getSpecialLocation(File::userHomeDirectory).getChildFile(".envi/access.log"));
 	}
 }
 

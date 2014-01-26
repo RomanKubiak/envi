@@ -19,13 +19,12 @@ class EnviHTTPCacheBlobData: public ReferenceCountedObject
 		void copyFromDisk(const File &sourceData)
 		{			
 			ScopedPointer <FileInputStream> fis(sourceData.createInputStream());
-
+			MemoryOutputStream mo(blobData.getData(), sourceData.getSize());
+			
 			if (fis != nullptr)
 			{
-				while (!fis->isExhausted())
-				{
-					fis->read (blobData.getData(), 8192);
-				}
+				if (mo.writeFromInputStream (*fis, sourceData.getSize()) != sourceData.getSize())
+					jassertfalse;
 			}
 		}
 
@@ -33,6 +32,8 @@ class EnviHTTPCacheBlobData: public ReferenceCountedObject
 		{
 			memcpy (blobData.getData(), data, dataSize);
 		}
+
+		void *getData() { return (blobData.getData()); }
 	private:
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EnviHTTPCacheBlobData)
 		HeapBlock<uint8> blobData;
@@ -56,6 +57,7 @@ class EnviHTTPCacheBlob
 		const int64 getSize() const noexcept						{ return size; }
 		const int64 hashCode64() const noexcept						{ return hash; }
 		const String getMime() const noexcept						{ return mime; }
+		InputStream *createInputStream() const;
 		static const EnviHTTPCacheBlob null;
 
 	private:

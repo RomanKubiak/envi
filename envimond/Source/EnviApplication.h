@@ -52,6 +52,8 @@ class EnviApplication : public MultiTimer
 		const File getEnviStoreFile();
 		const File getEnviLogFile();
 		const File getEnviStaticHTMLDir();
+		const File getEnviHTTPErrorLogFile();
+		const File getEnviHTTPAccessLogFile();
 		const bool isValidURL (const URL &url);
         const MemoryBlock getResponseForURL (const URL &url);
 

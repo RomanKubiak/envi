@@ -176,6 +176,11 @@ EnviHTTPCacheBlob& EnviHTTPCacheBlob::operator= (const EnviHTTPCacheBlob &other)
     return *this;
 }
 
+InputStream *EnviHTTPCacheBlob::createInputStream() const
+{
+	return (new MemoryInputStream (data->getData(), size, false));
+}
+
 EnviHTTPCacheBlob EnviHTTPCacheBlob::loadFrom (const File &file, const String &mime)
 {
 	EnviHTTPCacheBlob blob (file.getSize(), file.hashCode64(), mime);
