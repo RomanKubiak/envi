@@ -21,8 +21,8 @@ void EnviIPCServer::run()
 
 const bool EnviIPCServer::isValidURL (const URL &url)
 {
-	if (	url.toString(false) == "/jsonrpc"
-		|| 	url.toString(false) == "/ping")
+	if (	url.toString(false).startsWith ("/jsonrpc")
+		|| 	url.toString(false).startsWith ("/ping"))
 	{
 		return (true);
 	}
@@ -37,15 +37,41 @@ const Result EnviIPCServer::getResponse (	const URL &requestUrl,
 											StringPairArray &responseHeaders,
 											String &responseData)
 {
-	responseHeaders.set ("Content-type", "application/json");
-
-	if (requestUrl.toString(false) == "/jsonrpc")
+	if (requestUrl.toString(false).startsWith ("/jsonrpc"))
 	{
-		responseData = JSON::toString(EnviJSONRPC::fromRequest(requestBody).getResponseWithParam("Responding"));
+		responseHeaders.set ("Content-type", "application/json");
+
+		if (methodUsed == GET)
+		{
+			responseData = "Can't use GET with json-rpc";
+		}
+		else
+		{
+			Result res = EnviJSONRPC::isValid(requestBody);
+
+			if (res.wasOk())
+			{
+				responseData = processJSONRequest(requestBody);
+			}
+			else
+			{
+				responseData = respondWithJSONError(res);
+			}
+		}
 	}
 	else if (requestUrl.toString(false) == "/ping")
 	{
-		responseData = "ENVIMOND/"+_STR(ProjectInfo::versionString)+"\r\n";
+		responseData = "PONG/"+_STR(Time::getCurrentTime().toMilliseconds())+"/ENVIMOND/"+_STR(ProjectInfo::versionString)+"\r\n";
 	}
 	return (Result::ok());
+}
+
+const String EnviIPCServer::processJSONRequest(const String &request)
+{
+	return (String::empty);
+}
+
+const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
+{
+	return (String::empty);
 }

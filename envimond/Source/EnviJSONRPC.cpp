@@ -142,3 +142,54 @@ EnviJSONRPC EnviJSONRPC::fromRequest(const String &jsonEncodedRequest)
 {
 	return (EnviJSONRPC (JSON::parse (jsonEncodedRequest), true));
 }
+
+Result EnviJSONRPC::isValid(const String &jsonEncodedData)
+{
+	var temp;
+	Result res = JSON::parse (jsonEncodedData, temp);
+
+	if (res.wasOk())
+	{
+		if (temp.getDynamicObject())
+		{
+			DynamicObject *dso = temp.getDynamicObject();
+
+			if (dso->hasProperty("jsonrpc"))
+			{
+				if (dso->getProperty("jsonrpc") != "2.0")
+				{
+					return (Result::fail("JSON-RPC request version is not 2.0 ["+dso->getProperty("jsonrpc").toString()+"]"));
+				}
+				else
+				{
+					if (dso->hasProperty("method") && dso->hasProperty("params"))
+					{
+						return (Result::ok());
+					}
+
+					if (!dso->hasProperty("method"))
+					{
+						return (Result::fail("JSON-RPC missing required method request parameter"));
+					}
+
+					if (!dso->hasProperty("params"))
+					{
+						return (Result::fail("JSON-RPC missing required params request parameter"));
+					}
+				}
+			}
+			else
+			{
+				return (Result::fail("JSON-RPC missing jsonrpc property"));
+			}
+		}
+		else
+		{
+			return (Result::fail("JSON-RPC json data is not an object"));
+		}
+	}
+	else
+	{
+		return (Result::fail("JSON-RPC json parser failed ["+res.getErrorMessage()+"]"));
+	}
+}

@@ -73,7 +73,7 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	 */
 	enviIPCServer	= new EnviIPCServer(*this);
 	enviHTTP	    = new EnviHTTP(enviIPCServer, (bool)getCLI().isSet("listen-port") ? getCLI().getParameter("listen-port").getIntValue() : 9999);
-	
+
 	enviHTTP->setStaticFolder ("/", getEnviStaticHTMLDir(), WildcardFileFilter ("*.js;*.css;*.html;*.png;*.jpg;*.gif", "*", "Static pages"));
 	enviHTTP->setMimeTypes (BinaryData::mime_types, BinaryData::mime_typesSize);
 	enviHTTP->setAccessLog (getEnviHTTPAccessLogFile());
@@ -92,7 +92,6 @@ EnviApplication::~EnviApplication()
 
 const bool EnviApplication::isValid()
 {
-	ScopedLock sl(dataSources.getLock());
 	return (valid);
 }
 
@@ -121,25 +120,21 @@ void EnviApplication::cleanupAndExit()
 
 void EnviApplication::removeDataSource(EnviDataSource *sourceToRemove)
 {
-	ScopedLock sl(dataSources.getLock());
 	dataSources.removeObject (sourceToRemove);
 }
 
 const int EnviApplication::getNumDataSources()
 {
-	ScopedLock sl(dataSources.getLock());
 	return (dataSources.size());
 }
 
 EnviDataSource *EnviApplication::getDataSource(const int index)
 {
-	ScopedLock sl(dataSources.getLock());
 	return (dataSources[index]);
 }
 
 void EnviApplication::timerCallback(int timerId)
 {
-	ScopedLock sl(dataSources.getLock());
 	EnviDataSource *ds = dataSources[timerId - ENVI_TIMER_OFFSET];
 	if (ds)
 	{
@@ -172,7 +167,6 @@ EnviDataSource *EnviApplication::createInstance(const ValueTree dataSourceInstan
 
 		if (ds != nullptr)
 		{
-			ScopedLock sl(dataSources.getLock());
 			dataSources.add (ds);
 
 			Result res = ds->initialize (dataSourceInstance);
@@ -304,8 +298,6 @@ EnviDataSource *EnviApplication::getInstanceFromType(const Identifier dsType)
 
 const int EnviApplication::getNumInstances(const Identifier dsType)
 {
-	ScopedLock sl(dataSources.getLock());
-
 	int instances = 0;
 
 	for (int i=0; i<dataSources.size(); i++)
@@ -403,13 +395,11 @@ const File EnviApplication::getEnviHTTPAccessLogFile()
 
 const int EnviApplication::getNumSources()
 {
-	ScopedLock sl(dataSources.getLock());
 	return (dataSources.size());
 }
 
 EnviDataSource *EnviApplication::getSource(const int sourceIndex)
 {
-	ScopedLock sl(dataSources.getLock());
 	return (dataSources[sourceIndex]);
 }
 

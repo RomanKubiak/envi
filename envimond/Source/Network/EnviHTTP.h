@@ -50,6 +50,9 @@ class EnviHTTP : public Thread, public ChangeListener
 		void logError(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
 		void logAccess(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
 		static const String getLogTimestamp();
+		static const String getOsType(const SystemStats::OperatingSystemType type);
+		static const StringPairArray getSystemStats();
+
 		JUCE_LEAK_DETECTOR(EnviHTTP);
 
 	private:

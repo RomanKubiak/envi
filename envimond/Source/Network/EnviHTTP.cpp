@@ -68,14 +68,12 @@ void EnviHTTP::processConnection (StreamingSocket *socket)
 {
 	if (socket)
 	{
-		const ScopedLock sl(connectionPool.getLock());
 		connectionPool.add (new EnviHTTPConnection (*this, socket));
 	}
 }
 
 const File EnviHTTP::isStaticURL(const String &urlAsString) const
 {
-	const ScopedLock sl(staticUrlMap.getLock());
 	for (int i=0; i<staticUrlMap.size(); i++)
 	{
 		StaticMapEntry &mapEntry = staticUrlMap.getReference(i);
@@ -93,7 +91,6 @@ const File EnviHTTP::isStaticURL(const String &urlAsString) const
 
 void EnviHTTP::setStaticFolder (const String &urlToMap, const File filesystemLocation, const WildcardFileFilter fileWildcard)
 {
-	const ScopedLock sl(staticUrlMap.getLock());
 	staticUrlMap.add (StaticMapEntry (urlToMap, filesystemLocation, fileWildcard));
 }
 
@@ -115,7 +112,6 @@ void EnviHTTP::setMimeTypes (const char *mimeTypeData, const int mimeTypeDataSiz
 
 const String EnviHTTP::getMimeTypeFor(const File &fileToCheck)
 {
-	const ScopedLock sl (mimeTypes.getLock());
 	const String ext = fileToCheck.getFileExtension().substring(1);
 
 	if (mimeTypes.contains (ext))
@@ -130,7 +126,6 @@ const String EnviHTTP::getMimeTypeFor(const File &fileToCheck)
 
 int EnviHTTP::getNumClientConnections()
 {
-	const ScopedLock sl(connectionPool.getLock());
 	return (connectionPool.size());
 }
 
@@ -139,7 +134,6 @@ void EnviHTTP::changeListenerCallback (ChangeBroadcaster* source)
 	EnviHTTPConnection *conn = dynamic_cast<EnviHTTPConnection*>(source);
 	if (conn != nullptr)
 	{
-		const ScopedLock sl(connectionPool.getLock());
 		logAccess (conn);
 		connectionPool.removeObject (conn);
 	}
@@ -214,4 +208,70 @@ void EnviHTTP::logAccess(EnviHTTPConnection *source, const String &messageIfAny)
 								+ (messageIfAny.isEmpty() ? (" "+messageIfAny) : String::empty)
 							);
 	}
+}
+
+const String EnviHTTP::getOsType(const SystemStats::OperatingSystemType type)
+{
+	switch (type)
+	{
+	case SystemStats::Linux:
+		return ("Linux");
+	case SystemStats::Android:
+		return ("Android");
+	case SystemStats::iOS:
+		return ("iOS");
+	case SystemStats::MacOSX_10_4:
+		return ("Mac OSX 10.4");
+	case SystemStats::MacOSX_10_5:
+		return ("Mac OSX 10.5");
+	case SystemStats::MacOSX_10_6:
+		return ("Mac OSX 10.6");
+	case SystemStats::MacOSX_10_7:
+		return ("Mac OSX 10.7");
+	case SystemStats::MacOSX_10_8:
+		return ("Mac OSX 10.8");
+	case SystemStats::Win2000:
+		return ("Windows 2000");
+	case SystemStats::WinXP:
+		return ("Windows XP");
+	case SystemStats::WinVista:
+		return ("Windows Vista");
+	case SystemStats::Windows7:
+		return ("Windows 7");
+	case SystemStats::Windows8:
+		return ("Windows 8");
+	case SystemStats::Windows:
+		return ("Windows ?");
+	default:
+		break;
+	}
+
+	return ("Unknown OS");
+}
+
+const StringPairArray EnviHTTP::getSystemStats()
+{
+	StringPairArray result;
+	result.set ("JUCE version", SystemStats::getJUCEVersion());
+	result.set ("OS Type", EnviHTTP::getOsType(SystemStats::getOperatingSystemType()));
+	result.set ("OS Name", SystemStats::getOperatingSystemName());
+	result.set ("OS 64bits", SystemStats::isOperatingSystem64Bit() ? "Yes" : "No");
+	result.set ("Logon name", SystemStats::getLogonName());
+	result.set ("Full user name", SystemStats::getFullUserName());
+	result.set ("Computer name", SystemStats::getComputerName());
+	result.set ("User language", SystemStats::getUserLanguage());
+	result.set ("User region", SystemStats::getUserRegion());
+	result.set ("Device description", SystemStats::getDeviceDescription());
+	result.set ("Number of CPUs", _STR(SystemStats::getNumCpus()));
+	result.set ("CPU speed (MHz)", _STR(SystemStats::getCpuSpeedInMegaherz()));
+	result.set ("CPU vendor", SystemStats::getCpuVendor());
+	result.set ("Has MMX", SystemStats::hasMMX() ? "Yes" : "No");
+	result.set ("Has SSE", SystemStats::hasSSE() ? "Yes" : "No");
+	result.set ("Has SSE2", SystemStats::hasSSE2() ? "Yes" : "No");
+	result.set ("Has SSE3", SystemStats::hasSSE3() ? "Yes" : "No");
+	result.set ("Has 3DNow", SystemStats::has3DNow() ? "Yes" : "No");
+	result.set ("Memory size (MB)", _STR(SystemStats::getMemorySizeInMegabytes()));
+	result.set ("Page size", _STR(SystemStats::getPageSize()));
+
+	return (result);
 }

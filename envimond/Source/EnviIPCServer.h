@@ -27,7 +27,8 @@ class EnviIPCServer : public Thread, public EnviHTTPProvider
 									const String &requestBody,
 									StringPairArray &responseHeaders,
 									String &responseData);
-
+		const String processJSONRequest(const String &request);
+		const String respondWithJSONError(const Result &whyRequestFailed);
 		JUCE_LEAK_DETECTOR(EnviIPCServer);
 
 	private:

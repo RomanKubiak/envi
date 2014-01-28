@@ -25,6 +25,7 @@ EnviHTTPConnection::EnviHTTPConnection(EnviHTTP &_owner, StreamingSocket *_socke
 
 EnviHTTPConnection::~EnviHTTPConnection()
 {
+	socket->close();
 	removeChangeListener (&owner);
 	signalThreadShouldExit();
 	waitForThreadToExit (500);
@@ -32,27 +33,24 @@ EnviHTTPConnection::~EnviHTTPConnection()
 
 void EnviHTTPConnection::run()
 {
-	while (1)
+	const int ret = socket->waitUntilReady (true, 100);
+
+	if (threadShouldExit())
 	{
-		const int ret = socket->waitUntilReady (true, 2500);
-
-		if (threadShouldExit())
-		{
-			return;
-		}
-
-		if (ret == 1)
-		{
-			/* normal */
-			if (!respond())
-			{
-				_WRN("\tEnviHTTPConnection respond() failed");
-			}
-		}
-		
-		sendChangeMessage ();
 		return;
 	}
+
+	if (ret == 1)
+	{
+		/* normal */
+		if (!respond())
+		{
+			_WRN("EnviHTTPConnection respond() failed");
+			return;
+		}
+	}
+
+	sendChangeMessage ();
 }
 
 int EnviHTTPConnection::writeStringToSocket(StreamingSocket *socket, const String &stringToWrite)
@@ -134,16 +132,13 @@ const URL EnviHTTPConnection::getRequestURL(const EnviHTTPMethod method, const S
 
 const bool EnviHTTPConnection::respond()
 {
-	_DBG("EnviHTTPConnection::respond");
 	if (readRequestData())
 	{
 		httpMethod = getRequestMethod(requestHeaders);
-		
+
 		if (httpMethod != UNKNOWN)
 		{
 			requestURL 					= getRequestURL (httpMethod, requestHeaders);
-
-			_DBG("\t"+requestURL.toString(true));
 
 			if (requestURL.toString(false) == "/")
 				requestURL = requestURL.withNewSubPath("index.html");
@@ -152,8 +147,6 @@ const bool EnviHTTPConnection::respond()
 
 			if (staticFileToSend != File::nonexistent)
 			{
-				_DBG("\tstatic response");
-
 				/** handle a static url request */
 				if (staticFileToSend.existsAsFile())
 					return (sendStaticResponse (staticFileToSend));
@@ -162,14 +155,10 @@ const bool EnviHTTPConnection::respond()
 			}
 			else if (requestURL.toString(true).startsWith ("/status"))
 			{
-				_DBG("\tstatus response");
-
 				return (sendStatusResponse (requestURL));
 			}
 			else if (owner.getProvider() && owner.getProvider()->isValidURL(requestURL))
 			{
-				_DBG("\thandled response");
-
 				StringPairArray responseHeaders;
 				String responseData;
 
@@ -192,7 +181,7 @@ const bool EnviHTTPConnection::respond()
 	}
 	else
 	{
-		_DBG("EnviHTTPConnection read failed");
+		_ERR("EnviHTTPConnection read failed");
 		return (false);
 	}
 
@@ -238,7 +227,7 @@ const bool EnviHTTPConnection::writeHeadersForBlob (const EnviHTTPCacheBlob &blo
 	headers << "Content-length: " + _STR(blob.getSize()) + "\n";
 	headers << "Connection: close\n";
 	headers << "Content-type: " + blob.getMime() + "\n\n";
-	
+
 	const int ret = socket->waitUntilReady(false, 1000);
 
 	if (ret == 1)
@@ -296,17 +285,32 @@ const bool EnviHTTPConnection::writeDataFromBlob(const EnviHTTPCacheBlob &blob)
     while (numBytesToWrite > 0)
     {
         char buffer [8192];
+        int ret=1;
         const int num = source->read (buffer, (int) jmin (numBytesToWrite, (int64) sizeof (buffer)));
 
         if (num <= 0)
+		{
             break;
+		}
 
-        if (socket->write (buffer, (size_t) num) < 0)
+		if ((ret = socket->waitUntilReady (false, 100)) > 0)
+		{
+			if (socket->write (buffer, (size_t) num) < 0)
+			{
+				owner.logError (this, "write to socket returned less then zero");
+				return (false);
+			}
+
+			numBytesToWrite -= num;
+			numWritten += num;
+		}
+		else
+		{
+			owner.logError (this, "waitUntilReady returned error ["+_STR(ret)+"]");
 			return (false);
-
-        numBytesToWrite -= num;
-        numWritten += num;
+		}
     }
+
     return (numWritten > 0);
 }
 
@@ -365,6 +369,8 @@ const bool EnviHTTPConnection::sendStatusResponse(const URL &requestURL)
 
 const bool EnviHTTPConnection::sendNotFoundResponse()
 {
+	_DBG("EnviHTTPConnection::sendNotFoundResponse");
+
 	String response = "HTTP/1.1 404 Not Found\nServer: EnviHTTP/"+SystemStats::getJUCEVersion()+"\nContent-Type: text/html; charset=utf-8\n\n404 Not Found";
 	responseCode = 404;
 	responseSize = 13;
@@ -404,11 +410,11 @@ const URL EnviHTTPConnection::getRequestURL()
 }
 
 const int EnviHTTPConnection::getResponseCode()
-{ 
-	return (responseCode); 
+{
+	return (responseCode);
 }
 
 const int64 EnviHTTPConnection::getResponseSize()
 {
-	return (responseSize); 
+	return (responseSize);
 }

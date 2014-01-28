@@ -41,7 +41,7 @@ class EnviJSONRPC
 
 		const var getResponseWithParam(const var responseParam);
 		static EnviJSONRPC fromRequest(const String &jsonEncodedRequest);
-
+		static Result isValid(const String &jsonEncodedData);
 	private:
 		var response;
 		var request;

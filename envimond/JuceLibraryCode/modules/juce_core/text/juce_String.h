@@ -307,6 +307,9 @@ public:
     */
     inline bool isNotEmpty() const noexcept                 { return text[0] != 0; }
 
+    /** Resets this string to be empty. */
+    void clear() noexcept;
+
     /** Case-insensitive comparison with another string. */
     bool equalsIgnoreCase (const String& other) const noexcept;
 
@@ -1290,6 +1293,8 @@ JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, int number);
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, long number);
 /** Appends a decimal number at the end of a string. */
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, int64 number);
+/** Appends a decimal number at the end of a string. */
+JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, uint64 number);
 /** Appends a decimal number at the end of a string. */
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, float number);
 /** Appends a decimal number at the end of a string. */
