@@ -18,6 +18,7 @@ class EnviJSONRPC
 	public:
 		EnviJSONRPC();
 		EnviJSONRPC(const EnviJSONRPC &other);
+		EnviJSONRPC(const String &initialData, const bool isRequest=true);
 		EnviJSONRPC(var data, const bool isRequest=true);
 		~EnviJSONRPC() {}
 		void setResponseErrorString (const String &errorString);
@@ -38,9 +39,13 @@ class EnviJSONRPC
 		void setResponseId(const int64 id);
 		var &getResponse();
 		var &getRequest();
+		const String responseToString();
+		const String requestToString();
 
 		const var getResponseWithParam(const var responseParam);
+		static const var toArray (const StringPairArray &stringPairArray);
 		static EnviJSONRPC fromRequest(const String &jsonEncodedRequest);
+		static EnviJSONRPC error (const String &errorMessage, const int id=0);
 		static Result isValid(const String &jsonEncodedData);
 	private:
 		var response;

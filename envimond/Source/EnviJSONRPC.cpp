@@ -10,12 +10,15 @@
 
 #include "EnviJSONRPC.h"
 
-static var empty()
+static var empty(const bool addDefaultProperties=true)
 {
 	DynamicObject *dso = new DynamicObject();
-	dso->setProperty("jsonrpc", "2.0");
-	dso->setProperty("id", "-1");
-	dso->setProperty("error", String::empty);
+	if (addDefaultProperties)
+	{
+		dso->setProperty("jsonrpc", "2.0");
+		dso->setProperty("id", "-1");
+		dso->setProperty("error", String::empty);
+	}
 	return (var(dso));
 }
 
@@ -25,6 +28,21 @@ EnviJSONRPC::EnviJSONRPC() : response(empty()), request(empty())
 
 EnviJSONRPC::EnviJSONRPC(const EnviJSONRPC &other) : request(other.request), response(other.response)
 {
+}
+
+EnviJSONRPC::EnviJSONRPC(const String &initialData, const bool isRequest)
+{
+	if (isRequest)
+	{
+		request 	= JSON::fromString(initialData);
+		response 	= empty();
+		setResponseId (getRequestId());
+	}
+	else
+	{
+		request 	= empty();
+		response 	= JSON::fromString(initialData);
+	}
 }
 
 EnviJSONRPC::EnviJSONRPC(var data, const bool isRequest)
@@ -132,6 +150,16 @@ var &EnviJSONRPC::getRequest()
 	return (request);
 }
 
+const String EnviJSONRPC::responseToString()
+{
+	return (JSON::toString(response));
+}
+
+const String EnviJSONRPC::requestToString()
+{
+	return (JSON::toString(request));
+}
+
 const var EnviJSONRPC::getResponseWithParam(const var responseParam)
 {
     setResponseParameters (responseParam);
@@ -141,6 +169,11 @@ const var EnviJSONRPC::getResponseWithParam(const var responseParam)
 EnviJSONRPC EnviJSONRPC::fromRequest(const String &jsonEncodedRequest)
 {
 	return (EnviJSONRPC (JSON::parse (jsonEncodedRequest), true));
+}
+
+EnviJSONRPC EnviJSONRPC::error (const String &errorMessage, const int id)
+{
+	return (EnviJSONRPC("{\"jsonrpc\": \"2.0\", \"error\": \""+errorMessage+"\", \"id\":"+_STR(id)+"}", false));
 }
 
 Result EnviJSONRPC::isValid(const String &jsonEncodedData)
@@ -160,22 +193,20 @@ Result EnviJSONRPC::isValid(const String &jsonEncodedData)
 				{
 					return (Result::fail("JSON-RPC request version is not 2.0 ["+dso->getProperty("jsonrpc").toString()+"]"));
 				}
-				else
+				
+				if (dso->hasProperty("method") && dso->hasProperty("params"))
 				{
-					if (dso->hasProperty("method") && dso->hasProperty("params"))
-					{
-						return (Result::ok());
-					}
+					return (Result::ok());
+				}
+					
+				if (!dso->hasProperty("method"))
+				{
+					return (Result::fail("JSON-RPC missing required method request parameter"));
+				}
 
-					if (!dso->hasProperty("method"))
-					{
-						return (Result::fail("JSON-RPC missing required method request parameter"));
-					}
-
-					if (!dso->hasProperty("params"))
-					{
-						return (Result::fail("JSON-RPC missing required params request parameter"));
-					}
+				if (!dso->hasProperty("params"))
+				{
+					return (Result::fail("JSON-RPC missing required params request parameter"));
 				}
 			}
 			else
@@ -192,4 +223,19 @@ Result EnviJSONRPC::isValid(const String &jsonEncodedData)
 	{
 		return (Result::fail("JSON-RPC json parser failed ["+res.getErrorMessage()+"]"));
 	}
+
+	return (Result::fail("JSON-RPC Undefined parser state"));
+}
+
+const var EnviJSONRPC::toArray (const StringPairArray &stringPairArray)
+{
+	var ret = empty(false);
+	DynamicObject *dso = ret.getDynamicObject();
+
+	for (int i=0; i<stringPairArray.size(); i++)
+	{
+		dso->setProperty (stringPairArray.getAllKeys() [i], stringPairArray.getAllValues() [i]);
+	}
+
+	return (ret);
 }

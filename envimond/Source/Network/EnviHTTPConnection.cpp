@@ -151,7 +151,7 @@ const bool EnviHTTPConnection::respond()
 				if (staticFileToSend.existsAsFile())
 					return (sendStaticResponse (staticFileToSend));
 				else
-					return (sendNotFoundResponse());
+					return (sendNotFoundResponse(staticFileToSend));
 			}
 			else if (requestURL.toString(true).startsWith ("/status"))
 			{
@@ -171,7 +171,7 @@ const bool EnviHTTPConnection::respond()
 			}
 			else
 			{
-				return (sendNotFoundResponse());
+				return (sendNotFoundResponse(File::nonexistent));
 			}
 		}
 		else
@@ -191,7 +191,17 @@ const bool EnviHTTPConnection::respond()
 const bool EnviHTTPConnection::sendDefaultResponse(const String &message)
 {
 	responseSize = message.length();
-	return (writeStringToSocket(socket, getStatndardResponseHeaders()+"Content-Length: "+_STR(message.length())+"\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n"+message));
+
+	if (writeStringToSocket(socket, getStatndardResponseHeaders()+"Content-Length: "+_STR(message.length())+"\nContent-type: text/html; charset=UTF-8\nConnection: close\n\n"+message))
+	{
+		owner.logAccess(this);
+		return (true);
+	}
+	else
+	{
+		owner.logError (this);
+		return (false);
+	}
 }
 
 const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeaders, const String &responseData)
@@ -213,7 +223,16 @@ const bool EnviHTTPConnection::sendResponse(const StringPairArray &responseHeade
 
 	responseSize = responseData.length();
 
-	return (writeStringToSocket(socket, resp));
+	if (writeStringToSocket(socket, resp))
+	{
+		owner.logAccess(this);
+		return (true);
+	}
+	else
+	{
+		owner.logError(this);
+		return (false);
+	}
 }
 
 const String EnviHTTPConnection::getStatndardResponseHeaders()
@@ -316,6 +335,8 @@ const bool EnviHTTPConnection::writeDataFromBlob(const EnviHTTPCacheBlob &blob)
 
 const bool EnviHTTPConnection::sendFile(const File &fileToSend)
 {
+	owner.logAccess(this);
+
 	if (owner.canCache (fileToSend))
 	{
 		EnviHTTPCacheBlob blob = EnviHTTPCache::getFromFile (fileToSend, owner.getMimeTypeFor(fileToSend));
@@ -364,17 +385,19 @@ const bool EnviHTTPConnection::sendStatusResponse(const URL &requestURL)
 	String resp = "<html><body>Status<br />";
 	resp << "</body></html>";
 
+	owner.logAccess(this);
+
 	return (sendDefaultResponse (resp));
 }
 
-const bool EnviHTTPConnection::sendNotFoundResponse()
+const bool EnviHTTPConnection::sendNotFoundResponse(const File &objectThatFailedToLoad)
 {
-	_DBG("EnviHTTPConnection::sendNotFoundResponse");
-
 	String response = "HTTP/1.1 404 Not Found\nServer: EnviHTTP/"+SystemStats::getJUCEVersion()+"\nContent-Type: text/html; charset=utf-8\n\n404 Not Found";
 	responseCode = 404;
 	responseSize = 13;
 	const int ret = socket->waitUntilReady(false, 1000);
+
+	owner.logError (this, objectThatFailedToLoad.getFullPathName());
 
 	if (ret == 1)
 	{

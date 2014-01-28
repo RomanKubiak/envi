@@ -28,7 +28,7 @@ class EnviHTTPConnection : public Thread, public ChangeBroadcaster
 		const bool sendDefaultResponse(const String &message);
 		const bool sendStaticResponse(const File &fileToSend);
 		const bool sendStatusResponse(const URL &requestURL);
-		const bool sendNotFoundResponse();
+		const bool sendNotFoundResponse(const File &objectThatFailedToLoad);
 		const bool sendFile(const File &fileToSend);
 		const EnviHTTPMethod getRequestMethod(const String &headers);
 		const URL getRequestURL(const EnviHTTPMethod method, const String &headers);

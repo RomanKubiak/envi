@@ -134,7 +134,6 @@ void EnviHTTP::changeListenerCallback (ChangeBroadcaster* source)
 	EnviHTTPConnection *conn = dynamic_cast<EnviHTTPConnection*>(source);
 	if (conn != nullptr)
 	{
-		logAccess (conn);
 		connectionPool.removeObject (conn);
 	}
 }
@@ -174,7 +173,7 @@ void EnviHTTP::logError(EnviHTTPConnection *source, const String &messageIfAny)
 {
 	if (errorLog)
 	{
-		accessLog->logMessage (	source->getHostname()
+		errorLog->logMessage (	source->getHostname()
 								+" "
 								+getLogTimestamp()
 								+" \""

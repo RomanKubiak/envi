@@ -68,10 +68,20 @@ const Result EnviIPCServer::getResponse (	const URL &requestUrl,
 
 const String EnviIPCServer::processJSONRequest(const String &request)
 {
-	return (String::empty);
+	EnviJSONRPC rpc = EnviJSONRPC::fromRequest (request);
+
+	_DBG("EnviIPCServer::processJSONRequest");
+	_DBG(request);
+
+	if (rpc.getRequestMethodName() == "envi.status")
+	{
+		rpc.setResponseParameters (EnviJSONRPC::toArray(EnviHTTP::getSystemStats()));
+	}
+
+	return (rpc.responseToString());
 }
 
 const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
 {
-	return (String::empty);
+	return (EnviJSONRPC::error(whyRequestFailed.getErrorMessage()).responseToString());
 }

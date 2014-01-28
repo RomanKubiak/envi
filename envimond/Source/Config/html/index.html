@@ -17,28 +17,20 @@
 		<div class="container">
 			<div class="header">
 				<ul class="nav nav-pills pull-right">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
+					<li class="active"><a href="/">Home</a></li>
+					<li><a href="/sensors">Sensors</a></li>
+					<li><a href="/status">Status</a></li>
 				</ul>
 				<h3 class="text-muted">Project name</h3>
 			</div>
 			<div class="row marketing">
 				<div class="col-lg-6">
 					<h4>Subheading</h4>
-					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-					<h4>Subheading</h4>
-					<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-					<h4>Subheading</h4>
-					<p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+					<p><div id="envi-status"></div></p>
 				</div>
 				<div class="col-lg-6">
 					<h4>Subheading</h4>
 					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-					<h4>Subheading</h4>
-					<p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-					<h4>Subheading</h4>
-					<p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
 				</div>
 			</div>
 		</div>
@@ -55,16 +47,15 @@
 				params: [],
 				success: function(result) 
 				{
-					// Do something with the result here
-					// It comes back as an RPC 2.0 compatible response object
-					console.log ("Request success");
-					console.log (result);
+					console.log (result.params);
+					for (key in result.params)
+					{
+						$("#envi-status").append (key+" = "+result.params[key]+"<br />");
+						
+					}
 				},
 				error: function(result) 
 				{
-					// Result is an RPC 2.0 compatible response object
-					console.log ("Request failed");
-					console.log (result);
 				}
 			});
 		</script>
