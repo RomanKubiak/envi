@@ -274,3 +274,8 @@ const StringPairArray EnviHTTP::getSystemStats()
 
 	return (result);
 }
+
+const String EnviHTTP::processCoreRPC (const EnviJSONRPC &request)
+{
+	return (String::empty);
+}

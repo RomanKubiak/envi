@@ -81,6 +81,7 @@ namespace Ids
 {
 	#define DECLARE_ID(name)      const Identifier name (#name)
 	DECLARE_ID (envi);
+	DECLARE_ID (core);
 	DECLARE_ID (dataSource);
 	DECLARE_ID (dataValue);
 	DECLARE_ID (dataExp);

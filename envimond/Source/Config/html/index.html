@@ -2,39 +2,58 @@
 <html lang="en">
 
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<link rel="shortcut icon" href="images/favicon.png">
-		<title>Envi</title>
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/jumbotron-narrow.css" rel="stylesheet">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<link rel="shortcut icon" href="images/favicon.png" />
+		<title>
+			Envi
+		</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="css/envi.css" rel="stylesheet" />
 	</head>
 
 	<body>
+
 		<div class="container">
-			<div class="header">
-				<ul class="nav nav-pills pull-right">
-					<li class="active"><a href="/">Home</a></li>
-					<li><a href="/sensors">Sensors</a></li>
-					<li><a href="/status">Status</a></li>
-				</ul>
-				<h3 class="text-muted">Project name</h3>
+			<div class="masthead">
+					<ul class="nav nav-justified">
+						<li class="active"><a href="#">Status</a></li>
+						<li><a href="#">Solar</a></li>
+						<li><a href="#">Power</a></li>
+						<li><a href="#">Environment</a></li>
+						<li><a href="#">OS Stats</a></li>
+						<li><a href="#">History</a></li>
+						<li><a href="#">Network</a></li>
+						<li><a href="#">Logs</a></li>
+					</ul>
 			</div>
-			<div class="row marketing">
-				<div class="col-lg-6">
-					<h4>Subheading</h4>
-					<p><div id="envi-status"></div></p>
+
+			<div class="row">
+				<div class="col-lg-4">
+					<h2>Heading</h2>
+					<p>Content</p>
 				</div>
-				<div class="col-lg-6">
-					<h4>Subheading</h4>
-					<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+				<div class="col-lg-4">
+					<h2>Heading</h2>
+					<p>Content</p>
+				</div>
+
+				<div class="col-lg-4">
+					<h2>Heading</h2>
+					<p>Content</p>
 				</div>
 			</div>
-		</div>
-		
+
+			<div class="footer">
+				<p>&copy; Company 2013</p>
+			</div>
+
+		</div> <!-- Container -->
+
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/jquery.jsonrpc.js"></script>
@@ -45,20 +64,21 @@
 			});
 			$.jsonRPC.request('status', {
 				params: [],
-				success: function(result) 
+				success: function(result)
 				{
 					console.log (result.params);
 					for (key in result.params)
 					{
 						$("#envi-status").append (key+" = "+result.params[key]+"<br />");
-						
+
 					}
 				},
-				error: function(result) 
+				error: function(result)
 				{
 				}
 			});
 		</script>
+
 	</body>
 
 </html>

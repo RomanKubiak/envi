@@ -10,13 +10,11 @@
 
 #include "EnviIPCServer.h"
 #include "EnviApplication.h"
+#include <functional>
 
-EnviIPCServer::EnviIPCServer(EnviApplication &_owner) : owner(_owner), Thread("EnviIPCServer")
+EnviIPCServer::EnviIPCServer(EnviApplication &_owner) : owner(_owner)
 {
-}
-
-void EnviIPCServer::run()
-{
+	methods.set ("getNumDataSources", std::bind (&EnviIPCServer::getNumDataSources, this, std::placeholders::_1));
 }
 
 const bool EnviIPCServer::isValidURL (const URL &url)
@@ -73,15 +71,29 @@ const String EnviIPCServer::processJSONRequest(const String &request)
 	_DBG("EnviIPCServer::processJSONRequest");
 	_DBG(request);
 
-	if (rpc.getRequestMethodName() == "envi.status")
+	if (rpc.getRequestNamespace() == Ids::envi.toString())
 	{
-		rpc.setResponseParameters (EnviJSONRPC::toArray(EnviHTTP::getSystemStats()));
+		return (processEnviRPC(rpc));
+	}
+	else if (rpc.getRequestNamespace() == Ids::core.toString())
+	{
+		return (owner.getEnviHTTP().processCoreRPC(rpc));
 	}
 
-	return (rpc.responseToString());
+	return (respondWithJSONError(Result::fail("Unhandled RPC method")));
 }
 
 const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
 {
 	return (EnviJSONRPC::error(whyRequestFailed.getErrorMessage()).responseToString());
+}
+
+const String EnviIPCServer::processEnviRPC(const EnviJSONRPC &rpc)
+{
+	return (String::empty);
+}
+
+const var EnviIPCServer::getNumDataSources(const var)
+{
+	return (var::null);
 }

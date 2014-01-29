@@ -37,6 +37,7 @@ class EnviApplication : public MultiTimer
 		void timerCallback(int timerId);
 		const Result findDataSourcesOnDisk();
 		EnviCLI &getCLI();
+		EnviHTTP &getEnviHTTP();
 		EnviDataSource *createInstance(const File &sourceState);
 		EnviDataSource *createInstance(const ValueTree dataSourceInstance);
 		void sourceWrite(EnviDataSource *dataSource, const Result &failureReason);

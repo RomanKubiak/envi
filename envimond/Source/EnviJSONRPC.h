@@ -41,7 +41,8 @@ class EnviJSONRPC
 		var &getRequest();
 		const String responseToString();
 		const String requestToString();
-
+		const String getRequestNamespace();
+		const String getResponseNamespace();
 		const var getResponseWithParam(const var responseParam);
 		static const var toArray (const StringPairArray &stringPairArray);
 		static EnviJSONRPC fromRequest(const String &jsonEncodedRequest);

@@ -11,6 +11,7 @@
 #ifndef ENVIHTTP_H_INCLUDED
 #define ENVIHTTP_H_INCLUDED
 
+#include "EnviJSONRPC.h"
 #include "EnviHTTPCache.h"
 #include "Externals/juce_WildcardFileFilter.h"
 class EnviApplication;
@@ -49,6 +50,7 @@ class EnviHTTP : public Thread, public ChangeListener
 		void setErrorLog (const File &fileToLogTo);
 		void logError(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
 		void logAccess(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
+		const String processCoreRPC (const EnviJSONRPC &request);
 		static const String getLogTimestamp();
 		static const String getOsType(const SystemStats::OperatingSystemType type);
 		static const StringPairArray getSystemStats();

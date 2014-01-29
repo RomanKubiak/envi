@@ -90,6 +90,16 @@ void EnviJSONRPC::setResponseMethodName(const String &methodName)
 	if (response.getDynamicObject()) response.getDynamicObject()->setProperty ("method", methodName);
 }
 
+const String EnviJSONRPC::getRequestNamespace()
+{
+	return (getRequestMethodName().upToFirstOccurrenceOf(".", false, true));
+}
+
+const String EnviJSONRPC::getResponseNamespace()
+{
+	return (getResponseMethodName().upToFirstOccurrenceOf(".", false, true));
+}
+
 const var EnviJSONRPC::getRequestParameters() const
 {
 	return (request.getDynamicObject() ? request.getDynamicObject()->getProperty("params") : var::null);
@@ -193,12 +203,12 @@ Result EnviJSONRPC::isValid(const String &jsonEncodedData)
 				{
 					return (Result::fail("JSON-RPC request version is not 2.0 ["+dso->getProperty("jsonrpc").toString()+"]"));
 				}
-				
+
 				if (dso->hasProperty("method") && dso->hasProperty("params"))
 				{
 					return (Result::ok());
 				}
-					
+
 				if (!dso->hasProperty("method"))
 				{
 					return (Result::fail("JSON-RPC missing required method request parameter"));

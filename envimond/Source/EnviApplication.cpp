@@ -412,3 +412,8 @@ const MemoryBlock EnviApplication::getResponseForURL (const URL &url)
 {
 	return (MemoryBlock());
 }
+
+EnviHTTP &EnviApplication::getEnviHTTP()
+{
+	return (*enviHTTP);
+}
