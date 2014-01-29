@@ -13,6 +13,7 @@
 
 #include "EnviHTTP.h"
 #include "EnviJSONRPC.h"
+#include <functional>
 
 class EnviIPCServer;
 
@@ -32,6 +33,10 @@ class EnviIPCServer : public EnviHTTPProvider
 		const String respondWithJSONError(const Result &whyRequestFailed);
 		const String processEnviRPC(const EnviJSONRPC &rpc);
 		const var getNumDataSources(const var);
+		const var getDataSource(const var dataSourceIndex);
+		const var getDataSourceGroups(const var);
+		const var getNumDataSourcesInGroup(const var groupName);
+		const var getDataSourceInGroup(const var parameters);
 
 		JUCE_LEAK_DETECTOR(EnviIPCServer);
 

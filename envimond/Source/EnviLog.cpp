@@ -14,7 +14,7 @@
 juce_ImplementSingleton (EnviLog)
 
 EnviLog::EnviLog()
-	: owner(nullptr), logToConsole(false), logLevel(3)
+	: owner(nullptr), logToConsole(false), logLevel(3), logHistorySize(32)
 {
 	Logger::setCurrentLogger (this);
 }
@@ -48,6 +48,12 @@ void EnviLog::logMessage (const int level, const String &message)
 	{
 		fileLogger->logMessage (msg);
 	}
+
+	historyLog.insert (0, EnviLogMessage(level,message));
+
+	if (historyLog.size() > logHistorySize.get())
+		historyLog.resize (logHistorySize.get());
+
 }
 
 void EnviLog::logMessage(const String &message)

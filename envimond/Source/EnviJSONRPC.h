@@ -48,6 +48,19 @@ class EnviJSONRPC
 		static EnviJSONRPC fromRequest(const String &jsonEncodedRequest);
 		static EnviJSONRPC error (const String &errorMessage, const int id=0);
 		static Result isValid(const String &jsonEncodedData);
+
+		static var empty(const bool addDefaultProperties=true)
+		{
+			DynamicObject *dso = new DynamicObject();
+			if (addDefaultProperties)
+			{
+				dso->setProperty("jsonrpc", "2.0");
+				dso->setProperty("id", "-1");
+				dso->setProperty("error", String::empty);
+			}
+			return (var(dso));
+		}
+
 	private:
 		var response;
 		var request;

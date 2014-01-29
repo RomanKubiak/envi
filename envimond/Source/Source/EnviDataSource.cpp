@@ -435,3 +435,18 @@ double EnviDataSource::EnviExpScope::evaluateFunction (const String &functionNam
 	}
 	return (0.0);
 }
+
+const var EnviDataSource::getDataSourceInfoAsJSON() const
+{
+	const ScopedLock sl(dataSourceLock);
+
+	var obj = EnviJSONRPC::empty(false);
+	DynamicObject *dso = obj.getDynamicObject();
+
+	for (int i=0; i<instanceConfig.getNumProperties(); i++)
+	{
+		dso->setProperty (instanceConfig.getPropertyName(i), instanceConfig.getProperty(instanceConfig.getPropertyName(i)));
+	}
+
+	return (obj);
+}

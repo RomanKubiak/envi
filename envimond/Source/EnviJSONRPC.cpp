@@ -10,18 +10,6 @@
 
 #include "EnviJSONRPC.h"
 
-static var empty(const bool addDefaultProperties=true)
-{
-	DynamicObject *dso = new DynamicObject();
-	if (addDefaultProperties)
-	{
-		dso->setProperty("jsonrpc", "2.0");
-		dso->setProperty("id", "-1");
-		dso->setProperty("error", String::empty);
-	}
-	return (var(dso));
-}
-
 EnviJSONRPC::EnviJSONRPC() : response(empty()), request(empty())
 {
 }

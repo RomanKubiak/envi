@@ -27,13 +27,23 @@ class EnviLog : public Logger
 		void setLogLevel(const int _logLevel);
 		static const String levelToString(const int logLevel);
 
+		struct EnviLogMessage
+		{
+			EnviLogMessage (const int _level, const String &_message) : level(_level), message(_message) {}
+			EnviLogMessage() : level(-1) {}
+			EnviLogMessage (const EnviLogMessage &other) : level(other.level), message(other.message) {}
+			int level;
+			String message;
+		};
 		juce_DeclareSingleton (EnviLog, false);
 
 	private:
+		Array<EnviLogMessage,CriticalSection> historyLog;
 		EnviApplication *owner;
 		ScopedPointer <FileLogger> fileLogger;
 		bool logToConsole;
 		int logLevel;
+		Atomic<int> logHistorySize;
 
 };
 

@@ -10,11 +10,14 @@
 
 #include "EnviIPCServer.h"
 #include "EnviApplication.h"
-#include <functional>
 
 EnviIPCServer::EnviIPCServer(EnviApplication &_owner) : owner(_owner)
 {
 	methods.set ("getNumDataSources", std::bind (&EnviIPCServer::getNumDataSources, this, std::placeholders::_1));
+	methods.set ("getDataSource", std::bind (&EnviIPCServer::getDataSource, this, std::placeholders::_1));
+	methods.set ("getDataSourceGroups", std::bind (&EnviIPCServer::getDataSourceGroups, this, std::placeholders::_1));
+	methods.set ("getNumDataSourcesInGroup", std::bind (&EnviIPCServer::getNumDataSourcesInGroup, this, std::placeholders::_1));
+	methods.set ("getDataSourceInGroup", std::bind (&EnviIPCServer::getDataSourceInGroup, this, std::placeholders::_1));
 }
 
 const bool EnviIPCServer::isValidURL (const URL &url)
@@ -94,6 +97,30 @@ const String EnviIPCServer::processEnviRPC(const EnviJSONRPC &rpc)
 }
 
 const var EnviIPCServer::getNumDataSources(const var)
+{
+	return (owner.getNumDataSources());
+}
+
+const var EnviIPCServer::getDataSource(const var dataSourceIndex)
+{
+	if (owner.getDataSource (dataSourceIndex))
+	{
+		return (owner.getDataSource(dataSourceIndex)->getDataSourceInfoAsJSON());
+	}
+	return (var::null);
+}
+
+const var EnviIPCServer::getDataSourceGroups(const var)
+{
+	return (var::null);
+}
+
+const var EnviIPCServer::getNumDataSourcesInGroup(const var)
+{
+	return (var::null);
+}
+
+const var EnviIPCServer::getDataSourceInGroup(const var)
 {
 	return (var::null);
 }

@@ -69,6 +69,7 @@ class EnviDataSource : public ChangeBroadcaster
 		var getHistory();
 		var &getResultRef();
 		var getResult() const;
+		const var getDataSourceInfoAsJSON() const;
 		JUCE_LEAK_DETECTOR(EnviDataSource);
 
 	protected:
