@@ -145,6 +145,8 @@ const bool EnviHTTPConnection::respond()
 
 			const File staticFileToSend	= owner.isStaticURL(requestURL.toString(false));
 
+			_DBG("EnviHTTPConnection::respond "+requestURL.toString(false)+" file: "+staticFileToSend.getFullPathName());
+
 			if (staticFileToSend != File::nonexistent)
 			{
 				/** handle a static url request */
@@ -362,6 +364,7 @@ const bool EnviHTTPConnection::sendFile(const File &fileToSend)
 
 const bool EnviHTTPConnection::sendStaticResponse(const File &fileToSend)
 {
+	_DBG("EnviHTTPConnection::sendStaticResponse");
 	responseSize = fileToSend.getSize();
 
 	if (fileToSend.existsAsFile())

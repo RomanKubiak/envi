@@ -15,9 +15,6 @@ EnviIPCServer::EnviIPCServer(EnviApplication &_owner) : owner(_owner)
 {
 	methods.set ("getNumDataSources", std::bind (&EnviIPCServer::getNumDataSources, this, std::placeholders::_1));
 	methods.set ("getDataSource", std::bind (&EnviIPCServer::getDataSource, this, std::placeholders::_1));
-	methods.set ("getDataSourceGroups", std::bind (&EnviIPCServer::getDataSourceGroups, this, std::placeholders::_1));
-	methods.set ("getNumDataSourcesInGroup", std::bind (&EnviIPCServer::getNumDataSourcesInGroup, this, std::placeholders::_1));
-	methods.set ("getDataSourceInGroup", std::bind (&EnviIPCServer::getDataSourceInGroup, this, std::placeholders::_1));
 }
 
 const bool EnviIPCServer::isValidURL (const URL &url)
@@ -93,34 +90,28 @@ const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
 
 const String EnviIPCServer::processEnviRPC(const EnviJSONRPC &rpc)
 {
-	return (String::empty);
+	const String methodName = rpc.getRequestMethodName().fromFirstOccurrenceOf("envi.", false, false);
+
+	if (methods.contains (methodName))
+	{
+        return (methods[methodName] (rpc.getRequestParameters()));
+	}
+	else
+	{
+		return (EnviJSONRPC::error("Unhandled ENVI method"));
+	}
 }
 
-const var EnviIPCServer::getNumDataSources(const var)
+const var EnviIPCServer::getNumDataSources(const var params)
 {
 	return (owner.getNumDataSources());
 }
 
-const var EnviIPCServer::getDataSource(const var dataSourceIndex)
+const var EnviIPCServer::getDataSource(const var params)
 {
-	if (owner.getDataSource (dataSourceIndex))
+	if (owner.getDataSource (params[0]))
 	{
-		return (owner.getDataSource(dataSourceIndex)->getDataSourceInfoAsJSON());
+		return (owner.getDataSource(params[0])->getDataSourceInfoAsJSON());
 	}
-	return (var::null);
-}
-
-const var EnviIPCServer::getDataSourceGroups(const var)
-{
-	return (var::null);
-}
-
-const var EnviIPCServer::getNumDataSourcesInGroup(const var)
-{
-	return (var::null);
-}
-
-const var EnviIPCServer::getDataSourceInGroup(const var)
-{
 	return (var::null);
 }

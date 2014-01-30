@@ -32,11 +32,9 @@ class EnviIPCServer : public EnviHTTPProvider
 		const String processJSONRequest(const String &request);
 		const String respondWithJSONError(const Result &whyRequestFailed);
 		const String processEnviRPC(const EnviJSONRPC &rpc);
-		const var getNumDataSources(const var);
-		const var getDataSource(const var dataSourceIndex);
-		const var getDataSourceGroups(const var);
-		const var getNumDataSourcesInGroup(const var groupName);
-		const var getDataSourceInGroup(const var parameters);
+
+		const var getNumDataSources(const var params);
+		const var getDataSource(const var params);
 
 		JUCE_LEAK_DETECTOR(EnviIPCServer);
 

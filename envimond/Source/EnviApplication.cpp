@@ -74,7 +74,7 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 	enviIPCServer	= new EnviIPCServer(*this);
 	enviHTTP	    = new EnviHTTP(enviIPCServer, (bool)getCLI().isSet("listen-port") ? getCLI().getParameter("listen-port").getIntValue() : 9999);
 
-	enviHTTP->setStaticFolder ("/", getEnviStaticHTMLDir(), WildcardFileFilter ("*.js;*.css;*.html;*.png;*.jpg;*.gif", "*", "Static pages"));
+	enviHTTP->setStaticFolder ("/", getEnviStaticHTMLDir(), WildcardFileFilter ("*.js;*.css;*.html;*.png;*.jpg;*.gif;*.ico", "*", "Static pages"));
 	enviHTTP->setMimeTypes (BinaryData::mime_types, BinaryData::mime_typesSize);
 	enviHTTP->setAccessLog (getEnviHTTPAccessLogFile());
 	enviHTTP->setErrorLog (getEnviHTTPErrorLogFile());
