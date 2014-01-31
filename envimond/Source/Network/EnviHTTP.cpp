@@ -28,6 +28,10 @@ EnviHTTP::EnviHTTP(EnviHTTPProvider *_provider, const int listenPort) : provider
 			startThread();
 		}
 	}
+
+	coreMethods.set ("systemStatus", std::bind (&EnviHTTP::systemStatus, this, std::placeholders::_1));
+	coreMethods.set ("serverStatus", std::bind (&EnviHTTP::serverStatus, this, std::placeholders::_1));
+	coreMethods.set ("ping", std::bind (&EnviHTTP::ping, this, std::placeholders::_1));
 }
 
 EnviHTTP::~EnviHTTP()
@@ -275,7 +279,32 @@ const StringPairArray EnviHTTP::getSystemStats()
 	return (result);
 }
 
-const String EnviHTTP::processCoreRPC (const EnviJSONRPC &request)
+const Result EnviHTTP::processCoreRPC (EnviJSONRPC &request)
 {
-	return (String::empty);
+	const String methodName = request.getRequestMethodName().fromFirstOccurrenceOf("core.", false, false);
+
+	if (coreMethods.contains (methodName))
+	{
+        return (coreMethods[methodName] (request));
+	}
+	else
+	{
+		return (Result::fail("Unhandled CORE method ["+methodName+"]"));
+	}
+}
+
+const Result EnviHTTP::systemStatus(EnviJSONRPC &request)
+{
+	return (Result::ok());
+}
+
+const Result EnviHTTP::serverStatus(EnviJSONRPC &request)
+{
+	return (Result::ok());
+}
+
+const Result EnviHTTP::ping(EnviJSONRPC &request)
+{
+	request.setResponseResult ("pong");
+    return (Result::ok());
 }

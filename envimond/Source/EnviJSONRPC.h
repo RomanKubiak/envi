@@ -24,15 +24,11 @@ class EnviJSONRPC
 		void setResponseErrorString (const String &errorString);
 		void setRequestErrorString (const String &errorString);
 		const String getRequestMethodName() const;
-		const String getResponseMethodName() const;
 		void setRequestMethodName(const String &methodName);
-		void setResponseMethodName(const String &methodName);
 		const var getRequestParameters() const;
-		const var getResponseParameters() const;
-		void setResponseParameters(const var parameters);
-		void setRequestParameters(const var parameters);
 		void setResponseResult(const var result);
-		void setRequestResult(const var result);
+		const var getResponseResult() const;
+		void setRequestParameters(const var parameters);
 		const int64 getRequestId() const;
 		const int64 getResponseId() const;
 		void setRequestId(const int64 id);
@@ -43,21 +39,31 @@ class EnviJSONRPC
 		const String requestToString();
 		const String getRequestNamespace();
 		const String getResponseNamespace();
-		const var getResponseWithParam(const var responseParam);
+		const var getResponseWithResult(const var responseResult);
 		static const var toArray (const StringPairArray &stringPairArray);
 		static EnviJSONRPC fromRequest(const String &jsonEncodedRequest);
 		static EnviJSONRPC error (const String &errorMessage, const int id=0);
 		static Result isValid(const String &jsonEncodedData);
 
-		static var empty(const bool addDefaultProperties=true)
+		static var empty(const bool addDefaultProperties=true, const bool isRequest=true)
 		{
 			DynamicObject *dso = new DynamicObject();
 			if (addDefaultProperties)
 			{
 				dso->setProperty("jsonrpc", "2.0");
 				dso->setProperty("id", "-1");
-				dso->setProperty("error", String::empty);
 			}
+
+			if (isRequest)
+			{
+				dso->setProperty("method", var::null);
+				dso->setProperty("params", var::null);
+			}
+			else
+			{
+				dso->setProperty ("result", var::null);
+			}
+
 			return (var(dso));
 		}
 

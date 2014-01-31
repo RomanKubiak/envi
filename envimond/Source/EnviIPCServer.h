@@ -29,12 +29,12 @@ class EnviIPCServer : public EnviHTTPProvider
 									const String &requestBody,
 									StringPairArray &responseHeaders,
 									String &responseData);
-		const String processJSONRequest(const String &request);
 		const String respondWithJSONError(const Result &whyRequestFailed);
-		const String processEnviRPC(const EnviJSONRPC &rpc);
+		const Result processJSONRequest(const String &request);
 
-		const var getNumDataSources(const var params);
-		const var getDataSource(const var params);
+		const Result processEnviRPC(EnviJSONRPC &reqeust);
+		const Result getNumDataSources(EnviJSONRPC &reqeust);
+		const Result getDataSource(EnviJSONRPC &reqeust);
 
 		JUCE_LEAK_DETECTOR(EnviIPCServer);
 
@@ -42,7 +42,7 @@ class EnviIPCServer : public EnviHTTPProvider
 		CriticalSection ipcCriticalSection;
 		EnviJSONRPC jsonRPC;
 		EnviApplication &owner;
-		HashMap<String, std::function<const var(const var)> > methods;
+		HashMap<String, std::function<const Result(EnviJSONRPC &)> > methods;
 };
 
 #endif  // ENVIIPCSERVER_H_INCLUDED

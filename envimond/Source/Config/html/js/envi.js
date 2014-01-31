@@ -1,7 +1,8 @@
 /* Envi javascript */
 console.log ("Envi.js")
 
-var rpcConfig = { endPoint: '/jsonrpc', namespace: 'envi' };
+var rpcEnviConfig = { endPoint: '/jsonrpc', namespace: 'envi' };
+var rpcCoreConfig = { endPoint: '/jsonrpc', namespace: 'core' };
 
 function rpcSuccess(rpcResult)
 {
@@ -21,6 +22,5 @@ function rpcFailure(rpcResult)
 	console.log (rpcResult);
 }
 
-$.jsonRPC.setup(rpcConfig);
-
-$.jsonRPC.request('status', { params: [], success: rpcSuccess, error: rpcFailure } );
+$.jsonRPC.setup(rpcCoreConfig);
+$.jsonRPC.request('ping', { params: [], success: rpcSuccess, error: rpcFailure } );

@@ -23,12 +23,12 @@ EnviJSONRPC::EnviJSONRPC(const String &initialData, const bool isRequest)
 	if (isRequest)
 	{
 		request 	= JSON::fromString(initialData);
-		response 	= empty();
+		response 	= empty(true,true);
 		setResponseId (getRequestId());
 	}
 	else
 	{
-		request 	= empty();
+		request 	= empty(true,false);
 		response 	= JSON::fromString(initialData);
 	}
 }
@@ -58,11 +58,6 @@ void EnviJSONRPC::setRequestErrorString (const String &errorString)
 	if (request.getDynamicObject()) request.getDynamicObject()->setProperty ("error", errorString);
 }
 
-const String EnviJSONRPC::getResponseMethodName() const
-{
-	return (response.getProperty("method", var::null));
-}
-
 const String EnviJSONRPC::getRequestMethodName() const
 {
 	return (request.getProperty("method", var::null));
@@ -73,34 +68,14 @@ void EnviJSONRPC::setRequestMethodName(const String &methodName)
 	if (request.getDynamicObject()) request.getDynamicObject()->setProperty ("method", methodName);
 }
 
-void EnviJSONRPC::setResponseMethodName(const String &methodName)
-{
-	if (response.getDynamicObject()) response.getDynamicObject()->setProperty ("method", methodName);
-}
-
 const String EnviJSONRPC::getRequestNamespace()
 {
 	return (getRequestMethodName().upToFirstOccurrenceOf(".", false, true));
 }
 
-const String EnviJSONRPC::getResponseNamespace()
-{
-	return (getResponseMethodName().upToFirstOccurrenceOf(".", false, true));
-}
-
 const var EnviJSONRPC::getRequestParameters() const
 {
 	return (request.getDynamicObject() ? request.getDynamicObject()->getProperty("params") : var::null);
-}
-
-const var EnviJSONRPC::getResponseParameters() const
-{
-	return (response.getDynamicObject() ? response.getDynamicObject()->getProperty("params") : var::null);
-}
-
-void EnviJSONRPC::setResponseParameters(const var parameters)
-{
-	if (response.getDynamicObject()) response.getDynamicObject()->setProperty ("params", parameters);
 }
 
 void EnviJSONRPC::setRequestParameters(const var parameters)
@@ -133,9 +108,9 @@ void EnviJSONRPC::setResponseResult(const var result)
 	if (response.getDynamicObject()) response.getDynamicObject()->setProperty("result", result);
 }
 
-void EnviJSONRPC::setRequestResult(const var result)
+const var EnviJSONRPC::getResponseResult() const
 {
-	if (request.getDynamicObject()) request.getDynamicObject()->setProperty("result", result);
+	return (response.getDynamicObject() ? response.getDynamicObject()->getProperty("result") : var::null);
 }
 
 var &EnviJSONRPC::getResponse()
@@ -158,9 +133,9 @@ const String EnviJSONRPC::requestToString()
 	return (JSON::toString(request));
 }
 
-const var EnviJSONRPC::getResponseWithParam(const var responseParam)
+const var EnviJSONRPC::getResponseWithResult(const var responseResult)
 {
-    setResponseParameters (responseParam);
+    setResponseResult (responseResult);
     return (response);
 }
 

@@ -50,7 +50,12 @@ class EnviHTTP : public Thread, public ChangeListener
 		void setErrorLog (const File &fileToLogTo);
 		void logError(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
 		void logAccess(EnviHTTPConnection *source, const String &messageIfAny=String::empty);
-		const String processCoreRPC (const EnviJSONRPC &request);
+
+		const Result processCoreRPC (EnviJSONRPC &request);
+		const Result systemStatus(EnviJSONRPC &request);
+		const Result serverStatus(EnviJSONRPC &request);
+		const Result ping(EnviJSONRPC &request);
+
 		static const String getLogTimestamp();
 		static const String getOsType(const SystemStats::OperatingSystemType type);
 		static const StringPairArray getSystemStats();
@@ -76,6 +81,7 @@ class EnviHTTP : public Thread, public ChangeListener
 		OwnedArray <EnviHTTPConnection,CriticalSection> connectionPool;
 		HashMap<String,String,DefaultHashFunctions,CriticalSection> mimeTypes;
 		ScopedPointer <FileLogger> accessLog, errorLog;
+		HashMap<String, std::function<const Result(EnviJSONRPC &)> > coreMethods;
 };
 
 #endif  // ENVIHTTP_H_INCLUDED

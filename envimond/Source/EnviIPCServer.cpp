@@ -49,7 +49,16 @@ const Result EnviIPCServer::getResponse (	const URL &requestUrl,
 
 			if (res.wasOk())
 			{
-				responseData = processJSONRequest(requestBody);
+				Result processResult = processJSONRequest(requestBody);
+
+				if (processResult.wasOk())
+				{
+					responseData = jsonRPC.responseToString();
+				}
+				else
+				{
+					responseData = respondWithJSONError(processResult);
+				}
 			}
 			else
 			{
@@ -64,23 +73,20 @@ const Result EnviIPCServer::getResponse (	const URL &requestUrl,
 	return (Result::ok());
 }
 
-const String EnviIPCServer::processJSONRequest(const String &request)
+const Result EnviIPCServer::processJSONRequest(const String &request)
 {
-	EnviJSONRPC rpc = EnviJSONRPC::fromRequest (request);
+	jsonRPC = EnviJSONRPC::fromRequest (request);
 
-	_DBG("EnviIPCServer::processJSONRequest");
-	_DBG(request);
-
-	if (rpc.getRequestNamespace() == Ids::envi.toString())
+	if (jsonRPC.getRequestNamespace() == Ids::envi.toString())
 	{
-		return (processEnviRPC(rpc));
+		return (processEnviRPC(jsonRPC));
 	}
-	else if (rpc.getRequestNamespace() == Ids::core.toString())
+	else if (jsonRPC.getRequestNamespace() == Ids::core.toString())
 	{
-		return (owner.getEnviHTTP().processCoreRPC(rpc));
+		return (owner.getEnviHTTP().processCoreRPC(jsonRPC));
 	}
 
-	return (respondWithJSONError(Result::fail("Unhandled RPC method")));
+	return (Result::fail("Unhandled RPC method"));
 }
 
 const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
@@ -88,30 +94,26 @@ const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
 	return (EnviJSONRPC::error(whyRequestFailed.getErrorMessage()).responseToString());
 }
 
-const String EnviIPCServer::processEnviRPC(const EnviJSONRPC &rpc)
+const Result EnviIPCServer::processEnviRPC(EnviJSONRPC &rpc)
 {
 	const String methodName = rpc.getRequestMethodName().fromFirstOccurrenceOf("envi.", false, false);
 
 	if (methods.contains (methodName))
 	{
-        return (methods[methodName] (rpc.getRequestParameters()));
+        return (methods[methodName] (rpc));
 	}
 	else
 	{
-		return (EnviJSONRPC::error("Unhandled ENVI method"));
+		return (Result::fail ("Unhandled ENVI method ["+methodName+"]"));
 	}
 }
 
-const var EnviIPCServer::getNumDataSources(const var params)
+const Result EnviIPCServer::getNumDataSources(EnviJSONRPC &request)
 {
-	return (owner.getNumDataSources());
+	return (Result::ok());
 }
 
-const var EnviIPCServer::getDataSource(const var params)
+const Result EnviIPCServer::getDataSource(EnviJSONRPC &request)
 {
-	if (owner.getDataSource (params[0]))
-	{
-		return (owner.getDataSource(params[0])->getDataSourceInfoAsJSON());
-	}
-	return (var::null);
+	return (Result::ok());
 }
