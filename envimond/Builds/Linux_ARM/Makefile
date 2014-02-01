@@ -53,8 +53,6 @@ endif
 OBJECTS := \
   $(OBJDIR)/EnviJSONRPC_da331522.o \
   $(OBJDIR)/EnviIPCServer_944afaa4.o \
-  $(OBJDIR)/juce_FileFilter_3afcc0a0.o \
-  $(OBJDIR)/juce_WildcardFileFilter_af9ab61a.o \
   $(OBJDIR)/slre_95efb89.o \
   $(OBJDIR)/bit_ecebd8a7.o \
   $(OBJDIR)/getopt_1199f4d.o \
@@ -109,16 +107,6 @@ $(OBJDIR)/EnviJSONRPC_da331522.o: ../../Source/EnviJSONRPC.cpp
 $(OBJDIR)/EnviIPCServer_944afaa4.o: ../../Source/EnviIPCServer.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling EnviIPCServer.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/juce_FileFilter_3afcc0a0.o: ../../Source/Externals/juce_FileFilter.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling juce_FileFilter.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/juce_WildcardFileFilter_af9ab61a.o: ../../Source/Externals/juce_WildcardFileFilter.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling juce_WildcardFileFilter.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/slre_95efb89.o: ../../Source/Externals/slre/slre.c

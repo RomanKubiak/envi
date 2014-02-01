@@ -6,8 +6,8 @@
 EnviDSDHT22::EnviDSDHT22(EnviApplication &owner)
 	: Thread("EnviDSDHT22"), gpioPin(-1), EnviDataSource(owner, "dht22")
 {
-	addValue ("Temperature", EnviData::Celsius);
-	addValue ("Humidity", EnviData::Percent);
+	addValue ("Temperature", Celsius);
+	addValue ("Humidity", Percent);
 }
 
 EnviDSDHT22::~EnviDSDHT22()

@@ -12,6 +12,9 @@
 #define ENVIJSONRPC_H_INCLUDED
 
 #include "EnviIncludes.h"
+#include <iostream>
+
+using namespace std;
 
 class EnviJSONRPC
 {
@@ -44,6 +47,12 @@ class EnviJSONRPC
 		static EnviJSONRPC fromRequest(const String &jsonEncodedRequest);
 		static EnviJSONRPC error (const String &errorMessage, const int id=0);
 		static Result isValid(const String &jsonEncodedData);
+
+		static const var toJSONArray (const var p1);
+		static const var toJSONArray (const var p1, const var p2);
+		static const var toJSONArray (const var p1, const var p2, const var p3);
+		static const var toJSONArray (const var p1, const var p2, const var p3, const var p4);
+		static const var toJSONArray (const var p1, const var p2, const var p3, const var p4, const var p5);
 
 		static var empty(const bool addDefaultProperties=true, const bool isRequest=true)
 		{

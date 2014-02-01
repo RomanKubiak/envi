@@ -212,3 +212,48 @@ const var EnviJSONRPC::toArray (const StringPairArray &stringPairArray)
 
 	return (ret);
 }
+
+const var EnviJSONRPC::toJSONArray (const var p1)
+{
+	var result;
+	result.append (p1);
+	return (result);
+}
+
+const var EnviJSONRPC::toJSONArray (const var p1, const var p2)
+{
+	var result;
+	result.append (p1);
+	result.append (p2);
+	return (result);
+}
+
+const var EnviJSONRPC::toJSONArray (const var p1, const var p2, const var p3)
+{
+	var result;
+	result.append (p1);
+	result.append (p2);
+	result.append (p3);
+	return (result);
+}
+
+const var EnviJSONRPC::toJSONArray (const var p1, const var p2, const var p3, const var p4)
+{
+	var result;
+	result.append (p1);
+	result.append (p2);
+	result.append (p3);
+	result.append (p4);
+	return (result);
+}
+
+const var EnviJSONRPC::toJSONArray (const var p1, const var p2, const var p3, const var p4, const var p5)
+{
+	var result;
+	result.append (p1);
+	result.append (p2);
+	result.append (p3);
+	result.append (p4);
+	result.append (p5);
+	return (result);
+}

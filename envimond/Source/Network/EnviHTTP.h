@@ -13,7 +13,8 @@
 
 #include "EnviJSONRPC.h"
 #include "EnviHTTPCache.h"
-#include "Externals/juce_WildcardFileFilter.h"
+#include <functional>
+
 class EnviApplication;
 class EnviHTTPConnection;
 

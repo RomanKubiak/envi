@@ -11,8 +11,6 @@
 #include "EnviDataSource.h"
 #include "EnviApplication.h"
 
-
-
 EnviDataSource::EnviDataSource(EnviApplication &_owner, const Identifier &_type)
 	: disabled(false), owner(_owner), instanceConfig(Ids::dataSource), enviExpScope(*this)
 {

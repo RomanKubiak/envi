@@ -304,7 +304,7 @@ const Result EnviHTTP::serverStatus(EnviJSONRPC &request)
 }
 
 const Result EnviHTTP::ping(EnviJSONRPC &request)
-{
-	request.setResponseResult ("pong");
+{	
+	request.setResponseResult (EnviJSONRPC::toJSONArray ("pong", Time::getCurrentTime().toMilliseconds()));
     return (Result::ok());
 }

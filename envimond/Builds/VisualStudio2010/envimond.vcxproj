@@ -127,8 +127,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\EnviJSONRPC.cpp"/>
     <ClCompile Include="..\..\Source\EnviIPCServer.cpp"/>
-    <ClCompile Include="..\..\Source\Externals\juce_FileFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Externals\juce_WildcardFileFilter.cpp"/>
     <ClCompile Include="..\..\Source\Externals\slre\slre.c"/>
     <ClCompile Include="..\..\Source\Externals\bit.c"/>
     <ClCompile Include="..\..\Source\Externals\getopt.c"/>
@@ -237,6 +235,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_File.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileInputStream.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -247,6 +248,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_TemporaryFile.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_WildcardFileFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_IPAddress.cpp">
@@ -437,8 +441,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\EnviJSONRPC.h"/>
     <ClInclude Include="..\..\Source\EnviIPCServer.h"/>
-    <ClInclude Include="..\..\Source\Externals\juce_FileFilter.h"/>
-    <ClInclude Include="..\..\Source\Externals\juce_WildcardFileFilter.h"/>
     <ClInclude Include="..\..\Source\Externals\slre\slre.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\ClassInfo.h"/>
@@ -552,11 +554,13 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\time\juce_Time.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_DirectoryIterator.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_File.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileFilter.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileInputStream.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileOutputStream.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_FileSearchPath.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_MemoryMappedFile.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_TemporaryFile.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\files\juce_WildcardFileFilter.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_IPAddress.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_MACAddress.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\network\juce_NamedPipe.h"/>

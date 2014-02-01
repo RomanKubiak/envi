@@ -12,14 +12,6 @@
             file="Source/EnviIPCServer.cpp"/>
       <FILE id="fuARuO" name="EnviIPCServer.h" compile="0" resource="0" file="Source/EnviIPCServer.h"/>
       <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
-        <FILE id="KeZLmB" name="juce_FileFilter.cpp" compile="1" resource="0"
-              file="Source/Externals/juce_FileFilter.cpp"/>
-        <FILE id="Rz97Wb" name="juce_FileFilter.h" compile="0" resource="0"
-              file="Source/Externals/juce_FileFilter.h"/>
-        <FILE id="JMXB2i" name="juce_WildcardFileFilter.cpp" compile="1" resource="0"
-              file="Source/Externals/juce_WildcardFileFilter.cpp"/>
-        <FILE id="kpybkB" name="juce_WildcardFileFilter.h" compile="0" resource="0"
-              file="Source/Externals/juce_WildcardFileFilter.h"/>
         <GROUP id="{70125ECB-6CC9-748E-3728-AE8386D7752C}" name="slre">
           <FILE id="EV40bu" name="LICENSE" compile="0" resource="1" file="Source/Externals/slre/LICENSE"/>
           <FILE id="l1lwkS" name="README.md" compile="0" resource="1" file="Source/Externals/slre/README.md"/>

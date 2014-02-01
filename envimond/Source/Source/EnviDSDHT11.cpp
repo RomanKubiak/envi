@@ -5,8 +5,8 @@
 EnviDSDHT11::EnviDSDHT11(EnviApplication &owner)
 	: Thread("EnviDSDHT11"), gpioPin(-1), EnviDataSource(owner, "dht11")
 {
-	addValue ("Temperature", EnviData::Celsius);
-	addValue ("Humidity", EnviData::Percent);
+	addValue ("Temperature", Celsius);
+	addValue ("Humidity", Percent);
 }
 
 EnviDSDHT11::~EnviDSDHT11()
