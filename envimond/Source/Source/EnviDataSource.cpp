@@ -309,6 +309,11 @@ const Result EnviDataSource::evaluateAllExpressions(Array <double> inputData)
 {
 	ScopedLock sl(dataSourceLock);
 
+    if (getResult().getArray() == nullptr)
+    {
+        return (Result::fail("EnviDataSource::evaluateAllExpressions results not valid in this data source"));
+    }
+
 	for (int i=0; i<getResult().getArray()->size(); i++)
 	{
 		if (hasExpression(getValueProperty(i, Ids::name)))

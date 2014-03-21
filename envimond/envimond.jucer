@@ -144,7 +144,7 @@
       </MODULEPATHS>
     </CODEBLOCKS>
     <LINUX_MAKE targetFolder="Builds/Linux_ARM" extraLinkerFlags="" externalLibraries="wiringPi&#10;X11&#10;dl&#10;rt"
-                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w -std=c++11"
+                extraCompilerFlags="-mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -w -std=gnu++0x"
                 extraDefs="WIRING_PI=1&#10;LUA_USE_LINUX">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
@@ -161,7 +161,7 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Linux_x86" externalLibraries="X11&#10;dl&#10;rt"
-                extraDefs="LUA_USE_LINUX" extraCompilerFlags="-w -std=c++11">
+                extraDefs="LUA_USE_LINUX" extraCompilerFlags="-w -std=gnu++0x">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" libraryPath="/usr/X11R6/lib/" isDebug="1" optimisation="1"
                        targetName="envimond" headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals&#10;~/devel/JUCE"

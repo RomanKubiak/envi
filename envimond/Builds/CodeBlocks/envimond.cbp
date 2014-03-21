@@ -1,1333 +1,721 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-  <FileVersion major="1" minor="6"/>
-  <Project>
-    <Option title="envimond"/>
-    <Option pch_mode="2"/>
-    <Option compiler="gcc"/>
-    <Build>
-      <Target title="Debug">
-        <Option output="bin/Debug/envimond"
-                prefix_auto="1"
-                extension_auto="1"/>
-        <Option object_output="obj/Debug"/>
-        <Option type="1"/>
-        <Option compiler="gcc"/>
-        <Compiler>
-          <Add option="-O0"/>
-          <Add option="-std=gnu++0x"/>
-          <Add option="-mstackrealign"/>
-          <Add option="-g"/>
-          <Add option="-w"/>
-          <Add option="-march=corei7-avx"/>
-          <Add option="-D__MINGW__=1"/>
-          <Add option="-D__MINGW_EXTENSION="/>
-          <Add option="-DJUCER_CODEBLOCKS_20734A5D=1"/>
-          <Add option="-DJUCE_APP_VERSION=1.0.0"/>
-          <Add option="-DJUCE_APP_VERSION_HEX=0x10000"/>
-          <Add directory="."/>
-          <Add directory="..\..\JuceLibraryCode"/>
-          <Add directory="../../Source"/>
-          <Add directory="../../Source/Source"/>
-          <Add directory="../../Source/Storage"/>
-          <Add directory="../../Source/Network"/>
-          <Add directory="../../Source/Externals"/>
-        </Compiler>
-        <Linker>
-          <Add library="comdlg32"/>
-          <Add library="imm32"/>
-          <Add library="ole32"/>
-          <Add library="oleaut32"/>
-          <Add library="rpcrt4"/>
-          <Add library="shlwapi"/>
-          <Add library="uuid"/>
-          <Add library="version"/>
-          <Add library="wininet"/>
-          <Add library="winmm"/>
-          <Add library="ws2_32"/>
-          <Add library="wsock32"/>
-        </Linker>
-      </Target>
-      <Target title="Release">
-        <Option output="bin/Release/envimond"
-                prefix_auto="1"
-                extension_auto="1"/>
-        <Option object_output="obj/Release"/>
-        <Option type="1"/>
-        <Option compiler="gcc"/>
-        <Compiler>
-          <Add option="-Os"/>
-          <Add option="-std=gnu++0x"/>
-          <Add option="-mstackrealign"/>
-          <Add option="-w"/>
-          <Add option="-march=corei7-avx"/>
-          <Add option="-D__MINGW__=1"/>
-          <Add option="-D__MINGW_EXTENSION="/>
-          <Add option="-DJUCER_CODEBLOCKS_20734A5D=1"/>
-          <Add option="-DJUCE_APP_VERSION=1.0.0"/>
-          <Add option="-DJUCE_APP_VERSION_HEX=0x10000"/>
-          <Add directory="."/>
-          <Add directory="..\..\JuceLibraryCode"/>
-          <Add directory="../../Source"/>
-          <Add directory="../../Source/Source"/>
-          <Add directory="../../Source/Storage"/>
-          <Add directory="../../Source/Network"/>
-          <Add directory="../../Source/Externals"/>
-        </Compiler>
-        <Linker>
-          <Add option="-s"/>
-          <Add library="comdlg32"/>
-          <Add library="imm32"/>
-          <Add library="ole32"/>
-          <Add library="oleaut32"/>
-          <Add library="rpcrt4"/>
-          <Add library="shlwapi"/>
-          <Add library="uuid"/>
-          <Add library="version"/>
-          <Add library="wininet"/>
-          <Add library="winmm"/>
-          <Add library="ws2_32"/>
-          <Add library="wsock32"/>
-        </Linker>
-      </Target>
-    </Build>
-    <Compiler>
-      <Add option="-Wall"/>
-      <Add option="-Wno-strict-aliasing"/>
-      <Add option="-Wno-strict-overflow"/>
-    </Compiler>
-    <Linker>
-      <Add library="gdi32"/>
-      <Add library="user32"/>
-      <Add library="kernel32"/>
-      <Add library="comctl32"/>
-    </Linker>
-    <Unit filename="../../Source/Config/html/mime.types">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/EnviJSONRPC.cpp"/>
-    <Unit filename="../../Source/EnviJSONRPC.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/EnviIPCServer.cpp"/>
-    <Unit filename="../../Source/EnviIPCServer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/slre/LICENSE">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/slre/README.md">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/slre/slre.c"/>
-    <Unit filename="../../Source/Externals/slre/slre.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/bit.c"/>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/CFunctions.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/ClassInfo.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/Constructor.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/dump.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/FuncTraits.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/Iterator.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/LuaException.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/LuaHelpers.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/LuaRef.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/Namespace.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/Stack.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/TypeList.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/TypeTraits.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/detail/Userdata.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/LuaBridge.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/RefCountedObject.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/LuaBridge/RefCountedPtr.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/luaconf.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/lualib.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/getopt.c"/>
-    <Unit filename="../../Source/Externals/lauxlib.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/lua.c"/>
-    <Unit filename="../../Source/Externals/lua.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/lua.hpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/getopt.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/sqlite3.c"/>
-    <Unit filename="../../Source/Externals/sqlite3.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Externals/sqlite3ext.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Network/EnviHTTPCache.cpp"/>
-    <Unit filename="../../Source/Network/EnviHTTPCache.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Network/EnviHTTP.cpp"/>
-    <Unit filename="../../Source/Network/EnviHTTP.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Network/EnviHTTPConnection.cpp"/>
-    <Unit filename="../../Source/Network/EnviHTTPConnection.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSLua.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSLua.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSTrigger.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSTrigger.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSFile.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSFile.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSPCF8591.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSPCF8591.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSDHT22.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSDHT22.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDataSource.cpp"/>
-    <Unit filename="../../Source/Source/EnviDataSource.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSCommand.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSCommand.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviDSDHT11.cpp"/>
-    <Unit filename="../../Source/Source/EnviDSDHT11.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Source/EnviWiringPi.cpp"/>
-    <Unit filename="../../Source/Source/EnviWiringPi.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Storage/EnviDataStore.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Storage/EnviDB.cpp"/>
-    <Unit filename="../../Source/Storage/EnviDB.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Storage/EnviFlatFileStore.cpp"/>
-    <Unit filename="../../Source/Storage/EnviFlatFileStore.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Storage/EnviSqlite3Store.cpp"/>
-    <Unit filename="../../Source/Storage/EnviSqlite3Store.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/EnviApplication.cpp"/>
-    <Unit filename="../../Source/EnviApplication.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/EnviCLI.cpp"/>
-    <Unit filename="../../Source/EnviCLI.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/EnviIncludes.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/EnviLog.cpp"/>
-    <Unit filename="../../Source/EnviLog.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../Source/Envimond.cpp"/>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharacterFunctions.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharacterFunctions.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_ASCII.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_UTF16.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_UTF32.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_UTF8.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_Identifier.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_Identifier.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_LocalisedStrings.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_LocalisedStrings.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_NewLine.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_String.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_String.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringArray.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringArray.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPairArray.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPairArray.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPool.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPool.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringRef.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_TextDiff.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_TextDiff.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_BigInteger.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_BigInteger.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Expression.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Expression.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_MathsFunctions.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Random.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Random.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Range.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_Atomic.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ByteOrder.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ContainerDeletePolicy.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_HeapBlock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_LeakedObjectDetector.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_Memory.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_MemoryBlock.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_MemoryBlock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_OptionalScopedPointer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ReferenceCountedObject.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ScopedPointer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_Singleton.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_WeakReference.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_AbstractFifo.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_AbstractFifo.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_Array.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ArrayAllocationBase.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_DynamicObject.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_DynamicObject.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ElementComparator.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_HashMap.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_LinkedListPointer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_NamedValueSet.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_NamedValueSet.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_OwnedArray.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_PropertySet.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_PropertySet.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ReferenceCountedArray.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ScopedValueSetter.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_SortedSet.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_SparseSet.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_Variant.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_Variant.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ChildProcess.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ChildProcess.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_CriticalSection.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_DynamicLibrary.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_HighResolutionTimer.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_HighResolutionTimer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_InterProcessLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_Process.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ReadWriteLock.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ReadWriteLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ScopedLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ScopedReadLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ScopedWriteLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_SpinLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_Thread.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_Thread.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ThreadLocalValue.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ThreadPool.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ThreadPool.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_TimeSliceThread.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_TimeSliceThread.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_WaitableEvent.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_PerformanceCounter.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_PerformanceCounter.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_RelativeTime.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_RelativeTime.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_Time.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_Time.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_DirectoryIterator.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_DirectoryIterator.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_File.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_File.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileFilter.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileFilter.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileInputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileInputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileOutputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileOutputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileSearchPath.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileSearchPath.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_MemoryMappedFile.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_TemporaryFile.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_TemporaryFile.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_WildcardFileFilter.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_WildcardFileFilter.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_IPAddress.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_IPAddress.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_MACAddress.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_MACAddress.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_NamedPipe.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_NamedPipe.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_Socket.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_Socket.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_URL.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_URL.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_BufferedInputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_BufferedInputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_FileInputSource.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_FileInputSource.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_InputSource.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_InputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_InputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryInputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryInputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryOutputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryOutputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_OutputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_OutputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_SubregionStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_SubregionStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_FileLogger.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_FileLogger.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_Logger.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_Logger.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_PlatformDefs.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_StandardHeader.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_SystemStats.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_SystemStats.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_TargetPlatform.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlDocument.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlDocument.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlElement.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlElement.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_Javascript.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_Javascript.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_JSON.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_JSON.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPCompressorOutputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPCompressorOutputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPDecompressorInputStream.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPDecompressorInputStream.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_ZipFile.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_ZipFile.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/unit_tests/juce_UnitTest.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/unit_tests/juce_UnitTest.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Result.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Result.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Uuid.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Uuid.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_WindowsRegistry.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Files.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_JNIHelpers.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Misc.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Network.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_SystemStats.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Threads.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_BasicNativeHeaders.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_CommonFile.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_Files.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_Network.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_SystemStats.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_Threads.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Files.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Network.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Strings.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_SystemStats.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Threads.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_osx_ObjCHelpers.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_posix_NamedPipe.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_posix_SharedCode.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_ComSmartPtr.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Files.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Network.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Registry.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_SystemStats.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Threads.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../../../JUCE/modules/juce_core/juce_module_info">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../../../JUCE/modules/juce_core/juce_core.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_ValueTree.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_ValueTree.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoableAction.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoManager.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoManager.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_ApplicationProperties.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_ApplicationProperties.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_PropertiesFile.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_PropertiesFile.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../../../JUCE/modules/juce_data_structures/juce_module_info">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../../../JUCE/modules/juce_data_structures/juce_data_structures.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_ApplicationBase.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_ApplicationBase.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_CallbackMessage.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_DeletedAtShutdown.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_DeletedAtShutdown.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_Initialisation.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_Message.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageListener.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageListener.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageManager.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageManager.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_NotificationType.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_MultiTimer.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_MultiTimer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_Timer.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_Timer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ActionBroadcaster.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ActionBroadcaster.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ActionListener.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_AsyncUpdater.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_AsyncUpdater.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ChangeBroadcaster.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ChangeBroadcaster.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ChangeListener.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ListenerList.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_ConnectedChildProcess.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_ConnectedChildProcess.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnection.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnection.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnectionServer.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnectionServer.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_android_Messaging.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_ios_MessageManager.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_linux_Messaging.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_mac_MessageManager.mm">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_osx_MessageQueue.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_ScopedXLock.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_win32_HiddenMessageWindow.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_win32_Messaging.cpp">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../../../JUCE/modules/juce_events/juce_module_info">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../../../JUCE/modules/juce_events/juce_events.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/AppConfig.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/BinaryData.cpp"/>
-    <Unit filename="../../JuceLibraryCode/BinaryData.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-    <Unit filename="../../JuceLibraryCode/modules/juce_core/juce_core.cpp"/>
-    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/juce_data_structures.cpp"/>
-    <Unit filename="../../JuceLibraryCode/modules/juce_events/juce_events.cpp"/>
-    <Unit filename="../../JuceLibraryCode/JuceHeader.h">
-      <Option compile="0"/>
-      <Option link="0"/>
-    </Unit>
-  </Project>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="envimond" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/envimond" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--log-console" />
+				<Compiler>
+					<Add option="-march=corei7-avx" />
+					<Add option="-w" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add option="-std=gnu++0x" />
+					<Add option="-mstackrealign" />
+					<Add option="-DJUCER_CODEBLOCKS_20734A5D=1" />
+					<Add option="-DJUCE_APP_VERSION=1.0.0" />
+					<Add option="-DJUCE_APP_VERSION_HEX=0x10000" />
+					<Add option="-DJUCE_FORCE_DEBUG=1" />
+					<Add option="-DDEBUG=1" />
+					<Add option="-D_DEBUG=1" />
+					<Add option="-DLINUX=1" />
+					<Add directory="." />
+					<Add directory="../../JuceLibraryCode" />
+					<Add directory="../../Source" />
+					<Add directory="../../Source/Source" />
+					<Add directory="../../Source/Storage" />
+					<Add directory="../../Source/Network" />
+					<Add directory="../../Source/Externals" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/envimond" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-std=gnu++0x" />
+					<Add option="-mstackrealign" />
+					<Add option="-w" />
+					<Add option="-march=corei7-avx" />
+					<Add option="-D__MINGW__=1" />
+					<Add option="-D__MINGW_EXTENSION=" />
+					<Add option="-DJUCER_CODEBLOCKS_20734A5D=1" />
+					<Add option="-DJUCE_APP_VERSION=1.0.0" />
+					<Add option="-DJUCE_APP_VERSION_HEX=0x10000" />
+					<Add directory="." />
+					<Add directory="../../JuceLibraryCode" />
+					<Add directory="../../Source" />
+					<Add directory="../../Source/Source" />
+					<Add directory="../../Source/Storage" />
+					<Add directory="../../Source/Network" />
+					<Add directory="../../Source/Externals" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="comdlg32" />
+					<Add library="imm32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="rpcrt4" />
+					<Add library="shlwapi" />
+					<Add library="uuid" />
+					<Add library="version" />
+					<Add library="wininet" />
+					<Add library="winmm" />
+					<Add library="ws2_32" />
+					<Add library="wsock32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-Wno-strict-aliasing" />
+			<Add option="-Wno-strict-overflow" />
+			<Add option="-DLUA_USE_LINUX=1" />
+		</Compiler>
+		<Linker>
+			<Add option="-lpthread" />
+			<Add option="-ldl" />
+			<Add option="-lrt" />
+			<Add option="-lX11" />
+		</Linker>
+		<Unit filename="../../../../JUCE/modules/juce_core/juce_core.h" />
+		<Unit filename="../../../../JUCE/modules/juce_core/juce_module_info" />
+		<Unit filename="../../../../JUCE/modules/juce_data_structures/juce_data_structures.h" />
+		<Unit filename="../../../../JUCE/modules/juce_data_structures/juce_module_info" />
+		<Unit filename="../../../../JUCE/modules/juce_events/juce_events.h" />
+		<Unit filename="../../../../JUCE/modules/juce_events/juce_module_info" />
+		<Unit filename="../../JuceLibraryCode/AppConfig.h" />
+		<Unit filename="../../JuceLibraryCode/BinaryData.cpp" />
+		<Unit filename="../../JuceLibraryCode/BinaryData.h" />
+		<Unit filename="../../JuceLibraryCode/JuceHeader.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_AbstractFifo.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_AbstractFifo.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_Array.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ArrayAllocationBase.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_DynamicObject.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_DynamicObject.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ElementComparator.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_HashMap.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_LinkedListPointer.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_NamedValueSet.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_NamedValueSet.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_OwnedArray.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_PropertySet.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_PropertySet.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ReferenceCountedArray.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_ScopedValueSetter.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_SortedSet.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_SparseSet.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_Variant.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/containers/juce_Variant.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_DirectoryIterator.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_DirectoryIterator.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_File.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_File.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileFilter.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileFilter.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileInputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileInputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileOutputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileOutputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileSearchPath.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_FileSearchPath.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_MemoryMappedFile.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_TemporaryFile.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_TemporaryFile.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_WildcardFileFilter.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/files/juce_WildcardFileFilter.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_JSON.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_JSON.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_Javascript.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/javascript/juce_Javascript.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/juce_core.cpp" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_FileLogger.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_FileLogger.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_Logger.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/logging/juce_Logger.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_BigInteger.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_BigInteger.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Expression.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Expression.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_MathsFunctions.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Random.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Random.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/maths/juce_Range.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_Atomic.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ByteOrder.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ContainerDeletePolicy.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_HeapBlock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_LeakedObjectDetector.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_Memory.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_MemoryBlock.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_MemoryBlock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_OptionalScopedPointer.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ReferenceCountedObject.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_ScopedPointer.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_Singleton.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/memory/juce_WeakReference.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Result.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Result.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Uuid.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_Uuid.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/misc/juce_WindowsRegistry.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_BasicNativeHeaders.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Files.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_JNIHelpers.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Misc.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Network.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_SystemStats.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_android_Threads.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_CommonFile.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_Files.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_Network.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_SystemStats.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_linux_Threads.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Files.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Network.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Strings.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_SystemStats.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Threads.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_osx_ObjCHelpers.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_posix_NamedPipe.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_posix_SharedCode.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_ComSmartPtr.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Files.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Network.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Registry.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_SystemStats.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_win32_Threads.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_IPAddress.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_IPAddress.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_MACAddress.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_MACAddress.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_NamedPipe.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_NamedPipe.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_Socket.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_Socket.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_URL.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/network/juce_URL.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_BufferedInputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_BufferedInputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_FileInputSource.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_FileInputSource.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_InputSource.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_InputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_InputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryInputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryInputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryOutputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_MemoryOutputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_OutputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_OutputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_SubregionStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/streams/juce_SubregionStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_PlatformDefs.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_StandardHeader.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_SystemStats.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_SystemStats.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/system/juce_TargetPlatform.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_ASCII.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_UTF16.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_UTF32.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharPointer_UTF8.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharacterFunctions.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_CharacterFunctions.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_Identifier.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_Identifier.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_LocalisedStrings.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_LocalisedStrings.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_NewLine.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_String.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_String.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringArray.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringArray.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPairArray.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPairArray.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPool.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringPool.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_StringRef.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_TextDiff.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/text/juce_TextDiff.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ChildProcess.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ChildProcess.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_CriticalSection.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_DynamicLibrary.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_HighResolutionTimer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_HighResolutionTimer.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_InterProcessLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_Process.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ReadWriteLock.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ReadWriteLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ScopedLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ScopedReadLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ScopedWriteLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_SpinLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_Thread.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_Thread.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ThreadLocalValue.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ThreadPool.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_ThreadPool.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_TimeSliceThread.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_TimeSliceThread.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/threads/juce_WaitableEvent.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_PerformanceCounter.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_PerformanceCounter.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_RelativeTime.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_RelativeTime.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_Time.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/time/juce_Time.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/unit_tests/juce_UnitTest.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/unit_tests/juce_UnitTest.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlDocument.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlDocument.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlElement.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/xml/juce_XmlElement.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPCompressorOutputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPCompressorOutputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPDecompressorInputStream.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_GZIPDecompressorInputStream.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_ZipFile.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_core/zip/juce_ZipFile.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_ApplicationProperties.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_ApplicationProperties.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_PropertiesFile.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_PropertiesFile.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/juce_data_structures.cpp" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoManager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoManager.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoableAction.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_ValueTree.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_data_structures/values/juce_ValueTree.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ActionBroadcaster.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ActionBroadcaster.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ActionListener.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_AsyncUpdater.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_AsyncUpdater.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ChangeBroadcaster.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ChangeBroadcaster.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ChangeListener.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/broadcasters/juce_ListenerList.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_ConnectedChildProcess.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_ConnectedChildProcess.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnection.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnection.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnectionServer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/interprocess/juce_InterprocessConnectionServer.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/juce_events.cpp" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_ApplicationBase.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_ApplicationBase.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_CallbackMessage.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_DeletedAtShutdown.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_DeletedAtShutdown.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_Initialisation.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_Message.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageListener.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageListener.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageManager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_MessageManager.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/messages/juce_NotificationType.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_ScopedXLock.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_android_Messaging.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_ios_MessageManager.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_linux_Messaging.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_mac_MessageManager.mm" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_osx_MessageQueue.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_win32_HiddenMessageWindow.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/native/juce_win32_Messaging.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_MultiTimer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_MultiTimer.h" />
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_Timer.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../../JuceLibraryCode/modules/juce_events/timers/juce_Timer.h" />
+		<Unit filename="../../Source/Config/html/mime.types" />
+		<Unit filename="../../Source/EnviApplication.cpp" />
+		<Unit filename="../../Source/EnviApplication.h" />
+		<Unit filename="../../Source/EnviCLI.cpp" />
+		<Unit filename="../../Source/EnviCLI.h" />
+		<Unit filename="../../Source/EnviIPCServer.cpp" />
+		<Unit filename="../../Source/EnviIPCServer.h" />
+		<Unit filename="../../Source/EnviIncludes.h" />
+		<Unit filename="../../Source/EnviJSONRPC.cpp" />
+		<Unit filename="../../Source/EnviJSONRPC.h" />
+		<Unit filename="../../Source/EnviLog.cpp" />
+		<Unit filename="../../Source/EnviLog.h" />
+		<Unit filename="../../Source/Envimond.cpp" />
+		<Unit filename="../../Source/Externals/LuaBridge/LuaBridge.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/RefCountedObject.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/RefCountedPtr.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/CFunctions.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/ClassInfo.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/Constructor.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/FuncTraits.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/Iterator.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/LuaException.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/LuaHelpers.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/LuaRef.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/Namespace.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/Stack.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/TypeList.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/TypeTraits.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/Userdata.h" />
+		<Unit filename="../../Source/Externals/LuaBridge/detail/dump.h" />
+		<Unit filename="../../Source/Externals/bit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Externals/getopt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Externals/getopt.h" />
+		<Unit filename="../../Source/Externals/lauxlib.h" />
+		<Unit filename="../../Source/Externals/lua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Externals/lua.h" />
+		<Unit filename="../../Source/Externals/lua.hpp" />
+		<Unit filename="../../Source/Externals/luaconf.h" />
+		<Unit filename="../../Source/Externals/lualib.h" />
+		<Unit filename="../../Source/Externals/slre/LICENSE" />
+		<Unit filename="../../Source/Externals/slre/README.md" />
+		<Unit filename="../../Source/Externals/slre/slre.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Externals/slre/slre.h" />
+		<Unit filename="../../Source/Externals/sqlite3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Externals/sqlite3.h" />
+		<Unit filename="../../Source/Externals/sqlite3ext.h" />
+		<Unit filename="../../Source/Network/EnviHTTP.cpp" />
+		<Unit filename="../../Source/Network/EnviHTTP.h" />
+		<Unit filename="../../Source/Network/EnviHTTPCache.cpp" />
+		<Unit filename="../../Source/Network/EnviHTTPCache.h" />
+		<Unit filename="../../Source/Network/EnviHTTPConnection.cpp" />
+		<Unit filename="../../Source/Network/EnviHTTPConnection.h" />
+		<Unit filename="../../Source/Source/EnviDSCommand.cpp" />
+		<Unit filename="../../Source/Source/EnviDSCommand.h" />
+		<Unit filename="../../Source/Source/EnviDSDHT11.cpp" />
+		<Unit filename="../../Source/Source/EnviDSDHT11.h" />
+		<Unit filename="../../Source/Source/EnviDSDHT22.cpp" />
+		<Unit filename="../../Source/Source/EnviDSDHT22.h" />
+		<Unit filename="../../Source/Source/EnviDSFile.cpp" />
+		<Unit filename="../../Source/Source/EnviDSFile.h" />
+		<Unit filename="../../Source/Source/EnviDSLua.cpp" />
+		<Unit filename="../../Source/Source/EnviDSLua.h" />
+		<Unit filename="../../Source/Source/EnviDSPCF8591.cpp" />
+		<Unit filename="../../Source/Source/EnviDSPCF8591.h" />
+		<Unit filename="../../Source/Source/EnviDSTrigger.cpp" />
+		<Unit filename="../../Source/Source/EnviDSTrigger.h" />
+		<Unit filename="../../Source/Source/EnviDataSource.cpp" />
+		<Unit filename="../../Source/Source/EnviDataSource.h" />
+		<Unit filename="../../Source/Source/EnviWiringPi.cpp" />
+		<Unit filename="../../Source/Source/EnviWiringPi.h" />
+		<Unit filename="../../Source/Storage/EnviDB.cpp" />
+		<Unit filename="../../Source/Storage/EnviDB.h" />
+		<Unit filename="../../Source/Storage/EnviDataStore.h" />
+		<Unit filename="../../Source/Storage/EnviFlatFileStore.cpp" />
+		<Unit filename="../../Source/Storage/EnviFlatFileStore.h" />
+		<Unit filename="../../Source/Storage/EnviSqlite3Store.cpp" />
+		<Unit filename="../../Source/Storage/EnviSqlite3Store.h" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
 </CodeBlocks_project_file>

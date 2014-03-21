@@ -19,7 +19,7 @@ ifeq ($(CONFIG),Debug)
   endif
 
   CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "DEBUG=1" -D "_DEBUG=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C6ADE1=1" -D "JUCE_APP_VERSION=1.0.0" -D "JUCE_APP_VERSION_HEX=0x10000" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
-  CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 -w -std=c++11
+  CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 -w -std=gnu++0x
   CXXFLAGS += $(CFLAGS)
   LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lX11 -ldl -lrt 
   LDDEPS :=
@@ -40,7 +40,7 @@ ifeq ($(CONFIG),Release)
   endif
 
   CPPFLAGS := $(DEPFLAGS) -D "LINUX=1" -D "NDEBUG=1" -D "LUA_USE_LINUX" -D "JUCER_LINUX_MAKE_62C6ADE1=1" -D "JUCE_APP_VERSION=1.0.0" -D "JUCE_APP_VERSION_HEX=0x10000" -I /usr/include -I /usr/include/freetype2 -I ../../JuceLibraryCode -I ../../JuceLibraryCode/modules -I ../../Source -I ../../Source/Source -I ../../Source/Storage -I ../../Source/Network -I ../../Source/Externals -I ~/devel/JUCE
-  CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -Os -w -std=c++11
+  CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -Os -w -std=gnu++0x
   CXXFLAGS += $(CFLAGS)
   LDFLAGS += $(TARGET_ARCH) -L$(BINDIR) -L$(LIBDIR) -fvisibility=hidden -L/usr/X11R6/lib/ -lX11 -ldl -lpthread -lrt -lX11 -ldl -lrt 
   LDDEPS :=

@@ -13,10 +13,10 @@ namespace BinaryData
     const int            mime_typesSize = 29198;
 
     extern const char*   LICENSE;
-    const int            LICENSESize = 752;
+    const int            LICENSESize = 736;
 
     extern const char*   README_md;
-    const int            README_mdSize = 4759;
+    const int            README_mdSize = 4637;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
