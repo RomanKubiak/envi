@@ -11,7 +11,6 @@
 				<Option object_output="obj/Debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--log-console" />
 				<Compiler>
 					<Add option="-march=corei7-avx" />
 					<Add option="-w" />
@@ -26,6 +25,7 @@
 					<Add option="-DDEBUG=1" />
 					<Add option="-D_DEBUG=1" />
 					<Add option="-DLINUX=1" />
+					<Add option="-DJUCE_LINUX=1" />
 					<Add directory="." />
 					<Add directory="../../JuceLibraryCode" />
 					<Add directory="../../Source" />

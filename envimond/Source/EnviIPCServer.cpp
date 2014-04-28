@@ -110,10 +110,30 @@ const Result EnviIPCServer::processEnviRPC(EnviJSONRPC &rpc)
 
 const Result EnviIPCServer::getNumDataSources(EnviJSONRPC &request)
 {
+    request.setResponseResult (owner.getNumDataSources());
 	return (Result::ok());
 }
 
 const Result EnviIPCServer::getDataSource(EnviJSONRPC &request)
 {
+    const int dataSourceIndex = request.getRequestParameters();
+    if (dataSourceIndex >= 0)
+    {
+        request.setResponseResult (dataSourceToJSON(owner.getDataSource(dataSourceIndex)));
+    }
 	return (Result::ok());
+}
+
+const var EnviIPCServer::dataSourceToJSON(EnviDataSource *dataSource)
+{
+    if (dataSource != nullptr)
+    {
+        DynamicObject *dso = new DynamicObject();
+        dso->setProperty(Ids::name, dataSource->getName());
+        return (var (dso));
+    }
+    else
+    {
+        return (var::null);
+    }
 }

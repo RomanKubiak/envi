@@ -16,6 +16,7 @@
 #include <functional>
 
 class EnviIPCServer;
+class EnviDataSource;
 
 class EnviIPCServer : public EnviHTTPProvider
 {
@@ -35,6 +36,8 @@ class EnviIPCServer : public EnviHTTPProvider
 		const Result processEnviRPC(EnviJSONRPC &reqeust);
 		const Result getNumDataSources(EnviJSONRPC &reqeust);
 		const Result getDataSource(EnviJSONRPC &reqeust);
+
+        static const var dataSourceToJSON(EnviDataSource *dataSource);
 
 		JUCE_LEAK_DETECTOR(EnviIPCServer);
 

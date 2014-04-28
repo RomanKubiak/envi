@@ -1,7 +1,8 @@
 #include "EnviWiringPi.h"
 
 #ifdef JUCE_LINUX
-EnviWiringPi::EnviWiringPi(EnviApplication &_owner) 
+#ifdef ENVI_WIRINGPI
+EnviWiringPi::EnviWiringPi(EnviApplication &_owner)
 	: valid(false), owner(_owner)
 {
 	_DBG("EnviWiringPi::ctor");
@@ -25,4 +26,5 @@ void EnviWiringPi::setValid(const bool _valid)
 {
 	valid = _valid;
 }
+#endif
 #endif

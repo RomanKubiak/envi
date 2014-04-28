@@ -28,8 +28,6 @@ EnviApplication::EnviApplication(int argc, char* argv[])
 		EnviLog::getInstance()->setLogToConsole(true);
 	}
 
-	_DBG(enviCLI->getAllArguments().getDescription());
-
 	if (enviCLI->isSet("help"))
 	{
 		enviCLI->printHelp();

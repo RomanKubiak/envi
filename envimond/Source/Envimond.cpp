@@ -17,8 +17,6 @@ int main (int argc, char* argv[])
 {
 	ScopedJuceInitialiser_GUI plattform;
 
-	fprintf (stderr, "%s\n", SystemStats::getJUCEVersion().toUTF8().getAddress());
-
 	EnviApplication *enviApplication = new EnviApplication(argc, argv);
 
 	if (enviApplication->isValid())
