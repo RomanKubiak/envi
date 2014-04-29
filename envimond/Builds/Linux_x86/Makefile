@@ -51,16 +51,11 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
-  $(OBJDIR)/EnviJSONRPC_da331522.o \
-  $(OBJDIR)/EnviIPCServer_944afaa4.o \
   $(OBJDIR)/slre_95efb89.o \
   $(OBJDIR)/bit_ecebd8a7.o \
   $(OBJDIR)/getopt_1199f4d.o \
   $(OBJDIR)/lua_ed7df0d2.o \
   $(OBJDIR)/sqlite3_42a04441.o \
-  $(OBJDIR)/EnviHTTPCache_501810de.o \
-  $(OBJDIR)/EnviHTTP_b152028e.o \
-  $(OBJDIR)/EnviHTTPConnection_ceb1734c.o \
   $(OBJDIR)/EnviDSLua_f364ea42.o \
   $(OBJDIR)/EnviDSTrigger_d517e982.o \
   $(OBJDIR)/EnviDSFile_a4da9d3c.o \
@@ -99,16 +94,6 @@ strip:
 	@echo Stripping envimond
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
 
-$(OBJDIR)/EnviJSONRPC_da331522.o: ../../Source/EnviJSONRPC.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviJSONRPC.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviIPCServer_944afaa4.o: ../../Source/EnviIPCServer.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviIPCServer.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
 $(OBJDIR)/slre_95efb89.o: ../../Source/Externals/slre/slre.c
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling slre.c"
@@ -133,21 +118,6 @@ $(OBJDIR)/sqlite3_42a04441.o: ../../Source/Externals/sqlite3.c
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling sqlite3.c"
 	@$(CC) $(CFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviHTTPCache_501810de.o: ../../Source/Network/EnviHTTPCache.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviHTTPCache.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviHTTP_b152028e.o: ../../Source/Network/EnviHTTP.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviHTTP.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
-$(OBJDIR)/EnviHTTPConnection_ceb1734c.o: ../../Source/Network/EnviHTTPConnection.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling EnviHTTPConnection.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/EnviDSLua_f364ea42.o: ../../Source/Source/EnviDSLua.cpp
 	-@mkdir -p $(OBJDIR)

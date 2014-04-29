@@ -20,9 +20,6 @@
     <Filter Include="envimond\Source\Externals\LuaBridge\detail">
       <UniqueIdentifier>{145208ED-1F86-5EDF-AA14-FC3EFD731531}</UniqueIdentifier>
     </Filter>
-    <Filter Include="envimond\Source\Network">
-      <UniqueIdentifier>{D21658E4-99E8-160D-97DF-72B4DB3ED5F7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="envimond\Source\Source">
       <UniqueIdentifier>{8E6F3E47-63D1-6681-886A-3D42E8D679EA}</UniqueIdentifier>
     </Filter>
@@ -121,12 +118,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\EnviJSONRPC.cpp">
-      <Filter>envimond\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\EnviIPCServer.cpp">
-      <Filter>envimond\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Externals\slre\slre.c">
       <Filter>envimond\Source\Externals\slre</Filter>
     </ClCompile>
@@ -141,15 +132,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Externals\sqlite3.c">
       <Filter>envimond\Source\Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Network\EnviHTTPCache.cpp">
-      <Filter>envimond\Source\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp">
-      <Filter>envimond\Source\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp">
-      <Filter>envimond\Source\Network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Source\EnviDSLua.cpp">
       <Filter>envimond\Source\Source</Filter>
@@ -519,12 +501,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\EnviJSONRPC.h">
-      <Filter>envimond\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\EnviIPCServer.h">
-      <Filter>envimond\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Externals\slre\slre.h">
       <Filter>envimond\Source\Externals\slre</Filter>
     </ClInclude>
@@ -602,15 +578,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h">
       <Filter>envimond\Source\Externals</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Network\EnviHTTPCache.h">
-      <Filter>envimond\Source\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Network\EnviHTTP.h">
-      <Filter>envimond\Source\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h">
-      <Filter>envimond\Source\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Source\EnviDSLua.h">
       <Filter>envimond\Source\Source</Filter>
@@ -748,6 +715,9 @@
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ScopedPointer.h">
+      <Filter>Juce Modules\juce_core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_SharedResourcePointer.h">
       <Filter>Juce Modules\juce_core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_Singleton.h">
@@ -1094,9 +1064,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Config\html\mime.types">
-      <Filter>envimond\Source</Filter>
-    </None>
     <None Include="..\..\Source\Externals\slre\LICENSE">
       <Filter>envimond\Source\Externals\slre</Filter>
     </None>

@@ -125,16 +125,11 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\EnviJSONRPC.cpp"/>
-    <ClCompile Include="..\..\Source\EnviIPCServer.cpp"/>
     <ClCompile Include="..\..\Source\Externals\slre\slre.c"/>
     <ClCompile Include="..\..\Source\Externals\bit.c"/>
     <ClCompile Include="..\..\Source\Externals\getopt.c"/>
     <ClCompile Include="..\..\Source\Externals\lua.c"/>
     <ClCompile Include="..\..\Source\Externals\sqlite3.c"/>
-    <ClCompile Include="..\..\Source\Network\EnviHTTPCache.cpp"/>
-    <ClCompile Include="..\..\Source\Network\EnviHTTP.cpp"/>
-    <ClCompile Include="..\..\Source\Network\EnviHTTPConnection.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSLua.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSTrigger.cpp"/>
     <ClCompile Include="..\..\Source\Source\EnviDSFile.cpp"/>
@@ -442,8 +437,6 @@
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_events\juce_events.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\EnviJSONRPC.h"/>
-    <ClInclude Include="..\..\Source\EnviIPCServer.h"/>
     <ClInclude Include="..\..\Source\Externals\slre\slre.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\CFunctions.h"/>
     <ClInclude Include="..\..\Source\Externals\LuaBridge\detail\ClassInfo.h"/>
@@ -470,9 +463,6 @@
     <ClInclude Include="..\..\Source\Externals\getopt.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3.h"/>
     <ClInclude Include="..\..\Source\Externals\sqlite3ext.h"/>
-    <ClInclude Include="..\..\Source\Network\EnviHTTPCache.h"/>
-    <ClInclude Include="..\..\Source\Network\EnviHTTP.h"/>
-    <ClInclude Include="..\..\Source\Network\EnviHTTPConnection.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSLua.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSTrigger.h"/>
     <ClInclude Include="..\..\Source\Source\EnviDSFile.h"/>
@@ -519,6 +509,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_OptionalScopedPointer.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ReferenceCountedObject.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_ScopedPointer.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_SharedResourcePointer.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_Singleton.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\memory\juce_WeakReference.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_core\containers\juce_AbstractFifo.h"/>
@@ -635,7 +626,6 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Config\html\mime.types"/>
     <None Include="..\..\Source\Externals\slre\LICENSE"/>
     <None Include="..\..\Source\Externals\slre\README.md"/>
     <None Include="..\..\..\..\JUCE\modules\juce_core\juce_module_info"/>

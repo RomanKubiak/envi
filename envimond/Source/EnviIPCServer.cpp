@@ -73,22 +73,6 @@ const Result EnviIPCServer::getResponse (	const URL &requestUrl,
 	return (Result::ok());
 }
 
-const Result EnviIPCServer::processJSONRequest(const String &request)
-{
-	jsonRPC = EnviJSONRPC::fromRequest (request);
-
-	if (jsonRPC.getRequestNamespace() == Ids::envi.toString())
-	{
-		return (processEnviRPC(jsonRPC));
-	}
-	else if (jsonRPC.getRequestNamespace() == Ids::core.toString())
-	{
-		return (owner.getEnviHTTP().processCoreRPC(jsonRPC));
-	}
-
-	return (Result::fail("Unhandled RPC method"));
-}
-
 const String EnviIPCServer::respondWithJSONError(const Result &whyRequestFailed)
 {
 	return (EnviJSONRPC::error(whyRequestFailed.getErrorMessage()).responseToString());

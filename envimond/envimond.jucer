@@ -5,12 +5,6 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="ScCL3D" name="envimond">
     <GROUP id="{18253025-B5C7-9C21-4541-371A3E3FB51B}" name="Source">
-      <FILE id="GPGpRO" name="mime.types" compile="0" resource="1" file="Source/Config/html/mime.types"/>
-      <FILE id="JnV2hf" name="EnviJSONRPC.cpp" compile="1" resource="0" file="Source/EnviJSONRPC.cpp"/>
-      <FILE id="qepmAu" name="EnviJSONRPC.h" compile="0" resource="0" file="Source/EnviJSONRPC.h"/>
-      <FILE id="dhou2N" name="EnviIPCServer.cpp" compile="1" resource="0"
-            file="Source/EnviIPCServer.cpp"/>
-      <FILE id="fuARuO" name="EnviIPCServer.h" compile="0" resource="0" file="Source/EnviIPCServer.h"/>
       <GROUP id="{587B2195-3BD6-25F7-8C4F-46382227FC81}" name="Externals">
         <GROUP id="{70125ECB-6CC9-748E-3728-AE8386D7752C}" name="slre">
           <FILE id="EV40bu" name="LICENSE" compile="0" resource="1" file="Source/Externals/slre/LICENSE"/>
@@ -52,17 +46,6 @@
         <FILE id="ArY89g" name="sqlite3.c" compile="1" resource="0" file="Source/Externals/sqlite3.c"/>
         <FILE id="Cijhqt" name="sqlite3.h" compile="0" resource="0" file="Source/Externals/sqlite3.h"/>
         <FILE id="iN0v9m" name="sqlite3ext.h" compile="0" resource="0" file="Source/Externals/sqlite3ext.h"/>
-      </GROUP>
-      <GROUP id="{CEA7D5EF-0A70-CE8D-CC9D-3621BB641A1E}" name="Network">
-        <FILE id="ubl0qC" name="EnviHTTPCache.cpp" compile="1" resource="0"
-              file="Source/Network/EnviHTTPCache.cpp"/>
-        <FILE id="wrc853" name="EnviHTTPCache.h" compile="0" resource="0" file="Source/Network/EnviHTTPCache.h"/>
-        <FILE id="Xr8LdV" name="EnviHTTP.cpp" compile="1" resource="0" file="Source/Network/EnviHTTP.cpp"/>
-        <FILE id="ytmL4F" name="EnviHTTP.h" compile="0" resource="0" file="Source/Network/EnviHTTP.h"/>
-        <FILE id="jUFxrp" name="EnviHTTPConnection.cpp" compile="1" resource="0"
-              file="Source/Network/EnviHTTPConnection.cpp"/>
-        <FILE id="ApgXHy" name="EnviHTTPConnection.h" compile="0" resource="0"
-              file="Source/Network/EnviHTTPConnection.h"/>
       </GROUP>
       <GROUP id="{8152FBDB-7753-31BE-06F1-AAEC91628D7C}" name="Source">
         <FILE id="xp8TCL" name="EnviDSLua.cpp" compile="1" resource="0" file="Source/Source/EnviDSLua.cpp"/>
@@ -175,6 +158,21 @@
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
+    <CODEBLOCKS targetFolder="Builds/CodeBlocks_Linux" extraCompilerFlags="-w -std=gnu++0x -march=corei7-avx"
+                extraLinkerFlags="-lrt -lpthread -lm -ldl -lX11" extraDefs="LUA_USE_LINUX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="envimond"
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"
+                       defines="JUCE_FORCE_DEBUG=1&#10;LINUX=1&#10;_LINUX=1&#10;JUCE_LINUX=1&#10;DEBUG=1"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="envimond"
+                       headerPath="../../Source&#10;../../Source/Source&#10;../../Source/Storage&#10;../../Source/Network&#10;../../Source/Externals"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </CODEBLOCKS>
   </EXPORTFORMATS>
   <MODULES>
     <MODULES id="juce_core" showAllCode="1" useLocalCopy="1"/>
